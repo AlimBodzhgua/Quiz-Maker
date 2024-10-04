@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { RegisterForm } from 'components/Auth/RegisterForm';
-import { Page } from 'components/Page/Page';
+import { Page } from 'src/components/UI/Page/Page';
 
 const RegisterPage: FC = () => {
 

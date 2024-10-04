@@ -27,10 +27,12 @@ export const RegisterForm: FC = memo(() => {
 			p='14px 18px'
 		>
 			<Heading
-				size='2xl'
+				size='xl'
 				color='gray.50'
 				mb='12px'
-			>Register</Heading>
+			>
+				Register
+			</Heading>
 			<Input
 				placeholder='Login'
 				value={login}

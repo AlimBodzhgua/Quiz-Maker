@@ -3,7 +3,7 @@ import { LoginPage } from 'pages/LoginPage/LoginPage.async';
 import { RegisterPage } from 'pages/RegisterPage/RegisterPage.async';
 import { MainPage } from 'pages/MainPage/MainPage.async';
 import { NotFoundPage } from 'pages/NotFoundPage/NotFoundPage';
-import { Layout } from 'components/Layout/Layout';
+import { Layout } from 'components/UI/Layout/Layout';
 
 export enum AppRoutes {
 	MAIN = '/',

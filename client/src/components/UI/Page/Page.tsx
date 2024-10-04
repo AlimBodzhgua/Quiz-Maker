@@ -1,5 +1,5 @@
-import { Flex } from '@chakra-ui/react';
 import { FC, memo, ReactNode } from 'react';
+import { Flex } from '@chakra-ui/react';
 
 interface PageProps {
 	children: ReactNode;
@@ -7,7 +7,7 @@ interface PageProps {
 
 export const Page: FC<PageProps> = memo(({children}) => {
 	return (
-		<Flex justify='center' align='center' w='100%' height='100%'>
+		<Flex justify='center' align='center' direction='column' w='100%' height='100%'>
 			{children}
 		</Flex>
 	)

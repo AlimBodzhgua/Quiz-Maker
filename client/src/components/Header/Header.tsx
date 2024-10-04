@@ -1,8 +1,6 @@
 import { FC, memo, useState } from 'react';
 import {
-	Link,
 	Box, 
-	Flex,
 	Wrap,
 	WrapItem,
 	Avatar,
@@ -14,11 +12,12 @@ import {
 } from '@chakra-ui/react';
 import { Link as RouterLink} from 'react-router-dom';
 import { AppRoutes } from 'src/router/router';
-import { HamburgerIcon } from '@chakra-ui/icons'
-
+import ProfileIcon from 'src/assets/profile.svg';
 
 export const Header: FC = memo(() => {
-	const [isAuth, setIsAuth] = useState<boolean>(false);
+	const [isAuth, setIsAuth] = useState<boolean>(true);
+
+	const onLogout = () => setIsAuth(false);
 
 	return (
 		<Box
@@ -28,23 +27,24 @@ export const Header: FC = memo(() => {
 			bg='gray.800'
 			w='100%'
 			h='65px'
-			p='0 50px'
+			p='0 64px'
 			as='header'
 		>
 			{isAuth ? (
-				//<Avatar icon={<HamburgerIcon />}/>
 				<Popover>
-				<PopoverTrigger>
-					<Button><Avatar icon={<HamburgerIcon />}/></Button>
-				</PopoverTrigger>
-				<PopoverContent>
-					<PopoverBody display='flex' flexDirection='column'>
-						<Button>My tests</Button>
-						<Button>Completed</Button>
-						<Button>Profile</Button>
-						<Button>Logout</Button>
-					</PopoverBody>
-				</PopoverContent>
+					<PopoverTrigger>
+						<Avatar icon={<ProfileIcon />} size='sm' bg='gray.50' />
+					</PopoverTrigger>
+					<PopoverContent w='175px' mt='5px'>
+						<PopoverBody display='flex' flexDirection='column' gap='4px'>
+							<Button size='sm'>My tests</Button>
+							<Button size='sm'>Completed</Button>
+							<Button size='sm'>Profile</Button>
+							<Button size='sm' onClick={onLogout}>
+								Logout
+							</Button>
+						</PopoverBody>
+					</PopoverContent>
 				</Popover>
 			) : (
 				<Wrap spacing='20px'>
@@ -55,7 +55,7 @@ export const Header: FC = memo(() => {
 							variant='outline'
 							color='gray.50'
 							size='sm'
-							_hover={{bg: 'gray.700'}}
+							_hover={{ bg: 'gray.700' }}
 						>
 							Register
 						</Button>
@@ -67,7 +67,7 @@ export const Header: FC = memo(() => {
 							variant='outline'
 							color='gray.50'
 							size='sm'
-							_hover={{bg: 'gray.700'}}
+							_hover={{ bg: 'gray.700' }}
 						>
 							Login
 						</Button>

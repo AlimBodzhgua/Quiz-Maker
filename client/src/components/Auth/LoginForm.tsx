@@ -1,5 +1,5 @@
 import { FC, memo, useState } from 'react';
-import { Box, Heading, Input, Button, Text } from '@chakra-ui/react';
+import { Box, Heading, Input, Button } from '@chakra-ui/react';
 import { useUserStore } from 'src/store/user';
 
 export const LoginForm: FC = memo(() => {
@@ -26,7 +26,7 @@ export const LoginForm: FC = memo(() => {
 			p='14px 18px'
 		>
 			<Heading
-				size='2xl'
+				size='xl'
 				color='gray.50'
 				mb='12px'
 			>Login</Heading>

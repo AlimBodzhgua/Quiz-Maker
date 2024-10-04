@@ -3,6 +3,7 @@ import { LoginPage } from 'pages/LoginPage/LoginPage.async';
 import { RegisterPage } from 'pages/RegisterPage/RegisterPage.async';
 import { MainPage } from 'pages/MainPage/MainPage.async';
 import { NotFoundPage } from 'pages/NotFoundPage/NotFoundPage';
+import { Layout } from 'components/Layout/Layout';
 
 export enum AppRoutes {
 	MAIN = '/',
@@ -14,19 +15,25 @@ export enum AppRoutes {
 
 export const router = createBrowserRouter([
 	{
-		path: AppRoutes.MAIN,
-		element: <MainPage />,
-	},
-	{
-		path: AppRoutes.LOGIN,
-		element: <LoginPage />,
-	},
-	{
-		path: AppRoutes.REGISTER,
-		element: <RegisterPage />,
-	},
-	{
-		path: AppRoutes.NOT_FOUND,
-		element: <NotFoundPage />,
+		path: '/',
+		element: <Layout />,
+		children: [
+			{
+				index: true,
+				element: <MainPage />,
+			},
+			{
+				path: AppRoutes.LOGIN,
+				element: <LoginPage />,
+			},
+			{
+				path: AppRoutes.REGISTER,
+				element: <RegisterPage />,
+			},
+			{
+				path: AppRoutes.NOT_FOUND,
+				element: <NotFoundPage />,
+			},
+		],
 	},
 ]);

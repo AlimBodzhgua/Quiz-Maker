@@ -25,6 +25,8 @@
 		"pages/*": ["pages/*"],
 		"components/*": ["components/*"],
 		"types/*": ["types/*"],
+		"styles/*": ["styles/*"],
+		"store/*": ["store/*"]
     }
   },
   "include": ["src"]

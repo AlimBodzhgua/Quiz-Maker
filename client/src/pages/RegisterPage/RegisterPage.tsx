@@ -1,11 +1,13 @@
 import { FC } from 'react';
+import { RegisterForm } from 'components/Auth/RegisterForm';
+import { Page } from 'components/Page/Page';
 
 const RegisterPage: FC = () => {
 
 	return (
-		<div>
-			<h1>Register Page</h1>
-		</div>
+		<Page>
+			<RegisterForm />
+		</Page>
 	)
 }
 

@@ -1,11 +1,13 @@
 import { FC } from 'react';
+import { LoginForm } from 'components/Auth/LoginForm';
+import { Page } from 'components/Page/Page';
 
 const LoginPage: FC = () => {
 
 	return (
-		<div>
-			<h1>Login Page</h1>
-		</div>
+		<Page>
+			<LoginForm />
+		</Page>
 	)
 }
 

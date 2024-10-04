@@ -12,7 +12,9 @@ export default defineConfig({
 			src: '/src',
 			pages: '/src/pages',
 			components: '/src/components',
-			types: '/src/types'
+			types: '/src/types',
+			styles: '/src/styles',
+			store: '/src/store',
 		},
 	},
 });

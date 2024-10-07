@@ -1,4 +1,4 @@
-import { FC, memo, useState } from 'react';
+import { FC, memo } from 'react';
 import {
 	Box, 
 	Wrap,
@@ -10,14 +10,20 @@ import {
 	PopoverContent,
 	PopoverBody,
 } from '@chakra-ui/react';
-import { Link as RouterLink} from 'react-router-dom';
+import { Link as RouterLink, useNavigate} from 'react-router-dom';
 import { AppRoutes } from 'src/router/router';
+import { useUserStore } from 'src/store/user';
 import ProfileIcon from 'src/assets/profile.svg';
 
 export const Header: FC = memo(() => {
-	const [isAuth, setIsAuth] = useState<boolean>(true);
+	const user = useUserStore((state) => state.user);
+	const logout = useUserStore((state) => state.logout);
+	const navigate = useNavigate();
 
-	const onLogout = () => setIsAuth(false);
+	const handleLogout = () => {
+		logout();
+		navigate('/login');
+	}
 
 	return (
 		<Box
@@ -30,7 +36,7 @@ export const Header: FC = memo(() => {
 			p='0 64px'
 			as='header'
 		>
-			{isAuth ? (
+			{user ? (
 				<Popover>
 					<PopoverTrigger>
 						<Avatar icon={<ProfileIcon />} size='sm' bg='gray.50' />
@@ -40,7 +46,7 @@ export const Header: FC = memo(() => {
 							<Button size='sm'>My tests</Button>
 							<Button size='sm'>Completed</Button>
 							<Button size='sm'>Profile</Button>
-							<Button size='sm' onClick={onLogout}>
+							<Button size='sm' onClick={handleLogout}>
 								Logout
 							</Button>
 						</PopoverBody>

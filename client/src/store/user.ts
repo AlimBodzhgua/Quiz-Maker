@@ -1,6 +1,7 @@
 import { IUser } from 'src/types/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
+import $axios from 'src/api/axios';
 
 interface UserState {
 	user: IUser | null;
@@ -10,18 +11,90 @@ interface UserState {
 }
 
 interface UserAction {
-	login: () => void;
-	register: () => void;
+	login: (email: string, password: string) => Promise<void>;
+	register: (email: string, password: string) => Promise<void>;
+	logout: () => void;
+	initUser: () => void;
 }
 
 export const useUserStore = create<UserAction & UserState>()(
 	devtools((set) => ({
 		user: null,
 		isLoading: false,
-		errur: undefined,
+		error: undefined,
 
-		login: () => set((state) => ({ user: null }), false, 'login'),
-		register: () => set((state) => ({ user: null }), false, 'register'),
+		logout: () => {
+			set({ user: null, error: undefined, isLoading: false }, false, 'logout'),
+			localStorage.removeItem('authToken');
+		},
+
+		initUser: async () => {
+			set({ isLoading: true });
+
+			try {
+				const response = await $axios.get<IUser>('/users/auth/me');
+	
+				const user = {
+					_id: response.data._id,
+					email: response.data.email,
+					token: response.data.token,
+				};
+				
+				localStorage.setItem('authToken', user.token);
+
+				set({ isLoading: false, user: user, error: undefined }, false, 'initUser');
+			} catch (err) {
+				set({ error: JSON.stringify(err) })
+			} finally {
+				set({ isLoading: false });
+			}
+		},
+
+		login: async (email, password) => {
+			set({ isLoading: true }, false, 'loading');
+
+			try {
+				const response = await $axios.post<IUser>('/users/login', { email, password });
+				console.log(response);
+				const user = {
+					_id: response.data._id,
+					email: response.data.email,
+					token: response.data.token,
+				};
+
+				localStorage.setItem('authToken', user.token);
+
+				set({ user, error: undefined }, false, 'login');
+				window.location.replace('/');
+			} catch (err) {
+				set({ error: JSON.stringify(err) })
+			} finally {
+				set({ isLoading: false });
+			}
+		},
+
+		register: async (email, password) => {
+			set({ isLoading: true }, false, 'loading');
+
+			try {
+				const response = await $axios.post<IUser>('/users/registration', { email, password });
+
+				const user = {
+					_id: response.data._id,
+					email: response.data.email,
+					token: response.data.token,
+				};
+
+				localStorage.setItem('authToken', user.token);
+
+				set({ user: user, error: undefined }, false, 'register');
+				window.location.replace('/');
+			} catch (err) {
+				set({ error: JSON.stringify(err) });
+			} finally {
+				set({ isLoading: false });
+			}
+		}
 	}))
 );
   

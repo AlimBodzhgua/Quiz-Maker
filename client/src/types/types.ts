@@ -1,11 +1,11 @@
 export interface IUser {
-	id: string;
-	password: string;
+	_id: string;
+	token: string;
 	email: string;
 }
 
 export interface ITest {
-	id: string;
+	_id: string;
 	title: string;
 	author_id: string;
 	created_ad: string;

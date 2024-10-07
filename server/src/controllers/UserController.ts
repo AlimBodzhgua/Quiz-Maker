@@ -33,7 +33,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 		
 		const { passwordHash, ...userData } = user._doc;
 
-		return res.json({...userData, token});
+		res.json({...userData, token});
 	} catch (err) {
 		next(err);
 	}
@@ -64,7 +64,23 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
 		const { passwordHash, ...userData } = user._doc;
 
-		return res.json({...userData, token});
+		res.json({...userData, token});
+	} catch (err) {
+		next(err);
+	}
+}
+
+export const getMe = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const user = await UserModel.findById(res.locals.userId);
+
+		if (!user) {
+			return next(ApiError.BadRequest('Such user does not exist'));
+		};
+
+		const { passwordHash, ...userData } = user._doc;
+
+		res.json({...userData, token: res.locals.token});
 	} catch (err) {
 		next(err);
 	}

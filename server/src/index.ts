@@ -3,12 +3,14 @@ import cors from 'cors';
 import errorHandler from './middleware/errorHandler';
 import mongoose from 'mongoose';
 import 'dotenv/config';
+import router from './routes';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-//app.use(errorHandler);
+app.use(router);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 4000;
 const DATABASE = process.env.DATABASE!.replace(

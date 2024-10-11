@@ -9,7 +9,7 @@ export const TestTable: FC = memo(() => {
 
 	useEffect(() => {
 		getTests();
-	}, [tests])
+	}, [tests, getTests]);
 
 	return (
 		<TableContainer>
@@ -23,9 +23,8 @@ export const TestTable: FC = memo(() => {
 					</Tr>
 				</Thead>
 				<Tbody>
-					{tests.length && tests.map((test) => (
-						<TestItem testItem={test} key={test._id}/>
-					))}
+					{tests.length &&
+						tests.map((test) => <TestItem testItem={test} key={test._id} />)}
 				</Tbody>
 			</Table>
 		</TableContainer>

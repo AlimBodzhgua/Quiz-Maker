@@ -10,6 +10,11 @@
     "preview": "vite preview",
     "prepare": "husky"
   },
+  "husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
   "dependencies": {
     "@chakra-ui/icons": "^2.2.3",
     "@chakra-ui/react": "^2.9.3",

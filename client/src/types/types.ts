@@ -7,6 +7,6 @@ export interface IUser {
 export interface ITest {
 	_id: string;
 	title: string;
-	author_id: string;
-	created_ad: string;
+	authorId: string;
+	createdAt: string;
 }

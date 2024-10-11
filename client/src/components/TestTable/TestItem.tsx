@@ -13,7 +13,11 @@ export const getTestPage = (id: string) => `/test/${id}`
 
 export const TestItem: FC<TestItemProps> = memo(({ testItem }) => {
 	const removeTest = useTestsStore((state) => state.removeTest);
-	const formatter = new Intl.DateTimeFormat('en-US')
+	const formatter = new Intl.DateTimeFormat('en-US', {
+		day: '2-digit',
+		month: '2-digit',
+		year: 'numeric',
+	});
 
 	const handleRemove = () => {
 		removeTest(testItem._id);
@@ -26,7 +30,7 @@ export const TestItem: FC<TestItemProps> = memo(({ testItem }) => {
 					{testItem.title}
 				</Link>
 			</Td>
-			<Td>{formatter.format(new Date(testItem.createdAt))}</Td>
+			<Td>{formatter.format(new Date(testItem.createdAt)).split('/').join('.')}</Td>
 			<Td isNumeric>5</Td>
 			<Td>
 				<Flex align='center' gap='10px'>

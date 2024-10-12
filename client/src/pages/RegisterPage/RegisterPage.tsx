@@ -4,7 +4,7 @@ import { Page } from 'components/UI/Page/Page';
 
 const RegisterPage: FC = () => {
 	return (
-		<Page>
+		<Page centered>
 			<RegisterForm />
 		</Page>
 	);

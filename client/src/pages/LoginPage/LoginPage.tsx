@@ -4,7 +4,7 @@ import { Page } from 'components/UI/Page/Page';
 
 const LoginPage: FC = () => {
 	return (
-		<Page>
+		<Page centered>
 			<LoginForm />
 		</Page>
 	);

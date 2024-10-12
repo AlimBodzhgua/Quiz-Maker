@@ -37,8 +37,8 @@ export const useTestsStore = create<TestState & TestAction>()(
 			set({ isLoading: true });
 			try {
 				const response = await $axios.post('tests', { title });
-				set((state) => ({ tests: [...state.tests, response.data] }))
-			} catch(err) {
+				set((state) => ({ tests: [...state.tests, response.data] }));
+			} catch (err) {
 				set({ error: JSON.stringify(err) });
 			} finally {
 				set({ isLoading: true });
@@ -49,11 +49,11 @@ export const useTestsStore = create<TestState & TestAction>()(
 			set({ isLoading: true });
 			try {
 				$axios.delete(`/tests/${testId}`);
-			} catch(err) {
+			} catch (err) {
 				set({ error: JSON.stringify(err) });
 			} finally {
 				set({ isLoading: true });
 			}
-		}
+		},
 	})),
 );

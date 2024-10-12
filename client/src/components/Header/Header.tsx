@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import {
-	Box, 
+	Box,
 	Wrap,
 	WrapItem,
 	Avatar,
@@ -10,7 +10,7 @@ import {
 	PopoverContent,
 	PopoverBody,
 } from '@chakra-ui/react';
-import { Link as RouterLink, useNavigate} from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AppRoutes } from 'src/router/router';
 import { useUserStore } from 'src/store/user';
 import ProfileIcon from 'src/assets/profile.svg';
@@ -23,7 +23,7 @@ export const Header: FC = memo(() => {
 	const handleLogout = () => {
 		logout();
 		navigate('/login');
-	}
+	};
 
 	return (
 		<Box

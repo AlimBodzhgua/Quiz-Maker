@@ -13,17 +13,17 @@ export const LoginForm: FC = memo(() => {
 
 	const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.target.value);
-	}
+	};
 
 	const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPassword(e.target.value);
-	}
+	};
 
 	const onToggleShowPassword = () => setShowPassword((prev) => !prev);
 
 	const handleLogin = () => {
 		onLogin(email, password);
-	}
+	};
 
 	return (
 		<Box
@@ -59,7 +59,11 @@ export const LoginForm: FC = memo(() => {
 				/>
 				<InputRightElement width='4.5rem'>
 					<Button variant='unstyled' onClick={onToggleShowPassword}>
-						{showPassword ? <ViewOffIcon color='#ffff'/> : <ViewIcon color='#ffff'/>}
+						{showPassword ? (
+							<ViewOffIcon color='#ffff' />
+						) : (
+							<ViewIcon color='#ffff' />
+						)}
 					</Button>
 				</InputRightElement>
 			</InputGroup>

@@ -17,6 +17,8 @@ export enum AppRoutes {
 	NOT_FOUND = '*',
 }
 
+export const getTestPage = (id: string) => `/test/${id}`;
+
 export const router = createBrowserRouter([
 	{
 		path: '/',
@@ -40,7 +42,7 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: AppRoutes.TEST,
-				element: <TestPage />
+				element: <TestPage />,
 			},
 			{
 				path: AppRoutes.NOT_FOUND,

@@ -9,10 +9,7 @@ const MainPage: FC = () => {
 		<Box w='80%' p='15px 0'>
 			<Flex justify='space-between' align='center' p='2px 14px' mb='14px'>
 				<Heading>My tests</Heading>
-				<Button
-					as={Link}
-					to={AppRoutes.CREATE_TEST}
-				>
+				<Button as={Link} to={AppRoutes.CREATE_TEST}>
 					Create
 				</Button>
 			</Flex>

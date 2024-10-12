@@ -11,7 +11,7 @@ const $axios = axios.create({
 
 $axios.interceptors.request.use((config) => {
 	const token = localStorage.getItem('authToken');
-	config.headers.Authorization = token ? `Bearer ${token}`: '';
+	config.headers.Authorization = token ? `Bearer ${token}` : '';
 	return config;
 });
 

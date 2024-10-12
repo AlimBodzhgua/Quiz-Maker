@@ -9,5 +9,5 @@ export const Layout: FC = () => {
 			<Header />
 			<Outlet />
 		</Flex>
-	)
-}
+	);
+};

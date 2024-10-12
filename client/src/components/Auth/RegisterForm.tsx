@@ -13,17 +13,17 @@ export const RegisterForm: FC = memo(() => {
 
 	const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.target.value);
-	}
+	};
 
 	const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPassword(e.target.value);
-	}
+	};
 
 	const onToggleShowPassword = () => setShowPassword((prev) => !prev);
 
 	const handleRegister = () => {
 		onRegister(email, password);
-	}
+	};
 
 	return (
 		<Box
@@ -67,10 +67,7 @@ export const RegisterForm: FC = memo(() => {
 					</Button>
 				</InputRightElement>
 			</InputGroup>
-			<Button
-				onClick={handleRegister}
-				disabled={isLoading}
-			>
+			<Button onClick={handleRegister} disabled={isLoading}>
 				Register
 			</Button>
 		</Box>

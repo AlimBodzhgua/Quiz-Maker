@@ -8,20 +8,16 @@ export const CreateTestForm: FC = memo(() => {
 
 	const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTitle(e.target.value);
-	}
+	};
 
 	const onAddTest = async () => {
 		createTest(title);
-	}
+	};
 
 	return (
 		<>
-			<Input
-				placeholder='Test title'
-				value={title}
-				onChange={onTitleChange}
-			/>
+			<Input placeholder='Test title' value={title} onChange={onTitleChange} />
 			<Button onClick={onAddTest}>Add</Button>
 		</>
-	)
+	);
 });

@@ -6,22 +6,20 @@ import { Page } from 'components/UI/Page/Page';
 
 const CreateTestPage: FC = () => {
 	const [showForm, setShowForm] = useState<boolean>(false);
-	
+
 	const toggleShowForm = () => setShowForm((prev) => !prev);
 
 	return (
 		<Page>
 			<Heading m='12px 0'>Сreating a new test</Heading>
 			<Box>
-				{showForm &&
-					<CreateTestForm />
-				}
+				{showForm && <CreateTestForm />}
 				<Button onClick={toggleShowForm}>
-					<AddIcon/>
+					<AddIcon />
 				</Button>
 			</Box>
 		</Page>
-	)
-}
+	);
+};
 
 export default CreateTestPage;

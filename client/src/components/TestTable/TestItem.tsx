@@ -2,7 +2,7 @@ import { FC, memo } from 'react';
 import { Button, Flex, Td, Tr } from '@chakra-ui/react';
 import { DeleteIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { useTestsStore } from 'store/tests';
-import { getTestPage } from 'router/router';
+import { getTestPage } from '@/router/router';
 import { ITest } from 'types/types';
 import { Link } from 'react-router-dom';
 

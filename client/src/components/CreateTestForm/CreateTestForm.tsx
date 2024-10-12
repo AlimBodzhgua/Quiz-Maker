@@ -1,6 +1,6 @@
 import { FC, memo, useState } from 'react';
 import { Button, Input } from '@chakra-ui/react';
-import { useTestsStore } from 'src/store/tests';
+import { useTestsStore } from 'store/tests';
 
 export const CreateTestForm: FC = memo(() => {
 	const [title, setTitle] = useState<string>('');

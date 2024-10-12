@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
-import { Page } from 'src/components/UI/Page/Page';
+import { Page } from 'components/UI/Page/Page';
 
 const TestPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();

@@ -11,9 +11,9 @@ import {
 	PopoverBody,
 } from '@chakra-ui/react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { AppRoutes } from 'src/router/router';
-import { useUserStore } from 'src/store/user';
-import ProfileIcon from 'src/assets/profile.svg';
+import { AppRoutes } from '@/router/router';
+import ProfileIcon from '@/assets/profile.svg';
+import { useUserStore } from 'store/user';
 
 export const Header: FC = memo(() => {
 	const user = useUserStore((state) => state.user);

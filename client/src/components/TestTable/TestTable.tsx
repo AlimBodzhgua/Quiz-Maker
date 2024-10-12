@@ -1,7 +1,7 @@
 import { FC, memo, useEffect } from 'react';
 import { TestItem } from './TestItem';
 import { Table, TableContainer, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
-import { useTestsStore } from 'src/store/tests';
+import { useTestsStore } from 'store/tests';
 
 export const TestTable: FC = memo(() => {
 	const tests = useTestsStore((state) => state.tests);

@@ -1,7 +1,7 @@
-import { IUser } from 'src/types/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import $axios from 'src/api/axios';
+import { IUser } from '@/types/types';
+import $axios from '@/api/axios';
 
 interface UserState {
 	user: IUser | null;

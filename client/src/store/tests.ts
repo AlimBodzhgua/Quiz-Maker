@@ -1,5 +1,5 @@
-import $axios from 'src/api/axios';
-import { ITest } from 'src/types/types';
+import $axios from '@/api/axios';
+import { ITest } from 'types/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 

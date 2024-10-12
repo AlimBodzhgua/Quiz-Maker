@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Box, Button, Flex, Heading } from '@chakra-ui/react';
 import { TestTable } from 'components/TestTable/TestTable';
 import { Link } from 'react-router-dom';
-import { AppRoutes } from 'src/router/router';
+import { AppRoutes } from '@/router/router';
 
 const MainPage: FC = () => {
 	return (

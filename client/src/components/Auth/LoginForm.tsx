@@ -1,6 +1,6 @@
 import { FC, memo, useState } from 'react';
 import { Box, Heading, Input, Button, InputGroup, InputRightElement } from '@chakra-ui/react';
-import { useUserStore } from 'src/store/user';
+import { useUserStore } from 'store/user';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 export const LoginForm: FC = memo(() => {

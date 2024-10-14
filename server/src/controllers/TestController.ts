@@ -38,8 +38,14 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getOne = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const test = await TestModel.findOne({ authorId: res.locals.userId, _id: req.params.id });
-		console.log(test);
+		const test = await TestModel.findOne({
+			_id: req.params.testId,
+			authorId: res.locals.userId,
+		});
+
+		if (!test) {
+			return next(ApiError.BadRequest('Test with such id not found'));
+		}
 
 		res.json(test);
 	} catch (err) {
@@ -50,12 +56,39 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
 
 export const remove = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		await TestModel.findOneAndDelete({
+		const test = await TestModel.findOneAndDelete({
+			_id: req.params.testId,
 			authorId: res.locals.userId,
-			_id: req.params.id,
 		});
 
+		if (!test) {
+			return next(ApiError.BadRequest('Test with such id not found'));
+		}
+
 		res.status(200).send();
+	} catch (err) {
+		next(err);
+	}
+}
+
+export const update = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const test = await TestModel.findOneAndUpdate(
+			{
+				_id: req.params.testId,
+				authorId: res.locals.userId,
+			},
+			{
+				title: req.body.title,
+			},
+			{ new: true }
+		);
+
+		if (!test) {
+			return next(ApiError.BadRequest('Test with such id not found'));
+		}
+
+		res.status(200).send(test);
 	} catch (err) {
 		next(err);
 	}

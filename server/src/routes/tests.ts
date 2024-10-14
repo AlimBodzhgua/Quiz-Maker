@@ -16,9 +16,9 @@ const router = Router();
 // /tests
 router.post('/', requireAuth, testCreateValidation, TestController.create);;
 router.get('/', requireAuth, TestController.getAll);
-router.get('/:id', requireAuth, TestController.getOne);
-router.delete('/:id', requireAuth, TestController.remove);
-// router.put('/', );
+router.get('/:testId', requireAuth, TestController.getOne);
+router.delete('/:testId', requireAuth, TestController.remove);
+router.put('/:testId', requireAuth, testCreateValidation, TestController.update);
 // router.get('/completed', );
 // router.delete('/completed/:id', );
 

@@ -7,6 +7,8 @@ export interface DocResult<T> {
 
 export type DecodePayloadType = JwtPayload & { _id: string };
 
+type QuestionType = 'multipleAnswer' | 'oneAnswer' | 'inputAnswer' // checkbox/radioButton/input
+
 export interface IUser extends DocResult<IUser> {
 	_id: Types.ObjectId;
 	email: string;
@@ -16,33 +18,33 @@ export interface IUser extends DocResult<IUser> {
 export interface ITest {
 	_id: Types.ObjectId;
 	title: string;
-	authorId: string;
+	authorId: Types.ObjectId;
 	createAt: Date;
 }
 
-// export interface ICompletedTest {
-// 	id: string;
-// 	userId: string;
-// 	testId: string;
-// 	right: number; // amount of correct answers
-// 	wrong: number; // amount of incorrect answers
-// }
+export interface IQuestion {
+	_id: Types.ObjectId;
+	description: string;
+	testId: Types.ObjectId;
+	type: QuestionType; 
+	order: number; // question number
+}
 
-// export interface IQuestion {
-// 	id: string;
-// 	description: string;
-// 	testId: string;
-// 	//type: 
-// 	order: number;
-// }
+export interface IAnswer {
+	_id: Types.ObjectId;
+	value: string;
+	isCorrect: boolean;
+	questionId: Types.ObjectId;
+}
 
+export interface ICompletedTest {
+	_id: Types.ObjectId;
+	userId: Types.ObjectId;
+	testId: Types.ObjectId;
+	right: number;
+	wrong: number;
+}
 
-// export interface IAnswer {
-// 	id: string;
-// 	value: string;
-// 	isCorrect: boolean;
-// 	questionId: string;
-// }
 
 // export interface IUserAnswer {
 

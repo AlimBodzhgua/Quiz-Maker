@@ -1,4 +1,7 @@
+import { requireAuth } from './../middleware/requireAuth';
 import { Router } from 'express';
+import { testCreateValidation, testRemoveValidation } from './../validations/validations';
+import * as TestController from '../controllers/TestController';
 
 const router = Router();
 
@@ -11,11 +14,11 @@ const router = Router();
 // GET /api/tests/completed/:id - получить детальную информацию по пройденному тесту (c правильными\неправильными ответами)
 
 // /tests
-// router.post('/', );
-// router.get('/', );
-// router.get('/:id', );
+router.post('/', requireAuth, testCreateValidation, TestController.create);;
+router.get('/', requireAuth, TestController.getAll);
+router.get('/:id', requireAuth, TestController.getOne);
+router.delete('/:id', requireAuth, TestController.remove);
 // router.put('/', );
-// router.delete('/:id', );
 // router.get('/completed', );
 // router.delete('/completed/:id', );
 

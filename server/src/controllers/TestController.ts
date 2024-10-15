@@ -3,7 +3,6 @@ import { validationResult } from 'express-validator';
 
 import { ApiError } from '../exceptions/ApiError';
 import TestModel from '../models/Test';
-import UserModel from '../models/User';
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -22,7 +21,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 
 		res.json(test);
 	} catch (err) {
-		next(err);
+		next(err);	
 	}
 }
 

@@ -36,7 +36,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 
 export const remove = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const test = await TestModel.findById(req.params.testId );
+		const test = await TestModel.findById(req.params.testId);
 
 		if (!test) {
 			return next(ApiError.BadRequest('Test with such id not found'));
@@ -45,7 +45,7 @@ export const remove = async (req: Request, res: Response, next: NextFunction) =>
 		const result = await QuestionModel.findOneAndDelete({
 			testId: req.params.testId,
 			_id: req.params.id,
-		})
+		});
 
 		if (!result) {
 			return next(ApiError.BadRequest('Question not found'));

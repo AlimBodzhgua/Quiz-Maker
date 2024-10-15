@@ -1,5 +1,5 @@
 import { FC, memo, useState } from 'react';
-import { Button, Input } from '@chakra-ui/react';
+import { Button, Flex, Input } from '@chakra-ui/react';
 import { useTestsStore } from 'store/tests';
 
 export const CreateTestForm: FC = memo(() => {
@@ -15,9 +15,9 @@ export const CreateTestForm: FC = memo(() => {
 	};
 
 	return (
-		<>
+		<Flex gap='10px'>
 			<Input placeholder='Test title' value={title} onChange={onTitleChange} />
 			<Button onClick={onAddTest}>Add</Button>
-		</>
+		</Flex>
 	);
 });

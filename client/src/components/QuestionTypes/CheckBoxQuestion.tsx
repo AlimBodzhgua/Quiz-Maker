@@ -17,7 +17,12 @@ export const CheckBoxQuestion: FC<CheckBoxQuestion> = memo(({answers}) => {
 			<CheckboxGroup onChange={onChange}>
 				<Flex direction='column'>
 					{answers.map((answer) => (
-						<Checkbox value={answer.value}>{answer.value}</Checkbox>
+						<Checkbox
+							key={answer._id}
+							value={answer.value}
+						>
+							{answer.value}
+						</Checkbox>
 					))}
 				</Flex>
 			</CheckboxGroup>

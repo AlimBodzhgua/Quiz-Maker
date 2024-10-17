@@ -1,10 +1,26 @@
-import { Box } from '@chakra-ui/react';
 import { FC, memo } from 'react';
+import { IAnswer } from '@/types/types';
+import { Box, Checkbox, CheckboxGroup, Flex } from '@chakra-ui/react';
 
-export const CheckBoxQuestion: FC = memo(() => {
+interface CheckBoxQuestion {
+	answers: IAnswer[];
+}
+// MultipleAnswer
+export const CheckBoxQuestion: FC<CheckBoxQuestion> = memo(({answers}) => {
+
+	const onChange = (e: Array<string | number>) => {
+		console.log(e)
+	}
+
 	return (
-		<Box>
-			CheckBoxQuestion
+		<Box pl='16px'>
+			<CheckboxGroup onChange={onChange}>
+				<Flex direction='column'>
+					{answers.map((answer) => (
+						<Checkbox value={answer.value}>{answer.value}</Checkbox>
+					))}
+				</Flex>
+			</CheckboxGroup>
 		</Box>
 	)
 })

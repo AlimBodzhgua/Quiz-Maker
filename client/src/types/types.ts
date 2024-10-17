@@ -11,10 +11,10 @@ export interface ITest {
 	createdAt: string;
 }
 
-export type QuestionType = 'multipleAnswer' | 'oneAnswer' | 'inputAnswer' // checkbox/radioButton/input
+export type QuestionType = 'multipleAnswer' | 'oneAnswer' | 'inputAnswer' | 'trueOrFalse' // checkbox/radioButton/input
 
 export interface IQuestion {
-	_id: String;
+	_id: string;
 	description: string;
 	testId: String;
 	type: QuestionType; 
@@ -22,7 +22,7 @@ export interface IQuestion {
 }
 
 export interface IAnswer {
-	_id: String;
+	_id: string;
 	value: string;
 	isCorrect: boolean;
 	questionId: String;

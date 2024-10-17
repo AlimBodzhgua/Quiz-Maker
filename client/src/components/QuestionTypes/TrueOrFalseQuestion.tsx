@@ -2,20 +2,20 @@ import { IAnswer } from '@/types/types';
 import { Box, Flex, Radio, RadioGroup } from '@chakra-ui/react';
 import { FC, memo } from 'react';
 
-interface RadioButtonQuestionProps {
+
+interface TrueOrFalseQuestionProps {
 	answers: IAnswer[];
 }
 
-// OneAnswer
-export const RadioButtonQuestion: FC<RadioButtonQuestionProps> = memo(({answers}) => {
+export const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = memo(({answers}) => {
 
 	const onChange = (value: string) => {
 		console.log(value);
 	}
 
 	return (
-		<Box pl='16px'>
-			<RadioGroup onChange={onChange} name='oneAnswer'>
+		<Box>
+			<RadioGroup onChange={onChange} name='trueOrFalse'>
 				<Flex direction='column'>
 					{answers.map((answer) => (
 						<Radio
@@ -29,4 +29,4 @@ export const RadioButtonQuestion: FC<RadioButtonQuestionProps> = memo(({answers}
 			</RadioGroup>
 		</Box>
 	)
-})
+});

@@ -7,10 +7,12 @@ export const questionTypes: Record<QuestionType, QuestionType> = {
 	multipleAnswer: 'multipleAnswer',
 	oneAnswer: 'oneAnswer',
 	inputAnswer: 'inputAnswer',
+	trueOrFalse: 'trueOrFalse',
 } as const;
 
-export const mapStateToQuestionType: Record<QuestionType, JSX.Element> = {
-	multipleAnswer: <CheckBoxQuestion />,
-	oneAnswer: <RadioButtonQuestion />,
-	inputAnswer: <InputQuestion />,
-} as const;
+// export const mapStateToQuestionType: Record<QuestionType, JSX.Element> = {
+// 	multipleAnswer: <CheckBoxQuestion />,
+// 	oneAnswer: <RadioButtonQuestion />,
+// 	inputAnswer: <InputQuestion />,
+// } as const;
+

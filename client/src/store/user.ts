@@ -29,7 +29,7 @@ export const useUserStore = create<UserAction & UserState>()(
 		},
 
 		initUser: async () => {
-			set({ isLoading: true });
+			set({ isLoading: true }, false, 'initUserLoading');
 
 			try {
 				const response = await $axios.get<IUser>('/users/auth/me');
@@ -51,7 +51,7 @@ export const useUserStore = create<UserAction & UserState>()(
 		},
 
 		login: async (email, password) => {
-			set({ isLoading: true }, false, 'loading');
+			set({ isLoading: true }, false, 'loginLoading');
 
 			try {
 				const response = await $axios.post<IUser>('/users/login', { email, password });
@@ -67,14 +67,14 @@ export const useUserStore = create<UserAction & UserState>()(
 				set({ user, error: undefined }, false, 'login');
 				window.location.replace('/');
 			} catch (err) {
-				set({ error: JSON.stringify(err) });
+				set({ error: JSON.stringify(err) }, false, 'loginError');
 			} finally {
 				set({ isLoading: false });
 			}
 		},
 
 		register: async (email, password) => {
-			set({ isLoading: true }, false, 'loading');
+			set({ isLoading: true }, false, 'registerLoading');
 
 			try {
 				const response = await $axios.post<IUser>('/users/registration', {
@@ -93,7 +93,7 @@ export const useUserStore = create<UserAction & UserState>()(
 				set({ user: user, error: undefined }, false, 'register');
 				window.location.replace('/');
 			} catch (err) {
-				set({ error: JSON.stringify(err) });
+				set({ error: JSON.stringify(err) }, false, 'registerError');
 			} finally {
 				set({ isLoading: false });
 			}

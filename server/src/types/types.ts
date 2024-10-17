@@ -7,7 +7,7 @@ export interface DocResult<T> {
 
 export type DecodePayloadType = JwtPayload & { _id: string };
 
-type QuestionType = 'multipleAnswer' | 'oneAnswer' | 'inputAnswer' // checkbox/radioButton/input
+type QuestionType = 'multipleAnswer' | 'oneAnswer' | 'inputAnswer' | 'trueOrFalse' // checkbox/radioButton/input
 
 export interface IUser extends DocResult<IUser> {
 	_id: Types.ObjectId;

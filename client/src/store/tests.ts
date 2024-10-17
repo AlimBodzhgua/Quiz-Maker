@@ -22,35 +22,35 @@ export const useTestsStore = create<TestState & TestAction>()(
 		error: undefined,
 
 		getTests: async () => {
-			set({ isLoading: true });
+			set({ isLoading: true }, false, 'getTestsLoading');
 			try {
 				const response = await $axios.get('tests');
 				set({ tests: response.data }, false, 'getTests');
 			} catch (err) {
-				set({ error: JSON.stringify(err) });
+				set({ error: JSON.stringify(err) }, false, 'getTestsError');
 			} finally {
 				set({ isLoading: false });
 			}
 		},
 
 		createTest: async (title: string) => {
-			set({ isLoading: true });
+			set({ isLoading: true }, false, 'createTestLoading');
 			try {
 				const response = await $axios.post('tests', { title });
-				set((state) => ({ tests: [...state.tests, response.data] }));
+				set((state) => ({ tests: [...state.tests, response.data] }), false, 'createTest');
 			} catch (err) {
-				set({ error: JSON.stringify(err) });
+				set({ error: JSON.stringify(err) }, false, 'createTestError');
 			} finally {
 				set({ isLoading: true });
 			}
 		},
 
 		removeTest: (testId: string) => {
-			set({ isLoading: true });
+			set({ isLoading: true }, false, 'removeTestLoading');
 			try {
 				$axios.delete(`/tests/${testId}`);
 			} catch (err) {
-				set({ error: JSON.stringify(err) });
+				set({ error: JSON.stringify(err) }, false, 'removeTestError');
 			} finally {
 				set({ isLoading: true });
 			}

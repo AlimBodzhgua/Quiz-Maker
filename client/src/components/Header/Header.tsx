@@ -43,7 +43,13 @@ export const Header: FC = memo(() => {
 					</PopoverTrigger>
 					<PopoverContent w='175px' mt='5px'>
 						<PopoverBody display='flex' flexDirection='column' gap='4px'>
-							<Button size='sm'>My tests</Button>
+							<Button
+								as={RouterLink}
+								to={AppRoutes.MAIN}
+								size='sm'
+							>
+								My tests
+							</Button>
 							<Button size='sm'>Completed</Button>
 							<Button size='sm'>Profile</Button>
 							<Button size='sm' onClick={handleLogout}>

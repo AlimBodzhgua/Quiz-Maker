@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { IUser } from '@/types/types';
+import { AUTH_LOCALSTORAGE_KEY } from '@/constants/localStorage';
 import $axios from '@/api/axios';
 
 interface UserState {
@@ -25,7 +26,7 @@ export const useUserStore = create<UserAction & UserState>()(
 
 		logout: () => {
 			set({ user: null, error: undefined, isLoading: false }, false, 'logout'),
-			localStorage.removeItem('authToken');
+			localStorage.removeItem(AUTH_LOCALSTORAGE_KEY);
 		},
 
 		initUser: async () => {
@@ -40,7 +41,7 @@ export const useUserStore = create<UserAction & UserState>()(
 					token: response.data.token,
 				};
 
-				localStorage.setItem('authToken', user.token);
+				localStorage.setItem(AUTH_LOCALSTORAGE_KEY, user.token);
 
 				set({ isLoading: false, user: user, error: undefined }, false, 'initUser');
 			} catch (err) {
@@ -62,7 +63,7 @@ export const useUserStore = create<UserAction & UserState>()(
 					token: response.data.token,
 				};
 
-				localStorage.setItem('authToken', user.token);
+				localStorage.setItem(AUTH_LOCALSTORAGE_KEY, user.token);
 
 				set({ user, error: undefined }, false, 'login');
 				window.location.replace('/');
@@ -88,7 +89,7 @@ export const useUserStore = create<UserAction & UserState>()(
 					token: response.data.token,
 				};
 
-				localStorage.setItem('authToken', user.token);
+				localStorage.setItem(AUTH_LOCALSTORAGE_KEY, user.token);
 
 				set({ user: user, error: undefined }, false, 'register');
 				window.location.replace('/');

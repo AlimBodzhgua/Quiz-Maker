@@ -27,3 +27,5 @@ export interface IAnswer {
 	isCorrect: boolean;
 	questionId: String;
 }
+
+export type IAnswerForm = Omit<IAnswer, 'questionId'>;

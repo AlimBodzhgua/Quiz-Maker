@@ -21,8 +21,9 @@ export default tseslint.config(
 		rules: {
 			...reactHooks.configs.recommended.rules,
 			...eslintConfigPrettier.rules,
-			'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
 			quotes: ['error', 'single'],
+			'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+			//'react/jsx-max-props-per-line': ['error', { maximum: 3 }],
 		},
 	},
 );

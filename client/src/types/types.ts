@@ -16,7 +16,7 @@ export type QuestionType = 'multipleAnswer' | 'oneAnswer' | 'inputAnswer' | 'tru
 export interface IQuestion {
 	_id: string;
 	description: string;
-	testId: String;
+	testId: string;
 	type: QuestionType; 
 	order: number; // question number
 }
@@ -25,7 +25,7 @@ export interface IAnswer {
 	_id: string;
 	value: string;
 	isCorrect: boolean;
-	questionId: String;
+	questionId: string;
 }
 
 export type IAnswerForm = Omit<IAnswer, 'questionId'>;

@@ -7,7 +7,12 @@ import { AppRoutes } from '@/router/router';
 const MainPage: FC = () => {
 	return (
 		<Box w='80%' p='15px 0'>
-			<Flex justify='space-between' align='center' p='2px 14px' mb='14px'>
+			<Flex
+				justify='space-between'
+				align='center'
+				p='2px 14px'
+				mb='14px'
+			>
 				<Heading>My tests</Heading>
 				<Button as={Link} to={AppRoutes.CREATE_TEST}>
 					Create

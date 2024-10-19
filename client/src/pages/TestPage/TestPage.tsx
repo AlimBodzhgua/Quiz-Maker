@@ -15,7 +15,7 @@ const TestPage: FC = () => {
 		if (id) {
 			getCurrentTest(id);
 		}
-	}, [])
+	}, [getCurrentTest, id])
 
 	return (
 		<Page>

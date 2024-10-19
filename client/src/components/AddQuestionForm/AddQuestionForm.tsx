@@ -23,13 +23,13 @@ export const AddQuestionForm: FC = memo(() => {
 			setAnswersList([trueAnswer, falseAnswer]);
 			setAnswersAmount(2);
 		}
-	}, [answersAmount, questionType])
+	}, [answersAmount, questionType, answersList])
 
 	
 	const onChangeIsCorrect = useCallback((answerId: string) => {
 		const answers = fixCorrectFieldForTypes(answersList, answerId, questionType);
 		setAnswersList(answers);
-	}, [answersList])
+	}, [answersList, questionType])
 	
 	const onChangeValue = useCallback((answerId: string, value: string) => {
 		const newAnswers = answersList.map((answer) =>
@@ -58,9 +58,19 @@ export const AddQuestionForm: FC = memo(() => {
 	}, [answersList])
 	
 	return (
-		<Flex flexDirection='column' borderRadius='base' bg='blue.100' p='10px 8px'>
+		<Flex
+			flexDirection='column'
+			borderRadius='base'
+			bg='blue.100'
+			p='10px 8px'
+		>
 			<Flex gap='10px'>
-				<Input placeholder='Question title' bg='whiteAlpha.900' w='75%' mb='8px' />
+				<Input
+					placeholder='Question title'
+					bg='whiteAlpha.900'
+					w='75%'
+					mb='8px'
+				/>
 				<QuestionTypeSelector value={questionType} onChange={onChangeType} />
 			</Flex>
 			{answersList.map((answer) => (

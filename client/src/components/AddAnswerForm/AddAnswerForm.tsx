@@ -23,22 +23,22 @@ export const AddAnswerForm: FC<AddAnswerFormProps> = memo((props) => {
 	const [isHover, hoverProps] = useHover();
 	const [value, setValue] = useState<string>(answer.value);
 	const debouncedValue = useDebounce(value);
-
-	const handleIsCorrect = () => {
-		onChangeIsCorrect(answer._id)
-	}
+	
+	useEffect(() => {
+		onChangeValue(answer._id, debouncedValue);
+	}, [debouncedValue, answer._id, onChangeValue])
 
 	const handleOnChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
 	}
 
+	const handleIsCorrect = () => {
+		onChangeIsCorrect(answer._id);
+	}
+
 	const handleDeleteAnswer = () => {
 		onDeleteAnswer(answer._id);
 	}
-
-	useEffect(() => {
-		onChangeValue(answer._id, debouncedValue);
-	}, [debouncedValue])
 
 	return (
 		<Flex

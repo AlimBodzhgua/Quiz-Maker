@@ -1,6 +1,6 @@
 import { IAnswer } from '@/types/types';
 import { List } from '@chakra-ui/react';
-import { FC, memo, useEffect } from 'react';
+import { FC, memo } from 'react';
 import { AnswersItem } from './AnswersItem';
 import { useCurrentTest } from '@/store/currentTest';
 
@@ -9,12 +9,7 @@ interface AnswerListProps {
 }
 
 export const AnswersList: FC<AnswerListProps> = memo(({answers}) => {
-	//const answers = useCurrentTest((state) => state.answers);
 	const isLoading = useCurrentTest((state) => state.isLoading);
-
-	useEffect(() => {
-		console.log(answers);
-	}, [])
 
 	if (isLoading) {
 		return <h1>Loading...</h1>

@@ -1,8 +1,8 @@
 import { FC, memo } from 'react';
 import { Button, Flex, Td, Tr } from '@chakra-ui/react';
 import { DeleteIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import { useTestsStore } from 'store/tests';
 import { getTestPage } from '@/router/router';
+import { useTestsStore } from 'store/tests';
 import { ITest } from 'types/types';
 import { Link } from 'react-router-dom';
 
@@ -32,7 +32,13 @@ export const TestItem: FC<TestItemProps> = memo(({ testItem }) => {
 			<Td isNumeric>5</Td>
 			<Td>
 				<Flex align='center' gap='10px'>
-					<Button variant='unstyled' _hover={{ color: 'blue.300' }}>
+					<Button
+						as={Link}
+						to={getTestPage(testItem._id)}
+						variant='unstyled'
+						alignContent='center'
+						_hover={{ color: 'blue.300' }}
+					>
 						<InfoOutlineIcon />
 					</Button>
 					<Button

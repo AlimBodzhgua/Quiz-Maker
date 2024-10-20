@@ -1,5 +1,6 @@
-import { IQuestion } from './../types/types';
 import mongoose from 'mongoose';
+import AnswerModel from './Answer';
+import { IQuestion } from './../types/types';
 
 const QuestionSchema = new mongoose.Schema<IQuestion>({
 	// _id;
@@ -20,6 +21,18 @@ const QuestionSchema = new mongoose.Schema<IQuestion>({
 		type: Number,
 		require: true,
 	},
+})
+
+QuestionSchema.pre('findOneAndDelete', async function(next) {
+	const question = this;
+	const answersToDelete = await AnswerModel.find({ questionId: question.getQuery()['_id'] });
+
+	if (answersToDelete.length) {
+		await AnswerModel.deleteMany({
+			questionId: { $in: answersToDelete.map((answer) => answer.questionId) }
+		});
+	}
+	next();
 })
 
 const QuestionModel = mongoose.model('Question', QuestionSchema);

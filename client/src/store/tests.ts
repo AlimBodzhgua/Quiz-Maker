@@ -1,5 +1,6 @@
 import $axios from '@/api/axios';
-import { ITest } from 'types/types';
+import { addQueryParam } from '@/utils/utils';
+import { IAnswer, IAnswerForm, IQuestion, ITest } from 'types/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
@@ -13,6 +14,8 @@ interface TestAction {
 	getTests: () => Promise<void>;
 	createTest: (title: string) => Promise<void>;
 	removeTest: (testId: string) => void;
+	addQuestion: (testId: string, question: Omit<IQuestion, '_id'>) => Promise<void>;
+	addAnswers: (testId: string, questionId: string, answers: IAnswerForm[]) => Promise<void>;
 }
 
 export const useTestsStore = create<TestState & TestAction>()(
@@ -36,8 +39,11 @@ export const useTestsStore = create<TestState & TestAction>()(
 		createTest: async (title: string) => {
 			set({ isLoading: true }, false, 'createTestLoading');
 			try {
-				const response = await $axios.post('tests', { title });
+				const response = await $axios.post<ITest>('tests', { title });
+				
 				set((state) => ({ tests: [...state.tests, response.data] }), false, 'createTest');
+
+				addQueryParam('id', response.data._id);
 			} catch (err) {
 				set({ error: JSON.stringify(err) }, false, 'createTestError');
 			} finally {
@@ -55,5 +61,35 @@ export const useTestsStore = create<TestState & TestAction>()(
 				set({ isLoading: true });
 			}
 		},
+
+		addQuestion: async (testId, question) => {
+			set({ isLoading : true });
+			try {
+				const response = await $axios.post<IQuestion>(`/tests/${testId}/questions`, question);
+				addQueryParam('qid', response.data._id);
+
+				console.log(response);
+			} catch (err) {
+				set({ error: JSON.stringify(err) })
+			} finally {
+				set({ isLoading: false });
+			}
+		},
+
+		addAnswers: async (testId, questionId, answers) => {
+			try {
+				console.log(answers);
+				const promises = answers.map((answer) => {
+					return $axios.post(`/tests/${testId}/questions/${questionId}/answers`, answer);
+				});
+
+				const response = await Promise.all(promises);
+				console.log(response);
+			} catch (err) {
+				set({ error: JSON.stringify(err) });
+			} finally {
+				set({ isLoading: false });
+			}
+		}
 	})),
 );

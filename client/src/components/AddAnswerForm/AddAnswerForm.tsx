@@ -26,7 +26,7 @@ export const AddAnswerForm: FC<AddAnswerFormProps> = memo((props) => {
 	
 	useEffect(() => {
 		onChangeValue(answer._id, debouncedValue);
-	}, [debouncedValue, answer._id, onChangeValue])
+	}, [debouncedValue])
 
 	const handleOnChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);

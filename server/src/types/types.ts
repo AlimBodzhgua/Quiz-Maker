@@ -34,6 +34,7 @@ export interface IAnswer {
 	_id: Types.ObjectId;
 	value: string;
 	isCorrect: boolean;
+	order: number;
 	questionId: Types.ObjectId;
 }
 

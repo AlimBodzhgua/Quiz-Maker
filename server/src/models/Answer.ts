@@ -11,6 +11,10 @@ export const AnswerSchema = new mongoose.Schema<IAnswer>({
 		type: Boolean,
 		require: true,
 	},
+	order: {
+		type: Number,
+		require: true,
+	},
 	questionId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Question',

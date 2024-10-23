@@ -24,6 +24,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 		const doc = new AnswerModel({
 			isCorrect: req.body.isCorrect,
 			value: req.body.value,
+			order: req.body.order,
 			questionId: req.params.questionId,
 		});
 

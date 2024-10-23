@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body } from 'express-validator';
 
 export const registerValidation = [
 	body('email').notEmpty().isEmail(),
@@ -27,4 +27,5 @@ export const questionValidation = [
 export const answerValidation = [
 	body('value').notEmpty().isString(),
 	body('isCorrect').notEmpty().isBoolean(),
+	body('order').notEmpty().isNumeric(),
 ];

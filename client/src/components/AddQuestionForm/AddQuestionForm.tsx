@@ -2,81 +2,116 @@ import { FC, memo, useState, useCallback, useEffect } from 'react';
 import { Button, Flex, Input, Tooltip } from '@chakra-ui/react';
 import { questionTypes } from '@/constants/questions';
 import { baseAnswer, falseAnswer, inputAnswer, trueAnswer } from '@/constants/answers';
-import { fixCorrectFieldForTypes, getQueryParam, initAnswers } from '@/utils/utils';
+import { changeAnswersOrder, fixCorrectFieldForTypes, getQueryParam, initAnswers } from '@/utils/utils';
 import { IAnswerForm, QuestionType } from '@/types/types';
+import { useTestsStore } from '@/store/tests';
+import { DndContext, DragEndEvent, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { SortableContext } from '@dnd-kit/sortable';
 import { AddAnswerForm } from '../AddAnswerForm/AddAnswerForm';
 import { QuestionTypeSelector } from '../QuestionTypeSelector/QuestionTypeSelector';
-import { useTestsStore } from '@/store/tests';
+
 
 export const AddQuestionForm: FC = memo(() => {
 	const [questionType, setQuestionType] = useState<QuestionType>(questionTypes.multipleAnswer);
 	const [title, setTitle] = useState<string>('');
 	const [answersAmount, setAnswersAmount] = useState<number>(3);
-	const [answersList, setAnswersList] = useState<IAnswerForm[]>(initAnswers(answersAmount));
+	const [answersList, setAnswersList] = useState<IAnswerForm[] | null>(null);
 	const addQuestion = useTestsStore((state) => state.addQuestion);
 	const addAnswers = useTestsStore((state) => state.addAnswers);
 	const showAddBtn = questionType === questionTypes.multipleAnswer || questionType === questionTypes.oneAnswer;
+	const showSaveBtn = answersList && title.length;
+
+	const sensors = useSensors(
+		useSensor(PointerSensor, {
+			activationConstraint: {
+				distance: 8,
+			},
+		}),
+	);
 
 	useEffect(() => {
-		if (answersAmount > answersList.length) {
-			setAnswersList([...answersList, {...baseAnswer, _id: crypto.randomUUID()}]);
-		} else if (questionType === questionTypes.inputAnswer) {
-			setAnswersList([inputAnswer])
+		if (!answersList) {
+			setAnswersList(initAnswers(answersAmount));
+		}
+	}, []);
+
+	useEffect(() => {
+		if (questionType === questionTypes.inputAnswer) {
+			setAnswersList([inputAnswer]);
 			setAnswersAmount(1);
 		} else if (questionType === questionTypes.trueOrFalse) {
 			setAnswersList([trueAnswer, falseAnswer]);
 			setAnswersAmount(2);
 		}
-	}, [answersAmount, questionType, answersList])
+	}, [questionType]);
 
-	
 	const onChangeIsCorrect = useCallback((answerId: string) => {
-		const answers = fixCorrectFieldForTypes(answersList, answerId, questionType);
+		const answers = fixCorrectFieldForTypes(answersList!, answerId, questionType);
 
 		setAnswersList(answers);
-	}, [answersList, questionType])
+	}, [answersList, questionType]);
 	
 	const onChangeValue = useCallback((answerId: string, value: string) => {
-		const newAnswers = answersList.map((answer) =>
-			answer._id === answerId ? { ...answer, value } : answer,
-		);
-
-		setAnswersList(newAnswers);
-	}, [answersList])
+		if (answersList) {
+			const newAnswers = answersList.map((answer) =>
+				answer._id === answerId ? { ...answer, value } : answer,
+			);
+	
+			setAnswersList(newAnswers);
+		}
+	}, []);
 
 	const onChangeType = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-		setQuestionType(e.target.value as QuestionType);
-		const updatedAnswers = answersList.map((answer) => ({ ...answer, isCorrect: false }));
-
-		setAnswersList(updatedAnswers);
-	}, [answersList])
+		if (answersList) {
+			setQuestionType(e.target.value as QuestionType);
+			const updatedAnswers = answersList.map((answer) => ({ ...answer, isCorrect: false }));
+	
+			setAnswersList(updatedAnswers);
+		}
+	}, [answersList]);
 
 	const onAddAnswer = () => {
-		setAnswersAmount(prev => prev + 1);
-	}
+		setAnswersAmount((prev) => prev + 1);
+		const newAnswers = [
+			...answersList!,
+			{ ...baseAnswer, _id: crypto.randomUUID(), order: answersList!.length },
+		];
+		setAnswersList(newAnswers);
+	};
 
 	const onDeleteAnswer = useCallback((answerId: string) => {
 		setAnswersAmount(prev => prev - 1);
-		const filteredAnswers = answersList.filter((answer) => answer._id !== answerId);
+		const filteredAnswers = answersList!.filter((answer) => answer._id !== answerId);
 		setAnswersList(filteredAnswers);
-	}, [answersList])
+	}, [answersList]);
 
 	const onChnageTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTitle(e.target.value);
-	}
+	};
 	
 	const onSave = async () => {
-		const testId = getQueryParam('id');
-		const question = {
-			description: title,
-			type: questionType,
-			order: 1,
-			testId,
+		if (answersList) {
+			const testId = getQueryParam('id');
+			const question = {
+				description: title,
+				type: questionType,
+				order: 1,
+				testId,
+			}
+			await addQuestion(testId, question);
+			const questionId = getQueryParam('qid');
+			await addAnswers(testId, questionId, answersList);
 		}
-		await addQuestion(testId, question);
-		const questionId = getQueryParam('qid');
-		await addAnswers(testId, questionId, answersList);
-	}
+	};
+
+	const onAnswersDragEnd = (e: DragEndEvent) => {
+		const { active, over } = e;
+		if (active.id !== over?.id) {
+			const updatedAnswers = changeAnswersOrder(answersList!, over!.id, active.id);
+			setAnswersList(updatedAnswers);
+		}
+	};
+	
 
 	return (
 		<Flex
@@ -96,15 +131,21 @@ export const AddQuestionForm: FC = memo(() => {
 				/>
 				<QuestionTypeSelector value={questionType} onChange={onChangeType} />
 			</Flex>
-			{answersList.map((answer) => (
-				<AddAnswerForm
-					key={answer._id}
-					answer={answer}
-					onChangeValue={onChangeValue}
-					onChangeIsCorrect={onChangeIsCorrect}
-					onDeleteAnswer={onDeleteAnswer}
-				/>
-			))}
+			{answersList && 
+				<DndContext onDragEnd={onAnswersDragEnd} sensors={sensors}>
+					<SortableContext items={answersList.map((answer) => answer._id)}>
+						{answersList!.length && answersList!.map((answer) => (
+							<AddAnswerForm
+								key={answer._id}
+								answer={answer}
+								onChangeValue={onChangeValue}
+								onChangeIsCorrect={onChangeIsCorrect}
+								onDeleteAnswer={onDeleteAnswer}
+							/>
+						))}
+					</SortableContext>
+				</DndContext>
+			}
 			{showAddBtn && (
 				<Tooltip label={answersAmount >= 5 && 'max answers amount is 5'}>
 					<Button
@@ -112,13 +153,12 @@ export const AddQuestionForm: FC = memo(() => {
 						size='sm'
 						alignSelf='flex-end'
 						disabled={answersAmount >= 5 ? true : false}
-						mb='5px'
 					>
 						+ Add Answer
 					</Button>
 				</Tooltip>
 			)}
-			<Button onClick={onSave}>Save question</Button>
+			{!!showSaveBtn && <Button mt='8px' onClick={onSave}>Save question</Button>}
 		</Flex>
 	);
 })

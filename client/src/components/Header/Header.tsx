@@ -37,7 +37,7 @@ export const Header: FC = memo(() => {
 			as='header'
 		>
 			{user ? (
-				<Popover>
+				<Popover closeOnBlur={false} closeDelay={20}>
 					<PopoverTrigger>
 						<Avatar icon={<ProfileIcon />} size='sm' bg='gray.50' />
 					</PopoverTrigger>

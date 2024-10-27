@@ -1,25 +1,28 @@
 
 export const baseAnswer = {
+	_id: crypto.randomUUID(),
 	value: '',
 	isCorrect: false,
-	_id: crypto.randomUUID(),
 };
 
 export const trueAnswer = {
+	_id: crypto.randomUUID(),
 	value: 'true',
 	isCorrect: false,
-	_id: crypto.randomUUID(),
+	order: 0,
 };
 
 export const falseAnswer = {
+	_id: crypto.randomUUID(),
 	value: 'false',
 	isCorrect: false,
-	_id: crypto.randomUUID(),
+	order: 1,
 };
 
 
 export const inputAnswer = {
+	_id: crypto.randomUUID(),
 	value: '',
 	isCorrect: true,
-	_id: crypto.randomUUID(),
+	order: 1,
 };

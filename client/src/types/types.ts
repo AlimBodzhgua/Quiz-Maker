@@ -24,6 +24,7 @@ export interface IQuestion {
 export interface IAnswer {
 	_id: string;
 	value: string;
+	order: number;
 	isCorrect: boolean;
 	questionId: string;
 }

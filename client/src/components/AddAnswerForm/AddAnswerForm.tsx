@@ -4,6 +4,7 @@ import { DeleteIcon, DragHandleIcon } from '@chakra-ui/icons';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useHover } from '@/hooks/useHover';
 import { IAnswerForm } from '@/types/types';
+import { SortableItem } from '@/lib/components/sortableItem';
 
 interface AddAnswerFormProps {
 	onChangeIsCorrect: (answerId: string) => void;
@@ -41,52 +42,54 @@ export const AddAnswerForm: FC<AddAnswerFormProps> = memo((props) => {
 	}
 
 	return (
-		<Flex
-			direction='column'
-			bg='whiteAlpha.900'
-			borderRadius='base'
-			gap='6px'
-			p='5px 8px'
-			m='5px 0 5px 40px'
-			{...hoverProps}
-		>
-			<InputGroup>
-				<Input
-					placeholder='Answer'
-					value={value}
-					onChange={handleOnChangeValue}
-				/>
-				{isHover && (
-					<InputRightElement w='none'>
-						<Flex>
-							<Button
-								onClick={handleDeleteAnswer}
-								variant='unstyled'
-								_hover={{ color: 'red.500' }}
-								size='sm'
-							>
-								<DeleteIcon />
-							</Button>
-							<Button
-								variant='unstyled'
-								_hover={{ color: 'blue.500' }}
-								size='sm'
-							>
-								<DragHandleIcon />
-							</Button>
-						</Flex>
-					</InputRightElement>
-				)}
-			</InputGroup>
-			<Checkbox
-				isChecked={answer.isCorrect}
-				onChange={handleIsCorrect}
-				_hover={{ color: 'blue.200' }}
-				size='sm'
-				alignSelf='flex-end'
+		<SortableItem id={answer._id}>
+			<Flex
+				direction='column'
+				bg='whiteAlpha.900'
+				borderRadius='base'
+				gap='6px'
+				p='5px 8px'
+				m='5px 0 5px 40px'
+				{...hoverProps}
 			>
-				correct answer
-			</Checkbox>
-		</Flex>
+				<InputGroup>
+					<Input
+						placeholder='Answer'
+						value={value}
+						onChange={handleOnChangeValue}
+					/>
+					{isHover && (
+						<InputRightElement w='none'>
+							<Flex>
+								<Button
+									onClick={handleDeleteAnswer}
+									variant='unstyled'
+									_hover={{ color: 'red.500' }}
+									size='sm'
+								>
+									<DeleteIcon />
+								</Button>
+								<Button
+									variant='unstyled'
+									_hover={{ color: 'blue.500', cursor: 'grab' }}
+									size='sm'
+								>
+									<DragHandleIcon />
+								</Button>
+							</Flex>
+						</InputRightElement>
+					)}
+				</InputGroup>
+				<Checkbox
+					isChecked={answer.isCorrect}
+					onChange={handleIsCorrect}
+					_hover={{ color: 'blue.200' }}
+					size='sm'
+					alignSelf='flex-end'
+				>
+					correct answer
+				</Checkbox>
+			</Flex>
+		</SortableItem>
 	);
 });

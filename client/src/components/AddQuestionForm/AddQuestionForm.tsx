@@ -5,10 +5,10 @@ import { baseAnswer, falseAnswer, inputAnswer, trueAnswer } from '@/constants/an
 import { changeAnswersOrder, fixCorrectFieldForTypes, getQueryParam, initAnswers } from '@/utils/utils';
 import { IAnswerForm, QuestionType } from '@/types/types';
 import { useTestsStore } from '@/store/tests';
-import { DndContext, DragEndEvent, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { SortableContext } from '@dnd-kit/sortable';
+import { DragEndEvent } from '@dnd-kit/core';
 import { AddAnswerForm } from '../AddAnswerForm/AddAnswerForm';
 import { QuestionTypeSelector } from '../QuestionTypeSelector/QuestionTypeSelector';
+import { SortableList } from '@/lib/components/SortableList';
 
 
 export const AddQuestionForm: FC = memo(() => {
@@ -20,14 +20,6 @@ export const AddQuestionForm: FC = memo(() => {
 	const addAnswers = useTestsStore((state) => state.addAnswers);
 	const showAddBtn = questionType === questionTypes.multipleAnswer || questionType === questionTypes.oneAnswer;
 	const showSaveBtn = answersList && title.length;
-
-	const sensors = useSensors(
-		useSensor(PointerSensor, {
-			activationConstraint: {
-				distance: 8,
-			},
-		}),
-	);
 
 	useEffect(() => {
 		if (!answersList) {
@@ -97,9 +89,10 @@ export const AddQuestionForm: FC = memo(() => {
 				order: 1,
 				testId,
 			}
-			await addQuestion(testId, question);
-			const questionId = getQueryParam('qid');
-			await addAnswers(testId, questionId, answersList);
+			const data = await addQuestion(testId, question);
+			if (data?._id) {
+				addAnswers(testId, data._id, answersList);
+			}
 		}
 	};
 
@@ -131,19 +124,17 @@ export const AddQuestionForm: FC = memo(() => {
 				<QuestionTypeSelector value={questionType} onChange={onChangeType} />
 			</Flex>
 			{answersList && 
-				<DndContext onDragEnd={onAnswersDragEnd} sensors={sensors}>
-					<SortableContext items={answersList.map((answer) => answer._id)}>
-						{answersList!.length && answersList!.map((answer) => (
-							<AddAnswerForm
-								key={answer._id}
-								answer={answer}
-								onChangeValue={onChangeValue}
-								onChangeIsCorrect={onChangeIsCorrect}
-								onDeleteAnswer={onDeleteAnswer}
-							/>
-						))}
-					</SortableContext>
-				</DndContext>
+				<SortableList items={answersList.map((answer) => answer._id)} onDragEnd={onAnswersDragEnd}>
+					{answersList!.length && answersList!.map((answer) => (
+						<AddAnswerForm
+							key={answer._id}
+							answer={answer}
+							onChangeValue={onChangeValue}
+							onChangeIsCorrect={onChangeIsCorrect}
+							onDeleteAnswer={onDeleteAnswer}
+						/>
+					))}
+				</SortableList>
 			}
 			{showAddBtn && (
 				<Tooltip label={answersAmount >= 5 && 'max answers amount is 5'}>

@@ -4,7 +4,7 @@ import { DeleteIcon, DragHandleIcon } from '@chakra-ui/icons';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useHover } from '@/hooks/useHover';
 import { IAnswerForm } from '@/types/types';
-import { SortableItem } from '@/lib/components/sortableItem';
+import { SortableItem } from '@/lib/components/SortableItem';
 
 interface AddAnswerFormProps {
 	onChangeIsCorrect: (answerId: string) => void;

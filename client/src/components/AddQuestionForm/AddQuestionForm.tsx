@@ -56,10 +56,9 @@ export const AddQuestionForm: FC = memo(() => {
 			const newAnswers = answersList.map((answer) =>
 				answer._id === answerId ? { ...answer, value } : answer,
 			);
-	
 			setAnswersList(newAnswers);
 		}
-	}, []);
+	}, [answersList]);
 
 	const onChangeType = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
 		if (answersList) {
@@ -100,6 +99,7 @@ export const AddQuestionForm: FC = memo(() => {
 			}
 			await addQuestion(testId, question);
 			const questionId = getQueryParam('qid');
+			console.log(answersList);
 			await addAnswers(testId, questionId, answersList);
 		}
 	};

@@ -1,6 +1,6 @@
 import $axios from '@/api/axios';
 import { addQueryParam } from '@/utils/utils';
-import { IAnswer, IAnswerForm, IQuestion, ITest } from 'types/types';
+import { IAnswerForm, IQuestion, ITest } from 'types/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
@@ -19,7 +19,7 @@ interface TestAction {
 }
 
 export const useTestsStore = create<TestState & TestAction>()(
-	devtools((set) => ({
+	devtools((set, get) => ({
 		tests: [],
 		isLoading: false,
 		error: undefined,
@@ -55,10 +55,11 @@ export const useTestsStore = create<TestState & TestAction>()(
 			set({ isLoading: true }, false, 'removeTestLoading');
 			try {
 				$axios.delete(`/tests/${testId}`);
+				set({ tests: get().tests.filter((test) => test._id !== testId) });
 			} catch (err) {
 				set({ error: JSON.stringify(err) }, false, 'removeTestError');
 			} finally {
-				set({ isLoading: true });
+				set({ isLoading: false });
 			}
 		},
 
@@ -67,8 +68,6 @@ export const useTestsStore = create<TestState & TestAction>()(
 			try {
 				const response = await $axios.post<IQuestion>(`/tests/${testId}/questions`, question);
 				addQueryParam('qid', response.data._id);
-
-				console.log(response);
 			} catch (err) {
 				set({ error: JSON.stringify(err) })
 			} finally {
@@ -78,13 +77,11 @@ export const useTestsStore = create<TestState & TestAction>()(
 
 		addAnswers: async (testId, questionId, answers) => {
 			try {
-				console.log(answers);
 				const promises = answers.map((answer) => {
 					return $axios.post(`/tests/${testId}/questions/${questionId}/answers`, answer);
 				});
 
-				const response = await Promise.all(promises);
-				console.log(response);
+				await Promise.all(promises);
 			} catch (err) {
 				set({ error: JSON.stringify(err) });
 			} finally {

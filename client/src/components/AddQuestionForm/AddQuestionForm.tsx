@@ -99,7 +99,6 @@ export const AddQuestionForm: FC = memo(() => {
 			}
 			await addQuestion(testId, question);
 			const questionId = getQueryParam('qid');
-			console.log(answersList);
 			await addAnswers(testId, questionId, answersList);
 		}
 	};

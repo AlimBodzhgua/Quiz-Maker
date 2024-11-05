@@ -18,15 +18,15 @@ const CreateTestPage: FC = () => {
 	const onAddQuestion = useCallback(() => {
 		setQuestionsList([
 			...questionsList,
-			{ order: questionsList.length, _id: crypto.randomUUID() },
+			{ _id: crypto.randomUUID(), order: questionsList.length + 1 },
 		]);
-	}, [questionsList])
+	}, [questionsList]);
 
 	const onRemoveQuestion = useCallback((questionId: string) => {
 		const filteredQuestions = questionsList.filter((question) => question._id !== questionId); 
 		console.log(filteredQuestions)
 		setQuestionsList(filteredQuestions);
-	}, [questionsList])
+	}, [questionsList]);
 
 	const onQuestionDragEnd = useCallback((e: DragEndEvent) => {
 		const { active, over } = e;
@@ -34,7 +34,7 @@ const CreateTestPage: FC = () => {
 			const updatedQuestions = changeListOrder<IQuestionForm>(questionsList, over!.id, active.id)
 			setQuestionsList(updatedQuestions);
 		}
-	}, [questionsList])
+	}, [questionsList]);
 
 	return (
 		<Page>

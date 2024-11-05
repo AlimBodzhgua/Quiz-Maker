@@ -53,7 +53,9 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 			try {
 				const response = await $axios.get<IQuestion[]>(`tests/${testId}/questions`);
 
-				set({ questions: response.data }, false, 'fetchCurrentTestQuestions');
+				const orderedQuestions = response.data.sort((a, b) => a.order > b.order ? 1 : -1);
+
+				set({ questions: orderedQuestions }, false, 'fetchCurrentTestQuestions');
 			} catch (err) {
 				set({ error: JSON.stringify(err) });
 			} finally {

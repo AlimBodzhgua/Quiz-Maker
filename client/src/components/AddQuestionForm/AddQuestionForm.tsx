@@ -70,7 +70,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 	const onAddAnswer = () => {
 		const newAnswers = [
 			...answersList!,
-			{ ...baseAnswer, _id: crypto.randomUUID(), order: answersList!.length },
+			{ ...baseAnswer, _id: crypto.randomUUID(), order: answersList!.length + 1 },
 		];
 		setAnswersList(newAnswers);
 	};

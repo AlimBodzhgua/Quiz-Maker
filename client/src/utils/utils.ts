@@ -7,13 +7,13 @@ import { arrayMove } from '@dnd-kit/sortable';
 export const initAnswers = (amount: number) => {
 	return Array(amount)
 		.fill(0)
-		.map((_, index) => ({ ...baseAnswer, _id: crypto.randomUUID(), order: index }));
+		.map((_, index) => ({ ...baseAnswer, _id: crypto.randomUUID(), order: index + 1}));
 };
 
 export const initQuestions = (amount: number) => {
 	return Array(amount)
 		.fill(0)
-		.map((_, index) => ({ _id: crypto.randomUUID(), order: index }));
+		.map((_, index) => ({ _id: crypto.randomUUID(), order: index + 1}));
 };
 
 export const fixCorrectFieldForTypes = (

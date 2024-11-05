@@ -47,7 +47,7 @@ export const useTestsStore = create<TestState & TestAction>()(
 			} catch (err) {
 				set({ error: JSON.stringify(err) }, false, 'createTestError');
 			} finally {
-				set({ isLoading: true });
+				set({ isLoading: false });
 			}
 		},
 

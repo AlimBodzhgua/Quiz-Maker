@@ -1,6 +1,6 @@
 import { baseAnswer } from '@/constants/answers';
 import { questionTypes } from '@/constants/questions';
-import { IAnswerForm, QuestionType } from '@/types/types';
+import { IAnswerForm, IQuestionForm, QuestionType } from '@/types/types';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 
@@ -8,6 +8,12 @@ export const initAnswers = (amount: number) => {
 	return Array(amount)
 		.fill(0)
 		.map((_, index) => ({ ...baseAnswer, _id: crypto.randomUUID(), order: index }));
+};
+
+export const initQuestions = (amount: number) => {
+	return Array(amount)
+		.fill(0)
+		.map((_, index) => ({ _id: crypto.randomUUID(), order: index }));
 };
 
 export const fixCorrectFieldForTypes = (
@@ -46,20 +52,17 @@ export const getQueryParam = (key: string) => {
 	return url.searchParams.get(key) || '';
 };
 
-export const changeAnswersOrder = (
-	answersList: IAnswerForm[],
+export const changeListOrder = <T extends IAnswerForm | IQuestionForm>(
+	list: T[],
 	activeId: UniqueIdentifier,
 	overId: UniqueIdentifier,
 ) => {
-	const activeIndex = answersList!.findIndex((answer) => answer._id === activeId);
-	const overIndex = answersList!.findIndex((answer) => answer._id === overId);
+	const newIndex = list.findIndex((listItem) => listItem._id === activeId);
+	const oldIndex = list.findIndex((listItem) => listItem._id === overId);
 
-	return arrayMove(answersList!, activeIndex, overIndex).map((answer) => {
-		if (answer._id === activeId) {
-			return { ...answer, order: answersList![overIndex].order };
-		} else if (answer._id === overId) {
-			return { ...answer, order: answersList![activeIndex].order };
-		}
-		return answer;
+	const updatedArray = arrayMove(list, oldIndex, newIndex).map((listItem, index) => {
+		return { ...listItem, order: index };
 	});
+
+	return updatedArray;
 };

@@ -1,14 +1,40 @@
-import { FC, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { Box, Button, Heading } from '@chakra-ui/react';
 import { CreateTestForm } from 'components/CreateTestForm/CreateTestForm';
 import { AddQuestionForm } from 'components/AddQuestionForm/AddQuestionForm';
 import { Page } from 'components/UI/Page/Page';
+import { SortableList } from '@/lib/components/SortableList';
+import { DragEndEvent } from '@dnd-kit/core';
+import { changeListOrder, initQuestions } from '@/utils/utils';
+import { IQuestionForm } from 'types/types';
 
 const CreateTestPage: FC = () => {
-	const [showForm, setShowForm] = useState<boolean>(false);
-	//const [showAddQuestion, setShowAddQuestion] = useState<boolean>(false);
+	const [questionsList, setQuestionsList] = useState<IQuestionForm[]>([]);
 
-	const toggleShowForm = () => setShowForm((prev) => !prev);
+	useEffect(() => {
+		setQuestionsList(initQuestions(0));
+	}, []);
+
+	const onAddQuestion = useCallback(() => {
+		setQuestionsList([
+			...questionsList,
+			{ order: questionsList.length, _id: crypto.randomUUID() },
+		]);
+	}, [questionsList])
+
+	const onRemoveQuestion = useCallback((questionId: string) => {
+		const filteredQuestions = questionsList.filter((question) => question._id !== questionId); 
+		console.log(filteredQuestions)
+		setQuestionsList(filteredQuestions);
+	}, [questionsList])
+
+	const onQuestionDragEnd = useCallback((e: DragEndEvent) => {
+		const { active, over } = e;
+		if (active.id !== over!.id) {
+			const updatedQuestions = changeListOrder<IQuestionForm>(questionsList, over!.id, active.id)
+			setQuestionsList(updatedQuestions);
+		}
+	}, [questionsList])
 
 	return (
 		<Page>
@@ -24,8 +50,22 @@ const CreateTestPage: FC = () => {
 				p='20px'
 			>
 				<CreateTestForm />
-				{showForm && <AddQuestionForm />}
-				<Button onClick={toggleShowForm}>+ New Question</Button>
+				{!!questionsList.length && (
+					<SortableList
+						items={questionsList.map((question) => question._id)}
+						onDragEnd={onQuestionDragEnd}
+					>
+						{questionsList.map((question) => (
+							<AddQuestionForm
+								question={question}
+								onRemoveQuestion={onRemoveQuestion}
+								key={question._id}
+							/>
+						))}
+					</SortableList>
+				)}
+
+				<Button onClick={onAddQuestion}>+ New Question</Button>
 			</Box>
 		</Page>
 	);

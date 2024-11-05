@@ -2,38 +2,44 @@ import { FC, memo, useState, useCallback, useEffect } from 'react';
 import { Button, Flex, Input, Tooltip } from '@chakra-ui/react';
 import { questionTypes } from '@/constants/questions';
 import { baseAnswer, falseAnswer, inputAnswer, trueAnswer } from '@/constants/answers';
-import { changeAnswersOrder, fixCorrectFieldForTypes, getQueryParam, initAnswers } from '@/utils/utils';
-import { IAnswerForm, QuestionType } from '@/types/types';
-import { useTestsStore } from '@/store/tests';
+import { changeListOrder, fixCorrectFieldForTypes, getQueryParam, initAnswers } from '@/utils/utils';
 import { DragEndEvent } from '@dnd-kit/core';
+import { SortableList } from '@/lib/components/SortableList';
+import { DeleteIcon, DragHandleIcon } from '@chakra-ui/icons';
+import { useHover } from '@/hooks/useHover';
+import { SortableItem } from '@/lib/components/SortableItem';
+import { IAnswerForm, IQuestionForm, QuestionType } from 'types/types';
+import { useTestsStore } from 'store/tests';
 import { AddAnswerForm } from '../AddAnswerForm/AddAnswerForm';
 import { QuestionTypeSelector } from '../QuestionTypeSelector/QuestionTypeSelector';
-import { SortableList } from '@/lib/components/SortableList';
 
+interface AddQuestionFormProps {
+	question: IQuestionForm;
+	onRemoveQuestion: (question: string) => void;
+}
 
-export const AddQuestionForm: FC = memo(() => {
+export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
+	const { question, onRemoveQuestion } = props;
 	const [questionType, setQuestionType] = useState<QuestionType>(questionTypes.multipleAnswer);
 	const [title, setTitle] = useState<string>('');
-	const [answersAmount, setAnswersAmount] = useState<number>(3);
 	const [answersList, setAnswersList] = useState<IAnswerForm[] | null>(null);
 	const addQuestion = useTestsStore((state) => state.addQuestion);
 	const addAnswers = useTestsStore((state) => state.addAnswers);
+	const [isHover, hoverProps] = useHover();
 	const showAddBtn = questionType === questionTypes.multipleAnswer || questionType === questionTypes.oneAnswer;
 	const showSaveBtn = answersList && title.length;
 
 	useEffect(() => {
 		if (!answersList) {
-			setAnswersList(initAnswers(answersAmount));
+			setAnswersList(initAnswers(3));
 		}
 	}, []);
 
 	useEffect(() => {
 		if (questionType === questionTypes.inputAnswer) {
 			setAnswersList([inputAnswer]);
-			setAnswersAmount(1);
 		} else if (questionType === questionTypes.trueOrFalse) {
 			setAnswersList([trueAnswer, falseAnswer]);
-			setAnswersAmount(2);
 		}
 	}, [questionType]);
 
@@ -62,7 +68,6 @@ export const AddQuestionForm: FC = memo(() => {
 	}, [answersList]);
 
 	const onAddAnswer = () => {
-		setAnswersAmount((prev) => prev + 1);
 		const newAnswers = [
 			...answersList!,
 			{ ...baseAnswer, _id: crypto.randomUUID(), order: answersList!.length },
@@ -71,7 +76,6 @@ export const AddQuestionForm: FC = memo(() => {
 	};
 
 	const onDeleteAnswer = useCallback((answerId: string) => {
-		setAnswersAmount(prev => prev - 1);
 		const filteredAnswers = answersList!.filter((answer) => answer._id !== answerId);
 		setAnswersList(filteredAnswers);
 	}, [answersList]);
@@ -99,56 +103,77 @@ export const AddQuestionForm: FC = memo(() => {
 	const onAnswersDragEnd = (e: DragEndEvent) => {
 		const { active, over } = e;
 		if (active.id !== over?.id) {
-			const updatedAnswers = changeAnswersOrder(answersList!, over!.id, active.id);
+			const updatedAnswers = changeListOrder<IAnswerForm>(answersList!, over!.id, active.id);
 			setAnswersList(updatedAnswers);
 		}
 	};
 	
+	const handleRemoveQuestion = () => {
+		onRemoveQuestion(question._id);
+	}
 
 	return (
-		<Flex
-			flexDirection='column'
-			borderRadius='base'
-			bg='blue.100'
-			p='10px 8px'
-		>
-			<Flex gap='10px'>
-				<Input
-					value={title}
-					onChange={onChnageTitle}
-					placeholder='Question title'
-					bg='whiteAlpha.900'
-					w='75%'
-					mb='8px'
-				/>
-				<QuestionTypeSelector value={questionType} onChange={onChangeType} />
+		<SortableItem id={question._id}>
+			<Flex
+				direction='column'
+				borderRadius='base'
+				bg='blue.100'
+				p='10px 8px'
+				position='relative'
+				{...hoverProps}
+			>
+				<Flex
+					direction='column'
+					position='absolute'
+					right='-52px'
+					top='0'
+					gap='10px'
+					bg='blue.100'
+					p='10px 8px'
+					transform={isHover ? 'scale(1)': 'scale(0)'}
+					transition={'transform .2s linear'}
+				>
+					<Button onClick={handleRemoveQuestion} size='sm'><DeleteIcon /></Button>
+					<Button size='sm' cursor='grab'><DragHandleIcon /></Button>
+				</Flex>
+				<Flex gap='10px'>
+					<Input
+						value={title}
+						onChange={onChnageTitle}
+						placeholder='Question title'
+						bg='whiteAlpha.900'
+						w='75%'
+						mb='8px'
+					/>
+					<QuestionTypeSelector value={questionType} onChange={onChangeType} />
+				</Flex>
+				{answersList && 
+					<SortableList items={answersList.map((answer) => answer._id)} onDragEnd={onAnswersDragEnd}>
+						{!!answersList.length && answersList.map((answer) => (
+							<AddAnswerForm
+								key={answer._id}
+								answer={answer}
+								onChangeValue={onChangeValue}
+								onChangeIsCorrect={onChangeIsCorrect}
+								onDeleteAnswer={onDeleteAnswer}
+							/>
+						))}
+					</SortableList>
+				}
+				{(showAddBtn && answersList) && (
+					<Tooltip label={answersList.length >= 5 && 'max answers amount is 5'}>
+						<Button
+							onClick={onAddAnswer}
+							disabled={answersList.length >= 5 ? true : false}
+							alignSelf='flex-end'
+							size='sm'
+						>
+							+ Add Answer
+						</Button>
+					</Tooltip>
+				)}
+				{!!showSaveBtn && <Button mt='8px' onClick={onSave}>Save question</Button>}
 			</Flex>
-			{answersList && 
-				<SortableList items={answersList.map((answer) => answer._id)} onDragEnd={onAnswersDragEnd}>
-					{answersList!.length && answersList!.map((answer) => (
-						<AddAnswerForm
-							key={answer._id}
-							answer={answer}
-							onChangeValue={onChangeValue}
-							onChangeIsCorrect={onChangeIsCorrect}
-							onDeleteAnswer={onDeleteAnswer}
-						/>
-					))}
-				</SortableList>
-			}
-			{showAddBtn && (
-				<Tooltip label={answersAmount >= 5 && 'max answers amount is 5'}>
-					<Button
-						onClick={onAddAnswer}
-						size='sm'
-						alignSelf='flex-end'
-						disabled={answersAmount >= 5 ? true : false}
-					>
-						+ Add Answer
-					</Button>
-				</Tooltip>
-			)}
-			{!!showSaveBtn && <Button mt='8px' onClick={onSave}>Save question</Button>}
-		</Flex>
+		</SortableItem>
 	);
 })

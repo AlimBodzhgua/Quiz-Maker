@@ -18,7 +18,7 @@ export interface IQuestion {
 	description: string;
 	testId: string;
 	type: QuestionType; 
-	order: number; // question number
+	order: number;
 }
 
 export interface IAnswer {
@@ -30,3 +30,4 @@ export interface IAnswer {
 }
 
 export type IAnswerForm = Omit<IAnswer, 'questionId'>;
+export type IQuestionForm = Pick<IQuestion, '_id' | 'order'>;

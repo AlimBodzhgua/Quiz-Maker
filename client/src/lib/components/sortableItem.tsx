@@ -18,12 +18,17 @@ export const SortableItem: FC<SortableItemProps> = memo((props) => {
 	} = useSortable({ id: id });
 
 	const style = {
-		transform: CSS.Transform.toString(transform),
+		transform: CSS.Translate.toString(transform),
 		transition,
 	};
 
 	return (
-		<div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+		<div
+			ref={setNodeRef}
+			style={style}
+			{...attributes}
+			{...listeners}
+		>
 			{children}
 		</div>
 	);

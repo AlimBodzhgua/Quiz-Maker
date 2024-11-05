@@ -14,7 +14,7 @@ interface TestAction {
 	getTests: () => Promise<void>;
 	createTest: (title: string) => Promise<void>;
 	removeTest: (testId: string) => void;
-	addQuestion: (testId: string, question: Omit<IQuestion, '_id'>) => Promise<void>;
+	addQuestion: (testId: string, question: Omit<IQuestion, '_id'>) => Promise<IQuestion | undefined>;
 	addAnswers: (testId: string, questionId: string, answers: IAnswerForm[]) => Promise<void>;
 }
 
@@ -67,7 +67,7 @@ export const useTestsStore = create<TestState & TestAction>()(
 			set({ isLoading : true });
 			try {
 				const response = await $axios.post<IQuestion>(`/tests/${testId}/questions`, question);
-				addQueryParam('qid', response.data._id);
+				return response.data;
 			} catch (err) {
 				set({ error: JSON.stringify(err) })
 			} finally {

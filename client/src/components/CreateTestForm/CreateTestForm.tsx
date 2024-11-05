@@ -1,5 +1,5 @@
 import { FC, memo, useState } from 'react';
-import { Button, Flex, Input } from '@chakra-ui/react';
+import { Button, Flex, Input, Tooltip } from '@chakra-ui/react';
 import { useTestsStore } from 'store/tests';
 import { CheckIcon } from '@chakra-ui/icons';
 
@@ -7,12 +7,13 @@ export const CreateTestForm: FC = memo(() => {
 	const [title, setTitle] = useState<string>('');
 	const [isCreated, setIsCreated] = useState<boolean>(false);
 	const createTest = useTestsStore((state) => state.createTest);
+	const isSmallLength = title.length <= 3;
 
 	const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTitle(e.target.value);
 	};
 
-	const onAddTest = async () => {
+	const onAddTest = () => {
 		createTest(title).then(() => setIsCreated(true));
 	};
 
@@ -24,9 +25,11 @@ export const CreateTestForm: FC = memo(() => {
 				onChange={onTitleChange}
 				disabled={isCreated}
 			/>
-			<Button onClick={onAddTest} disabled={isCreated}>
-				{isCreated ? <CheckIcon /> : <>Add</>}
-			</Button>
+			<Tooltip label={isSmallLength && 'Title must be at least 4 characters long'}>
+				<Button onClick={onAddTest} disabled={isCreated || isSmallLength}>
+					{isCreated ? <CheckIcon /> : <>Add</>}
+				</Button>
+			</Tooltip>
 		</Flex>
 	);
 });

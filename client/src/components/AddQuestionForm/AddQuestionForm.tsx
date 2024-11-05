@@ -87,13 +87,13 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 	const onSave = async () => {
 		if (answersList) {
 			const testId = getQueryParam('id');
-			const question = {
+			const newQuestion = {
 				description: title,
 				type: questionType,
-				order: 1,
+				order: question.order,
 				testId,
 			}
-			const data = await addQuestion(testId, question);
+			const data = await addQuestion(testId, newQuestion);
 			if (data?._id) {
 				addAnswers(testId, data._id, answersList);
 			}

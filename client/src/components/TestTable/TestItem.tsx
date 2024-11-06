@@ -1,17 +1,18 @@
-import { FC, memo } from 'react';
-import { Button, Flex, Td, Tr } from '@chakra-ui/react';
+import { FC, memo, useCallback } from 'react';
+import { Button, Flex, Td, Tr, useDisclosure } from '@chakra-ui/react';
 import { DeleteIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { getTestPage } from '@/router/router';
 import { useTestsStore } from 'store/tests';
 import { ITest } from 'types/types';
 import { Link } from 'react-router-dom';
+import { AppDialog } from '../UI/AppDialog/AppDialog';
 
 interface TestItemProps {
 	testItem: ITest;
 }
 
-
 export const TestItem: FC<TestItemProps> = memo(({ testItem }) => {
+	const { isOpen, onOpen, onClose } = useDisclosure()
 	const removeTest = useTestsStore((state) => state.removeTest);
 	const formatter = new Intl.DateTimeFormat('en-US', {
 		day: '2-digit',
@@ -19,9 +20,10 @@ export const TestItem: FC<TestItemProps> = memo(({ testItem }) => {
 		year: 'numeric',
 	});
 
-	const handleRemove = () => {
+	const handleRemove = useCallback(() => {
 		removeTest(testItem._id);
-	};
+		onClose();
+	}, [removeTest, onClose]);
 
 	return (
 		<Tr>
@@ -41,13 +43,23 @@ export const TestItem: FC<TestItemProps> = memo(({ testItem }) => {
 					>
 						<InfoOutlineIcon />
 					</Button>
-					<Button
-						variant='unstyled'
-						_hover={{ color: 'red.300' }}
-						onClick={handleRemove}
+
+					<AppDialog
+						isOpen={isOpen}
+						headerText={`Delete Test: ${testItem.title}`}
+						bodyText={`Are you sure? You can't undo this action afterwards.`}
+						actionText={'Delete'}
+						actionHandler={handleRemove}
+						onClose={onClose}
 					>
-						<DeleteIcon />
-					</Button>
+						<Button
+							variant='unstyled'
+							_hover={{ color: 'red.300' }}
+							onClick={onOpen}
+						>
+							<DeleteIcon />
+						</Button>
+					</AppDialog>
 				</Flex>
 			</Td>
 		</Tr>

@@ -1,22 +1,35 @@
 import { FC, useCallback, useState } from 'react';
-import { Box, Button, Heading } from '@chakra-ui/react';
+import { Box, Button, Heading, useToast } from '@chakra-ui/react';
 import { CreateTestForm } from 'components/CreateTestForm/CreateTestForm';
 import { AddQuestionForm } from 'components/AddQuestionForm/AddQuestionForm';
 import { Page } from 'components/UI/Page/Page';
 import { SortableList } from '@/lib/components/SortableList';
 import { DragEndEvent } from '@dnd-kit/core';
-import { changeListOrder, create24CharId } from '@/utils/utils';
+import { changeListOrder, create24CharId, getQueryParam } from '@/utils/utils';
 import { IQuestionForm } from 'types/types';
 
 
 const CreateTestPage: FC = () => {
 	const [questionsList, setQuestionsList] = useState<IQuestionForm[]>([]);
+	const toast = useToast();
 
 	const onAddQuestion = useCallback(() => {
-		setQuestionsList([
-			...questionsList,
-			{ _id: create24CharId(), order: questionsList.length + 1 },
-		]);
+		const testId = getQueryParam('id');
+		if (testId.length) {
+			setQuestionsList([
+				...questionsList,
+				{ _id: create24CharId(), order: questionsList.length + 1 },
+			]);
+		} else {
+			toast({
+				title: 'Test not created.',
+				description: 'First you need to create a test and save it.',
+				status: 'info',
+				duration: 5000,
+				isClosable: true,
+				position: 'top-left'
+			});
+		}
 	}, [questionsList]);
 
 	const onRemoveQuestion = useCallback((questionId: string) => {
@@ -61,7 +74,6 @@ const CreateTestPage: FC = () => {
 						))}
 					</SortableList>
 				)}
-
 				<Button onClick={onAddQuestion}>+ New Question</Button>
 			</Box>
 		</Page>

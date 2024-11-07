@@ -19,7 +19,6 @@ interface CurrentTestAscion {
 	getCurrentTest: (testId: string) => void;
 }
 
-
 export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 	devtools((set, get) => ({
 		test: null,
@@ -29,7 +28,6 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 		error: undefined,
 
 		fetchCurrentTest: async (testId) => {
-			set({ isLoading: true }, false, 'fetchCurrentTestLoading');
 			try {
 				const response = await $axios.get<ITest>(`tests/${testId}`);
 
@@ -43,13 +41,10 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 				set({ test: test }, false, 'fetchCurrentTest');
 			} catch (err) {
 				set({ error: JSON.stringify(err) });
-			} finally {
-				set({ isLoading: false });
 			}
 		},
 
 		fetchCurrentTestQuestions: async (testId) => {
-			set({ isLoading: true }, false, 'fetchCurrentTestQuestionsLoading');
 			try {
 				const response = await $axios.get<IQuestion[]>(`tests/${testId}/questions`);
 
@@ -58,28 +53,24 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 				set({ questions: orderedQuestions }, false, 'fetchCurrentTestQuestions');
 			} catch (err) {
 				set({ error: JSON.stringify(err) });
-			} finally {
-				set({ isLoading: false });
 			}
 		},
 
 		fetchQuestionsAnswers: async (testId, questionId) => {
-			set({ isLoading: true }, false, 'fetchQuestionsAnswersLoading');
 			try {
 				const response = await $axios.get<IAnswer[]>(`tests/${testId}/questions/${questionId}/answers`);
-
 				set({ answers: response.data }, false, 'fetchQuestionsAnswers');
 				return response.data;
 			} catch (err) {
 				set({ error: JSON.stringify(err) });
-			} finally {
-				set({ isLoading: false });
 			}
 		},
 
-		getCurrentTest: (testId) => {
-			get().fetchCurrentTest(testId);
-			get().fetchCurrentTestQuestions(testId);
+		getCurrentTest: async (testId) => {
+			set({ isLoading: true }, false, 'currentTestLoading');
+			await get().fetchCurrentTest(testId);
+			await get().fetchCurrentTestQuestions(testId);
+			set({ isLoading: false }, false, 'currentTestLoading');
 		}
 	}))
 );

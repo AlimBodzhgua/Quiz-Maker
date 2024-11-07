@@ -1,5 +1,5 @@
 import { FC, memo } from 'react';
-import { List } from '@chakra-ui/react';
+import { Card, CardBody, CardHeader, List, ListItem, Skeleton } from '@chakra-ui/react';
 import { useCurrentTest } from '@/store/currentTest';
 import { QuestionItem } from './QuestionItem';
 
@@ -8,7 +8,22 @@ export const QuestionsList: FC = memo(() => {
 	const isLoading = useCurrentTest((state) => state.isLoading);
 
 	if (isLoading) {
-		<h1>Loading ....</h1>
+		return (
+			<List>
+				{Array(4).fill(0).map((_, index) => (
+					<ListItem m='16px 0' key={index}>
+						<Card minW='md' maxW='xl'>
+							<CardHeader pb='0'>
+								<Skeleton height='24px'/>
+							</CardHeader>
+							<CardBody>
+								<Skeleton height='72px'/>
+							</CardBody>
+						</Card>
+					</ListItem>
+				))}
+			</List>
+		)
 	}
 
 	return (

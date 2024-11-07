@@ -14,13 +14,15 @@ interface QuestionItemProps {
 export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 	const currentTest = useCurrentTest((state) => state.test);
 	const fetchAnswers = useCurrentTest((state) => state.fetchQuestionsAnswers);
-	const isLoading = useCurrentTest((state) => state.isLoading);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [answers, setAnswers] = useState<IAnswer[]>([]);
 
 	useEffect(() => {
+		setIsLoading(true);
 		if (currentTest) {
 			fetchAnswers(currentTest._id, question._id)
-				.then((data) => setAnswers(data!));
+				.then((data) => setAnswers(data!))
+				.then(() => setIsLoading(false))
 		}
 	}, []);
 
@@ -37,7 +39,10 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 			<ListItem m='16px 0'>
 				<Card minW='md' maxW='xl'>
 					<CardHeader pb='0'>
-						<Skeleton height='24px'/>
+					<Flex align='center'>
+						<Text size='lg' mr='6px'>{`${question.order})`}</Text>
+						<Heading size='md' as='h4'>{question.description}</Heading>
+					</Flex>
 					</CardHeader>
 					<CardBody>
 						<Skeleton height='72px'/>
@@ -46,6 +51,7 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 			</ListItem>
 		)
 	}
+
 
 	return (
 		<ListItem m='16px 0'>

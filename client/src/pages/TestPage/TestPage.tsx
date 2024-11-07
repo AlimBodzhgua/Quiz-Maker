@@ -4,10 +4,11 @@ import { useParams } from 'react-router-dom';
 import { Page } from 'components/UI/Page/Page';
 import { useCurrentTest } from 'store/currentTest';
 import { QuestionsList } from 'components/QuestionsList/QuestionsList';
+import { useShallow } from 'zustand/shallow';
 
 const TestPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();
-	const getCurrentTest = useCurrentTest((state) => state.getCurrentTest);
+	const getCurrentTest = useCurrentTest(useShallow((state) => state.getCurrentTest));
 	const test = useCurrentTest((state) => state.test);
 	const questions = useCurrentTest((state) => state.questions);
 
@@ -15,7 +16,7 @@ const TestPage: FC = () => {
 		if (id) {
 			getCurrentTest(id);
 		}
-	}, [getCurrentTest, id])
+	}, [id]);
 
 	return (
 		<Page>

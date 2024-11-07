@@ -13,7 +13,7 @@ export const CreateTestForm: FC = memo(() => {
 		setTitle(e.target.value);
 	};
 
-	const onAddTest = () => {
+	const onSaveTest = () => {
 		createTest(title).then(() => setIsCreated(true));
 	};
 
@@ -26,8 +26,8 @@ export const CreateTestForm: FC = memo(() => {
 				disabled={isCreated}
 			/>
 			<Tooltip label={isSmallLength && 'Title must be at least 4 characters long'}>
-				<Button onClick={onAddTest} disabled={isCreated || isSmallLength}>
-					{isCreated ? <CheckIcon /> : <>Add</>}
+				<Button onClick={onSaveTest} disabled={isCreated || isSmallLength}>
+					{isCreated ? <CheckIcon /> : <>Save</>}
 				</Button>
 			</Tooltip>
 		</Flex>

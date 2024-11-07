@@ -3,6 +3,7 @@ import { validationResult } from 'express-validator';
 import { ApiError } from '../exceptions/ApiError';
 import TestModel from '../models/Test';
 import QuestionModel from '../models/Question';
+import mongoose from 'mongoose';
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -19,11 +20,13 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 		}
 
 		const doc = await QuestionModel.create({
+			_id: mongoose.Types.ObjectId.createFromHexString(req.body._id),
 			description: req.body.description,
 			testId: req.params.testId,
 			type: req.body.type,
 			order: req.body.order,
 		});
+		console.log(doc);
 
 		const question = await doc.save();
 

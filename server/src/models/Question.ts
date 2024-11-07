@@ -3,7 +3,9 @@ import AnswerModel from './Answer';
 import { IQuestion } from './../types/types';
 
 const QuestionSchema = new mongoose.Schema<IQuestion>({
-	// _id;
+	_id: {
+		type: mongoose.Schema.Types.ObjectId,
+	},
 	description: {
 		type: String,
 		require: true,
@@ -21,7 +23,7 @@ const QuestionSchema = new mongoose.Schema<IQuestion>({
 		type: Number,
 		require: true,
 	},
-})
+}, { _id: false })
 
 QuestionSchema.pre('findOneAndDelete', async function(next) {
 	const question = this;

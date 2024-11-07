@@ -19,6 +19,7 @@ export const testRemoveValidation = [
 ];
 
 export const questionValidation = [
+	body('_id').notEmpty().isString(),
 	body('description').notEmpty().isString(),
 	body('type').notEmpty().isString(),
 	body('order').notEmpty().isNumeric(),

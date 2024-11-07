@@ -9,11 +9,12 @@ import {
 	Popover,
 	PopoverContent,
 	PopoverBody,
+	Heading,
 } from '@chakra-ui/react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AppRoutes } from '@/router/router';
-import ProfileIcon from '@/assets/profile.svg';
 import { useUserStore } from 'store/user';
+import ProfileIcon from '@/assets/profile.svg';
 
 export const Header: FC = memo(() => {
 	const user = useUserStore((state) => state.user);
@@ -29,17 +30,22 @@ export const Header: FC = memo(() => {
 		<Box
 			display='flex'
 			alignItems='center'
-			justifyContent='flex-end'
+			justifyContent='space-between'
 			bg='gray.800'
 			w='100%'
-			h='65px'
+			minH='65px'
 			p='0 64px'
 			as='header'
 		>
+			<Heading size='md' color='gray.50' display='flex'>
+				<Box fontWeight='medium'>Test</Box>Constructor
+			</Heading>
 			{user ? (
-				<Popover closeOnBlur={false} closeDelay={20}>
+				<Popover closeDelay={15}>
 					<PopoverTrigger>
-						<Avatar icon={<ProfileIcon />} size='sm' bg='gray.50' />
+						<Button variant='unstyled'>
+							<Avatar icon={<ProfileIcon />} size='sm' bg='gray.50' />
+						</Button>
 					</PopoverTrigger>
 					<PopoverContent w='175px' mt='5px'>
 						<PopoverBody display='flex' flexDirection='column' gap='4px'>

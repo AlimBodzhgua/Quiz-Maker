@@ -10,11 +10,9 @@ export const initAnswers = (amount: number) => {
 		.map((_, index) => ({ ...baseAnswer, _id: crypto.randomUUID(), order: index + 1}));
 };
 
-export const initQuestions = (amount: number) => {
-	return Array(amount)
-		.fill(0)
-		.map((_, index) => ({ _id: crypto.randomUUID(), order: index + 1}));
-};
+export const create24CharId = () => {
+	return crypto.randomUUID().split('-').join('').substring(0, 24);
+}
 
 export const fixCorrectFieldForTypes = (
 	answers: IAnswerForm[],

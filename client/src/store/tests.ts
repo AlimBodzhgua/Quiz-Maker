@@ -1,6 +1,6 @@
 import $axios from '@/api/axios';
 import { addQueryParam } from '@/utils/utils';
-import { IAnswerForm, IQuestion, ITest } from 'types/types';
+import { IAnswer, IAnswerForm, IQuestion, ITest } from 'types/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
@@ -14,8 +14,9 @@ interface TestAction {
 	getTests: () => Promise<void>;
 	createTest: (title: string) => Promise<void>;
 	removeTest: (testId: string) => void;
-	addQuestion: (testId: string, question: Omit<IQuestion, '_id'>) => Promise<IQuestion | undefined>;
-	addAnswers: (testId: string, questionId: string, answers: IAnswerForm[]) => Promise<void>;
+	addQuestion: (testId: string, question: IQuestion) => Promise<IQuestion | undefined>;
+	removeQuestion: (testId: string, questionId: string) => Promise<void>;
+	addAnswers: (testId: string, questionId: string, answers: IAnswerForm[]) => Promise<IAnswerForm[] | undefined>;
 }
 
 export const useTestsStore = create<TestState & TestAction>()(
@@ -75,13 +76,26 @@ export const useTestsStore = create<TestState & TestAction>()(
 			}
 		},
 
+		removeQuestion: async (testId, questionId) => {
+			set({ isLoading: true });
+			try {
+				$axios.delete<IQuestion>(`/tests/${testId}/questions/${questionId}`);
+			} catch (err) {
+				set({ error: JSON.stringify(err) });
+			} finally {
+				set({ isLoading: false });
+			}
+		},
+
 		addAnswers: async (testId, questionId, answers) => {
 			try {
 				const promises = answers.map((answer) => {
 					return $axios.post(`/tests/${testId}/questions/${questionId}/answers`, answer);
 				});
 
-				await Promise.all(promises);
+				const responses = await Promise.all(promises);
+				const responsesData: IAnswer[] = responses.map((response) => response.data);
+				return responsesData;
 			} catch (err) {
 				set({ error: JSON.stringify(err) });
 			} finally {

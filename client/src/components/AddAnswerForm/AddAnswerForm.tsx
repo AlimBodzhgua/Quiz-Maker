@@ -11,11 +11,13 @@ interface AddAnswerFormProps {
 	onChangeValue: (answerId: string, value: string) => void;
 	onDeleteAnswer: (answerId: string) => void;
 	answer: IAnswerForm;
+	isSaved: boolean;
 }
 
 export const AddAnswerForm: FC<AddAnswerFormProps> = memo((props) => {
 	const {
 		answer,
+		isSaved,
 		onChangeIsCorrect,
 		onChangeValue,
 		onDeleteAnswer,
@@ -24,6 +26,7 @@ export const AddAnswerForm: FC<AddAnswerFormProps> = memo((props) => {
 	const [isHover, hoverProps] = useHover();
 	const [value, setValue] = useState<string>(answer.value);
 	const debouncedValue = useDebounce(value);
+	const showActionButtons = isHover && !isSaved;
 	
 	useEffect(() => {
 		onChangeValue(answer._id, debouncedValue);
@@ -57,8 +60,9 @@ export const AddAnswerForm: FC<AddAnswerFormProps> = memo((props) => {
 						placeholder='Answer'
 						value={value}
 						onChange={handleOnChangeValue}
+						disabled={isSaved}
 					/>
-					{isHover && (
+					{showActionButtons && (
 						<InputRightElement w='none'>
 							<Flex>
 								<Button
@@ -83,6 +87,7 @@ export const AddAnswerForm: FC<AddAnswerFormProps> = memo((props) => {
 				<Checkbox
 					isChecked={answer.isCorrect}
 					onChange={handleIsCorrect}
+					disabled={isSaved}
 					_hover={{ color: 'blue.200' }}
 					size='sm'
 					alignSelf='flex-end'

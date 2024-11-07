@@ -74,7 +74,7 @@ const CreateTestPage: FC = () => {
 						))}
 					</SortableList>
 				)}
-				<Button onClick={onAddQuestion}>+ New Question</Button>
+				<Button onClick={onAddQuestion}>+ Add Question</Button>
 			</Box>
 		</Page>
 	);

@@ -1,5 +1,5 @@
 import { FC, memo, useState, useCallback, useEffect } from 'react';
-import { Button, Flex, Input, Tooltip } from '@chakra-ui/react';
+import { Button, Flex, Input, ScaleFade, Tooltip } from '@chakra-ui/react';
 import { questionTypes } from '@/constants/questions';
 import { baseAnswer, falseAnswer, inputAnswer, trueAnswer } from '@/constants/answers';
 import { changeListOrder, fixCorrectFieldForTypes, getQueryParam, initAnswers } from '@/utils/utils';
@@ -138,29 +138,29 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 				position='relative'
 				{...hoverProps}
 			>
-				<Flex
-					direction='column'
-					position='absolute'
-					right='-52px'
-					top='0'
-					gap='10px'
-					bg='blue.100'
-					p='10px 8px'
-					transform={isHover ? 'scale(1)' : 'scale(0)'}
-					transition={'transform .2s linear'}
-				>
-					<Button onClick={handleRemoveQuestion} size='sm'>
-						<DeleteIcon />
-					</Button>
-					<Button size='sm' cursor='grab'>
-						<DragHandleIcon />
-					</Button>
-					{isSaved && (
-						<Button size='sm' onClick={onEdit}>
-							<EditIcon />
+				<ScaleFade in={isHover}>
+					<Flex
+						direction='column'
+						position='absolute'
+						right='-54px'
+						top='-10px'
+						gap='10px'
+						bg='blue.100'
+						p='10px 8px'
+					>
+						<Button onClick={handleRemoveQuestion} size='sm'>
+							<DeleteIcon />
 						</Button>
-					)}
-				</Flex>
+						<Button size='sm' cursor='grab'>
+							<DragHandleIcon />
+						</Button>
+						{isSaved && (
+							<Button size='sm' onClick={onEdit}>
+								<EditIcon />
+							</Button>
+						)}
+					</Flex>
+				</ScaleFade>
 				<Flex gap='10px'>
 					<Input
 						value={title}
@@ -177,6 +177,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 						disabled={isSaved}
 					/>
 				</Flex>
+				
 				{answersList && (
 					<SortableList
 						items={answersList.map((answer) => answer._id)}
@@ -195,6 +196,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 							))}
 					</SortableList>
 				)}
+
 				{showAddBtn && answersList && (
 					<Tooltip label={answersList.length >= 5 && 'max answers amount is 5'}>
 						<Button
@@ -207,6 +209,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 						</Button>
 					</Tooltip>
 				)}
+
 				{!!showSaveBtn && (
 					<Button
 						mt='8px'

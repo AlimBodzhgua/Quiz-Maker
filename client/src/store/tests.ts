@@ -1,6 +1,6 @@
 import $axios from '@/api/axios';
 import { addQueryParam } from '@/utils/utils';
-import { IAnswer, IAnswerForm, IQuestion, ITest } from 'types/types';
+import { IAnswer, IAnswerForm, IQuestion, IQuestionForm, ITest } from 'types/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
@@ -16,6 +16,8 @@ interface TestAction {
 	removeTest: (testId: string) => void;
 	addQuestion: (testId: string, question: IQuestion) => Promise<IQuestion | undefined>;
 	removeQuestion: (testId: string, questionId: string) => Promise<void>;
+	updateQuestion: (testId: string, questionId: string, newQuestion: Partial<IQuestion>) => Promise<void>;
+	updateQuestionsOrders: (testId: string, questions: IQuestionForm[]) => Promise<void>, 
 	addAnswers: (testId: string, questionId: string, answers: IAnswerForm[]) => Promise<IAnswerForm[] | undefined>;
 }
 
@@ -84,6 +86,24 @@ export const useTestsStore = create<TestState & TestAction>()(
 				set({ error: JSON.stringify(err) });
 			} finally {
 				set({ isLoading: false });
+			}
+		},
+
+		updateQuestion: async (testId, questionId, newQuestion) => {
+			try {
+				await $axios.put(`/tests/${testId}/questions/${questionId}`, newQuestion);
+			} catch (err) {
+				set({ error: JSON.stringify(err) });
+			}
+		},
+
+		updateQuestionsOrders: async (testId, questions) => {
+			try {
+				questions.forEach((question) => {
+					get().updateQuestion(testId, question._id, { order: question.order });
+				})
+			} catch (err) {
+				set({ error: JSON.stringify(err) });
 			}
 		},
 

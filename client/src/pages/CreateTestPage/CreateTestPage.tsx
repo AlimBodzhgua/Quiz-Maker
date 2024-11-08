@@ -7,10 +7,12 @@ import { SortableList } from '@/lib/components/SortableList';
 import { DragEndEvent } from '@dnd-kit/core';
 import { changeListOrder, create24CharId, getQueryParam } from '@/utils/utils';
 import { IQuestionForm } from 'types/types';
+import { useTestsStore } from '@/store/tests';
 
 
 const CreateTestPage: FC = () => {
 	const [questionsList, setQuestionsList] = useState<IQuestionForm[]>([]);
+	const updateQuestions = useTestsStore((state) => state.updateQuestionsOrders);
 	const toast = useToast();
 
 	const onAddQuestion = useCallback(() => {
@@ -33,15 +35,31 @@ const CreateTestPage: FC = () => {
 	}, [questionsList]);
 
 	const onRemoveQuestion = useCallback((questionId: string) => {
-		const filteredQuestions = questionsList.filter((question) => question._id !== questionId); 
+		const testId = getQueryParam('id');
 
-		setQuestionsList(filteredQuestions);
+		const removedQuestion = questionsList.find((question) => question._id === questionId);
+		const filteredQuestions = questionsList.filter((question) => question._id !== questionId); 
+		const updatedQuestions = filteredQuestions.map((question) => {
+			if (question.order > removedQuestion!.order) {
+				const updatedQuestion = { ...question, order: question.order - 1 } 
+
+				return updatedQuestion; 
+			}
+			return question;
+		});
+	
+		updateQuestions(testId, updatedQuestions);
+		setQuestionsList(updatedQuestions);
 	}, [questionsList]);
 
 	const onQuestionDragEnd = useCallback((e: DragEndEvent) => {
 		const { active, over } = e;
 		if (active.id !== over!.id) {
+			const testId = getQueryParam('id');
+
 			const updatedQuestions = changeListOrder<IQuestionForm>(questionsList, over!.id, active.id)
+
+			updateQuestions(testId, updatedQuestions);
 			setQuestionsList(updatedQuestions);
 		}
 	}, [questionsList]);

@@ -59,7 +59,7 @@ export const changeListOrder = <T extends IAnswerForm | IQuestionForm>(
 	const oldIndex = list.findIndex((listItem) => listItem._id === overId);
 
 	const updatedArray = arrayMove(list, oldIndex, newIndex).map((listItem, index) => {
-		return { ...listItem, order: index };
+		return { ...listItem, order: index + 1 };
 	});
 
 	return updatedArray;

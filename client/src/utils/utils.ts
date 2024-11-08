@@ -64,3 +64,15 @@ export const changeListOrder = <T extends IAnswerForm | IQuestionForm>(
 
 	return updatedArray;
 };
+
+export const isNoEmptyValuesAnswers = (answers: IAnswerForm[]) => {
+	const answersWithValues = answers.filter((answer) => answer.value.length);
+
+	return answers.length === answersWithValues.length;
+};
+
+export const isCorrectAnswerExist = (answers: IAnswerForm[]) => {
+	const answersWithCorrect = answers.filter((answer) => answer.isCorrect);
+
+	return answersWithCorrect.length >= 1;
+};

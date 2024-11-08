@@ -1,8 +1,8 @@
 import { FC, memo, useState, useCallback, useEffect } from 'react';
-import { Button, Flex, Input, ScaleFade, Tooltip } from '@chakra-ui/react';
+import { Button, Flex, Input, ScaleFade, Tooltip, useToast } from '@chakra-ui/react';
 import { questionTypes } from '@/constants/questions';
 import { baseAnswer, falseAnswer, inputAnswer, trueAnswer } from '@/constants/answers';
-import { changeListOrder, fixCorrectFieldForTypes, getQueryParam, initAnswers } from '@/utils/utils';
+import { changeListOrder, fixCorrectFieldForTypes, getQueryParam, initAnswers, isCorrectAnswerExist, isNoEmptyValuesAnswers } from '@/utils/utils';
 import { DragEndEvent } from '@dnd-kit/core';
 import { SortableList } from '@/lib/components/SortableList';
 import { DeleteIcon, DragHandleIcon, EditIcon } from '@chakra-ui/icons';
@@ -29,6 +29,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 	const removeQuestion = useTestsStore((state) => state.removeQuestion);
 	const [isHover, hoverProps] = useHover();
 	const [isSaved, setIsSaved] = useState<boolean>(false);
+	const toast = useToast();
 	const showAddBtn = questionType === questionTypes.multipleAnswer || questionType === questionTypes.oneAnswer;
 	const showSaveBtn = answersList && title.length;
 
@@ -89,18 +90,36 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 	
 	const onSave = async () => {
 		if (answersList) {
-			const testId = getQueryParam('id');
-			const newQuestion = {
-				_id: question._id,
-				description: title,
-				type: questionType,
-				order: question.order,
-				testId,
-			}
-			const data = await addQuestion(testId, newQuestion);
-			if (data?._id) {
-				addAnswers(testId, data._id, answersList)
-					.then(() => setIsSaved(true))
+			const haveValues = isNoEmptyValuesAnswers(answersList);
+			const haveCorrect = isCorrectAnswerExist(answersList);
+
+			if (haveValues && haveCorrect) {
+				const testId = getQueryParam('id');
+				const newQuestion = {
+					_id: question._id,
+					description: title,
+					type: questionType,
+					order: question.order,
+					testId,
+				}
+
+				const data = await addQuestion(testId, newQuestion);
+
+				if (data?._id) {
+					await addAnswers(testId, data._id, answersList);
+					setIsSaved(true);
+				}
+
+			} else {
+				toast({
+					title: 'Empty value or no correct answer.',
+					description:
+						'All answser fileds should not be empty and should have at least 1 correct answer.',
+					status: 'error',
+					duration: 5000,
+					isClosable: true,
+					position: 'bottom',
+				});
 			}
 		}
 	};
@@ -177,7 +196,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 						disabled={isSaved}
 					/>
 				</Flex>
-				
+
 				{answersList && (
 					<SortableList
 						items={answersList.map((answer) => answer._id)}

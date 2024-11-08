@@ -100,3 +100,31 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
 		next(err);
 	}
 }
+
+export const update = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const test = await TestModel.findById(req.params.testId);
+
+		if (!test) {
+			return next(ApiError.BadRequest('Test with such id not found'));
+		}
+
+		const question = await QuestionModel.findOneAndUpdate(
+			{
+				testId: test._id,
+				_id: req.params.id,
+			},
+			{
+				description: req.body.description,
+				testId: req.params.testId,
+				type: req.body.type,
+				order: req.body.order,
+			},
+			{ new: true },
+		);
+		console.log(question);
+		res.json(question);
+	} catch (err) {
+		next(err);
+	}
+}

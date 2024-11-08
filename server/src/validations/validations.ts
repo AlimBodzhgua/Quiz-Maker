@@ -25,6 +25,12 @@ export const questionValidation = [
 	body('order').notEmpty().isNumeric(),
 ];
 
+export const questionUpdateValidation = [
+	body('description').optional().isString(),
+	body('type').optional().isString(),
+	body('order').optional().isNumeric(),
+];
+
 export const answerValidation = [
 	body('value').notEmpty().isString(),
 	body('isCorrect').notEmpty().isBoolean(),

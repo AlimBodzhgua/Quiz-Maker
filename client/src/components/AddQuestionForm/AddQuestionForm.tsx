@@ -5,7 +5,7 @@ import { baseAnswer, falseAnswer, inputAnswer, trueAnswer } from '@/constants/an
 import { changeListOrder, fixCorrectFieldForTypes, getQueryParam, initAnswers, isCorrectAnswerExist, isNoEmptyValuesAnswers } from '@/utils/utils';
 import { DragEndEvent } from '@dnd-kit/core';
 import { SortableList } from '@/lib/components/SortableList';
-import { DeleteIcon, DragHandleIcon, EditIcon } from '@chakra-ui/icons';
+import { CheckIcon, DeleteIcon, DragHandleIcon, EditIcon } from '@chakra-ui/icons';
 import { useHover } from '@/hooks/useHover';
 import { SortableItem } from '@/lib/components/SortableItem';
 import { IAnswerForm, IQuestionForm, QuestionType } from 'types/types';
@@ -228,7 +228,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 						</Button>
 					</Tooltip>
 				)}
-
+				
 				{!!showSaveBtn && (
 					<Button
 						mt='8px'
@@ -238,7 +238,10 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 						loadingText={'Saving question'}
 						spinnerPlacement='end'
 					>
-						Save question
+						{isSaved
+							? <Flex gap='10px' alignItems='center'>Saved<CheckIcon/></Flex>
+							: 'Save question'
+						}
 					</Button>
 				)}
 			</Flex>

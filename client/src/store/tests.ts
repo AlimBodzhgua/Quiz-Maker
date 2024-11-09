@@ -1,6 +1,6 @@
 import $axios from '@/api/axios';
 import { addQueryParam } from '@/utils/utils';
-import { IAnswer, IAnswerForm, IQuestion, IQuestionForm, ITest } from 'types/types';
+import { ITest } from 'types/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
@@ -14,11 +14,6 @@ interface TestAction {
 	getTests: () => Promise<void>;
 	createTest: (title: string) => Promise<void>;
 	removeTest: (testId: string) => void;
-	addQuestion: (testId: string, question: IQuestion) => Promise<IQuestion | undefined>;
-	removeQuestion: (testId: string, questionId: string) => Promise<void>;
-	updateQuestion: (testId: string, questionId: string, newQuestion: Partial<IQuestion>) => Promise<void>;
-	updateQuestionsOrders: (testId: string, questions: IQuestionForm[]) => Promise<void>, 
-	addAnswers: (testId: string, questionId: string, answers: IAnswerForm[]) => Promise<IAnswerForm[] | undefined>;
 }
 
 export const useTestsStore = create<TestState & TestAction>()(
@@ -65,62 +60,5 @@ export const useTestsStore = create<TestState & TestAction>()(
 				set({ isLoading: false });
 			}
 		},
-
-		addQuestion: async (testId, question) => {
-			set({ isLoading : true });
-			try {
-				const response = await $axios.post<IQuestion>(`/tests/${testId}/questions`, question);
-				return response.data;
-			} catch (err) {
-				set({ error: JSON.stringify(err) })
-			} finally {
-				set({ isLoading: false });
-			}
-		},
-
-		removeQuestion: async (testId, questionId) => {
-			set({ isLoading: true });
-			try {
-				$axios.delete<IQuestion>(`/tests/${testId}/questions/${questionId}`);
-			} catch (err) {
-				set({ error: JSON.stringify(err) });
-			} finally {
-				set({ isLoading: false });
-			}
-		},
-
-		updateQuestion: async (testId, questionId, newQuestion) => {
-			try {
-				await $axios.put(`/tests/${testId}/questions/${questionId}`, newQuestion);
-			} catch (err) {
-				set({ error: JSON.stringify(err) });
-			}
-		},
-
-		updateQuestionsOrders: async (testId, questions) => {
-			try {
-				questions.forEach((question) => {
-					get().updateQuestion(testId, question._id, { order: question.order });
-				})
-			} catch (err) {
-				set({ error: JSON.stringify(err) });
-			}
-		},
-
-		addAnswers: async (testId, questionId, answers) => {
-			try {
-				const promises = answers.map((answer) => {
-					return $axios.post(`/tests/${testId}/questions/${questionId}/answers`, answer);
-				});
-
-				const responses = await Promise.all(promises);
-				const responsesData: IAnswer[] = responses.map((response) => response.data);
-				return responsesData;
-			} catch (err) {
-				set({ error: JSON.stringify(err) });
-			} finally {
-				set({ isLoading: false });
-			}
-		}
 	})),
 );

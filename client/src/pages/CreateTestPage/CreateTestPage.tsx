@@ -3,25 +3,21 @@ import { Box, Button, Heading, useToast } from '@chakra-ui/react';
 import { CreateTestForm } from 'components/CreateTestForm/CreateTestForm';
 import { AddQuestionForm } from 'components/AddQuestionForm/AddQuestionForm';
 import { Page } from 'components/UI/Page/Page';
+import { IQuestionForm } from 'types/types';
 import { SortableList } from '@/lib/components/SortableList';
 import { DragEndEvent } from '@dnd-kit/core';
 import { changeListOrder, create24CharId, getQueryParam } from '@/utils/utils';
-import { IQuestionForm } from 'types/types';
-import { useTestsStore } from '@/store/tests';
+import { QuestionService } from '@/services/QuestionService';
 
 
 const CreateTestPage: FC = () => {
 	const [questionsList, setQuestionsList] = useState<IQuestionForm[]>([]);
-	const updateQuestions = useTestsStore((state) => state.updateQuestionsOrders);
 	const toast = useToast();
 
 	const onAddQuestion = useCallback(() => {
 		const testId = getQueryParam('id');
 		if (testId.length) {
-			setQuestionsList([
-				...questionsList,
-				{ _id: create24CharId(), order: questionsList.length + 1 },
-			]);
+			setQuestionsList([...questionsList, { _id: create24CharId(), order: questionsList.length + 1 }]);
 		} else {
 			toast({
 				title: 'Test not created.',
@@ -36,19 +32,8 @@ const CreateTestPage: FC = () => {
 
 	const onRemoveQuestion = useCallback((questionId: string) => {
 		const testId = getQueryParam('id');
+		const updatedQuestions = QuestionService.removeQuestion(questionsList, testId, questionId);
 
-		const removedQuestion = questionsList.find((question) => question._id === questionId);
-		const filteredQuestions = questionsList.filter((question) => question._id !== questionId); 
-		const updatedQuestions = filteredQuestions.map((question) => {
-			if (question.order > removedQuestion!.order) {
-				const updatedQuestion = { ...question, order: question.order - 1 } 
-
-				return updatedQuestion; 
-			}
-			return question;
-		});
-	
-		updateQuestions(testId, updatedQuestions);
 		setQuestionsList(updatedQuestions);
 	}, [questionsList]);
 
@@ -56,10 +41,10 @@ const CreateTestPage: FC = () => {
 		const { active, over } = e;
 		if (active.id !== over!.id) {
 			const testId = getQueryParam('id');
-
 			const updatedQuestions = changeListOrder<IQuestionForm>(questionsList, over!.id, active.id)
 
-			updateQuestions(testId, updatedQuestions);
+			QuestionService.updateQuestionsOrderOnServer(testId, updatedQuestions);
+
 			setQuestionsList(updatedQuestions);
 		}
 	}, [questionsList]);

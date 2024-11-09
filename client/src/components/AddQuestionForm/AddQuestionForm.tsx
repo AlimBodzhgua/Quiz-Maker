@@ -2,14 +2,15 @@ import { FC, memo, useState, useCallback, useEffect } from 'react';
 import { Button, Flex, Input, ScaleFade, Tooltip, useToast } from '@chakra-ui/react';
 import { questionTypes } from '@/constants/questions';
 import { baseAnswer, falseAnswer, inputAnswer, trueAnswer } from '@/constants/answers';
-import { changeListOrder, fixCorrectFieldForTypes, getQueryParam, initAnswers, isCorrectAnswerExist, isNoEmptyValuesAnswers } from '@/utils/utils';
+import { changeListOrder, fixCorrectFieldForTypes, getQueryParam, initAnswers } from '@/utils/utils';
 import { DragEndEvent } from '@dnd-kit/core';
 import { SortableList } from '@/lib/components/SortableList';
 import { CheckIcon, DeleteIcon, DragHandleIcon, EditIcon } from '@chakra-ui/icons';
 import { useHover } from '@/hooks/useHover';
 import { SortableItem } from '@/lib/components/SortableItem';
 import { IAnswerForm, IQuestionForm, QuestionType } from 'types/types';
-import { useTestsStore } from 'store/tests';
+import { QuestionService } from '@/services/QuestionService';
+import { AnswersService } from '@/services/AnswersService';
 import { AddAnswerForm } from '../AddAnswerForm/AddAnswerForm';
 import { QuestionTypeSelector } from '../QuestionTypeSelector/QuestionTypeSelector';
 
@@ -23,10 +24,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 	const [questionType, setQuestionType] = useState<QuestionType>(questionTypes.multipleAnswer);
 	const [title, setTitle] = useState<string>('');
 	const [answersList, setAnswersList] = useState<IAnswerForm[] | null>(null);
-	const addQuestion = useTestsStore((state) => state.addQuestion);
-	const addAnswers = useTestsStore((state) => state.addAnswers);
-	const isLoading = useTestsStore((state) => state.isLoading);
-	const removeQuestion = useTestsStore((state) => state.removeQuestion);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [isHover, hoverProps] = useHover();
 	const [isSaved, setIsSaved] = useState<boolean>(false);
 	const toast = useToast();
@@ -89,38 +87,30 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 	};
 	
 	const onSave = async () => {
-		if (answersList) {
-			const haveValues = isNoEmptyValuesAnswers(answersList);
-			const haveCorrect = isCorrectAnswerExist(answersList);
-
-			if (haveValues && haveCorrect) {
-				const testId = getQueryParam('id');
-				const newQuestion = {
-					_id: question._id,
-					description: title,
-					type: questionType,
-					order: question.order,
-					testId,
-				}
-
-				const data = await addQuestion(testId, newQuestion);
-
-				if (data?._id) {
-					await addAnswers(testId, data._id, answersList);
-					setIsSaved(true);
-				}
-
-			} else {
-				toast({
-					title: 'Empty value or no correct answer.',
-					description:
-						'All answser fileds should not be empty and should have at least 1 correct answer.',
-					status: 'error',
-					duration: 5000,
-					isClosable: true,
-					position: 'bottom',
-				});
+		if (AnswersService.isAnswersValid(answersList!)) {
+			setIsLoading(true);
+			const testId = getQueryParam('id');
+			const newQuestion = {
+				_id: question._id,
+				description: title,
+				type: questionType,
+				order: question.order,
+				testId,
 			}
+
+			await QuestionService.saveQuestion(testId, newQuestion, answersList!);
+			setIsSaved(true);
+			setIsLoading(false);
+		} else {
+			toast({
+				title: 'Empty value or no correct answer.',
+				description:
+					'All answser fileds should not be empty and should have at least 1 correct answer.',
+				status: 'error',
+				duration: 5000,
+				isClosable: true,
+				position: 'bottom',
+			});
 		}
 	};
 
@@ -133,18 +123,18 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 	};
 	
 	const handleRemoveQuestion = () => {
-		const testId = getQueryParam('id');
 		onRemoveQuestion(question._id);
-
+		
 		if (isSaved) {
-			removeQuestion(testId, question._id);
+			const testId = getQueryParam('id');
+			QuestionService.removeQuestionOnServer(testId, question._id);
 		}
 	}
 
 	const onEdit = () => {
 		const testId = getQueryParam('id');
+		QuestionService.removeQuestionOnServer(testId, question._id);
 		setIsSaved(false);
-		removeQuestion(testId, question._id);
 	}
 
 	return (

@@ -2,7 +2,7 @@ import { FC, memo, useState, useCallback, useEffect } from 'react';
 import { Button, Flex, Input, ScaleFade, Tooltip, useToast } from '@chakra-ui/react';
 import { questionTypes } from '@/constants/questions';
 import { baseAnswer, falseAnswer, inputAnswer, trueAnswer } from '@/constants/answers';
-import { changeListOrder, fixCorrectFieldForTypes, getQueryParam, initAnswers } from '@/utils/utils';
+import { changeListOrder, fixCorrectFieldForTypes, getQueryParam, initAnswers, removeItemAndFixListOrder } from '@/utils/utils';
 import { DragEndEvent } from '@dnd-kit/core';
 import { SortableList } from '@/lib/components/SortableList';
 import { CheckIcon, DeleteIcon, DragHandleIcon, EditIcon } from '@chakra-ui/icons';
@@ -45,20 +45,9 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 		}
 	}, [questionType]);
 
-	const onChangeIsCorrect = useCallback((answerId: string) => {
-		const answers = fixCorrectFieldForTypes(answersList!, answerId, questionType);
-
-		setAnswersList(answers);
-	}, [answersList, questionType]);
-	
-	const onChangeValue = useCallback((answerId: string, value: string) => {
-		if (answersList) {
-			const newAnswers = answersList.map((answer) =>
-				answer._id === answerId ? { ...answer, value } : answer,
-			);
-			setAnswersList(newAnswers);
-		}
-	}, [answersList]);
+	const onChnageTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setTitle(e.target.value);
+	};
 
 	const onChangeType = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
 		if (answersList) {
@@ -69,6 +58,35 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 		}
 	}, [answersList]);
 
+	const onChangeValue = useCallback((answerId: string, value: string) => {
+		if (answersList) {
+			const newAnswers = answersList.map((answer) =>
+				answer._id === answerId ? { ...answer, value } : answer,
+			);
+			setAnswersList(newAnswers);
+		}
+	}, [answersList]);
+
+	const onChangeIsCorrect = useCallback((answerId: string) => {
+		const answers = fixCorrectFieldForTypes(answersList!, answerId, questionType);
+
+		setAnswersList(answers);
+	}, [answersList, questionType]);
+
+	const onDeleteAnswer = useCallback((answerId: string) => {
+		const updatedAnswers = removeItemAndFixListOrder<IAnswerForm>(answersList!, answerId);
+
+		setAnswersList(updatedAnswers);
+	}, [answersList]);
+
+	const onAnswersDragEnd = (e: DragEndEvent) => {
+		const { active, over } = e;
+		if (active.id !== over?.id) {
+			const updatedAnswers = changeListOrder<IAnswerForm>(answersList!, over!.id, active.id);
+			setAnswersList(updatedAnswers);
+		}
+	};
+
 	const onAddAnswer = () => {
 		const newAnswers = [
 			...answersList!,
@@ -76,16 +94,22 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 		];
 		setAnswersList(newAnswers);
 	};
-
-	const onDeleteAnswer = useCallback((answerId: string) => {
-		const filteredAnswers = answersList!.filter((answer) => answer._id !== answerId);
-		setAnswersList(filteredAnswers);
-	}, [answersList]);
-
-	const onChnageTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setTitle(e.target.value);
-	};
 	
+	const handleRemoveQuestion = () => {
+		onRemoveQuestion(question._id);
+		
+		if (isSaved) {
+			const testId = getQueryParam('id');
+			QuestionService.removeQuestionOnServer(testId, question._id);
+		}
+	};
+
+	const onEdit = () => {
+		const testId = getQueryParam('id');
+		QuestionService.removeQuestionOnServer(testId, question._id);
+		setIsSaved(false);
+	};
+
 	const onSave = async () => {
 		if (AnswersService.isAnswersValid(answersList!)) {
 			setIsLoading(true);
@@ -114,28 +138,6 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 		}
 	};
 
-	const onAnswersDragEnd = (e: DragEndEvent) => {
-		const { active, over } = e;
-		if (active.id !== over?.id) {
-			const updatedAnswers = changeListOrder<IAnswerForm>(answersList!, over!.id, active.id);
-			setAnswersList(updatedAnswers);
-		}
-	};
-	
-	const handleRemoveQuestion = () => {
-		onRemoveQuestion(question._id);
-		
-		if (isSaved) {
-			const testId = getQueryParam('id');
-			QuestionService.removeQuestionOnServer(testId, question._id);
-		}
-	}
-
-	const onEdit = () => {
-		const testId = getQueryParam('id');
-		QuestionService.removeQuestionOnServer(testId, question._id);
-		setIsSaved(false);
-	}
 
 	return (
 		<SortableItem id={question._id}>

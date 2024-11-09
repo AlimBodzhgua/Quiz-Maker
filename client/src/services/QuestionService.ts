@@ -1,6 +1,7 @@
 import $axios from "@/api/axios";
 import { IAnswerForm, IQuestion, IQuestionForm } from "@/types/types";
 import { AnswersService } from './AnswersService';
+import { removeItemAndFixListOrder } from "@/utils/utils";
 
 export class QuestionService {
 	
@@ -36,17 +37,7 @@ export class QuestionService {
 	};
 
 	static removeQuestion = (questions: IQuestionForm[], testId: string, questionId: string) => {
-		const removedQuestion = questions.find((question) => question._id === questionId);
-		const filteredQuestions = questions.filter((question) => question._id !== questionId); 
-		const updatedQuestions = filteredQuestions.map((question) => {
-			if (question.order > removedQuestion!.order) {
-				const updatedQuestion = { ...question, order: question.order - 1 } 
-
-				return updatedQuestion; 
-			}
-			return question;
-		});
-	
+		const updatedQuestions = removeItemAndFixListOrder<IQuestionForm>(questions, questionId);
 		QuestionService.updateQuestionsOrderOnServer(testId, updatedQuestions);
 
 		return updatedQuestions;

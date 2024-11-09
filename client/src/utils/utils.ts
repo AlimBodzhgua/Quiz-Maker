@@ -54,7 +54,7 @@ export const changeListOrder = <T extends IAnswerForm | IQuestionForm>(
 	list: T[],
 	activeId: UniqueIdentifier,
 	overId: UniqueIdentifier,
-) => {
+): T[] => {
 	const newIndex = list.findIndex((listItem) => listItem._id === activeId);
 	const oldIndex = list.findIndex((listItem) => listItem._id === overId);
 
@@ -63,6 +63,21 @@ export const changeListOrder = <T extends IAnswerForm | IQuestionForm>(
 	});
 
 	return updatedArray;
+};
+
+export const removeItemAndFixListOrder = <T extends IAnswerForm | IQuestionForm>(
+	list: T[],
+	removeId: string,
+): T[] => {
+	const removedItem = list.find((listItem) => listItem._id === removeId);
+	const filteredList = list.filter((listItem) => listItem._id !== removeId); 
+	const updatedList = filteredList.map((listItem) => {
+		if (listItem.order > removedItem!.order) {
+			return { ...listItem, order: listItem.order - 1 }; 
+		}
+		return listItem;
+	});
+	return updatedList;
 };
 
 export const isNoEmptyValuesAnswers = (answers: IAnswerForm[]) => {

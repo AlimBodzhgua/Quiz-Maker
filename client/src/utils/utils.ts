@@ -91,3 +91,11 @@ export const isCorrectAnswerExist = (answers: IAnswerForm[]) => {
 
 	return answersWithCorrect.length >= 1;
 };
+
+export const capitalizeFirstLetter = (word: string): string => {
+	return word.charAt(0).toUpperCase() + word.slice(1, word.length);
+};
+
+export const splitCamelCaseLetter = (word: string): string => {
+	return word.replace(/([a-z])([A-Z])/g, '$1 $2');
+};

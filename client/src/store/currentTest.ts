@@ -47,7 +47,6 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 		fetchCurrentTestQuestions: async (testId) => {
 			try {
 				const response = await $axios.get<IQuestion[]>(`tests/${testId}/questions`);
-
 				const orderedQuestions = response.data.sort((a, b) => a.order > b.order ? 1 : -1);
 
 				set({ questions: orderedQuestions }, false, 'fetchCurrentTestQuestions');
@@ -59,8 +58,10 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 		fetchQuestionsAnswers: async (testId, questionId) => {
 			try {
 				const response = await $axios.get<IAnswer[]>(`tests/${testId}/questions/${questionId}/answers`);
+				const orderedAnswers = response.data.sort((a, b) => a.order > b.order ? 1 : -1);
+				
 				set({ answers: response.data }, false, 'fetchQuestionsAnswers');
-				return response.data;
+				return orderedAnswers;
 			} catch (err) {
 				set({ error: JSON.stringify(err) });
 			}

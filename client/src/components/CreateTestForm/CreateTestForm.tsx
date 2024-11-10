@@ -1,35 +1,79 @@
 import { FC, memo, useState } from 'react';
-import { Button, Flex, Input, Tooltip } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { Button, Flex, Input, InputGroup, InputRightAddon, Tooltip } from '@chakra-ui/react';
+import { CheckIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { useHover } from '@/hooks/useHover';
+import { getQueryParam } from '@/utils/utils';
 import { useTestsStore } from 'store/tests';
-import { CheckIcon } from '@chakra-ui/icons';
 
 export const CreateTestForm: FC = memo(() => {
 	const [title, setTitle] = useState<string>('');
-	const [isCreated, setIsCreated] = useState<boolean>(false);
+	const [isSaved, setIsSaved] = useState<boolean>(false);
+	const [isHover, hoverProps] = useHover();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const createTest = useTestsStore((state) => state.createTest);
+	const removeTest = useTestsStore((state) => state.removeTest);
+	const updateTest = useTestsStore((state) => state.updateTest);
+	const navigate = useNavigate();
 	const isSmallLength = title.length <= 3;
 
 	const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTitle(e.target.value);
 	};
+	
+	const onEdit = () => setIsSaved(false);
 
-	const onSaveTest = () => {
-		createTest(title).then(() => setIsCreated(true));
+	const onSaveTest = async () => {
+		const testId = getQueryParam('id');
+		setIsLoading(true);
+
+		if (testId.length) {
+			await updateTest(testId, title);
+		} else {
+			await createTest(title);
+		}
+
+		setIsLoading(false);
+		setIsSaved(true);
+	};
+
+	const onRemove = async () => {
+		const testId = getQueryParam('id');
+		await removeTest(testId);
+		navigate('/');
 	};
 
 	return (
-		<Flex gap='10px'>
-			<Input
-				placeholder='Test title...'
-				value={title}
-				onChange={onTitleChange}
-				disabled={isCreated}
-			/>
-			<Tooltip label={isSmallLength && 'Title must be at least 4 characters long'}>
-				<Button onClick={onSaveTest} disabled={isCreated || isSmallLength}>
-					{isCreated ? <CheckIcon /> : <>Save</>}
-				</Button>
-			</Tooltip>
+		<Flex gap='10px' {...hoverProps}>
+			<InputGroup>
+				<Input
+					placeholder='Test title...'
+					value={title}
+					onChange={onTitleChange}
+					disabled={isSaved}
+				/>
+				<InputRightAddon maxW='15%' w='100%'>
+					{isSaved && isHover ? (
+						<Flex justify='center' align='flex-start' width='100%'>
+							<Button size='sm' onClick={onEdit} _hover={{ color: 'blue.500' }}>
+								<EditIcon />
+							</Button>
+							<Button size='sm' onClick={onRemove} _hover={{ color: 'red.400' }}>
+								<DeleteIcon />
+							</Button>
+						</Flex>
+					) : (
+						<Tooltip label={isSmallLength && 'Title must be at least 4 characters long'}>
+							<Button onClick={onSaveTest} disabled={isSaved || isSmallLength} isLoading={isLoading}>
+								{isSaved
+									?	<Flex gap='3px' align='center'>Saved <CheckIcon /></Flex>
+									:	'Save'
+								}
+							</Button>
+						</Tooltip>
+					)}
+				</InputRightAddon>
+			</InputGroup>
 		</Flex>
 	);
 });

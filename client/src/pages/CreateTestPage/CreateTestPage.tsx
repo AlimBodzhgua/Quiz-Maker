@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { Box, Button, Heading, useToast } from '@chakra-ui/react';
 import { CreateTestForm } from 'components/CreateTestForm/CreateTestForm';
 import { AddQuestionForm } from 'components/AddQuestionForm/AddQuestionForm';
@@ -13,6 +13,12 @@ import { QuestionService } from '@/services/QuestionService';
 const CreateTestPage: FC = () => {
 	const [questionsList, setQuestionsList] = useState<IQuestionForm[]>([]);
 	const toast = useToast();
+
+	useEffect(() => {
+		return () => {
+			window.history.pushState({}, document.title, window.location.pathname);
+		}
+	}, [])
 
 	const onAddQuestion = useCallback(() => {
 		const testId = getQueryParam('id');

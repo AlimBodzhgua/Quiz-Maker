@@ -13,7 +13,8 @@ interface TestState {
 interface TestAction {
 	getTests: () => Promise<void>;
 	createTest: (title: string) => Promise<void>;
-	removeTest: (testId: string) => void;
+	removeTest: (testId: string) => Promise<void>;
+	updateTest: (testId: string, title: string) => Promise<void>;
 }
 
 export const useTestsStore = create<TestState & TestAction>()(
@@ -49,10 +50,10 @@ export const useTestsStore = create<TestState & TestAction>()(
 			}
 		},
 
-		removeTest: (testId: string) => {
+		removeTest: async (testId: string) => {
 			set({ isLoading: true }, false, 'removeTestLoading');
 			try {
-				$axios.delete(`/tests/${testId}`);
+				await $axios.delete(`/tests/${testId}`);
 				set({ tests: get().tests.filter((test) => test._id !== testId) });
 			} catch (err) {
 				set({ error: JSON.stringify(err) }, false, 'removeTestError');
@@ -60,5 +61,22 @@ export const useTestsStore = create<TestState & TestAction>()(
 				set({ isLoading: false });
 			}
 		},
+
+		updateTest: async (testId: string, title) => {
+			try {
+				await $axios.put(`/tests/${testId}`, { title });
+				const updatedTests = get().tests.map((test) => {
+					if (test._id === testId) {
+						return {...test, title: title};
+					}
+					return test;
+				})
+				set({ tests: updatedTests });
+			} catch (err) {
+				set({ error: JSON.stringify(err) });
+			} finally {
+				set({ isLoading: false });
+			}
+		}
 	})),
 );

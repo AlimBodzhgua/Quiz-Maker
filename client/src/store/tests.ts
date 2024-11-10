@@ -51,14 +51,11 @@ export const useTestsStore = create<TestState & TestAction>()(
 		},
 
 		removeTest: async (testId: string) => {
-			set({ isLoading: true }, false, 'removeTestLoading');
 			try {
 				await $axios.delete(`/tests/${testId}`);
 				set({ tests: get().tests.filter((test) => test._id !== testId) });
 			} catch (err) {
 				set({ error: JSON.stringify(err) }, false, 'removeTestError');
-			} finally {
-				set({ isLoading: false });
 			}
 		},
 

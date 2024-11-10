@@ -1,4 +1,4 @@
-import { FC, memo, useCallback } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import { Button, Flex, Td, Tr, useDisclosure } from '@chakra-ui/react';
 import { DeleteIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { getTestPage } from '@/router/router';
@@ -13,6 +13,7 @@ interface TestItemProps {
 
 export const TestItem: FC<TestItemProps> = memo(({ testItem }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const removeTest = useTestsStore((state) => state.removeTest);
 	const formatter = new Intl.DateTimeFormat('en-US', {
 		day: '2-digit',
@@ -20,13 +21,15 @@ export const TestItem: FC<TestItemProps> = memo(({ testItem }) => {
 		year: 'numeric',
 	});
 
-	const handleRemove = useCallback(() => {
-		removeTest(testItem._id);
+	const handleRemove = useCallback(async () => {
+		setIsLoading(true);
+		await removeTest(testItem._id);
 		onClose();
+		setIsLoading(false);
 	}, [removeTest, onClose]);
 
 	return (
-		<Tr>
+		<Tr opacity={isLoading ? 0.2 : 1} transition={'opacity .4s linear'}>
 			<Td>
 				<Link to={getTestPage(testItem._id)}>{testItem.title}</Link>
 			</Td>

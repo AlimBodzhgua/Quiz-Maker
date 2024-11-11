@@ -5,7 +5,7 @@ const appHeaders = {
 };
 
 const $axios = axios.create({
-	baseURL: 'http://localhost:4000',
+	baseURL: import.meta.env.VITE_API,
 	headers: appHeaders,
 });
 

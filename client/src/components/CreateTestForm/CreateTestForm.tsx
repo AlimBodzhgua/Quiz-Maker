@@ -1,12 +1,14 @@
 import { FC, memo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Flex, Input, InputGroup, InputRightAddon, Tooltip } from '@chakra-ui/react';
+import { Button, Flex, Input, InputGroup, InputRightAddon, Tooltip, useDisclosure } from '@chakra-ui/react';
 import { CheckIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { useHover } from '@/hooks/useHover';
 import { getQueryParam } from '@/utils/utils';
 import { useTestsStore } from 'store/tests';
+import { AppDialog } from '../UI/AppDialog/AppDialog';
 
 export const CreateTestForm: FC = memo(() => {
+	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [title, setTitle] = useState<string>('');
 	const [isSaved, setIsSaved] = useState<boolean>(false);
 	const [isHover, hoverProps] = useHover();
@@ -40,6 +42,7 @@ export const CreateTestForm: FC = memo(() => {
 	const onRemove = async () => {
 		const testId = getQueryParam('id');
 		await removeTest(testId);
+		onClose();
 		navigate('/');
 	};
 
@@ -58,9 +61,18 @@ export const CreateTestForm: FC = memo(() => {
 							<Button size='sm' onClick={onEdit} _hover={{ color: 'blue.500' }}>
 								<EditIcon />
 							</Button>
-							<Button size='sm' onClick={onRemove} _hover={{ color: 'red.400' }}>
-								<DeleteIcon />
-							</Button>
+							<AppDialog
+								headerText='Delete test'
+								bodyText='Are you sure you want to delete test?'
+								actionText='delete'
+								isOpen={isOpen}
+								onClose={onClose}
+								actionHandler={onRemove}
+							>
+								<Button size='sm' onClick={onOpen} _hover={{ color: 'red.400' }}>
+									<DeleteIcon />
+								</Button>
+							</AppDialog>
 						</Flex>
 					) : (
 						<Tooltip label={isSmallLength && 'Title must be at least 4 characters long'}>

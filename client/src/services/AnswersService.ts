@@ -1,6 +1,6 @@
-import $axios from "@/api/axios";
-import { IAnswer, IAnswerForm } from "@/types/types";
-import { isCorrectAnswerExist, isNoEmptyValuesAnswers } from "@/utils/utils";
+import $axios from '@/api/axios';
+import { IAnswer, IAnswerForm } from 'types/types';
+import { isCorrectAnswerExist, isNoEmptyValuesAnswers } from '@/utils/utils';
 
 export class AnswersService {
 	

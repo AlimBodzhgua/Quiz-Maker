@@ -1,7 +1,7 @@
-import $axios from "@/api/axios";
-import { IAnswerForm, IQuestion, IQuestionForm } from "@/types/types";
+import $axios from '@/api/axios';
+import { IAnswerForm, IQuestion, IQuestionForm } from 'types/types';
+import { removeItemAndFixListOrder } from '@/utils/utils';
 import { AnswersService } from './AnswersService';
-import { removeItemAndFixListOrder } from "@/utils/utils";
 
 export class QuestionService {
 	

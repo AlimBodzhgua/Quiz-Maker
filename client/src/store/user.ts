@@ -25,7 +25,7 @@ export const useUserStore = create<UserAction & UserState>()(
 		error: undefined,
 
 		logout: () => {
-			set({ user: null, error: undefined, isLoading: false }, false, 'logout'),
+			set({ user: null, error: undefined, isLoading: false }, false, 'logout');
 			localStorage.removeItem(AUTH_LOCALSTORAGE_KEY);
 		},
 

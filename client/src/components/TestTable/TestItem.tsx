@@ -50,7 +50,7 @@ export const TestItem: FC<TestItemProps> = memo(({ testItem }) => {
 					<AppDialog
 						isOpen={isOpen}
 						headerText={`Delete Test: ${testItem.title}`}
-						bodyText={`Are you sure? You can't undo this action afterwards.`}
+						bodyText={'Are you sure? You can\'t undo this action afterwards.'}
 						actionText={'Delete'}
 						actionHandler={handleRemove}
 						onClose={onClose}

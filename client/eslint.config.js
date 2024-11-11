@@ -40,6 +40,7 @@ export default tseslint.config(
 			'react/jsx-max-props-per-line': ['error', { maximum: 3 }],
 			'react/prop-types': 'off',
 			'react/display-name': 'off',
+			'react-hooks/exhaustive-deps': 'off',
 		},
 	},
 );

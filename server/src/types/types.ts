@@ -42,8 +42,8 @@ export interface ICompletedTest {
 	_id: Types.ObjectId;
 	userId: Types.ObjectId;
 	testId: Types.ObjectId;
-	right: number;
-	wrong: number;
+	correct: number;
+	incorrect: number;
 }
 
 

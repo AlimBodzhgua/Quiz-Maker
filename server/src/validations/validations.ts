@@ -18,6 +18,13 @@ export const testRemoveValidation = [
 	body('testId').notEmpty(),
 ];
 
+export const completedTestCreateValidation = [
+	body('testId').notEmpty(),
+	body('testId').notEmpty(),
+	body('correct').notEmpty().isNumeric(),
+	body('incorrect').notEmpty().isNumeric(),
+];
+
 export const questionValidation = [
 	body('_id').notEmpty().isString(),
 	body('description').notEmpty().isString(),

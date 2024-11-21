@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import { Checkbox, Flex } from '@chakra-ui/react';
-import { IAnswer } from '@/types/types';
+import { IAnswer } from 'types/types';
 import { getDataMatchedAnswer } from '@/utils/utils';
 
 interface CheckBoxItemProps {

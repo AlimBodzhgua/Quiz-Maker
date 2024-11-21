@@ -1,8 +1,8 @@
+import { FC, memo, useEffect, useState } from 'react';
 import { IAnswer } from '@/types/types';
 import { Box, Flex, RadioGroup } from '@chakra-ui/react';
-import { FC, memo, useEffect, useState } from 'react';
+import { useCurrentTest } from 'store/currentTest';
 import { RadioButtonItem } from '../RadioButtonQuestion/RadioButtonItem';
-import { useCurrentTest } from '@/store/currentTest';
 
 interface TrueOrFalseQuestionProps {
 	answers: IAnswer[];
@@ -12,9 +12,7 @@ interface TrueOrFalseQuestionProps {
 export const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = memo((props) => {
 	const { answers, isAnswerSubmit } = props;
 	const [selectedAnswer, setSelectedAnswer] = useState('');
-	const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean>(false);
 	const questionAnswer = useCurrentTest((state) => state.questionAnswer);
-
 
 	useEffect(() => {
 		if (isAnswerSubmit) {

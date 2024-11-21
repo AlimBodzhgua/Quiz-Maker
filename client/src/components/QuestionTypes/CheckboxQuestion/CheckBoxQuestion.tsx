@@ -1,16 +1,15 @@
 import { FC, memo, useState, useEffect } from 'react';
-import { IAnswer } from '@/types/types';
 import { Box, CheckboxGroup, Flex } from '@chakra-ui/react';
+import { IAnswer } from 'types/types';
+import { useCurrentTest } from 'store/currentTest';
 import { CheckboxItem } from './CheckBoxItem';
-import { useCurrentTest } from '@/store/currentTest';
 
 interface CheckBoxQuestion {
 	answers: IAnswer[];
 	isAnswerSubmit: boolean;
 }
-// MultipleAnswer (CheckBox)
+
 export const CheckBoxQuestion: FC<CheckBoxQuestion> = memo(({answers, isAnswerSubmit}) => {
-	const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean>(false);
 	const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
 	const amountOfCorrect = answers.filter((answer) => answer.isCorrect).length;
 	const questionAnswer = useCurrentTest((state) => state.questionAnswer);

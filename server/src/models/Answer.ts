@@ -5,20 +5,20 @@ export const AnswerSchema = new mongoose.Schema<IAnswer>({
 	// _id;
 	value: {
 		type: String,
-		require: true,
+		required: true,
 	},
 	isCorrect: {
 		type: Boolean,
-		require: true,
+		required: true,
 	},
 	order: {
 		type: Number,
-		require: true,
+		required: true,
 	},
 	questionId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Question',
-		require: true,
+		required: true,
 	}
 });
 

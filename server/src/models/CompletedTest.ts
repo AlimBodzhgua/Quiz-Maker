@@ -5,12 +5,12 @@ const CompletedTestSchema = new mongoose.Schema<ICompletedTest>({
 	userId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
-		require: true,
+		required: true,
 	},
 	testId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Test',
-		require: true,
+		required: true,
 	},
 	correct: {
 		type: Number,
@@ -22,6 +22,6 @@ const CompletedTestSchema = new mongoose.Schema<ICompletedTest>({
 	},
 })
 
-const CompletedTestModel = mongoose.model<ICompletedTest>('User', CompletedTestSchema);
+const CompletedTestModel = mongoose.model<ICompletedTest>('CompletedTest', CompletedTestSchema);
 
 export default CompletedTestModel;

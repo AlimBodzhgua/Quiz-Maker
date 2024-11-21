@@ -20,7 +20,6 @@ export const testRemoveValidation = [
 
 export const completedTestCreateValidation = [
 	body('testId').notEmpty(),
-	body('testId').notEmpty(),
 	body('correct').notEmpty().isNumeric(),
 	body('incorrect').notEmpty().isNumeric(),
 ];

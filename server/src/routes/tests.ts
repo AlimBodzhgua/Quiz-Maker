@@ -15,7 +15,7 @@ router.put('/:testId', requireAuth, testCreateValidation, TestController.update)
 
 router.get('/completed/:id', requireAuth, CompletedTestController.getOne);
 router.delete('/completed/:id', requireAuth, CompletedTestController.remove);
-router.post('/completed/:id', requireAuth, completedTestCreateValidation, CompletedTestController.create);
+router.post('/completed', requireAuth, completedTestCreateValidation, CompletedTestController.create);
 
 
 export default router;

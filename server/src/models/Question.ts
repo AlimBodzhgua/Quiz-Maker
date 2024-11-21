@@ -8,20 +8,20 @@ const QuestionSchema = new mongoose.Schema<IQuestion>({
 	},
 	description: {
 		type: String,
-		require: true,
+		required: true,
 	},
 	testId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Test',
-		require: true,
+		required: true,
 	},
 	type: {
 		type: String,
-		require: true,
+		required: true,
 	},
 	order: {
 		type: Number,
-		require: true,
+		required: true,
 	},
 }, { _id: false })
 

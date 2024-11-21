@@ -14,10 +14,10 @@ export const QuestionsList: FC = memo(() => {
 					<ListItem m='16px 0' key={index}>
 						<Card minW='md' maxW='xl'>
 							<CardHeader pb='0'>
-								<Skeleton height='24px'/>
+								<Skeleton height='25px'/>
 							</CardHeader>
 							<CardBody>
-								<Skeleton height='72px'/>
+								<Skeleton height='95px'/>
 							</CardBody>
 						</Card>
 					</ListItem>

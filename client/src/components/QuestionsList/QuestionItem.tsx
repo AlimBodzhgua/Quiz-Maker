@@ -1,11 +1,24 @@
 import { FC, memo, useEffect, useMemo, useState } from 'react';
-import { Card, CardBody, CardHeader, Skeleton, Flex, Heading, ListItem, Text } from '@chakra-ui/react';
 import { IAnswer, IQuestion, QuestionType } from 'types/types';
 import { useCurrentTest } from 'store/currentTest';
-import { CheckBoxQuestion } from '../QuestionTypes/CheckBoxQuestion';
-import { RadioButtonQuestion } from '../QuestionTypes/RadioButtonQuestion';
-import { InputQuestion } from '../QuestionTypes/InputQuestion';
-import { TrueOrFalseQuestion } from '../QuestionTypes/TrueOrFalseQuestion';
+import {
+	Card,
+	CardBody,
+	CardHeader,
+	Skeleton,
+	Flex,
+	Heading,
+	ListItem,
+	Text,
+	CardFooter,
+	Button,
+} from '@chakra-ui/react';
+import {
+	TrueOrFalseQuestion,
+	RadioButtonQuestion,
+	InputQuestion,
+	CheckBoxQuestion,
+} from 'components/QuestionTypes';
 
 interface QuestionItemProps {
 	question: IQuestion;
@@ -16,6 +29,7 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 	const fetchAnswers = useCurrentTest((state) => state.fetchQuestionsAnswers);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [answers, setAnswers] = useState<IAnswer[]>([]);
+	const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
 	useEffect(() => {
 		setIsLoading(true);
@@ -28,11 +42,15 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 
 
 	const mapStateToQuestionType: Record<QuestionType, JSX.Element> = useMemo(() => ({
-		multipleAnswer: <CheckBoxQuestion answers={answers} />,
-		oneAnswer: <RadioButtonQuestion answers={answers} />,
-		inputAnswer: <InputQuestion answers={answers} />,
-		trueOrFalse: <TrueOrFalseQuestion answers={answers} />,	
-	} as const), [answers])
+		multipleAnswer: <CheckBoxQuestion answers={answers} isAnswerSubmit={isSubmitted}/>,
+		oneAnswer: <RadioButtonQuestion answers={answers} isAnswerSubmit={isSubmitted}/>,
+		inputAnswer: <InputQuestion answers={answers} isAnswerSubmit={isSubmitted}/>,
+		trueOrFalse: <TrueOrFalseQuestion answers={answers} isAnswerSubmit={isSubmitted}/>,	
+	} as const), [answers, isSubmitted])
+
+	const onSubmit = () => {
+		setIsSubmitted(true);
+	}
 
 	if (isLoading) {
 		return (
@@ -52,7 +70,7 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 		)
 	}
 
-
+	
 	return (
 		<ListItem m='16px 0'>
 			<Card minW='md' maxW='xl'>
@@ -65,6 +83,13 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 				<CardBody>
 					{mapStateToQuestionType[question.type]}
 				</CardBody>
+				<CardFooter justify='flex-end' pt='0'>
+					<Button
+						size='sm'
+						onClick={onSubmit}
+						disabled={isSubmitted}
+					>Submit Answer</Button>
+				</CardFooter>
 			</Card>
 		</ListItem>
 	)

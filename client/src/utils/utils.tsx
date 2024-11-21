@@ -3,6 +3,7 @@ import { questionTypes } from '@/constants/questions';
 import { IAnswerForm, IQuestionForm, QuestionType } from '@/types/types';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
+import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
 
 export const initAnswers = (amount: number) => {
 	return Array(amount)
@@ -98,4 +99,11 @@ export const capitalizeFirstLetter = (word: string): string => {
 
 export const splitCamelCaseLetter = (word: string): string => {
 	return word.replace(/([a-z])([A-Z])/g, '$1 $2');
+};
+
+export const getDataMatchedAnswer = (isCorrect: boolean) => {
+	return {
+		color: isCorrect ? '#68AF15' : '#D30000',
+		icon: isCorrect ? <CheckIcon fontSize='12px' /> : <CloseIcon fontSize='8px' />,
+	};
 };

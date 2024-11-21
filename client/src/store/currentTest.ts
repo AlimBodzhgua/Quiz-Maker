@@ -7,6 +7,8 @@ interface CurrentTestState {
 	test: ITest | null;
 	questions: IQuestion[] | null;
 	answers: IAnswer[] | null;
+	correctAnswers: number;
+	incorrectAnswers: number;
 
 	isLoading: boolean;
 	error?: string | undefined;
@@ -17,6 +19,9 @@ interface CurrentTestAscion {
 	fetchCurrentTestQuestions: (testId: string) => Promise<void>;
 	fetchQuestionsAnswers: (testId: string, questionsId: string) => Promise<IAnswer[] | undefined>;
 	getCurrentTest: (testId: string) => void;
+	questionAnswer: (isCorrect: boolean) => void;
+	resetTestResult: () => void;
+	saveTestResult: () => Promise<void>;
 }
 
 export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
@@ -24,6 +29,9 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 		test: null,
 		questions: null,
 		answers: null,
+		correctAnswers: 0,
+		incorrectAnswers: 0,
+
 		isLoading: false,
 		error: undefined,
 
@@ -72,6 +80,30 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 			await get().fetchCurrentTest(testId);
 			await get().fetchCurrentTestQuestions(testId);
 			set({ isLoading: false }, false, 'currentTestLoading');
-		}
+		},
+
+		questionAnswer: (isCorrect) => {
+			if (isCorrect) {
+				set({ correctAnswers: get().correctAnswers + 1 }, false, 'addCorrectAnswer');
+			} else {
+				set({ incorrectAnswers: get().incorrectAnswers + 1 }, false, 'addIncorrectAnswer');
+			}
+		},
+
+		resetTestResult: () => {
+			set({ correctAnswers: 0, incorrectAnswers: 0 });
+		},
+
+		saveTestResult: async () => {
+			try {
+				await $axios.post('tests/completed', {
+					testId: get().test?._id,
+					correct: get().correctAnswers,
+					incorrect: get().incorrectAnswers,
+				});
+			} catch (err) {
+				set({ error: JSON.stringify(err) });
+			}
+		},
 	}))
 );

@@ -15,7 +15,6 @@ export const Page: FC<PageProps> = memo((props) => {
 			align='center'
 			direction='column'
 			w='100%'
-			height='100%'
 		>
 			{children}
 		</Flex>

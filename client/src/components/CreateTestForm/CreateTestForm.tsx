@@ -55,7 +55,7 @@ export const CreateTestForm: FC = memo(() => {
 					onChange={onTitleChange}
 					disabled={isSaved}
 				/>
-				<InputRightAddon maxW='15%' w='100%'>
+				<InputRightAddon maxW='15%' w='100%' display='flex' justifyContent='center'>
 					{isSaved && isHover ? (
 						<Flex justify='center' align='flex-start' width='100%'>
 							<Button size='sm' onClick={onEdit} _hover={{ color: 'blue.500' }}>
@@ -76,7 +76,11 @@ export const CreateTestForm: FC = memo(() => {
 						</Flex>
 					) : (
 						<Tooltip label={isSmallLength && 'Title must be at least 4 characters long'}>
-							<Button onClick={onSaveTest} disabled={isSaved || isSmallLength} isLoading={isLoading}>
+							<Button
+								onClick={onSaveTest}
+								disabled={isSaved || isSmallLength}
+								isLoading={isLoading}
+							>
 								{isSaved
 									?	<Flex gap='3px' align='center'>Saved <CheckIcon /></Flex>
 									:	'Save'

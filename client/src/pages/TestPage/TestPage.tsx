@@ -1,9 +1,10 @@
 import { FC, useEffect, useState } from 'react';
-import { Box, Button, Heading, Text, useToast } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Text, useToast } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { Page } from 'components/UI/Page/Page';
 import { useCurrentTest } from 'store/currentTest';
 import { QuestionsList } from 'components/QuestionsList/QuestionsList';
+import { StarIcon } from '@chakra-ui/icons';
 
 const TestPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();
@@ -58,16 +59,21 @@ const TestPage: FC = () => {
 				</Heading>
 				<Text fontWeight='bold' color='white'>Total quesetions: {questions?.length}</Text>
 				<QuestionsList />
-				<Button
-					onClick={onFinish}
-					isLoading={isLoading}
-					colorScheme='cyan'
-					color='white'
-					display='flex'
-					size='lg'
-				>
-					Finish Test
-				</Button>
+				<Flex gap='16px'>
+					<Button
+						onClick={onFinish}
+						isLoading={isLoading}
+						colorScheme='cyan'
+						color='white'
+						size='lg'
+					>
+						Finish Test
+					</Button>
+					<Flex alignItems='center' gap='12px' color='white'>
+						<Text>{correctAnswers}</Text>
+						<StarIcon/>
+					</Flex>
+				</Flex>
 			</Box>
 		</Page>
 	);

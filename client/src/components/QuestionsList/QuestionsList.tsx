@@ -1,9 +1,14 @@
 import { FC, memo } from 'react';
 import { Card, CardBody, CardHeader, List, ListItem, Skeleton } from '@chakra-ui/react';
-import { useCurrentTest } from '@/store/currentTest';
+import { useCurrentTest } from 'store/currentTest';
 import { QuestionItem } from './QuestionItem';
 
-export const QuestionsList: FC = memo(() => {
+interface QuestionsListProps {
+	isBlured?: boolean;
+}
+
+export const QuestionsList: FC<QuestionsListProps> = memo((props) => {
+	const { isBlured } = props;
 	const questions = useCurrentTest((state) => state.questions);
 	const isLoading = useCurrentTest((state) => state.isLoading);
 
@@ -27,7 +32,11 @@ export const QuestionsList: FC = memo(() => {
 	}
 
 	return (
-		<List>
+		<List
+			filter={!isBlured ? 'blur(5px)' : 'none'}
+			pointerEvents={!isBlured ? 'none' : 'all'}
+			transition={'.2s filter linear'}
+		>
 			{questions && questions.map((question) => (
 				<QuestionItem question={question} key={question._id} />
 			))}

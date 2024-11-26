@@ -1,9 +1,11 @@
+import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
 import { baseAnswer } from '@/constants/answers';
 import { questionTypes } from '@/constants/questions';
-import { IAnswerForm, IQuestionForm, QuestionType } from '@/types/types';
+import { IAnswerForm, IQuestionForm, QuestionType } from 'types/types';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
-import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
+import { TimerLimit } from 'types/timer';
+import { DecreasingTimerProps, IncreasingTimerProps } from '@/hooks/useTimer';
 
 export const initAnswers = (amount: number) => {
 	return Array(amount)
@@ -115,3 +117,11 @@ export const getDataMatchedAnswer = (isCorrect: boolean) => {
 export const subtractPixelsFromString = (px: string, amount: number) => {
 	return `${Number(px.substring(0, px.length - 2)) - amount}px`;
 };
+
+export const getMathcedTimerProps = (timerLimit?: TimerLimit) => {
+	const type = timerLimit ? 'decreasing' : 'increasing';
+
+	return type === 'increasing'
+		? { type: 'increasing' } as IncreasingTimerProps
+		: { type: 'decreasing', limit: timerLimit } as DecreasingTimerProps; 
+}

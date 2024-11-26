@@ -15,10 +15,10 @@ interface CurrentTestState {
 }
 
 interface CurrentTestAscion {
-	fetchCurrentTest: (testId: string) => Promise<void>;
+	fetchCurrentTest: (testId: string) => Promise<ITest | undefined>;
 	fetchCurrentTestQuestions: (testId: string) => Promise<void>;
 	fetchQuestionsAnswers: (testId: string, questionsId: string) => Promise<IAnswer[] | undefined>;
-	getCurrentTest: (testId: string) => void;
+	getCurrentTest: (testId: string) => Promise<ITest | undefined>;
 	questionAnswer: (isCorrect: boolean) => void;
 	resetTestResult: () => void;
 	saveTestResult: () => Promise<void>;
@@ -46,9 +46,10 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 					createdAt: response.data.createdAt,
 					withTimer: response.data.withTimer,
 					timerLimit: response.data.timerLimit,
-				}
+				};
 
 				set({ test: test }, false, 'fetchCurrentTest');
+				return test;
 			} catch (err) {
 				set({ error: JSON.stringify(err) });
 			}
@@ -79,9 +80,10 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 
 		getCurrentTest: async (testId) => {
 			set({ isLoading: true }, false, 'currentTestLoading');
-			await get().fetchCurrentTest(testId);
+			const test = await get().fetchCurrentTest(testId);
 			await get().fetchCurrentTestQuestions(testId);
 			set({ isLoading: false }, false, 'currentTestLoading');
+			return test;
 		},
 
 		questionAnswer: (isCorrect) => {

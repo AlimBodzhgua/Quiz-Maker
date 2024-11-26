@@ -12,6 +12,8 @@ export const loginValidation = [
 
 export const testCreateValidation = [
 	body('title').notEmpty().isString().isLength({ min: 4 }),
+	body('withTimer').optional().isBoolean(),
+	body('timerLimit').optional().isObject(),
 ];
 
 export const testRemoveValidation = [
@@ -22,6 +24,7 @@ export const completedTestCreateValidation = [
 	body('testId').notEmpty(),
 	body('correct').notEmpty().isNumeric(),
 	body('incorrect').notEmpty().isNumeric(),
+	body('timeResult').optional().isObject(),
 ];
 
 export const questionValidation = [

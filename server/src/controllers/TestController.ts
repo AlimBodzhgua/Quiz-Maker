@@ -15,6 +15,8 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 		const doc = new TestModel({
 			title: req.body.title,
 			authorId: res.locals.userId,
+			withTimer: req.body.withTimer,
+			timerLimit: req.body.timerLimit,
 		});
 
 		const test = await doc.save();
@@ -79,6 +81,8 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
 			},
 			{
 				title: req.body.title,
+				withTimer: req.body.withTimer,
+				timerLimit: req.body.timerLimit,
 			},
 			{ new: true }
 		);

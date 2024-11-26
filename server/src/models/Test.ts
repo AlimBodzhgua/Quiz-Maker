@@ -13,6 +13,14 @@ const TestSchema = new mongoose.Schema<ITest>({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
 		required: true,
+	},
+	withTimer: {
+		type: Boolean,
+		required: false,
+	},
+	timerLimit: {
+		type: Object,
+		required: false,
 	}
 }, { timestamps: true })
 

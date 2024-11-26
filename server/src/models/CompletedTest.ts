@@ -20,6 +20,10 @@ const CompletedTestSchema = new mongoose.Schema<ICompletedTest>({
 		type: Number,
 		required: true,
 	},
+	timeResult: {
+		type: Object,
+		required: false,
+	}
 })
 
 const CompletedTestModel = mongoose.model<ICompletedTest>('CompletedTest', CompletedTestSchema);

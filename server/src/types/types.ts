@@ -15,11 +15,16 @@ export interface IUser extends DocResult<IUser> {
 	passwordHash: string;
 }
 
+export type TimerValues = 'minutes' | 'seconds';
+export type TimerLimit = Record<TimerValues, number>;
+
 export interface ITest {
 	_id: Types.ObjectId;
 	title: string;
 	authorId: Types.ObjectId;
 	createAt: Date;
+	withTimer?: boolean;
+	timerLimit?: TimerLimit;
 }
 
 export interface IQuestion {
@@ -44,6 +49,7 @@ export interface ICompletedTest {
 	testId: Types.ObjectId;
 	correct: number;
 	incorrect: number;
+	timeResult?: TimerLimit;
 }
 
 

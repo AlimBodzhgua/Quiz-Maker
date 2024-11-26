@@ -111,3 +111,7 @@ export const getDataMatchedAnswer = (isCorrect: boolean) => {
 		),
 	};
 };
+
+export const subtractPixelsFromString = (px: string, amount: number) => {
+	return `${Number(px.substring(0, px.length - 2)) - amount}px`;
+};

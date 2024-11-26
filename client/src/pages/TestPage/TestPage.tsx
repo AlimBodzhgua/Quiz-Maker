@@ -1,10 +1,12 @@
 import { FC, useEffect, useState } from 'react';
 import { Box, Button, Flex, Heading, Text, useToast } from '@chakra-ui/react';
+import { StarIcon } from '@chakra-ui/icons';
+import { DecreasingTimerProps, IncreasingTimerProps, useTimer } from '@/hooks/useTimer';
 import { useParams } from 'react-router-dom';
 import { Page } from 'components/UI/Page/Page';
+import { Timer } from 'components/UI/Timer/Timer';
 import { useCurrentTest } from 'store/currentTest';
 import { QuestionsList } from 'components/QuestionsList/QuestionsList';
-import { StarIcon } from '@chakra-ui/icons';
 
 const TestPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();
@@ -44,6 +46,13 @@ const TestPage: FC = () => {
 		}
 	}
 
+	const timerType = test?.timerLimit ? 'decreasing' : 'increasing';
+	const timerProps = timerType === 'increasing'
+		? { type: 'increasing' } as IncreasingTimerProps
+		: { type: 'decreasing', limit: test!.timerLimit } as DecreasingTimerProps; 
+
+	const { minutes, seconds } = useTimer(timerProps);
+
 	return (
 		<Page>
 			<Box
@@ -57,6 +66,9 @@ const TestPage: FC = () => {
 				<Heading size='lg' fontWeight='medium' color='white'>
 					{test?.title}
 				</Heading>
+				{(test && test.withTimer) && 
+					<Timer minutes={minutes} seconds={seconds} />
+				}
 				<Text fontWeight='bold' color='white'>Total quesetions: {questions?.length}</Text>
 				<QuestionsList />
 				<Flex gap='16px'>

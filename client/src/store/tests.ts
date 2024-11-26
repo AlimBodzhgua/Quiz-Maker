@@ -14,7 +14,7 @@ interface TestAction {
 	getTests: () => Promise<void>;
 	createTest: (title: string) => Promise<void>;
 	removeTest: (testId: string) => Promise<void>;
-	updateTest: (testId: string, title: string) => Promise<void>;
+	updateTest: (testId: string, newTest: Partial<ITest>) => Promise<void>;
 }
 
 export const useTestsStore = create<TestState & TestAction>()(
@@ -59,15 +59,20 @@ export const useTestsStore = create<TestState & TestAction>()(
 			}
 		},
 
-		updateTest: async (testId: string, title) => {
+		updateTest: async (testId, newTest) => {
 			try {
-				await $axios.put(`/tests/${testId}`, { title });
+				const response = await $axios.put<ITest>(`/tests/${testId}`, {
+					title: newTest.title,
+					withTimer: newTest.withTimer,
+					timerLimit: newTest.timerLimit,
+				});
+
 				const updatedTests = get().tests.map((test) => {
 					if (test._id === testId) {
-						return {...test, title: title};
+						return response.data;
 					}
 					return test;
-				})
+				});
 				set({ tests: updatedTests });
 			} catch (err) {
 				set({ error: JSON.stringify(err) });

@@ -1,3 +1,5 @@
+import { TimerLimit } from './timer';
+
 export interface IUser {
 	_id: string;
 	token: string;
@@ -9,6 +11,8 @@ export interface ITest {
 	title: string;
 	authorId: string;
 	createdAt: string;
+	withTimer?: boolean;
+	timerLimit?: TimerLimit;
 }
 
 export type QuestionType = 'multipleAnswer' | 'oneAnswer' | 'inputAnswer' | 'trueOrFalse' // checkbox/radioButton/input

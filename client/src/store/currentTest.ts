@@ -44,6 +44,8 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 					title: response.data.title,
 					authorId: response.data.authorId,
 					createdAt: response.data.createdAt,
+					withTimer: response.data.withTimer,
+					timerLimit: response.data.timerLimit,
 				}
 
 				set({ test: test }, false, 'fetchCurrentTest');

@@ -1,14 +1,20 @@
 import { FC, memo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Flex, Input, InputGroup, InputRightAddon, Tooltip, useDisclosure } from '@chakra-ui/react';
-import { CheckIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { CheckIcon, DeleteIcon, EditIcon, SettingsIcon } from '@chakra-ui/icons';
 import { useHover } from '@/hooks/useHover';
 import { getQueryParam } from '@/utils/utils';
 import { useTestsStore } from 'store/tests';
 import { AppDialog } from '../UI/AppDialog/AppDialog';
+import { SettingsModal } from '../SettingsModal/SettingsModal';
 
 export const CreateTestForm: FC = memo(() => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const {
+		isOpen: isSettingsModalOpen,
+		onOpen: onOpenSettingsModal,
+		onClose: onCloseSettingsModal,
+	} = useDisclosure();
 	const [title, setTitle] = useState<string>('');
 	const [isSaved, setIsSaved] = useState<boolean>(false);
 	const [isHover, hoverProps] = useHover();
@@ -30,7 +36,7 @@ export const CreateTestForm: FC = memo(() => {
 		setIsLoading(true);
 
 		if (testId.length) {
-			await updateTest(testId, title);
+			await updateTest(testId, { title });
 		} else {
 			await createTest(title);
 		}
@@ -47,7 +53,7 @@ export const CreateTestForm: FC = memo(() => {
 	};
 
 	return (
-		<Flex gap='10px' {...hoverProps}>
+		<Flex gap='15px' {...hoverProps}>
 			<InputGroup>
 				<Input
 					placeholder='Test title...'
@@ -94,6 +100,10 @@ export const CreateTestForm: FC = memo(() => {
 						</Tooltip>
 					)}
 				</InputRightAddon>
+				<Button onClick={onOpenSettingsModal} ml='5px' disabled={!isSaved}>
+					<SettingsIcon />
+				</Button>
+				<SettingsModal isOpen={isSettingsModalOpen} onClose={onCloseSettingsModal}/>
 			</InputGroup>
 		</Flex>
 	);

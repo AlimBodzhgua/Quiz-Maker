@@ -10,7 +10,7 @@ import {
 	Switch,
 } from '@chakra-ui/react';
 import { QuizService } from '@/services/QuizService';
-import { useQuizzesStore } from '@/store/quizzes';
+import { useQuizzesStore } from 'store/quizzes';
 import { TimerLimit } from 'types/timer';
 import { getQueryParam } from '@/utils/utils';
 

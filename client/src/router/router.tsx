@@ -2,8 +2,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import { LoginPage } from 'pages/LoginPage/LoginPage.async';
 import { RegisterPage } from 'pages/RegisterPage/RegisterPage.async';
 import { MainPage } from 'pages/MainPage/MainPage.async';
-import { CreateQuizPage } from '@/pages/CreateQuizPage/CreateQuizPage.async';
-import { QuizPage } from '@/pages/QuizPage/QuizPage.async';
+import { CreateQuizPage } from 'pages/CreateQuizPage/CreateQuizPage.async';
+import { QuizPage } from 'pages/QuizPage/QuizPage.async';
 import { NotFoundPage } from 'pages/NotFoundPage/NotFoundPage';
 import { Layout } from 'components/UI/Layout/Layout';
 

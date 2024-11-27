@@ -1,8 +1,8 @@
 import { FC, memo, useEffect, useRef, useState } from 'react';
-import { IAnswer } from '@/types/types';
+import { IAnswer } from 'types/types';
 import { getDataMatchedAnswer } from '@/utils/utils';
 import { Box, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
-import { useCurrentQuiz } from '@/store/currentQuiz';
+import { useCurrentQuiz } from 'store/currentQuiz';
 
 interface InputQuestionProps {
 	answers: IAnswer[];

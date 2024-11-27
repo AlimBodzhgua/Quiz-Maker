@@ -2,7 +2,7 @@
 // import { questionTypes } from '@/constants/questions';
 // import { falseAnswer, inputAnswer, trueAnswer } from '@/constants/answers';
 // import { changeAnswersOrder, fixCorrectFieldForTypes, getQueryParam, initAnswers } from '@/utils/utils';
-// import { IAnswerForm, QuestionType } from '@/types/types';
+// import { IAnswerForm, QuestionType } from 'types/types';
 // import { DragEndEvent } from '@dnd-kit/core';
 // import { AddAnswerForm } from '../AddAnswerForm/AddAnswerForm';
 // import { SortableList } from '@/lib/components/SortableList';

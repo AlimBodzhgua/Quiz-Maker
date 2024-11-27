@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Box, Button, Flex, Heading } from '@chakra-ui/react';
-import { QuizTable } from '@/components/QuizTable/QuizTable';
+import { QuizTable } from 'components/QuizTable/QuizTable';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '@/router/router';
 

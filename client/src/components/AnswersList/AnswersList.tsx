@@ -1,4 +1,4 @@
-import { IAnswer } from '@/types/types';
+import { IAnswer } from 'types/types';
 import { List } from '@chakra-ui/react';
 import { FC, memo } from 'react';
 import { AnswersItem } from './AnswersItem';

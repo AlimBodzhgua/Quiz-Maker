@@ -1,5 +1,5 @@
 import { FC, memo } from 'react';
-import { IAnswer } from '@/types/types';
+import { IAnswer } from 'types/types';
 import { ListItem } from '@chakra-ui/react';
 
 interface AnswersItemProps {

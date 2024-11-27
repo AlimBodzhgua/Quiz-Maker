@@ -4,7 +4,7 @@ import { Button, Flex, Input, InputGroup, InputRightAddon, Tooltip, useDisclosur
 import { CheckIcon, DeleteIcon, EditIcon, SettingsIcon } from '@chakra-ui/icons';
 import { useHover } from '@/hooks/useHover';
 import { getQueryParam } from '@/utils/utils';
-import { useQuizzesStore } from '@/store/quizzes';
+import { useQuizzesStore } from 'store/quizzes';
 import { AppDialog } from '../UI/AppDialog/AppDialog';
 import { SettingsModal } from '../SettingsModal/SettingsModal';
 

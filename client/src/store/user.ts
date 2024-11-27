@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { IUser } from '@/types/types';
+import { IUser } from 'types/types';
 import { AUTH_LOCALSTORAGE_KEY } from '@/constants/localStorage';
 import $axios from '@/api/axios';
 

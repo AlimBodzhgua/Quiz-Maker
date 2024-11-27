@@ -5,7 +5,7 @@ import { useTimer } from '@/hooks/useTimer';
 import { useLocation, useParams } from 'react-router-dom';
 import { Page } from 'components/UI/Page/Page';
 import { Timer } from 'components/UI/Timer/Timer';
-import { useCurrentQuiz } from '@/store/currentQuiz';
+import { useCurrentQuiz } from 'store/currentQuiz';
 import { QuestionsList } from 'components/QuestionsList/QuestionsList';
 import { calculatePassedTime, getMathcedTimerProps } from '@/utils/utils';
 

@@ -1,6 +1,6 @@
 import { FC, memo, useEffect, useMemo, useState } from 'react';
 import { IAnswer, IQuestion, QuestionType } from 'types/types';
-import { useCurrentQuiz } from '@/store/currentQuiz';
+import { useCurrentQuiz } from 'store/currentQuiz';
 import {
 	Card,
 	CardBody,

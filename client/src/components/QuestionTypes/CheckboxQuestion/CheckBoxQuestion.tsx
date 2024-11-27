@@ -1,7 +1,7 @@
 import { FC, memo, useState, useEffect } from 'react';
 import { Box, CheckboxGroup, Flex } from '@chakra-ui/react';
 import { IAnswer } from 'types/types';
-import { useCurrentQuiz } from '@/store/currentQuiz';
+import { useCurrentQuiz } from 'store/currentQuiz';
 import { CheckboxItem } from './CheckBoxItem';
 
 interface CheckBoxQuestion {

@@ -3,7 +3,7 @@ import { Button, Checkbox, Flex, Input, InputGroup, InputRightElement } from '@c
 import { DeleteIcon, DragHandleIcon } from '@chakra-ui/icons';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useHover } from '@/hooks/useHover';
-import { IAnswerForm } from '@/types/types';
+import { IAnswerForm } from 'types/types';
 import { SortableItem } from '@/lib/components/SortableItem';
 
 interface AddAnswerFormProps {

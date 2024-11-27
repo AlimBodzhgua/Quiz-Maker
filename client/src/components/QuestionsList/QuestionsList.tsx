@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import { Card, CardBody, CardHeader, List, ListItem, Skeleton } from '@chakra-ui/react';
-import { useCurrentQuiz } from '@/store/currentQuiz';
+import { useCurrentQuiz } from 'store/currentQuiz';
 import { QuestionItem } from './QuestionItem';
 
 interface QuestionsListProps {

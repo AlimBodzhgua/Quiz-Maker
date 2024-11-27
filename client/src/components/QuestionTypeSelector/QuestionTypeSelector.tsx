@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import { questionTypes } from '@/constants/questions';
-import { QuestionType } from '@/types/types';
+import { QuestionType } from 'types/types';
 import { capitalizeFirstLetter, splitCamelCaseLetter } from '@/utils/utils';
 import { Select } from '@chakra-ui/react';
 

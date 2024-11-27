@@ -1,4 +1,4 @@
-import { TimerLimit } from '@/types/timer';
+import { TimerLimit } from 'types/timer';
 import { useEffect, useRef, useState } from 'react';
 
 interface CreateTimerFnReturn {

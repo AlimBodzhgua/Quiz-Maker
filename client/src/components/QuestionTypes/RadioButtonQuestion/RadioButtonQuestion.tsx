@@ -1,7 +1,7 @@
 import { FC, memo, useEffect, useState } from 'react';
 import { Box, Flex, RadioGroup } from '@chakra-ui/react';
 import { IAnswer } from 'types/types';
-import { useCurrentQuiz } from '@/store/currentQuiz';
+import { useCurrentQuiz } from 'store/currentQuiz';
 import { RadioButtonItem } from './RadioButtonItem';
 
 interface RadioButtonQuestionProps {

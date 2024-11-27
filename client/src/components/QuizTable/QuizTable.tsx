@@ -1,6 +1,6 @@
 import { FC, memo, useEffect } from 'react';
 import { Card, CardBody, Heading, Table, TableContainer, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
-import { useQuizzesStore } from '@/store/quizzes';
+import { useQuizzesStore } from 'store/quizzes';
 import { QuizItem } from './QuizItem';
 import { TableSkeleton } from './TableSkeleton';
 

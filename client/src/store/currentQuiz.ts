@@ -1,6 +1,6 @@
 import $axios from '@/api/axios';
 import { TimerLimit } from 'types/timer';
-import { IAnswer, IQuestion, IQuiz } from '@/types/types';
+import { IAnswer, IQuestion, IQuiz } from 'types/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 

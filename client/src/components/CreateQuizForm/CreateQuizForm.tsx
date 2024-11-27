@@ -4,11 +4,11 @@ import { Button, Flex, Input, InputGroup, InputRightAddon, Tooltip, useDisclosur
 import { CheckIcon, DeleteIcon, EditIcon, SettingsIcon } from '@chakra-ui/icons';
 import { useHover } from '@/hooks/useHover';
 import { getQueryParam } from '@/utils/utils';
-import { useTestsStore } from 'store/tests';
+import { useQuizzesStore } from '@/store/quizzes';
 import { AppDialog } from '../UI/AppDialog/AppDialog';
 import { SettingsModal } from '../SettingsModal/SettingsModal';
 
-export const CreateTestForm: FC = memo(() => {
+export const CreateQuizForm: FC = memo(() => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const {
 		isOpen: isSettingsModalOpen,
@@ -19,9 +19,9 @@ export const CreateTestForm: FC = memo(() => {
 	const [isSaved, setIsSaved] = useState<boolean>(false);
 	const [isHover, hoverProps] = useHover();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const createTest = useTestsStore((state) => state.createTest);
-	const removeTest = useTestsStore((state) => state.removeTest);
-	const updateTest = useTestsStore((state) => state.updateTest);
+	const createQuiz = useQuizzesStore((state) => state.createQuiz);
+	const removeQuiz = useQuizzesStore((state) => state.removeQuiz);
+	const updateQuiz = useQuizzesStore((state) => state.updateQuiz);
 	const navigate = useNavigate();
 	const isSmallLength = title.length <= 3;
 
@@ -31,14 +31,14 @@ export const CreateTestForm: FC = memo(() => {
 	
 	const onEdit = () => setIsSaved(false);
 
-	const onSaveTest = async () => {
-		const testId = getQueryParam('id');
+	const onSaveQuiz = async () => {
+		const quizId = getQueryParam('id');
 		setIsLoading(true);
 
-		if (testId.length) {
-			await updateTest(testId, { title });
+		if (quizId.length) {
+			await updateQuiz(quizId, { title });
 		} else {
-			await createTest(title);
+			await createQuiz(title);
 		}
 
 		setIsLoading(false);
@@ -46,8 +46,8 @@ export const CreateTestForm: FC = memo(() => {
 	};
 
 	const onRemove = async () => {
-		const testId = getQueryParam('id');
-		await removeTest(testId);
+		const quizId = getQueryParam('id');
+		await removeQuiz(quizId);
 		onClose();
 		navigate('/');
 	};
@@ -56,7 +56,7 @@ export const CreateTestForm: FC = memo(() => {
 		<Flex gap='15px' {...hoverProps}>
 			<InputGroup>
 				<Input
-					placeholder='Test title...'
+					placeholder='Quiz title...'
 					value={title}
 					onChange={onTitleChange}
 					disabled={isSaved}
@@ -73,8 +73,8 @@ export const CreateTestForm: FC = memo(() => {
 								<EditIcon />
 							</Button>
 							<AppDialog
-								headerText='Delete test'
-								bodyText='Are you sure you want to delete test?'
+								headerText='Delete quiz'
+								bodyText='Are you sure you want to delete quiz?'
 								actionText='delete'
 								isOpen={isOpen}
 								onClose={onClose}
@@ -88,7 +88,7 @@ export const CreateTestForm: FC = memo(() => {
 					) : (
 						<Tooltip label={isSmallLength && 'Title must be at least 4 characters long'}>
 							<Button
-								onClick={onSaveTest}
+								onClick={onSaveQuiz}
 								disabled={isSaved || isSmallLength}
 								isLoading={isLoading}
 							>

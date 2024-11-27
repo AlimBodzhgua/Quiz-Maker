@@ -1,6 +1,6 @@
 import { FC, memo, useEffect, useMemo, useState } from 'react';
 import { IAnswer, IQuestion, QuestionType } from 'types/types';
-import { useCurrentTest } from 'store/currentTest';
+import { useCurrentQuiz } from '@/store/currentQuiz';
 import {
 	Card,
 	CardBody,
@@ -25,16 +25,16 @@ interface QuestionItemProps {
 }
 
 export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
-	const currentTest = useCurrentTest((state) => state.test);
-	const fetchAnswers = useCurrentTest((state) => state.fetchQuestionsAnswers);
+	const currentQuiz = useCurrentQuiz((state) => state.quiz);
+	const fetchAnswers = useCurrentQuiz((state) => state.fetchQuestionsAnswers);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [answers, setAnswers] = useState<IAnswer[]>([]);
 	const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
 	useEffect(() => {
 		setIsLoading(true);
-		if (currentTest) {
-			fetchAnswers(currentTest._id, question._id)
+		if (currentQuiz) {
+			fetchAnswers(currentQuiz._id, question._id)
 				.then((data) => setAnswers(data!))
 				.then(() => setIsLoading(false))
 		}

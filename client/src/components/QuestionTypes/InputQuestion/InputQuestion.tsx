@@ -2,7 +2,7 @@ import { FC, memo, useEffect, useRef, useState } from 'react';
 import { IAnswer } from '@/types/types';
 import { getDataMatchedAnswer } from '@/utils/utils';
 import { Box, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
-import { useCurrentTest } from '@/store/currentTest';
+import { useCurrentQuiz } from '@/store/currentQuiz';
 
 interface InputQuestionProps {
 	answers: IAnswer[];
@@ -13,7 +13,7 @@ export const InputQuestion: FC<InputQuestionProps> = memo((props) => {
 	const { answers, isAnswerSubmit } = props;
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean>(false);
-	const questionAnswer = useCurrentTest((state) => state.questionAnswer);
+	const questionAnswer = useCurrentQuiz((state) => state.questionAnswer);
 
 	useEffect(() => {
 		if (answers.length && isAnswerSubmit) {

@@ -9,8 +9,8 @@ import {
 	Select,
 	Switch,
 } from '@chakra-ui/react';
-import { TestService } from '@/services/TestService';
-import { useTestsStore } from 'store/tests';
+import { QuizService } from '@/services/QuizService';
+import { useQuizzesStore } from '@/store/quizzes';
 import { TimerLimit } from 'types/timer';
 import { getQueryParam } from '@/utils/utils';
 
@@ -19,16 +19,16 @@ export const TimerSettings: FC = memo(() => {
 	const [showLimit, setShowLimit] = useState<boolean>(false);
 	const [minutes, setMinutes] = useState<number>(1);
 	const [seconds, setSeconds] = useState<number>(0);
-	const updateTest = useTestsStore((state) => state.updateTest);
+	const updateQuiz = useQuizzesStore((state) => state.updateQuiz);
 	const [isDataChanged, setIsDataChanged] = useState<boolean>(false);
 
 	useEffect(() => {
-		const testId = getQueryParam('id');
-		initTestTimerData(testId);
+		const quizId = getQueryParam('id');
+		initQuizTimerData(quizId);
 	}, []);
 
-	const initTestTimerData = useCallback(async(testId: string) => {
-		const data = await TestService.getTest(testId);
+	const initQuizTimerData = useCallback(async(quizId: string) => {
+		const data = await QuizService.getQuiz(quizId);
 
 		if (data.withTimer) {
 			setIsTimerEnabled(true);
@@ -75,9 +75,9 @@ export const TimerSettings: FC = memo(() => {
 	};
 
 	const onSave = async () => {
-		const testId = getQueryParam('id');
+		const quizId = getQueryParam('id');
 
-		const testTimerData = {
+		const quizTimerData = {
 			withTimer: isTimerEnabled,
 			...((minutes !== 0  && showLimit) || (seconds !== 0 && showLimit)) && {
 				timerLimit: {
@@ -87,9 +87,9 @@ export const TimerSettings: FC = memo(() => {
 			},
 		};
 
-		await updateTest(testId, {
-			withTimer: testTimerData.withTimer,
-			timerLimit: testTimerData.timerLimit as TimerLimit,
+		await updateQuiz(quizId, {
+			withTimer: quizTimerData.withTimer,
+			timerLimit: quizTimerData.timerLimit as TimerLimit,
 		});
 
 		setIsDataChanged(false);
@@ -100,11 +100,11 @@ export const TimerSettings: FC = memo(() => {
 			<FormControl display='flex' alignItems='center' mb='5px'>
 				<Flex justifyContent='space-between' w='100%'>
 					<Flex alignItems='center'>
-						<FormLabel htmlFor='test-timer'>
-							Enable test timer
+						<FormLabel htmlFor='quiz-timer'>
+							Enable quiz timer
 						</FormLabel>
 						<Switch
-							id='test-timer'
+							id='quiz-timer'
 							isChecked={isTimerEnabled}
 							onChange={onToggleTimerEnable}
 						/>

@@ -10,9 +10,9 @@ const QuestionSchema = new mongoose.Schema<IQuestion>({
 		type: String,
 		required: true,
 	},
-	testId: {
+	quizId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Test',
+		ref: 'Quiz',
 		required: true,
 	},
 	type: {

@@ -18,7 +18,7 @@ export interface IUser extends DocResult<IUser> {
 export type TimerValues = 'minutes' | 'seconds';
 export type TimerLimit = Record<TimerValues, number>;
 
-export interface ITest {
+export interface IQuiz {
 	_id: Types.ObjectId;
 	title: string;
 	authorId: Types.ObjectId;
@@ -30,7 +30,7 @@ export interface ITest {
 export interface IQuestion {
 	_id: Types.ObjectId;
 	description: string;
-	testId: Types.ObjectId;
+	quizId: Types.ObjectId;
 	type: QuestionType; 
 	order: number; // question number
 }
@@ -43,10 +43,10 @@ export interface IAnswer {
 	questionId: Types.ObjectId;
 }
 
-export interface ICompletedTest {
+export interface ICompletedQuiz {
 	_id: Types.ObjectId;
 	userId: Types.ObjectId;
-	testId: Types.ObjectId;
+	quizId: Types.ObjectId;
 	correct: number;
 	incorrect: number;
 	timeResult?: TimerLimit;

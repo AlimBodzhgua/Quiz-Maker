@@ -1,11 +1,11 @@
 import $axios from '@/api/axios';
 import { TimerLimit } from 'types/timer';
-import { IAnswer, IQuestion, ITest } from '@/types/types';
+import { IAnswer, IQuestion, IQuiz } from '@/types/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-interface CurrentTestState {
-	test: ITest | null;
+interface CurrentQuizState {
+	quiz: IQuiz | null;
 	questions: IQuestion[] | null;
 	answers: IAnswer[] | null;
 	correctAnswers: number;
@@ -15,19 +15,19 @@ interface CurrentTestState {
 	error?: string | undefined;
 }
 
-interface CurrentTestAscion {
-	fetchCurrentTest: (testId: string) => Promise<ITest | undefined>;
-	fetchCurrentTestQuestions: (testId: string) => Promise<void>;
-	fetchQuestionsAnswers: (testId: string, questionsId: string) => Promise<IAnswer[] | undefined>;
-	getCurrentTest: (testId: string) => Promise<ITest | undefined>;
+interface CurrentQuizAscion {
+	fetchCurrentQuiz: (quizId: string) => Promise<IQuiz | undefined>;
+	fetchCurrentQuizQuestions: (quizId: string) => Promise<void>;
+	fetchQuestionsAnswers: (quizId: string, questionsId: string) => Promise<IAnswer[] | undefined>;
+	getCurrentQuiz: (quizId: string) => Promise<IQuiz | undefined>;
 	questionAnswer: (isCorrect: boolean) => void;
-	resetTestResult: () => void;
-	saveTestResult: (timeResult?: TimerLimit) => Promise<void>;
+	resetQuizResult: () => void;
+	saveQuizResult: (timeResult?: TimerLimit) => Promise<void>;
 }
 
-export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
+export const useCurrentQuiz = create<CurrentQuizState & CurrentQuizAscion>()(
 	devtools((set, get) => ({
-		test: null,
+		quiz: null,
 		questions: null,
 		answers: null,
 		correctAnswers: 0,
@@ -36,11 +36,11 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 		isLoading: false,
 		error: undefined,
 
-		fetchCurrentTest: async (testId) => {
+		fetchCurrentQuiz: async (quizId) => {
 			try {
-				const response = await $axios.get<ITest>(`tests/${testId}`);
+				const response = await $axios.get<IQuiz>(`quizzes/${quizId}`);
 
-				const test = {
+				const quiz = {
 					_id: response.data._id,
 					title: response.data.title,
 					authorId: response.data.authorId,
@@ -49,27 +49,27 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 					timerLimit: response.data.timerLimit,
 				};
 
-				set({ test: test }, false, 'fetchCurrentTest');
-				return test;
+				set({ quiz: quiz }, false, 'fetchCurrentQuiz');
+				return quiz;
 			} catch (err) {
 				set({ error: JSON.stringify(err) });
 			}
 		},
 
-		fetchCurrentTestQuestions: async (testId) => {
+		fetchCurrentQuizQuestions: async (quizId) => {
 			try {
-				const response = await $axios.get<IQuestion[]>(`tests/${testId}/questions`);
+				const response = await $axios.get<IQuestion[]>(`quizzes/${quizId}/questions`);
 				const orderedQuestions = response.data.sort((a, b) => a.order > b.order ? 1 : -1);
 
-				set({ questions: orderedQuestions }, false, 'fetchCurrentTestQuestions');
+				set({ questions: orderedQuestions }, false, 'fetchCurrentQuizQuestions');
 			} catch (err) {
 				set({ error: JSON.stringify(err) });
 			}
 		},
 
-		fetchQuestionsAnswers: async (testId, questionId) => {
+		fetchQuestionsAnswers: async (quizId, questionId) => {
 			try {
-				const response = await $axios.get<IAnswer[]>(`tests/${testId}/questions/${questionId}/answers`);
+				const response = await $axios.get<IAnswer[]>(`quizzes/${quizId}/questions/${questionId}/answers`);
 				const orderedAnswers = response.data.sort((a, b) => a.order > b.order ? 1 : -1);
 				
 				set({ answers: response.data }, false, 'fetchQuestionsAnswers');
@@ -79,12 +79,12 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 			}
 		},
 
-		getCurrentTest: async (testId) => {
-			set({ isLoading: true }, false, 'currentTestLoading');
-			const test = await get().fetchCurrentTest(testId);
-			await get().fetchCurrentTestQuestions(testId);
-			set({ isLoading: false }, false, 'currentTestLoading');
-			return test;
+		getCurrentQuiz: async (quizId) => {
+			set({ isLoading: true }, false, 'currentQuizLoading');
+			const quiz = await get().fetchCurrentQuiz(quizId);
+			await get().fetchCurrentQuizQuestions(quizId);
+			set({ isLoading: false }, false, 'currentQuizLoading');
+			return quiz;
 		},
 
 		questionAnswer: (isCorrect) => {
@@ -95,14 +95,14 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 			}
 		},
 
-		resetTestResult: () => {
+		resetQuizResult: () => {
 			set({ correctAnswers: 0, incorrectAnswers: 0 });
 		},
 
-		saveTestResult: async (timeResult) => {
+		saveQuizResult: async (timeResult) => {
 			try {
-				await $axios.post('tests/completed', {
-					testId: get().test?._id,
+				await $axios.post('quizzes/completed', {
+					quizId: get().quiz?._id,
 					correct: get().correctAnswers,
 					incorrect: get().incorrectAnswers,
 					timeResult: timeResult,

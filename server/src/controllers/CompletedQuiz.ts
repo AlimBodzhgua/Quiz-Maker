@@ -2,7 +2,7 @@ import { Response, Request, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 
 import { ApiError } from '../exceptions/ApiError';
-import CompletedTestModel from '../models/CompletedTest';
+import CompletedQuizModel from '../models/CompletedQuiz';
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -12,17 +12,17 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 			return next(ApiError.ValidationError(errors.array()));
 		}
 		
-		const doc = new CompletedTestModel({
+		const doc = new CompletedQuizModel({
 			userId: res.locals.userId,
-			testId: req.body.testId,
+			quizId: req.body.quizId,
 			correct: req.body.correct,
 			incorrect: req.body.incorrect,
 			timeResult: req.body.timeResult,
 		});
 
-		const test = await doc.save();
+		const quiz = await doc.save();
 
-		res.json(test);
+		res.json(quiz);
 	} catch (err) {
 		next(err);	
 	}
@@ -31,16 +31,16 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getOne = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const test = await CompletedTestModel.findOne({
-			_id: req.params.testId,
+		const quiz = await CompletedQuizModel.findOne({
+			_id: req.params.quizId,
 			userId: res.locals.userId,
 		});
 
-		if (!test) {
-			return next(ApiError.BadRequest('Test with such id not found'));
+		if (!quiz) {
+			return next(ApiError.BadRequest('Quiz with such id not found'));
 		}
 
-		res.json(test);
+		res.json(quiz);
 	} catch (err) {
 		next(err);
 	}
@@ -48,13 +48,13 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
 
 export const remove = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const test = await CompletedTestModel.findOneAndDelete({
-			_id: req.params.testId,
+		const quiz = await CompletedQuizModel.findOneAndDelete({
+			_id: req.params.quizId,
 			userId: res.locals.userId,
 		});
 
-		if (!test) {
-			return next(ApiError.BadRequest('Test with such id not found'));
+		if (!quiz) {
+			return next(ApiError.BadRequest('Quiz with such id not found'));
 		}
 
 		res.status(200).send();

@@ -99,30 +99,30 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 		onRemoveQuestion(question._id);
 		
 		if (isSaved) {
-			const testId = getQueryParam('id');
-			QuestionService.removeQuestionOnServer(testId, question._id);
+			const quizId = getQueryParam('id');
+			QuestionService.removeQuestionOnServer(quizId, question._id);
 		}
 	};
 
 	const onEdit = () => {
-		const testId = getQueryParam('id');
-		QuestionService.removeQuestionOnServer(testId, question._id);
+		const quizId = getQueryParam('id');
+		QuestionService.removeQuestionOnServer(quizId, question._id);
 		setIsSaved(false);
 	};
 
 	const onSave = async () => {
 		if (AnswersService.isAnswersValid(answersList!)) {
 			setIsLoading(true);
-			const testId = getQueryParam('id');
+			const quizId = getQueryParam('id');
 			const newQuestion = {
 				_id: question._id,
 				description: title,
 				type: questionType,
 				order: question.order,
-				testId,
+				quizId,
 			}
 
-			await QuestionService.saveQuestion(testId, newQuestion, answersList!);
+			await QuestionService.saveQuestion(quizId, newQuestion, answersList!);
 			setIsSaved(true);
 			setIsLoading(false);
 		} else {

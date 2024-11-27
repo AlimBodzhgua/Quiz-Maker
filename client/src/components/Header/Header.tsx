@@ -38,7 +38,7 @@ export const Header: FC = memo(() => {
 			as='header'
 		>
 			<Heading size='md' color='gray.50' display='flex'>
-				<Box fontWeight='medium'>Test</Box>Constructor
+				<Box fontWeight='medium'>Quiz</Box>Constructor
 			</Heading>
 			{user ? (
 				<Popover closeDelay={15}>
@@ -54,7 +54,7 @@ export const Header: FC = memo(() => {
 								to={AppRoutes.MAIN}
 								size='sm'
 							>
-								My tests
+								My Quizzes
 							</Button>
 							<Button size='sm'>Completed</Button>
 							<Button size='sm'>Profile</Button>

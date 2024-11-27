@@ -2,8 +2,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import { LoginPage } from 'pages/LoginPage/LoginPage.async';
 import { RegisterPage } from 'pages/RegisterPage/RegisterPage.async';
 import { MainPage } from 'pages/MainPage/MainPage.async';
-import { CreateTestPage } from 'pages/CreateTestPage/CreateTestPage.async';
-import { TestPage } from 'pages/TestPage/TestPage.async';
+import { CreateQuizPage } from '@/pages/CreateQuizPage/CreateQuizPage.async';
+import { QuizPage } from '@/pages/QuizPage/QuizPage.async';
 import { NotFoundPage } from 'pages/NotFoundPage/NotFoundPage';
 import { Layout } from 'components/UI/Layout/Layout';
 
@@ -11,13 +11,13 @@ export enum AppRoutes {
 	MAIN = '/',
 	LOGIN = '/login',
 	REGISTER = '/register',
-	CREATE_TEST = '/createTest',
-	TEST = '/test/:id',
+	CREATE_QUIZ = '/createQuiz',
+	QUIZ = '/quiz/:id',
 
 	NOT_FOUND = '*',
 }
 
-export const getTestPage = (id: string) => `/test/${id}`;
+export const getQuizPage = (id: string) => `/quiz/${id}`;
 
 export const router = createBrowserRouter([
 	{
@@ -37,12 +37,12 @@ export const router = createBrowserRouter([
 				element: <RegisterPage />,
 			},
 			{
-				path: AppRoutes.CREATE_TEST,
-				element: <CreateTestPage />,
+				path: AppRoutes.CREATE_QUIZ,
+				element: <CreateQuizPage />,
 			},
 			{
-				path: AppRoutes.TEST,
-				element: <TestPage />,
+				path: AppRoutes.QUIZ,
+				element: <QuizPage />,
 			},
 			{
 				path: AppRoutes.NOT_FOUND,

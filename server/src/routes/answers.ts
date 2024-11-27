@@ -6,7 +6,7 @@ import * as AnswerController from '../controllers/AnswerController';
 const router = Router({ mergeParams: true });
 
 // POST /api/answers/:answer_id - ответить
-// GET /api/answers/:test_id - получить ответы пользователя на тест по ID теста
+// GET /api/answers/:quiz_id - получить ответы пользователя на тест по ID теста
 
 // /answers
 router.post('/', requireAuth, answerValidation, AnswerController.create);

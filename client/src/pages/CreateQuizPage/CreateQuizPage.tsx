@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 import { Box, Button, Flex, Heading, useToast, Text } from '@chakra-ui/react';
-import { CreateTestForm } from 'components/CreateTestForm/CreateTestForm';
+import { CreateQuizForm } from 'components/CreateQuizForm/CreateQuizForm';
 import { AddQuestionForm } from 'components/AddQuestionForm/AddQuestionForm';
 import { Page } from 'components/UI/Page/Page';
 import { IQuestionForm } from 'types/types';
@@ -11,7 +11,7 @@ import { QuestionService } from '@/services/QuestionService';
 import { ViewIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 
-const CreateTestPage: FC = () => {
+const CreateQuizPage: FC = () => {
 	const [questionsList, setQuestionsList] = useState<IQuestionForm[]>([]);
 	const toast = useToast();
 
@@ -22,13 +22,13 @@ const CreateTestPage: FC = () => {
 	}, []);
 
 	const onAddQuestion = useCallback(() => {
-		const testId = getQueryParam('id');
-		if (testId.length) {
+		const quizId = getQueryParam('id');
+		if (quizId.length) {
 			setQuestionsList([...questionsList, { _id: create24CharId(), order: questionsList.length + 1 }]);
 		} else {
 			toast({
-				title: 'Test not created.',
-				description: 'First you need to create a test and save it.',
+				title: 'Quiz not created.',
+				description: 'First you need to create a quiz and save it.',
 				status: 'info',
 				duration: 5000,
 				isClosable: true,
@@ -38,8 +38,8 @@ const CreateTestPage: FC = () => {
 	}, [questionsList]);
 
 	const onRemoveQuestion = useCallback((questionId: string) => {
-		const testId = getQueryParam('id');
-		const updatedQuestions = QuestionService.removeQuestion(questionsList, testId, questionId);
+		const quizId = getQueryParam('id');
+		const updatedQuestions = QuestionService.removeQuestion(questionsList, quizId, questionId);
 
 		setQuestionsList(updatedQuestions);
 	}, [questionsList]);
@@ -47,10 +47,10 @@ const CreateTestPage: FC = () => {
 	const onQuestionDragEnd = useCallback((e: DragEndEvent) => {
 		const { active, over } = e;
 		if (active.id !== over!.id) {
-			const testId = getQueryParam('id');
+			const quizId = getQueryParam('id');
 			const updatedQuestions = changeListOrder<IQuestionForm>(questionsList, over!.id, active.id)
 
-			QuestionService.updateQuestionsOrderOnServer(testId, updatedQuestions);
+			QuestionService.updateQuestionsOrderOnServer(quizId, updatedQuestions);
 
 			setQuestionsList(updatedQuestions);
 		}
@@ -62,7 +62,7 @@ const CreateTestPage: FC = () => {
 
 	return (
 		<Page>
-			<Heading m='12px 0'>Сreating a new test</Heading>
+			<Heading m='12px 0'>Сreating a new quiz</Heading>
 			<Box
 				display='flex'
 				flexDirection='column'
@@ -73,7 +73,7 @@ const CreateTestPage: FC = () => {
 				w='70%'
 				p='20px'
 			>
-				<CreateTestForm />
+				<CreateQuizForm />
 				{!!questionsList.length && (
 					<SortableList
 						items={questionsList.map((question) => question._id)}
@@ -97,7 +97,7 @@ const CreateTestPage: FC = () => {
 						as={Link}
 						disabled={!questionsList.length}
 						state={{ page: '#PREVIEW'}}
-						to={`/test/${getQueryParam('id')}#PREVIEW`}
+						to={`/quiz/${getQueryParam('id')}#PREVIEW`}
 						colorScheme='blue'
 						target='_blank'
 					>
@@ -117,4 +117,4 @@ const CreateTestPage: FC = () => {
 	);
 };
 
-export default CreateTestPage;
+export default CreateQuizPage;

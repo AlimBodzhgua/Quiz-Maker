@@ -5,13 +5,13 @@ import { isCorrectAnswerExist, isNoEmptyValuesAnswers } from '@/utils/utils';
 export class AnswersService {
 	
 	static addAnswersOnServer = async (
-		testId: string,
+		quizId: string,
 		questionId: string,
 		answers: IAnswerForm[],
 	): Promise<IAnswer[]> => {
 		try {
 			const promises = answers.map((answer) => {
-				return $axios.post(`/tests/${testId}/questions/${questionId}/answers`, answer);
+				return $axios.post(`/quizzes/${quizId}/questions/${questionId}/answers`, answer);
 			});
 
 			const responses = await Promise.all(promises);

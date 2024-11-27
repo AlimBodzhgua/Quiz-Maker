@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Box, Button, Flex, Heading } from '@chakra-ui/react';
-import { TestTable } from 'components/TestTable/TestTable';
+import { QuizTable } from '@/components/QuizTable/QuizTable';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '@/router/router';
 
@@ -13,12 +13,12 @@ const MainPage: FC = () => {
 				p='2px 14px'
 				mb='14px'
 			>
-				<Heading>My tests</Heading>
-				<Button as={Link} to={AppRoutes.CREATE_TEST}>
+				<Heading>My quizzes</Heading>
+				<Button as={Link} to={AppRoutes.CREATE_QUIZ}>
 					Create
 				</Button>
 			</Flex>
-			<TestTable />
+			<QuizTable />
 		</Box>
 	);
 };

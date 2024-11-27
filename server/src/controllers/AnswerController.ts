@@ -1,20 +1,20 @@
 import { Request, Response, NextFunction } from 'express';
 import { ApiError } from '../exceptions/ApiError';
-import TestModel from '../models/Test';
+import QuizModel from '../models/Quiz';
 import QuestionModel from '../models/Question';
 import AnswerModel from '../models/Answer';
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const test = await TestModel.findById(req.params.testId);
+		const quiz = await QuizModel.findById(req.params.quizId);
 
-		if (!test) {
-			return next(ApiError.BadRequest('Test with such id not found'));
+		if (!quiz) {
+			return next(ApiError.BadRequest('Quiz with such id not found'));
 		}
 
 		const question = await QuestionModel.findOne({
 			_id: req.params.questionId,
-			testId: req.params.testId,
+			quizId: req.params.quizId,
 		});
 
 		if (!question) {
@@ -39,15 +39,15 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const test = await TestModel.findById(req.params.testId);
+		const quiz = await QuizModel.findById(req.params.quizId);
 
-		if (!test) {
-			return next(ApiError.BadRequest('Test with such id not found'));
+		if (!quiz) {
+			return next(ApiError.BadRequest('Quiz with such id not found'));
 		}
 
 		const question = await QuestionModel.findOne({
 			_id: req.params.questionId,
-			testId: req.params.testId,
+			quizId: req.params.quizId,
 		});
 
 		if (!question) {

@@ -1,7 +1,7 @@
 import { FC, memo, useEffect, useState } from 'react';
 import { Box, Flex, RadioGroup } from '@chakra-ui/react';
 import { IAnswer } from 'types/types';
-import { useCurrentTest } from 'store/currentTest';
+import { useCurrentQuiz } from '@/store/currentQuiz';
 import { RadioButtonItem } from './RadioButtonItem';
 
 interface RadioButtonQuestionProps {
@@ -11,7 +11,7 @@ interface RadioButtonQuestionProps {
 
 export const RadioButtonQuestion: FC<RadioButtonQuestionProps> = memo(({answers, isAnswerSubmit}) => {
 	const [selectedAnswer, setSelectedAnswers] = useState<string>('');
-	const questionAnswer = useCurrentTest((state) => state.questionAnswer);
+	const questionAnswer = useCurrentQuiz((state) => state.questionAnswer);
 
 	useEffect(() => {
 		if (isAnswerSubmit) {

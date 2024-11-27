@@ -6,7 +6,7 @@ export interface IUser {
 	email: string;
 }
 
-export interface ITest {
+export interface IQuiz {
 	_id: string;
 	title: string;
 	authorId: string;
@@ -20,7 +20,7 @@ export type QuestionType = 'multipleAnswer' | 'oneAnswer' | 'inputAnswer' | 'tru
 export interface IQuestion {
 	_id: string;
 	description: string;
-	testId: string;
+	quizId: string;
 	type: QuestionType; 
 	order: number;
 }

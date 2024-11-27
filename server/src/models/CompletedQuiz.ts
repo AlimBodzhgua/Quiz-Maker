@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
-import { ICompletedTest } from '../types/types';
+import { ICompletedQuiz } from '../types/types';
 
-const CompletedTestSchema = new mongoose.Schema<ICompletedTest>({
+const CompletedQuizSchema = new mongoose.Schema<ICompletedQuiz>({
 	userId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
 		required: true,
 	},
-	testId: {
+	quizId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Test',
+		ref: 'Quiz',
 		required: true,
 	},
 	correct: {
@@ -26,6 +26,6 @@ const CompletedTestSchema = new mongoose.Schema<ICompletedTest>({
 	}
 })
 
-const CompletedTestModel = mongoose.model<ICompletedTest>('CompletedTest', CompletedTestSchema);
+const CompletedQuizModel = mongoose.model<ICompletedQuiz>('CompletedQuiz', CompletedQuizSchema);
 
-export default CompletedTestModel;
+export default CompletedQuizModel;

@@ -5,7 +5,7 @@ import * as QuestionController from '../controllers/QuestionController';
 
 const router = Router({ mergeParams: true });
 
-// /tests/:testId/questions
+// /quizzes/:quizId/questions
 router.post('/', requireAuth, questionValidation, QuestionController.create);
 router.delete('/:id', requireAuth, QuestionController.remove);
 router.get('/', requireAuth, QuestionController.getAll);

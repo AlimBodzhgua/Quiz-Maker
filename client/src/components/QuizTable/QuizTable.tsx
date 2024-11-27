@@ -1,27 +1,27 @@
 import { FC, memo, useEffect } from 'react';
 import { Card, CardBody, Heading, Table, TableContainer, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
-import { useTestsStore } from 'store/tests';
-import { TestItem } from './TestItem';
+import { useQuizzesStore } from '@/store/quizzes';
+import { QuizItem } from './QuizItem';
 import { TableSkeleton } from './TableSkeleton';
 
-export const TestTable: FC = memo(() => {
-	const tests = useTestsStore((state) => state.tests);
-	const getTests = useTestsStore((state) => state.getTests);
-	const isLoading = useTestsStore((state) => state.isLoading);
+export const QuizTable: FC = memo(() => {
+	const quizzes = useQuizzesStore((state) => state.quizzes);
+	const getQuizzes = useQuizzesStore((state) => state.getQuizzes);
+	const isLoading = useQuizzesStore((state) => state.isLoading);
 
 	useEffect(() => {
-		getTests();
-	}, [getTests]);
+		getQuizzes();
+	}, [getQuizzes]);
 
 	if (isLoading) {
 		return <TableSkeleton />
 	}
 
-	if (!tests.length) {
+	if (!quizzes.length) {
 		return (
 			<Card align='center'>
 				<CardBody>
-					<Heading size='md'>You have not tests yet</Heading>
+					<Heading size='md'>You have not quizzes yet</Heading>
 				</CardBody>
 			</Card>
 		);
@@ -39,8 +39,8 @@ export const TestTable: FC = memo(() => {
 					</Tr>
 				</Thead>
 				<Tbody>
-					{tests.map((test) => (
-						<TestItem testItem={test} key={test._id} />
+					{quizzes.map((quiz) => (
+						<QuizItem quizItem={quiz} key={quiz._id} />
 					))}
 				</Tbody>
 			</Table>

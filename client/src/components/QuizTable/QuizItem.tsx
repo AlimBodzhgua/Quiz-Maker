@@ -1,20 +1,20 @@
 import { FC, memo, useCallback, useState } from 'react';
 import { Button, Flex, Td, Tr, useDisclosure } from '@chakra-ui/react';
 import { DeleteIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import { getTestPage } from '@/router/router';
-import { useTestsStore } from 'store/tests';
-import { ITest } from 'types/types';
+import { getQuizPage } from '@/router/router';
+import { useQuizzesStore } from '@/store/quizzes';
+import { IQuiz } from 'types/types';
 import { Link } from 'react-router-dom';
 import { AppDialog } from '../UI/AppDialog/AppDialog';
 
-interface TestItemProps {
-	testItem: ITest;
+interface QuizItemProps {
+	quizItem: IQuiz;
 }
 
-export const TestItem: FC<TestItemProps> = memo(({ testItem }) => {
+export const QuizItem: FC<QuizItemProps> = memo(({ quizItem }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const removeTest = useTestsStore((state) => state.removeTest);
+	const removeQuiz = useQuizzesStore((state) => state.removeQuiz);
 	const formatter = new Intl.DateTimeFormat('en-US', {
 		day: '2-digit',
 		month: '2-digit',
@@ -23,23 +23,23 @@ export const TestItem: FC<TestItemProps> = memo(({ testItem }) => {
 
 	const handleRemove = useCallback(async () => {
 		setIsLoading(true);
-		await removeTest(testItem._id);
+		await removeQuiz(quizItem._id);
 		onClose();
 		setIsLoading(false);
-	}, [removeTest, onClose]);
+	}, [removeQuiz, onClose]);
 
 	return (
 		<Tr opacity={isLoading ? 0.2 : 1} transition={'opacity .4s linear'}>
 			<Td>
-				<Link to={getTestPage(testItem._id)}>{testItem.title}</Link>
+				<Link to={getQuizPage(quizItem._id)}>{quizItem.title}</Link>
 			</Td>
-			<Td>{formatter.format(new Date(testItem.createdAt)).split('/').join('.')}</Td>
+			<Td>{formatter.format(new Date(quizItem.createdAt)).split('/').join('.')}</Td>
 			<Td isNumeric>5</Td>
 			<Td>
 				<Flex align='center' gap='10px'>
 					<Button
 						as={Link}
-						to={getTestPage(testItem._id)}
+						to={getQuizPage(quizItem._id)}
 						variant='unstyled'
 						alignContent='center'
 						_hover={{ color: 'blue.300' }}
@@ -49,7 +49,7 @@ export const TestItem: FC<TestItemProps> = memo(({ testItem }) => {
 
 					<AppDialog
 						isOpen={isOpen}
-						headerText={`Delete Test: ${testItem.title}`}
+						headerText={`Delete Quiz: ${quizItem.title}`}
 						bodyText={'Are you sure? You can\'t undo this action afterwards.'}
 						actionText={'Delete'}
 						actionHandler={handleRemove}

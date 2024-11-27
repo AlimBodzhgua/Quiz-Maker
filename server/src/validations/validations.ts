@@ -10,18 +10,18 @@ export const loginValidation = [
 	body('password').notEmpty(),
 ];
 
-export const testCreateValidation = [
+export const quizCreateValidation = [
 	body('title').notEmpty().isString().isLength({ min: 4 }),
 	body('withTimer').optional().isBoolean(),
 	body('timerLimit').optional().isObject(),
 ];
 
-export const testRemoveValidation = [
-	body('testId').notEmpty(),
+export const quizRemoveValidation = [
+	body('quizId').notEmpty(),
 ];
 
-export const completedTestCreateValidation = [
-	body('testId').notEmpty(),
+export const completedQuizCreateValidation = [
+	body('quizId').notEmpty(),
 	body('correct').notEmpty().isNumeric(),
 	body('incorrect').notEmpty().isNumeric(),
 	body('timeResult').optional().isObject(),

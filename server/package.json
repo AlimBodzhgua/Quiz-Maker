@@ -1,5 +1,5 @@
 {
-  "name": "test-constructor-server",
+  "name": "quiz-maker-server",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {

@@ -1,7 +1,7 @@
 import { FC, memo, useState, useEffect } from 'react';
 import { Box, CheckboxGroup, Flex } from '@chakra-ui/react';
 import { IAnswer } from 'types/types';
-import { useCurrentTest } from 'store/currentTest';
+import { useCurrentQuiz } from '@/store/currentQuiz';
 import { CheckboxItem } from './CheckBoxItem';
 
 interface CheckBoxQuestion {
@@ -12,7 +12,7 @@ interface CheckBoxQuestion {
 export const CheckBoxQuestion: FC<CheckBoxQuestion> = memo(({answers, isAnswerSubmit}) => {
 	const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
 	const amountOfCorrect = answers.filter((answer) => answer.isCorrect).length;
-	const questionAnswer = useCurrentTest((state) => state.questionAnswer);
+	const questionAnswer = useCurrentQuiz((state) => state.questionAnswer);
 
 	useEffect(() => {
 		if (isAnswerSubmit) {

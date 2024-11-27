@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import QuestionModel from './Question';
 import AnswerModel from './Answer';
-import type { ITest } from '../types/types';
+import type { IQuiz } from '../types/types';
 
-const TestSchema = new mongoose.Schema<ITest>({
+const QuizSchema = new mongoose.Schema<IQuiz>({
 	// _id;
 	title: {
 		type: String,
@@ -25,17 +25,17 @@ const TestSchema = new mongoose.Schema<ITest>({
 }, { timestamps: true })
 
 
-TestSchema.pre('findOneAndDelete', async function(next) {
-	const test = this;
-	const questionsToDelete = await QuestionModel.find({ testId: test.getQuery()['_id'] });
+QuizSchema.pre('findOneAndDelete', async function(next) {
+	const quiz = this;
+	const questionsToDelete = await QuestionModel.find({ quizId: quiz.getQuery()['_id'] });
 
 	if (questionsToDelete.length) {
-		await QuestionModel.deleteMany({ testId: { $in: questionsToDelete.map((question) => question.testId) }});
+		await QuestionModel.deleteMany({ quizId: { $in: questionsToDelete.map((question) => question.quizId) }});
 		await AnswerModel.deleteMany({ questionId: { $in: questionsToDelete.map((question) => question._id) }});
 	}
 	next();
 })
 
-const TestModel = mongoose.model<ITest>('Test', TestSchema);
+const QuizModel = mongoose.model<IQuiz>('Quiz', QuizSchema);
 
-export default TestModel;
+export default QuizModel;

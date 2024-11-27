@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import { Card, CardBody, CardHeader, List, ListItem, Skeleton } from '@chakra-ui/react';
-import { useCurrentTest } from 'store/currentTest';
+import { useCurrentQuiz } from '@/store/currentQuiz';
 import { QuestionItem } from './QuestionItem';
 
 interface QuestionsListProps {
@@ -9,8 +9,8 @@ interface QuestionsListProps {
 
 export const QuestionsList: FC<QuestionsListProps> = memo((props) => {
 	const { isBlured } = props;
-	const questions = useCurrentTest((state) => state.questions);
-	const isLoading = useCurrentTest((state) => state.isLoading);
+	const questions = useCurrentQuiz((state) => state.questions);
+	const isLoading = useCurrentQuiz((state) => state.isLoading);
 
 	if (isLoading) {
 		return (

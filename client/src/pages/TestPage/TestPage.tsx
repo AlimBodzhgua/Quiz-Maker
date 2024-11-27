@@ -7,7 +7,8 @@ import { Page } from 'components/UI/Page/Page';
 import { Timer } from 'components/UI/Timer/Timer';
 import { useCurrentTest } from 'store/currentTest';
 import { QuestionsList } from 'components/QuestionsList/QuestionsList';
-import { getMathcedTimerProps } from '@/utils/utils';
+import { calculatePassedTime, getMathcedTimerProps } from '@/utils/utils';
+
 
 const TestPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();
@@ -41,7 +42,7 @@ const TestPage: FC = () => {
 	const handleStart = () => {
 		setIsStarted(true);
 		start();
-	}
+	};
 
 	const onFinish = () => {
 		const answeredQuestionsAmount = correctAnswers + incorrectAnswers;
@@ -49,7 +50,17 @@ const TestPage: FC = () => {
 
 		if (answeredQuestionsAmount === questions?.length) {
 			setIsLoading(true);
-			saveTestResult().then(() => setIsLoading(false));
+			let timeResult;
+
+			if (test?.withTimer) {
+				if (test.timerLimit) {
+					timeResult = calculatePassedTime(test.timerLimit, minutes, seconds);
+				} else {
+					timeResult = { minutes, seconds };
+				}
+			}
+
+			saveTestResult(timeResult).then(() => setIsLoading(false));
 		} else {
 			toast({
 				title: 'You haven\'t answered all the questions.',

@@ -1,4 +1,5 @@
 import $axios from '@/api/axios';
+import { TimerLimit } from 'types/timer';
 import { IAnswer, IQuestion, ITest } from '@/types/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
@@ -21,7 +22,7 @@ interface CurrentTestAscion {
 	getCurrentTest: (testId: string) => Promise<ITest | undefined>;
 	questionAnswer: (isCorrect: boolean) => void;
 	resetTestResult: () => void;
-	saveTestResult: () => Promise<void>;
+	saveTestResult: (timeResult?: TimerLimit) => Promise<void>;
 }
 
 export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
@@ -98,12 +99,13 @@ export const useCurrentTest = create<CurrentTestState & CurrentTestAscion>()(
 			set({ correctAnswers: 0, incorrectAnswers: 0 });
 		},
 
-		saveTestResult: async () => {
+		saveTestResult: async (timeResult) => {
 			try {
 				await $axios.post('tests/completed', {
 					testId: get().test?._id,
 					correct: get().correctAnswers,
 					incorrect: get().incorrectAnswers,
+					timeResult: timeResult,
 				});
 			} catch (err) {
 				set({ error: JSON.stringify(err) });

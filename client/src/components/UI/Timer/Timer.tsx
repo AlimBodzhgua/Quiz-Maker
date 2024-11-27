@@ -21,7 +21,12 @@ export const Timer: FC<TimerProps> = memo((props) => {
 	const { minutes, seconds, size = 'md' } = props;
 
 	return (
-		<Flex alignItems='center' gap='6px' color='white' fontSize={timereSizes[size]}>
+		<Flex
+			gap='6px'
+			color='white'
+			alignItems='center'
+			fontSize={timereSizes[size]}
+		>
 			<TimeIcon fontSize={subtractPixelsFromString(timereSizes[size], 2)} />
 			{`${minutes <= 9 ? '0' + minutes : minutes}:${seconds <= 9 ? '0' + seconds : seconds}`}
 		</Flex>

@@ -17,7 +17,7 @@ export interface IncreasingTimerProps {
 }
 
 export interface DecreasingTimerProps {
-	type: 'decreasing'
+	type: 'decreasing';
 	limit: TimerLimit;
 }
 

@@ -79,7 +79,7 @@ export const TimerSettings: FC = memo(() => {
 
 		const testTimerData = {
 			withTimer: isTimerEnabled,
-			...(minutes !== 0 || seconds !== 0) && {
+			...((minutes !== 0  && showLimit) || (seconds !== 0 && showLimit)) && {
 				timerLimit: {
 					minutes: minutes,
 					seconds: seconds,

@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { Box, Button, Flex, Heading, Text, useToast } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
 import { useTimer } from '@/hooks/useTimer';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Page } from 'components/UI/Page/Page';
 import { Timer } from 'components/UI/Timer/Timer';
 import { useCurrentTest } from 'store/currentTest';
@@ -26,9 +26,18 @@ const TestPage: FC = () => {
 	const { minutes, seconds, start, pause } = useTimer(timerProps);
 	const [isStarted, setIsStarted] = useState<boolean>(false);
 
+	const location = useLocation();
+	const [isPreview, setIsPreview] = useState<boolean>(false);
+
 
 	useEffect(() => {
 		if (id) {
+			const { hash } = location;
+
+			if (hash === '#PREVIEW') {
+				setIsPreview(true);
+			}
+
 			getCurrentTest(id).then((test) => {
 				if (!test?.withTimer) {
 					setIsStarted(true);
@@ -105,21 +114,23 @@ const TestPage: FC = () => {
 					</Button>
 				}
 				<QuestionsList isBlured={isStarted} />
-				<Flex gap='16px'>
-					<Button
-						onClick={onFinish}
-						isLoading={isLoading}
-						colorScheme='cyan'
-						color='white'
-						size='lg'
-					>
-						Finish Test
-					</Button>
-					<Flex alignItems='center' gap='12px' color='white'>
-						<Text>{correctAnswers}</Text>
-						<StarIcon />
+				{!isPreview &&
+					<Flex gap='16px'>
+						<Button
+							onClick={onFinish}
+							isLoading={isLoading}
+							colorScheme='cyan'
+							color='white'
+							size='lg'
+						>
+							Finish Test
+						</Button>
+						<Flex alignItems='center' gap='12px' color='white'>
+							<Text>{correctAnswers}</Text>
+							<StarIcon />
+						</Flex>
 					</Flex>
-				</Flex>
+				}
 			</Box>
 		</Page>
 	);

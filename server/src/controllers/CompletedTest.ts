@@ -17,6 +17,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 			testId: req.body.testId,
 			correct: req.body.correct,
 			incorrect: req.body.incorrect,
+			timeResult: req.body.timeResult,
 		});
 
 		const test = await doc.save();

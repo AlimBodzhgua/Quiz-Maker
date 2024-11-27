@@ -38,7 +38,7 @@ export const Header: FC = memo(() => {
 			as='header'
 		>
 			<Heading size='md' color='gray.50' display='flex'>
-				<Box fontWeight='medium'>Quiz</Box>Constructor
+				<Box fontWeight='medium'>Quiz</Box>Maker
 			</Heading>
 			{user ? (
 				<Popover closeDelay={15}>

@@ -16,7 +16,7 @@ export const QuizItem: FC<QuizItemProps> = memo(({ quizItem }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const removeQuiz = useQuizzesStore((state) => state.removeQuiz);
-	const [participiants, setParticipiants] = useState<number>(0);
+	const [participiantsAmount, setParticipiantsAmount] = useState<number>(0);
 	const formatter = new Intl.DateTimeFormat('en-US', {
 		day: '2-digit',
 		month: '2-digit',
@@ -24,7 +24,7 @@ export const QuizItem: FC<QuizItemProps> = memo(({ quizItem }) => {
 	});
 
 	useEffect(() => {
-		QuizService.countParticipiants(quizItem._id).then(setParticipiants);
+		QuizService.countParticipiants(quizItem._id).then(setParticipiantsAmount);
 	}, []);
 
 	const handleRemove = useCallback(async () => {
@@ -40,7 +40,7 @@ export const QuizItem: FC<QuizItemProps> = memo(({ quizItem }) => {
 				<Link to={getQuizPage(quizItem._id)}>{quizItem.title}</Link>
 			</Td>
 			<Td>{formatter.format(new Date(quizItem.createdAt)).split('/').join('.')}</Td>
-			<Td isNumeric>{participiants}</Td>
+			<Td isNumeric>{participiantsAmount}</Td>
 			<Td>
 				<Flex align='center' gap='10px'>
 					<Button

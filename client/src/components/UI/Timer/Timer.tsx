@@ -15,15 +15,21 @@ interface TimerProps {
 	minutes: number;
 	seconds: number;
 	size?: TimerSize;
+	color?: string;
 };
 
 export const Timer: FC<TimerProps> = memo((props) => {
-	const { minutes, seconds, size = 'md' } = props;
+	const {
+		minutes,
+		seconds,
+		size = 'md',
+		color = 'white',
+	} = props;
 
 	return (
 		<Flex
 			gap='6px'
-			color='white'
+			color={color}
 			alignItems='center'
 			fontSize={timereSizes[size]}
 		>

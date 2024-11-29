@@ -21,7 +21,7 @@ export interface IQuestion {
 	_id: string;
 	description: string;
 	quizId: string;
-	type: QuestionType; 
+	type: QuestionType;
 	order: number;
 }
 
@@ -31,6 +31,16 @@ export interface IAnswer {
 	order: number;
 	isCorrect: boolean;
 	questionId: string;
+}
+
+export interface ICompletedQuiz {
+	_id: string;
+	userId: string;
+	quizId: string;
+	quizTitle: string;
+	correct: number;
+	incorrect: number;
+	timeResult?: TimerLimit;
 }
 
 export type IAnswerForm = Omit<IAnswer, 'questionId'>;

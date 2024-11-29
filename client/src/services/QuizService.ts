@@ -1,4 +1,4 @@
-import { IQuiz } from 'types/types';
+import { ICompletedQuiz, IQuiz } from 'types/types';
 import $axios from '@/api/axios';
 
 export class QuizService {
@@ -9,6 +9,24 @@ export class QuizService {
 			return response.data;
 		} catch (err) {
 			throw new Error(`Error getting quiz ${err}`);
+		}
+	}
+
+	static getCompletedQuizzes = async (): Promise<ICompletedQuiz[]> => {
+		try {
+			const response = await $axios.get<ICompletedQuiz[]>('/completed-quizzes');
+			
+			return response.data;
+		} catch (err) {
+			throw new Error(`Error getting completed quizzes ${err}`);
+		}
+	}
+
+	static removeCompletedQuize = async (quizId: string): Promise<void> => {
+		try {
+			await $axios.delete<ICompletedQuiz>(`/completed-quizzes/${quizId}`);
+		} catch (err) {
+			throw new Error(`Error getting deleting quiz ${err}`);
 		}
 	}
 }

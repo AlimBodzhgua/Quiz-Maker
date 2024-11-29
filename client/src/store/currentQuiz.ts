@@ -101,8 +101,9 @@ export const useCurrentQuiz = create<CurrentQuizState & CurrentQuizAscion>()(
 
 		saveQuizResult: async (timeResult) => {
 			try {
-				await $axios.post('quizzes/completed', {
+				await $axios.post('/completed-quizzes', {
 					quizId: get().quiz?._id,
+					quizTitle: get().quiz?.title,
 					correct: get().correctAnswers,
 					incorrect: get().incorrectAnswers,
 					timeResult: timeResult,

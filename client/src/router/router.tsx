@@ -5,6 +5,7 @@ import { MainPage } from 'pages/MainPage/MainPage.async';
 import { CreateQuizPage } from 'pages/CreateQuizPage/CreateQuizPage.async';
 import { QuizPage } from 'pages/QuizPage/QuizPage.async';
 import { NotFoundPage } from 'pages/NotFoundPage/NotFoundPage';
+import { CompletedQuizzesPage } from 'pages/CompletedQuizzesPage/CompletedQuizzesPage.async';
 import { Layout } from 'components/UI/Layout/Layout';
 
 export enum AppRoutes {
@@ -13,6 +14,7 @@ export enum AppRoutes {
 	REGISTER = '/register',
 	CREATE_QUIZ = '/createQuiz',
 	QUIZ = '/quiz/:id',
+	COMPLETED_QUIZZES = '/quizzes/completed',
 
 	NOT_FOUND = '*',
 }
@@ -44,6 +46,11 @@ export const router = createBrowserRouter([
 				path: AppRoutes.QUIZ,
 				element: <QuizPage />,
 			},
+			{
+				path: AppRoutes.COMPLETED_QUIZZES,
+				element: <CompletedQuizzesPage />,
+			},
+
 			{
 				path: AppRoutes.NOT_FOUND,
 				element: <NotFoundPage />,

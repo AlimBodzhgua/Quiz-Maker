@@ -1,6 +1,6 @@
 import $axios from '@/api/axios';
 import { addQueryParam } from '@/utils/utils';
-import { IQuiz } from 'types/types';
+import { ICompletedQuiz, IQuiz } from 'types/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
@@ -15,6 +15,7 @@ interface QuizAction {
 	createQuiz: (title: string) => Promise<void>;
 	removeQuiz: (quizId: string) => Promise<void>;
 	updateQuiz: (quizId: string, newQuiz: Partial<IQuiz>) => Promise<void>;
+	//getCompletedQuizzes: () => Promise<ICompletedQuiz[] | undefined>;
 }
 
 export const useQuizzesStore = create<QuizState & QuizAction>()(

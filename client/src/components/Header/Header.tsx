@@ -56,7 +56,13 @@ export const Header: FC = memo(() => {
 							>
 								My Quizzes
 							</Button>
-							<Button size='sm'>Completed</Button>
+							<Button
+								as={RouterLink}
+								to={AppRoutes.COMPLETED_QUIZZES}
+								size='sm'
+							>
+								Completed
+							</Button>
 							<Button size='sm'>Profile</Button>
 							<Button size='sm' onClick={handleLogout}>
 								Logout

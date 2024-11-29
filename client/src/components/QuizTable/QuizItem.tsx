@@ -1,7 +1,8 @@
-import { FC, memo, useCallback, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useState } from 'react';
 import { Button, Flex, Td, Tr, useDisclosure } from '@chakra-ui/react';
 import { DeleteIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { getQuizPage } from '@/router/router';
+import { QuizService } from '@/services/QuizService';
 import { useQuizzesStore } from 'store/quizzes';
 import { IQuiz } from 'types/types';
 import { Link } from 'react-router-dom';
@@ -15,11 +16,16 @@ export const QuizItem: FC<QuizItemProps> = memo(({ quizItem }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const removeQuiz = useQuizzesStore((state) => state.removeQuiz);
+	const [participiants, setParticipiants] = useState<number>(0);
 	const formatter = new Intl.DateTimeFormat('en-US', {
 		day: '2-digit',
 		month: '2-digit',
 		year: 'numeric',
 	});
+
+	useEffect(() => {
+		QuizService.countParticipiants(quizItem._id).then(setParticipiants);
+	}, []);
 
 	const handleRemove = useCallback(async () => {
 		setIsLoading(true);
@@ -34,7 +40,7 @@ export const QuizItem: FC<QuizItemProps> = memo(({ quizItem }) => {
 				<Link to={getQuizPage(quizItem._id)}>{quizItem.title}</Link>
 			</Td>
 			<Td>{formatter.format(new Date(quizItem.createdAt)).split('/').join('.')}</Td>
-			<Td isNumeric>5</Td>
+			<Td isNumeric>{participiants}</Td>
 			<Td>
 				<Flex align='center' gap='10px'>
 					<Button

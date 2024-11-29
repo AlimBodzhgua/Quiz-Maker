@@ -47,6 +47,7 @@ export interface ICompletedQuiz {
 	_id: Types.ObjectId;
 	userId: Types.ObjectId;
 	quizId: Types.ObjectId;
+	quizTitle: string;
 	correct: number;
 	incorrect: number;
 	timeResult?: TimerLimit;

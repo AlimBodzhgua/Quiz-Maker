@@ -15,6 +15,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 		const doc = new CompletedQuizModel({
 			userId: res.locals.userId,
 			quizId: req.body.quizId,
+			quizTitle: req.body.quizTitle,
 			correct: req.body.correct,
 			incorrect: req.body.incorrect,
 			timeResult: req.body.timeResult,
@@ -41,6 +42,16 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
 		}
 
 		res.json(quiz);
+	} catch (err) {
+		next(err);
+	}
+}
+
+export const getAll = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const quizzes = await CompletedQuizModel.find({ userId: res.locals.userId });
+		
+		res.json(quizzes);
 	} catch (err) {
 		next(err);
 	}

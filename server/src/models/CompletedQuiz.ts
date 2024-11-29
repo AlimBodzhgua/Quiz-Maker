@@ -12,6 +12,10 @@ const CompletedQuizSchema = new mongoose.Schema<ICompletedQuiz>({
 		ref: 'Quiz',
 		required: true,
 	},
+	quizTitle: {
+		type: String,
+		required: true,
+	},
 	correct: {
 		type: Number,
 		required: true,

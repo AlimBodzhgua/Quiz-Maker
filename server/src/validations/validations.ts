@@ -22,6 +22,7 @@ export const quizRemoveValidation = [
 
 export const completedQuizCreateValidation = [
 	body('quizId').notEmpty(),
+	body('quizTitle').notEmpty().isString(),
 	body('correct').notEmpty().isNumeric(),
 	body('incorrect').notEmpty().isNumeric(),
 	body('timeResult').optional().isObject(),

@@ -1,13 +1,12 @@
 import $axios from '@/api/axios';
 import { TimerLimit } from 'types/timer';
-import { IAnswer, IQuestion, IQuiz } from 'types/types';
+import { IQuestion, IQuiz } from 'types/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 interface CurrentQuizState {
 	quiz: IQuiz | null;
 	questions: IQuestion[] | null;
-	answers: IAnswer[] | null;
 	correctAnswers: number;
 	incorrectAnswers: number;
 
@@ -18,7 +17,6 @@ interface CurrentQuizState {
 interface CurrentQuizAscion {
 	fetchCurrentQuiz: (quizId: string) => Promise<IQuiz | undefined>;
 	fetchCurrentQuizQuestions: (quizId: string) => Promise<void>;
-	fetchQuestionsAnswers: (quizId: string, questionsId: string) => Promise<IAnswer[] | undefined>;
 	getCurrentQuiz: (quizId: string) => Promise<IQuiz | undefined>;
 	questionAnswer: (isCorrect: boolean) => void;
 	resetQuizResult: () => void;
@@ -62,18 +60,6 @@ export const useCurrentQuiz = create<CurrentQuizState & CurrentQuizAscion>()(
 				const orderedQuestions = response.data.sort((a, b) => a.order > b.order ? 1 : -1);
 
 				set({ questions: orderedQuestions }, false, 'fetchCurrentQuizQuestions');
-			} catch (err) {
-				set({ error: JSON.stringify(err) });
-			}
-		},
-
-		fetchQuestionsAnswers: async (quizId, questionId) => {
-			try {
-				const response = await $axios.get<IAnswer[]>(`quizzes/${quizId}/questions/${questionId}/answers`);
-				const orderedAnswers = response.data.sort((a, b) => a.order > b.order ? 1 : -1);
-				
-				set({ answers: response.data }, false, 'fetchQuestionsAnswers');
-				return orderedAnswers;
 			} catch (err) {
 				set({ error: JSON.stringify(err) });
 			}

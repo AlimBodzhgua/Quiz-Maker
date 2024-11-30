@@ -4,6 +4,17 @@ import { isCorrectAnswerExist, isNoEmptyValuesAnswers } from '@/utils/utils';
 
 export class AnswersService {
 	
+	static fetchQuestionAnswers = async (quizId: string, questionId: string): Promise<IAnswer[]> => {
+		try {
+			const response = await $axios.get<IAnswer[]>(`quizzes/${quizId}/questions/${questionId}/answers`);
+			const orderedAnswers = response.data.sort((a, b) => a.order > b.order ? 1 : -1);
+			
+			return orderedAnswers;
+		} catch (err) {
+			throw Error(`Error adding answer, ${err}`);
+		}
+	};
+
 	static addAnswersOnServer = async (
 		quizId: string,
 		questionId: string,

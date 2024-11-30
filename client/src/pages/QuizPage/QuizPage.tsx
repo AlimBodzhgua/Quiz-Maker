@@ -2,13 +2,12 @@ import { FC, useEffect, useState } from 'react';
 import { Box, Button, Flex, Heading, Text, useToast } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
 import { useTimer } from '@/hooks/useTimer';
-import { useLocation, useParams } from 'react-router-dom';
 import { Page } from 'components/UI/Page/Page';
-import { Timer } from 'components/UI/Timer/Timer';
-import { useCurrentQuiz } from 'store/currentQuiz';
 import { QuestionsList } from 'components/QuestionsList/QuestionsList';
+import { QuizInfo } from 'components/QuizInfo/QuizInfo';
 import { calculatePassedTime, getMathcedTimerProps } from '@/utils/utils';
-
+import { useCurrentQuiz } from 'store/currentQuiz';
+import { useLocation, useParams } from 'react-router-dom';
 
 const QuizPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();
@@ -29,7 +28,6 @@ const QuizPage: FC = () => {
 	const location = useLocation();
 	const [isPreview, setIsPreview] = useState<boolean>(false);
 
-
 	useEffect(() => {
 		if (id) {
 			const { hash } = location;
@@ -38,11 +36,7 @@ const QuizPage: FC = () => {
 				setIsPreview(true);
 			}
 
-			getCurrentQuiz(id).then((quiz) => {
-				if (!quiz?.withTimer) {
-					setIsStarted(true);
-				}
-			});
+			getCurrentQuiz(id);
 		}
 
 		return () => resetQuizResult();
@@ -91,29 +85,20 @@ const QuizPage: FC = () => {
 				bg='linear-gradient(#0E6FE4, #0447CC)'
 				borderRadius='base'
 				boxShadow='base'
-				position='relative'
 			>
-					<Heading size='lg' fontWeight='medium' color='white'>
-						{quiz?.title}
-					</Heading>
-				<Flex justifyContent='space-between'>
-					<Text fontWeight='bold' color='white'>
-						Total quesetions: {questions?.length}
-					</Text>
-					{(quiz && quiz.withTimer) && <Timer minutes={minutes} seconds={seconds} />}
-				</Flex>
-				{(quiz && quiz.withTimer) &&
-					<Button
-						size='sm'
-						onClick={handleStart}
-						borderRadius='md'
-						m='5px 0'
-					>
-						Start quiz 
+				<Heading size='lg' fontWeight='medium' color='white'>
+					{quiz?.title}
+				</Heading>
+
+				<QuizInfo isTimerStarted={isStarted}/>
+
+				{quiz && quiz.withTimer && (
+					<Button size='sm' onClick={handleStart} borderRadius='md' m='5px 0'>
+						Start quiz
 					</Button>
-				}
+				)}
 				<QuestionsList isBlured={isStarted} />
-				{!isPreview &&
+				{!isPreview && (
 					<Flex gap='16px'>
 						<Button
 							onClick={onFinish}
@@ -129,7 +114,7 @@ const QuizPage: FC = () => {
 							<StarIcon />
 						</Flex>
 					</Flex>
-				}
+				)}
 			</Box>
 		</Page>
 	);

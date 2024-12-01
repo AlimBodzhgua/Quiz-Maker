@@ -1,26 +1,24 @@
 import { FC, Fragment, memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Flex, Text } from '@chakra-ui/react';
-import { useTimer } from '@/hooks/useTimer';
-import { getMathcedTimerProps } from '@/utils/utils';
 import { Timer } from 'components/UI/Timer/Timer';
 import { useCurrentQuiz } from 'store/currentQuiz';
 import { QuizProgressBar } from '../QuizProgressBar/QuizProgressBar';
 
 interface QuizInfoProps {
 	isTimerStarted: boolean;
+	minutes: number;
+	seconds: number;
 }
 
 export const QuizInfo: FC<QuizInfoProps> = memo((props) => {
-	const { isTimerStarted } = props;
+	const { isTimerStarted, minutes, seconds } = props;
 	const quiz = useCurrentQuiz((state) => state.quiz);
 	const correctAnswers = useCurrentQuiz((state) => state.correctAnswers);
 	const incorrectAnswers = useCurrentQuiz((state) => state.incorrectAnswers);
 	const questions = useCurrentQuiz((state) => state.questions);
 	const infoRef = useRef<HTMLDivElement | null>(null);
 
-	const timerProps = getMathcedTimerProps(quiz?.timerLimit);
 	const [isSrolledAfter, setIsSrolledAfter] = useState<boolean>(false);
-	const { minutes, seconds } = useTimer(timerProps);
 
 	useEffect(() => {
 		window.addEventListener('scroll', onScroll);

@@ -48,7 +48,7 @@ const CreateQuizPage: FC = () => {
 		const { active, over } = e;
 		if (active.id !== over!.id) {
 			const quizId = getQueryParam('id');
-			const updatedQuestions = changeListOrder<IQuestionForm>(questionsList, over!.id, active.id)
+			const updatedQuestions = changeListOrder<IQuestionForm>(questionsList, over!.id, active.id);
 
 			QuestionService.updateQuestionsOrderOnServer(quizId, updatedQuestions);
 

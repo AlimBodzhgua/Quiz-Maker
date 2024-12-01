@@ -42,6 +42,7 @@ export const useTimer = (props: TimerProps): CreateTimerFnReturn => {
 	}, [type]);
 
 	useEffect(() => {
+		console.log('MINUTES SECONDS')
 		if (isRunning) {
 			timerRef.current = setInterval(() => {
 				type === 'increasing' ? setSeconds((prev) => prev + 1) : setSeconds((prev) => prev - 1);

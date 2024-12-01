@@ -8,6 +8,7 @@ import { QuizInfo } from 'components/QuizInfo/QuizInfo';
 import { calculatePassedTime, getMathcedTimerProps } from '@/utils/utils';
 import { useCurrentQuiz } from 'store/currentQuiz';
 import { useLocation, useParams } from 'react-router-dom';
+import { QuizService } from '@/services/QuizService';
 
 const QuizPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();
@@ -18,7 +19,6 @@ const QuizPage: FC = () => {
 	const questions = useCurrentQuiz((state) => state.questions);
 	const getCurrentQuiz = useCurrentQuiz((state) => state.getCurrentQuiz);
 	const resetQuizResult = useCurrentQuiz((state) => state.resetQuizResult);
-	const saveQuizResult = useCurrentQuiz((state) => state.saveQuizResult);
 	const toast = useToast();
 	
 	const timerProps = getMathcedTimerProps(quiz?.timerLimit);
@@ -51,7 +51,7 @@ const QuizPage: FC = () => {
 		const answeredQuestionsAmount = correctAnswers + incorrectAnswers;
 		pause();
 
-		if (answeredQuestionsAmount === questions?.length) {
+		if (quiz && answeredQuestionsAmount === questions?.length) {
 			setIsLoading(true);
 			let timeResult;
 
@@ -63,7 +63,13 @@ const QuizPage: FC = () => {
 				}
 			}
 
-			saveQuizResult(timeResult).then(() => setIsLoading(false));
+			QuizService.saveQuizResult({
+				quizId: quiz._id,
+				quizTitle: quiz.title,
+				correct: correctAnswers,
+				incorrect: incorrectAnswers,
+				timeResult
+			}).then(() => setIsLoading(false));
 		} else {
 			toast({
 				title: 'You haven\'t answered all the questions.',
@@ -90,7 +96,7 @@ const QuizPage: FC = () => {
 					{quiz?.title}
 				</Heading>
 
-				<QuizInfo isTimerStarted={isStarted}/>
+				<QuizInfo isTimerStarted={isStarted} minutes={minutes} seconds={seconds}/>
 
 				{quiz && quiz.withTimer && (
 					<Button size='sm' onClick={handleStart} borderRadius='md' m='5px 0'>

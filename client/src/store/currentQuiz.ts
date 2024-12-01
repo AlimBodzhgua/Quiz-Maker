@@ -1,5 +1,4 @@
 import $axios from '@/api/axios';
-import { TimerLimit } from 'types/timer';
 import { IQuestion, IQuiz } from 'types/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
@@ -20,7 +19,6 @@ interface CurrentQuizAscion {
 	getCurrentQuiz: (quizId: string) => Promise<IQuiz | undefined>;
 	questionAnswer: (isCorrect: boolean) => void;
 	resetQuizResult: () => void;
-	saveQuizResult: (timeResult?: TimerLimit) => Promise<void>;
 }
 
 export const useCurrentQuiz = create<CurrentQuizState & CurrentQuizAscion>()(
@@ -83,20 +81,6 @@ export const useCurrentQuiz = create<CurrentQuizState & CurrentQuizAscion>()(
 
 		resetQuizResult: () => {
 			set({ correctAnswers: 0, incorrectAnswers: 0 });
-		},
-
-		saveQuizResult: async (timeResult) => {
-			try {
-				await $axios.post('/completed-quizzes', {
-					quizId: get().quiz?._id,
-					quizTitle: get().quiz?.title,
-					correct: get().correctAnswers,
-					incorrect: get().incorrectAnswers,
-					timeResult: timeResult,
-				});
-			} catch (err) {
-				set({ error: JSON.stringify(err) });
-			}
-		},
+		}
 	}))
 );

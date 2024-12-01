@@ -29,6 +29,20 @@ export class QuizService {
 		}
 	};
 
+	static saveQuizResult = async (result: Omit<ICompletedQuiz, '_id' | 'userId'>) => {
+		try {
+			await $axios.post('/completed-quizzes', {
+				quizId: result.quizId,
+				quizTitle: result.quizTitle,
+				correct: result.correct,
+				incorrect: result.incorrect,
+				timeResult: result.timeResult,
+			});
+		} catch (err) {
+			throw new Error(`Error saving quiz reult ${err}`);
+		}
+	};
+
 	static countParticipiants = async (quizId: string): Promise<number> => {
 		const completedQuizzes = await QuizService.getCompletedQuizzes();
 		const selectedQuizzes = completedQuizzes.filter((quiz) => quiz.quizId === quizId);

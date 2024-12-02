@@ -19,14 +19,14 @@ const QuizPage: FC = () => {
 	const questions = useCurrentQuiz((state) => state.questions);
 	const getCurrentQuiz = useCurrentQuiz((state) => state.getCurrentQuiz);
 	const resetQuizResult = useCurrentQuiz((state) => state.resetQuizResult);
+	const location = useLocation();
 	const toast = useToast();
 	
+	const [isPreview, setIsPreview] = useState<boolean>(false);
+	const [isStarted, setIsStarted] = useState<boolean>(false);
 	const timerProps = getMathcedTimerProps(quiz?.timerLimit);
 	const { minutes, seconds, start, pause } = useTimer(timerProps);
-	const [isStarted, setIsStarted] = useState<boolean>(false);
 
-	const location = useLocation();
-	const [isPreview, setIsPreview] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (id) {
@@ -36,11 +36,18 @@ const QuizPage: FC = () => {
 				setIsPreview(true);
 			}
 
-			getCurrentQuiz(id);
+			initQuiz(id);
 		}
 
 		return () => resetQuizResult();
 	}, []);
+
+	const initQuiz = async (id: string) => {
+		const quiz = await getCurrentQuiz(id);
+		if (!quiz?.withTimer) {
+			setIsStarted(true);
+		}
+	}
 
 	const handleStart = () => {
 		setIsStarted(true);

@@ -104,9 +104,10 @@ const CreateQuizPage: FC = () => {
 					</Box>
 					<Button
 						as={Link}
-						disabled={!questionsList.length}
 						state={{ page: '#PREVIEW'}}
 						to={`/quiz/${getQueryParam('id')}#PREVIEW`}
+						disabled={!questionsList.length}
+						pointerEvents={questionsList.length ? 'all' : 'none'}
 						colorScheme='blue'
 						target='_blank'
 					>

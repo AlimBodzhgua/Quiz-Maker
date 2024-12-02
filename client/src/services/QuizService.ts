@@ -46,6 +46,9 @@ export class QuizService {
 	static countParticipiants = async (quizId: string): Promise<number> => {
 		const completedQuizzes = await QuizService.getCompletedQuizzes();
 		const selectedQuizzes = completedQuizzes.filter((quiz) => quiz.quizId === quizId);
-		return selectedQuizzes.length;
+		const selectedQuizzesUsers = selectedQuizzes.map((quiz) => quiz.userId);
+		const uniqueUsersAmount = new Set(selectedQuizzesUsers).size;
+
+		return uniqueUsersAmount;
 	};
 }

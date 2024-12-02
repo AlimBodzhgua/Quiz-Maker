@@ -15,7 +15,6 @@ interface QuizAction {
 	createQuiz: (title: string) => Promise<IQuiz | undefined>;
 	removeQuiz: (quizId: string) => Promise<void>;
 	updateQuiz: (quizId: string, newQuiz: Partial<IQuiz>) => Promise<void>;
-	removeLastQuiz: () => void;
 }
 
 export const useQuizzesStore = create<QuizState & QuizAction>()(
@@ -59,12 +58,6 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 			} catch (err) {
 				set({ error: JSON.stringify(err) }, false, 'removeQuizError');
 			}
-		},
-
-		removeLastQuiz: () => {
-			const lastElement = get().quizzes.pop();
-			console.log(lastElement)
-			get().removeQuiz(lastElement!._id);
 		},
 
 		updateQuiz: async (quizId, newQuiz) => {

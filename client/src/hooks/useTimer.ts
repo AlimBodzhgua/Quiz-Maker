@@ -55,6 +55,7 @@ export const useTimer = (props: TimerProps): CreateTimerFnReturn => {
 				}
 				
 				if (limit && minutes >= limit.minutes && seconds >= limit.seconds) {
+					setIsRunning(false);
 					clearInterval(timerRef.current);
 				}
 			} else {
@@ -65,6 +66,7 @@ export const useTimer = (props: TimerProps): CreateTimerFnReturn => {
 				};
 
 				if (seconds === 0 && minutes === 0) {
+					setIsRunning(false);
 					clearInterval(timerRef.current);
 				};
 			}

@@ -9,15 +9,23 @@ import { DragEndEvent } from '@dnd-kit/core';
 import { changeListOrder, create24CharId, getQueryParam } from '@/utils/utils';
 import { QuestionService } from '@/services/QuestionService';
 import { ViewIcon } from '@chakra-ui/icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useQuizzesStore } from 'store/quizzes';
+import { QUIZ_LOCALSTORAGE_KEY } from '@/constants/localStorage';
 
 const CreateQuizPage: FC = () => {
 	const [questionsList, setQuestionsList] = useState<IQuestionForm[]>([]);
+	const removeQuiz = useQuizzesStore((state) => state.removeQuiz);
 	const toast = useToast();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		return () => {
-			window.history.pushState({}, document.title, window.location.pathname);
+			const quizId = localStorage.getItem(QUIZ_LOCALSTORAGE_KEY);
+			if (quizId) {
+				removeQuiz(quizId);
+				localStorage.removeItem(QUIZ_LOCALSTORAGE_KEY);
+			}
 		};
 	}, []);
 
@@ -57,7 +65,8 @@ const CreateQuizPage: FC = () => {
 	}, [questionsList]);
 
 	const onComplete = () => {
-		console.log('on complete');
+		localStorage.removeItem(QUIZ_LOCALSTORAGE_KEY);
+		navigate('/');
 	};
 
 	return (

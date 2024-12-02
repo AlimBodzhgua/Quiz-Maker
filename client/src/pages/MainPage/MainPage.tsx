@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { AppRoutes } from '@/router/router';
 
 const MainPage: FC = () => {
+
 	return (
 		<Box w='80%' p='15px 0'>
 			<Flex

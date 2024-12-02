@@ -1,5 +1,5 @@
 import { FC, memo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Flex, Input, InputGroup, InputRightAddon, Tooltip, useDisclosure } from '@chakra-ui/react';
 import { CheckIcon, DeleteIcon, EditIcon, SettingsIcon } from '@chakra-ui/icons';
 import { useHover } from '@/hooks/useHover';
@@ -7,6 +7,7 @@ import { getQueryParam } from '@/utils/utils';
 import { useQuizzesStore } from 'store/quizzes';
 import { AppDialog } from '../UI/AppDialog/AppDialog';
 import { SettingsModal } from '../SettingsModal/SettingsModal';
+import { QUIZ_LOCALSTORAGE_KEY } from '@/constants/localStorage';
 
 export const CreateQuizForm: FC = memo(() => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -23,6 +24,7 @@ export const CreateQuizForm: FC = memo(() => {
 	const removeQuiz = useQuizzesStore((state) => state.removeQuiz);
 	const updateQuiz = useQuizzesStore((state) => state.updateQuiz);
 	const navigate = useNavigate();
+	const location = useLocation();
 	const isSmallLength = title.length <= 3;
 
 	const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,15 +34,18 @@ export const CreateQuizForm: FC = memo(() => {
 	const onEdit = () => setIsSaved(false);
 
 	const onSaveQuiz = async () => {
-		const quizId = getQueryParam('id');
+		let quizId = getQueryParam('id');
 		setIsLoading(true);
 
 		if (quizId.length) {
 			await updateQuiz(quizId, { title });
 		} else {
-			await createQuiz(title);
+			const quiz = await createQuiz(title);
+			quizId = quiz!._id;
 		}
 
+		//navigate(location.pathname + `?id=${quizId}`, { replace: true, state: { id: quizId } });
+		localStorage.setItem(QUIZ_LOCALSTORAGE_KEY, quizId);
 		setIsLoading(false);
 		setIsSaved(true);
 	};

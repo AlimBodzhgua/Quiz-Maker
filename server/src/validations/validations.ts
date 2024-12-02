@@ -26,6 +26,7 @@ export const completedQuizCreateValidation = [
 	body('correct').notEmpty().isNumeric(),
 	body('incorrect').notEmpty().isNumeric(),
 	body('timeResult').optional().isObject(),
+	body('date').notEmpty().isString(),
 ];
 
 export const questionValidation = [

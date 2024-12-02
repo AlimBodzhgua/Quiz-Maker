@@ -51,6 +51,7 @@ export interface ICompletedQuiz {
 	correct: number;
 	incorrect: number;
 	timeResult?: TimerLimit;
+	date: string;
 }
 
 

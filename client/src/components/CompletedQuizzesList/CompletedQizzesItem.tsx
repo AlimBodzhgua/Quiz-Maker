@@ -83,7 +83,8 @@ export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo((props) 
 					)}
 					<Divider />
 				</CardBody>
-				<CardFooter pt='0' display='flex' justifyContent='flex-end'>
+				<CardFooter pt='0' display='flex' justifyContent='space-between'>
+					<Text>{quiz.date}</Text>
 					<Button
 						size='sm'
 						colorScheme='cyan'

@@ -27,7 +27,11 @@ const CompletedQuizSchema = new mongoose.Schema<ICompletedQuiz>({
 	timeResult: {
 		type: Object,
 		required: false,
-	}
+	},
+	date: {
+		type: String,
+		required: true,
+	},
 })
 
 const CompletedQuizModel = mongoose.model<ICompletedQuiz>('CompletedQuiz', CompletedQuizSchema);

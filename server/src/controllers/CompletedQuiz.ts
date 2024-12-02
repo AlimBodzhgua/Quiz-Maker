@@ -19,6 +19,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 			correct: req.body.correct,
 			incorrect: req.body.incorrect,
 			timeResult: req.body.timeResult,
+			date: req.body.date,
 		});
 
 		const quiz = await doc.save();

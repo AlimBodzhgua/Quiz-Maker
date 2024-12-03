@@ -1,8 +1,9 @@
-import { FC, Fragment, memo, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, Fragment, memo, useEffect, useRef, useState } from 'react';
 import { Flex, Text } from '@chakra-ui/react';
 import { Timer } from 'components/UI/Timer/Timer';
 import { useCurrentQuiz } from 'store/currentQuiz';
 import { QuizProgressBar } from '../QuizProgressBar/QuizProgressBar';
+import { useThrottle } from '@/hooks/useThrottle';
 
 interface QuizInfoProps {
 	isTimerStarted: boolean;
@@ -26,7 +27,8 @@ export const QuizInfo: FC<QuizInfoProps> = memo((props) => {
 		return () => window.removeEventListener('scroll', onScroll);
 	}, []);
 
-	const onScroll = useCallback(() => {
+	const onScroll = useThrottle(() => {
+		console.log('scroll')
 		const windowTop = window.scrollY;
 		const infoTop = infoRef.current?.offsetTop || 75;
 
@@ -35,7 +37,7 @@ export const QuizInfo: FC<QuizInfoProps> = memo((props) => {
 		} else {
 			setIsSrolledAfter(false);
 		}
-	}, []);
+	}, 200);
 
 	const infoBar = (
 		<Fragment>

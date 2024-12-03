@@ -14,11 +14,11 @@ import {
 	Button,
 } from '@chakra-ui/react';
 import {
-	TrueOrFalseQuestion,
-	RadioButtonQuestion,
-	InputQuestion,
-	CheckBoxQuestion,
-} from 'components/QuestionTypes';
+	CheckBoxAnswers,
+	InputAnswer,
+	RadioButtonAnswers,
+	TrueOrFalseAnswers,
+} from 'components/QuestionTypeAnswers';
 import { AnswersService } from '@/services/AnswersService';
 
 interface QuestionItemProps {
@@ -40,11 +40,11 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 		}
 	}, []);
 
-	const mapStateToQuestionType: Record<QuestionType, JSX.Element> = useMemo(() => ({
-		multipleAnswer: <CheckBoxQuestion answers={answers} isAnswerSubmit={isSubmitted}/>,
-		oneAnswer: <RadioButtonQuestion answers={answers} isAnswerSubmit={isSubmitted}/>,
-		inputAnswer: <InputQuestion answers={answers} isAnswerSubmit={isSubmitted}/>,
-		trueOrFalse: <TrueOrFalseQuestion answers={answers} isAnswerSubmit={isSubmitted}/>,	
+	const mapToQuestionTypeAnswers: Record<QuestionType, JSX.Element> = useMemo(() => ({
+		multipleAnswer: <CheckBoxAnswers answers={answers} isAnswerSubmit={isSubmitted}/>,
+		oneAnswer: <RadioButtonAnswers answers={answers} isAnswerSubmit={isSubmitted}/>,
+		inputAnswer: <InputAnswer answers={answers} isAnswerSubmit={isSubmitted}/>,
+		trueOrFalse: <TrueOrFalseAnswers answers={answers} isAnswerSubmit={isSubmitted}/>,	
 	} as const), [answers, isSubmitted]);
 
 	const onSubmit = () => {
@@ -80,7 +80,7 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 					</Flex>
 				</CardHeader>
 				<CardBody>
-					{mapStateToQuestionType[question.type]}
+					{mapToQuestionTypeAnswers[question.type]}
 				</CardBody>
 				<CardFooter justify='flex-end' pt='0'>
 					<Button

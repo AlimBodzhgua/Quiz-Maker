@@ -4,12 +4,12 @@ import { getDataMatchedAnswer } from '@/utils/utils';
 import { Box, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 import { useCurrentQuiz } from 'store/currentQuiz';
 
-interface InputQuestionProps {
+interface InputAnswerProps {
 	answers: IAnswer[];
 	isAnswerSubmit: boolean;
 }
 
-export const InputQuestion: FC<InputQuestionProps> = memo((props) => {
+export const InputAnswer: FC<InputAnswerProps> = memo((props) => {
 	const { answers, isAnswerSubmit } = props;
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean>(false);
@@ -25,7 +25,7 @@ export const InputQuestion: FC<InputQuestionProps> = memo((props) => {
 				questionAnswer(false);
 			}
 		}
-	}, [isAnswerSubmit])
+	}, [isAnswerSubmit]);
 
 	return (
 		<Box pl='16px'>

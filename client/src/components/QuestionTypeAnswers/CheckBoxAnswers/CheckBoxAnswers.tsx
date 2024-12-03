@@ -4,12 +4,12 @@ import { IAnswer } from 'types/types';
 import { useCurrentQuiz } from 'store/currentQuiz';
 import { CheckboxItem } from './CheckBoxItem';
 
-interface CheckBoxQuestion {
+interface CheckBoxAnswersProps {
 	answers: IAnswer[];
 	isAnswerSubmit: boolean;
 }
 
-export const CheckBoxQuestion: FC<CheckBoxQuestion> = memo(({answers, isAnswerSubmit}) => {
+export const CheckBoxAnswers: FC<CheckBoxAnswersProps> = memo(({answers, isAnswerSubmit}) => {
 	const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
 	const amountOfCorrect = answers.filter((answer) => answer.isCorrect).length;
 	const questionAnswer = useCurrentQuiz((state) => state.questionAnswer);
@@ -30,11 +30,11 @@ export const CheckBoxQuestion: FC<CheckBoxQuestion> = memo(({answers, isAnswerSu
 			} else questionAnswer(false);
 		}
 
-	}, [isAnswerSubmit])
+	}, [isAnswerSubmit]);
 
 	const onChange = (e: Array<string>) => {
 		setSelectedAnswers(e);
-	}
+	};
 
 	return (
 		<Box pl='16px'>

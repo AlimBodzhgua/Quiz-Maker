@@ -1,46 +1,40 @@
 import { FC, memo, useEffect, useState } from 'react';
-import { IAnswer } from 'types/types';
 import { Box, Flex, RadioGroup } from '@chakra-ui/react';
+import { IAnswer } from 'types/types';
 import { useCurrentQuiz } from 'store/currentQuiz';
-import { RadioButtonItem } from '../RadioButtonQuestion/RadioButtonItem';
+import { RadioButtonItem } from './RadioButtonItem';
 
-interface TrueOrFalseQuestionProps {
+interface RadioButtonAnswersProps {
 	answers: IAnswer[];
 	isAnswerSubmit: boolean;
 }
 
-export const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = memo((props) => {
-	const { answers, isAnswerSubmit } = props;
-	const [selectedAnswer, setSelectedAnswer] = useState('');
+export const RadioButtonAnswers: FC<RadioButtonAnswersProps> = memo(({answers, isAnswerSubmit}) => {
+	const [selectedAnswer, setSelectedAnswers] = useState<string>('');
 	const questionAnswer = useCurrentQuiz((state) => state.questionAnswer);
 
 	useEffect(() => {
 		if (isAnswerSubmit) {
 			const splittedAnswer = selectedAnswer.split(':');
-
+		
 			if (splittedAnswer[1] === 'true') {
 				questionAnswer(true);
 			} else questionAnswer(false);
 		}
-
 	}, [isAnswerSubmit]);
 
 	const onChange = (value: string) => {
-		setSelectedAnswer(value);
+		setSelectedAnswers(value);
 	};
 
 	return (
 		<Box pl='16px'>
-			<RadioGroup
-				onChange={onChange}
-				isDisabled={isAnswerSubmit}
-				name='trueOrFalse'
-			>
+			<RadioGroup onChange={onChange} name='oneAnswer' isDisabled={isAnswerSubmit}>
 				<Flex direction='column'>
 					{answers.map((answer) => (
 						<RadioButtonItem
-							answer={answer}
 							key={answer._id}
+							answer={answer}
 							isAnswerSubmit={isAnswerSubmit}
 						/>
 					))}
@@ -48,4 +42,4 @@ export const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = memo((props) =>
 			</RadioGroup>
 		</Box>
 	);
-});
+})

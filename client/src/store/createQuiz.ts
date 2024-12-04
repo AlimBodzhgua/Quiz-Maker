@@ -41,6 +41,7 @@ export const useCreateQuiz = create<CreateQuizState & CreateQuizActions>()(
 			const quizId = response.data._id;
 			set({ quizId: quizId }, false, 'createQuiz');
 
+			localStorage.setItem(QUIZ_LOCALSTORAGE_KEY, quizId);
 			addQueryParam('id', quizId);
 			return response.data;
 		},
@@ -60,7 +61,6 @@ export const useCreateQuiz = create<CreateQuizState & CreateQuizActions>()(
 		},
 
 		addQuestion: () => {
-			console.log(get().questions);
 			set({ questions: [...get().questions, get().createQuestion()] }, false, 'addQustion');
 		},
 
@@ -86,7 +86,6 @@ export const useCreateQuiz = create<CreateQuizState & CreateQuizActions>()(
 
 			await QuestionService.saveQuestion(quizId, { ...question, quizId }, questionAnswers);
 			set({ savedQuestionsAmount: get().savedQuestionsAmount + 1}, false, 'saveQuestion');
-
 		},
 	}))
 );

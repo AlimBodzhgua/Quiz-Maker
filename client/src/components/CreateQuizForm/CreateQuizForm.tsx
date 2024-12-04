@@ -20,11 +20,10 @@ export const CreateQuizForm: FC = memo(() => {
 	const [isSaved, setIsSaved] = useState<boolean>(false);
 	const [isHover, hoverProps] = useHover();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const createQuiz = useQuizzesStore((state) => state.createQuiz);
+	const createQuiz = useCreateQuiz((state) => state.createQuiz);
+	const updateQuiz = useCreateQuiz((state) => state.updateQuiz);
 	const removeQuiz = useQuizzesStore((state) => state.removeQuiz);
-	const updateQuiz = useQuizzesStore((state) => state.updateQuiz);
 	const navigate = useNavigate();
-	const initQuiz = useCreateQuiz((state) => state.initQuiz);
 	const quizId = useCreateQuiz((state) => state.quizId);
 	const isSmallLength = title.length <= 3;
 
@@ -39,13 +38,11 @@ export const CreateQuizForm: FC = memo(() => {
 		setIsLoading(true);
 
 		if (quizId.length) {
-			await updateQuiz(quizId, { title });
+			await updateQuiz({ title });
 		} else {
-			const quiz = await createQuiz(title);
-			quizId = quiz!._id;
+			await createQuiz(title);
 		}
 
-		initQuiz(quizId);
 		setIsLoading(false);
 		setIsSaved(true);
 	};

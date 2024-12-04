@@ -11,16 +11,16 @@ import { SortableItem } from '@/lib/components/SortableItem';
 import { IAnswerForm, IQuestionForm, QuestionType } from 'types/types';
 import { QuestionService } from '@/services/QuestionService';
 import { AnswersService } from '@/services/AnswersService';
-import { AddAnswerForm } from '../AddAnswerForm/AddAnswerForm';
-import { QuestionTypeSelector } from '../QuestionTypeSelector/QuestionTypeSelector';
+import { AddAnswerForm } from '../../AddAnswerForm/AddAnswerForm';
+import { QuestionTypeSelector } from '../../QuestionTypeSelector/QuestionTypeSelector';
+import { useCreateQuiz } from '@/store/createQuiz';
 
 interface AddQuestionFormProps {
 	question: IQuestionForm;
-	onRemoveQuestion: (question: string) => void;
 }
 
 export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
-	const { question, onRemoveQuestion } = props;
+	const { question } = props;
 	const [questionType, setQuestionType] = useState<QuestionType>(questionTypes.multipleAnswer);
 	const [title, setTitle] = useState<string>('');
 	const [answersList, setAnswersList] = useState<IAnswerForm[] | null>(null);
@@ -30,6 +30,9 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 	const toast = useToast();
 	const showAddBtn = questionType === questionTypes.multipleAnswer || questionType === questionTypes.oneAnswer;
 	const showSaveBtn = answersList && title.length;
+
+	const removeQuestion = useCreateQuiz((state) => state.removeQuestion);
+	const saveQuestion = useCreateQuiz((state) => state.saveQuestion);
 
 	useEffect(() => {
 		if (!answersList) {
@@ -96,7 +99,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 	};
 	
 	const handleRemoveQuestion = () => {
-		onRemoveQuestion(question._id);
+		removeQuestion(question._id);
 		
 		if (isSaved) {
 			const quizId = getQueryParam('id');
@@ -113,23 +116,19 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 	const onSave = async () => {
 		if (AnswersService.isAnswersValid(answersList!)) {
 			setIsLoading(true);
-			const quizId = getQueryParam('id');
 			const newQuestion = {
 				_id: question._id,
 				description: title,
 				type: questionType,
 				order: question.order,
-				quizId,
 			}
-
-			await QuestionService.saveQuestion(quizId, newQuestion, answersList!);
+			await saveQuestion(newQuestion, answersList!);
 			setIsSaved(true);
 			setIsLoading(false);
 		} else {
 			toast({
 				title: 'Empty value or no correct answer.',
-				description:
-					'All answser fileds should not be empty and should have at least 1 correct answer.',
+				description: 'All answser fileds should not be empty and should have at least 1 correct answer.',
 				status: 'error',
 				duration: 5000,
 				isClosable: true,

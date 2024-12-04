@@ -4,7 +4,7 @@ import { Button, Flex, Input, InputGroup, InputRightAddon, Tooltip, useDisclosur
 import { CheckIcon, DeleteIcon, EditIcon, SettingsIcon } from '@chakra-ui/icons';
 import { useHover } from '@/hooks/useHover';
 import { getQueryParam } from '@/utils/utils';
-import { QUIZ_LOCALSTORAGE_KEY } from '@/constants/localStorage';
+import { useCreateQuiz } from 'store/createQuiz';
 import { useQuizzesStore } from 'store/quizzes';
 import { AppDialog } from '../UI/AppDialog/AppDialog';
 import { SettingsModal } from '../SettingsModal/SettingsModal';
@@ -24,6 +24,8 @@ export const CreateQuizForm: FC = memo(() => {
 	const removeQuiz = useQuizzesStore((state) => state.removeQuiz);
 	const updateQuiz = useQuizzesStore((state) => state.updateQuiz);
 	const navigate = useNavigate();
+	const initQuiz = useCreateQuiz((state) => state.initQuiz);
+	const quizId = useCreateQuiz((state) => state.quizId);
 	const isSmallLength = title.length <= 3;
 
 	const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,16 +45,17 @@ export const CreateQuizForm: FC = memo(() => {
 			quizId = quiz!._id;
 		}
 
-		localStorage.setItem(QUIZ_LOCALSTORAGE_KEY, quizId);
+		initQuiz(quizId);
 		setIsLoading(false);
 		setIsSaved(true);
 	};
 
 	const onRemove = async () => {
-		const quizId = getQueryParam('id');
-		await removeQuiz(quizId);
-		onClose();
-		navigate('/');
+		if (quizId) {
+			await removeQuiz(quizId);
+			onClose();
+			navigate('/');
+		}
 	};
 
 	return (
@@ -103,7 +106,7 @@ export const CreateQuizForm: FC = memo(() => {
 						</Tooltip>
 					)}
 				</InputRightAddon>
-				<Button onClick={onOpenSettingsModal} ml='5px' disabled={!isSaved}>
+				<Button onClick={onOpenSettingsModal} disabled={!isSaved} ml='5px'>
 					<SettingsIcon />
 				</Button>
 				<SettingsModal isOpen={isSettingsModalOpen} onClose={onCloseSettingsModal}/>

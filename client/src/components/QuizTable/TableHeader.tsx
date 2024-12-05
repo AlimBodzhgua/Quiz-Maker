@@ -26,19 +26,19 @@ export const TableHeader: FC = memo(() => {
 							variant='outline'
 							size='xs'
 							p='0 2px'
+							mr='5px'
 							color='blue.400'
 							borderColor='blue.400'
 							borderWidth='2px'
-							onClick={resetSelectedList}
 							disabled={!selectedQuizzes.length}
-							mr='5px'
+							onClick={resetSelectedList}
 						>
 							<MinusIcon />
 						</Button>
 						<AppDialog
 							isOpen={isOpen}
-							headerText={`Delete Selected quizzes`}
-							bodyText={"Are you sure? You can't undo this action afterwards."}
+							headerText={'Delete selected quizzes'}
+							bodyText={'Are you sure? You can\'t undo this action afterwards.'}
 							actionText={'Delete'}
 							actionHandler={handleRemove}
 							onClose={onClose}

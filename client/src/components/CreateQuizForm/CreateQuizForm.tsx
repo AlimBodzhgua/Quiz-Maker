@@ -34,7 +34,7 @@ export const CreateQuizForm: FC = memo(() => {
 	const onEdit = () => setIsSaved(false);
 
 	const onSaveQuiz = async () => {
-		let quizId = getQueryParam('id');
+		const quizId = getQueryParam('id');
 		setIsLoading(true);
 
 		if (quizId.length) {

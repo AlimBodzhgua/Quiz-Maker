@@ -42,14 +42,24 @@ export const QuizInfo: FC<QuizInfoProps> = memo((props) => {
 	const infoBar = (
 		<Fragment>
 			{isTimerStarted ? (
-				<Flex color='white' alignItems='center' w='50%' m='8px 0'>
+				<Flex
+					color='white'
+					alignItems='center'
+					w='50%'
+					m='8px 0'
+				>
 					<QuizProgressBar
 						currentValue={correctAnswers + incorrectAnswers}
 						maxValue={questions!.length}
 					/>
 				</Flex>
 			) : (
-				<Text fontWeight='bold' color='white' w='30%' m='8px 0'>
+				<Text
+					fontWeight='bold'
+					color='white'
+					w='30%'
+					m='8px 0'
+				>
 					Total quesetions: {questions?.length}
 				</Text>
 			)}

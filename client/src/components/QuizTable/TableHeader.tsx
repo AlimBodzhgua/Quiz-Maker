@@ -61,6 +61,7 @@ export const TableHeader: FC = memo(() => {
 				</Th>
 				<Th>Name</Th>
 				<Th>Date Created</Th>
+				<Th isNumeric>Questions</Th>
 				<Th isNumeric>Number of participants</Th>
 				<Th>Action</Th>
 			</Tr>

@@ -55,6 +55,22 @@ export class QuestionService {
 		}
 	};
 
+	static fetchCurrentQuizQuestions = async (quizId: string): Promise<IQuestion[]> => {
+		try {
+			const response = await $axios.get<IQuestion[]>(`quizzes/${quizId}/questions`);
+			const orderedQuestions = response.data.sort((a, b) => a.order > b.order ? 1 : -1);
+
+			return orderedQuestions;
+		} catch (err) {
+			throw new Error(`Error updating question ${err}`);
+		}
+	};
+
+	static countQuizQuestions = async (quizId: string): Promise<number> => {
+		const questions = await QuestionService.fetchCurrentQuizQuestions(quizId);
+		return questions.length;
+	};
+
 	static updateQuestionsOrderOnServer = async (quizId: string, questions: IQuestionForm[]) => {
 		try {
 			questions.forEach((question) => {

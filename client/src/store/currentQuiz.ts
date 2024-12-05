@@ -1,4 +1,5 @@
 import $axios from '@/api/axios';
+import { QuestionService } from '@/services/QuestionService';
 import { IQuestion, IQuiz } from 'types/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
@@ -54,10 +55,9 @@ export const useCurrentQuiz = create<CurrentQuizState & CurrentQuizAscion>()(
 
 		fetchCurrentQuizQuestions: async (quizId) => {
 			try {
-				const response = await $axios.get<IQuestion[]>(`quizzes/${quizId}/questions`);
-				const orderedQuestions = response.data.sort((a, b) => a.order > b.order ? 1 : -1);
+				const questions = await QuestionService.fetchCurrentQuizQuestions(quizId);
 
-				set({ questions: orderedQuestions }, false, 'fetchCurrentQuizQuestions');
+				set({ questions }, false, 'fetchCurrentQuizQuestions');
 			} catch (err) {
 				set({ error: JSON.stringify(err) });
 			}

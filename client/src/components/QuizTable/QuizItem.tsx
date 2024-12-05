@@ -8,6 +8,7 @@ import { IQuiz } from 'types/types';
 import { Link } from 'react-router-dom';
 import { formatterOptions } from '@/constants/options';
 import { AppDialog } from '../UI/AppDialog/AppDialog';
+import { QuestionService } from '@/services/QuestionService';
 
 interface QuizItemProps {
 	quiz: IQuiz;
@@ -17,6 +18,7 @@ export const QuizItem: FC<QuizItemProps> = memo(({ quiz }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [participiantsAmount, setParticipiantsAmount] = useState<number>(0);
+	const [questionsAmount, setQuestionsAmount] = useState<number>(0);
 	const [isSelected, setIsSelected] = useState<boolean>(false);
 	
 	const isSelecting = useQuizzesStore((state) => state.isSelecting);
@@ -30,6 +32,7 @@ export const QuizItem: FC<QuizItemProps> = memo(({ quiz }) => {
 
 	useEffect(() => {
 		QuizService.countParticipiants(quiz._id).then(setParticipiantsAmount);
+		QuestionService.countQuizQuestions(quiz._id).then(setQuestionsAmount);
 	}, []);
 
 	useEffect(() => {
@@ -73,6 +76,7 @@ export const QuizItem: FC<QuizItemProps> = memo(({ quiz }) => {
 				<Link to={getQuizPage(quiz._id)}>{quiz.title}</Link>
 			</Td>
 			<Td>{formatter.format(new Date(quiz.createdAt)).split('/').join('.')}</Td>
+			<Td isNumeric>{questionsAmount}</Td>
 			<Td isNumeric>{participiantsAmount}</Td>
 			<Td>
 				<Flex align='center' gap='10px'>

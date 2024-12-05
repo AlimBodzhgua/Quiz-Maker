@@ -7,3 +7,9 @@ export const dateOptions: Intl.DateTimeFormatOptions = {
 	minute: '2-digit',
 	second: undefined,
 };
+
+export const formatterOptions: Intl.DateTimeFormatOptions = {
+	day: '2-digit',
+	month: '2-digit',
+	year: 'numeric',
+};

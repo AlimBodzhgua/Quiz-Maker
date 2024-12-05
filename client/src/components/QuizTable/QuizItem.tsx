@@ -1,51 +1,84 @@
 import { FC, memo, useCallback, useEffect, useState } from 'react';
-import { Button, Flex, Td, Tr, useDisclosure } from '@chakra-ui/react';
+import { Button, Checkbox, Flex, ScaleFade, Td, Tr, useDisclosure } from '@chakra-ui/react';
 import { DeleteIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { getQuizPage } from '@/router/router';
 import { QuizService } from '@/services/QuizService';
 import { useQuizzesStore } from 'store/quizzes';
 import { IQuiz } from 'types/types';
 import { Link } from 'react-router-dom';
+import { formatterOptions } from '@/constants/options';
 import { AppDialog } from '../UI/AppDialog/AppDialog';
 
 interface QuizItemProps {
-	quizItem: IQuiz;
+	quiz: IQuiz;
 }
 
-export const QuizItem: FC<QuizItemProps> = memo(({ quizItem }) => {
-	const { isOpen, onOpen, onClose } = useDisclosure()
+export const QuizItem: FC<QuizItemProps> = memo(({ quiz }) => {
+	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const removeQuiz = useQuizzesStore((state) => state.removeQuiz);
 	const [participiantsAmount, setParticipiantsAmount] = useState<number>(0);
-	const formatter = new Intl.DateTimeFormat('en-US', {
-		day: '2-digit',
-		month: '2-digit',
-		year: 'numeric',
-	});
+	const [isSelected, setIsSelected] = useState<boolean>(false);
+	
+	const isSelecting = useQuizzesStore((state) => state.isSelecting);
+	const selectQuiz = useQuizzesStore((state) => state.selectQuiz);
+	const deselectQuiz = useQuizzesStore((state) => state.deselectQuiz);
+	const removeQuiz = useQuizzesStore((state) => state.removeQuiz);
+	const selectedQuizzes = useQuizzesStore((state) => state.selectedQuizzes);
+	const isSelectedQuiz = useQuizzesStore((state) => state.isSelected); 
+
+	const formatter = new Intl.DateTimeFormat('en-US', formatterOptions);
 
 	useEffect(() => {
-		QuizService.countParticipiants(quizItem._id).then(setParticipiantsAmount);
+		QuizService.countParticipiants(quiz._id).then(setParticipiantsAmount);
 	}, []);
+
+	useEffect(() => {
+		if (isSelectedQuiz(quiz._id)) {
+			setIsSelected(true);
+		} else setIsSelected(false);
+	}, [selectedQuizzes])
+
+	const toggleSelect = () => {
+		if (isSelected) {
+			setIsSelected(false);
+			deselectQuiz(quiz._id);
+		} else {
+			selectQuiz(quiz._id);
+			setIsSelected(true);
+		}
+	}
 
 	const handleRemove = useCallback(async () => {
 		setIsLoading(true);
-		await removeQuiz(quizItem._id);
+		await removeQuiz(quiz._id);
 		onClose();
 		setIsLoading(false);
 	}, [removeQuiz, onClose]);
 
 	return (
 		<Tr opacity={isLoading ? 0.2 : 1} transition={'opacity .4s linear'}>
-			<Td>
-				<Link to={getQuizPage(quizItem._id)}>{quizItem.title}</Link>
+			<Td pr='0px' pl='-1px'>
+				<ScaleFade in={isSelecting}>
+					<Checkbox
+						pointerEvents={isSelecting ? 'all' : 'none'}
+						onChange={toggleSelect}
+						isChecked={isSelected}
+						borderRadius='base'
+						w='35px'
+						size='lg'
+					/>
+				</ScaleFade>
 			</Td>
-			<Td>{formatter.format(new Date(quizItem.createdAt)).split('/').join('.')}</Td>
+			<Td>
+				<Link to={getQuizPage(quiz._id)}>{quiz.title}</Link>
+			</Td>
+			<Td>{formatter.format(new Date(quiz.createdAt)).split('/').join('.')}</Td>
 			<Td isNumeric>{participiantsAmount}</Td>
 			<Td>
 				<Flex align='center' gap='10px'>
 					<Button
 						as={Link}
-						to={getQuizPage(quizItem._id)}
+						to={getQuizPage(quiz._id)}
 						variant='unstyled'
 						alignContent='center'
 						_hover={{ color: 'blue.300' }}
@@ -55,7 +88,7 @@ export const QuizItem: FC<QuizItemProps> = memo(({ quizItem }) => {
 
 					<AppDialog
 						isOpen={isOpen}
-						headerText={`Delete Quiz: ${quizItem.title}`}
+						headerText={`Delete Quiz: ${quiz.title}`}
 						bodyText={'Are you sure? You can\'t undo this action afterwards.'}
 						actionText={'Delete'}
 						actionHandler={handleRemove}

@@ -1,8 +1,16 @@
 import { FC, memo, useEffect } from 'react';
-import { Card, CardBody, Heading, Table, TableContainer, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
+import {
+	Card,
+	CardBody,
+	Heading,
+	Table,
+	TableContainer,
+	Tbody,
+} from '@chakra-ui/react';
 import { useQuizzesStore } from 'store/quizzes';
 import { QuizItem } from './QuizItem';
 import { TableSkeleton } from './TableSkeleton';
+import { TableHeader } from './TableHeader';
 
 export const QuizTable: FC = memo(() => {
 	const quizzes = useQuizzesStore((state) => state.quizzes);
@@ -12,7 +20,7 @@ export const QuizTable: FC = memo(() => {
 	useEffect(() => {
 		getQuizzes();
 	}, [getQuizzes]);
-
+	
 	if (isLoading) {
 		return <TableSkeleton />
 	}
@@ -30,17 +38,10 @@ export const QuizTable: FC = memo(() => {
 	return (
 		<TableContainer>
 			<Table variant='simple' colorScheme='teal'>
-				<Thead>
-					<Tr>
-						<Th>Name</Th>
-						<Th>Date Created</Th>
-						<Th isNumeric>Number of participants</Th>
-						<Th>Action</Th>
-					</Tr>
-				</Thead>
+				<TableHeader />
 				<Tbody>
 					{quizzes.map((quiz) => (
-						<QuizItem quizItem={quiz} key={quiz._id} />
+						<QuizItem quiz={quiz} key={quiz._id} />
 					))}
 				</Tbody>
 			</Table>

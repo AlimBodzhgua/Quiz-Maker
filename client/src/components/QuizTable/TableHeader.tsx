@@ -1,8 +1,11 @@
-import { FC, memo, useCallback } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import { DeleteIcon, MinusIcon } from '@chakra-ui/icons';
 import { Button, ScaleFade, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react';
 import { useQuizzesStore } from 'store/quizzes';
 import { AppDialog } from '../UI/AppDialog/AppDialog';
+import { SortFieldType } from '@/types/sort';
+import { SortToggle } from '../SortToggle/SortToggle';
+import { sortField } from '@/constants/sort';
 
 export const TableHeader: FC = memo(() => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -10,11 +13,17 @@ export const TableHeader: FC = memo(() => {
 	const selectedQuizzes = useQuizzesStore((state) => state.selectedQuizzes);
 	const isSelecting = useQuizzesStore((state) => state.isSelecting);
 	const removeSelectedList = useQuizzesStore((state) => state.removeSelectedList);
+	const [acitveField, setActiveField] = useState<SortFieldType | null>(null);
 
 	const handleRemove = useCallback(() => {
 		removeSelectedList();
 		onClose();
 	}, []);
+
+	const onChangeActiveField = useCallback((field: SortFieldType) => {
+		setActiveField(field);
+	}, [])
+
 
 	return (
 		<Thead>
@@ -38,7 +47,7 @@ export const TableHeader: FC = memo(() => {
 						<AppDialog
 							isOpen={isOpen}
 							headerText={'Delete selected quizzes'}
-							bodyText={'Are you sure? You can\'t undo this action afterwards.'}
+							bodyText={"Are you sure? You can't undo this action afterwards."}
 							actionText={'Delete'}
 							actionHandler={handleRemove}
 							onClose={onClose}
@@ -59,8 +68,22 @@ export const TableHeader: FC = memo(() => {
 						</AppDialog>
 					</ScaleFade>
 				</Th>
-				<Th>Name</Th>
-				<Th>Date Created</Th>
+				<Th>
+					<SortToggle
+						text='Name'
+						sortField={sortField.name}
+						activeField={acitveField}
+						onChangeActiveField={onChangeActiveField}
+					/>
+				</Th>
+				<Th>
+					<SortToggle
+						text='Date'
+						sortField={sortField.date}
+						activeField={acitveField}
+						onChangeActiveField={onChangeActiveField}
+					/>
+				</Th>
 				<Th isNumeric>Questions</Th>
 				<Th isNumeric>Number of participants</Th>
 				<Th>Action</Th>

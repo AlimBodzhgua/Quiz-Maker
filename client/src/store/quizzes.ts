@@ -5,6 +5,7 @@ import { devtools } from 'zustand/middleware';
 
 interface QuizState {
 	quizzes: IQuiz[];
+	sortedQuizzes: IQuiz[];
 	isSelecting: boolean;
 	selectedQuizzes: string[];
 	isLoading: boolean;
@@ -12,8 +13,9 @@ interface QuizState {
 }
 
 interface QuizAction {
-	getQuizzes: () => Promise<void>;
+	getQuizzes: () => Promise<IQuiz[]>;
 	removeQuiz: (quizId: string) => Promise<void>;
+	setSortedQuizzes: (quizzes: IQuiz[]) => void;
 
 	toggleSelect: () => void;
 	selectQuiz: (quizId: string) => void;
@@ -27,6 +29,8 @@ interface QuizAction {
 export const useQuizzesStore = create<QuizState & QuizAction>()(
 	devtools((set, get) => ({
 		quizzes: [],
+		sortedQuizzes: [],
+
 		isSelecting: false,
 		selectedQuizzes: [],
 		isLoading: false,
@@ -36,12 +40,17 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 			set({ isLoading: true }, false, 'getQuizzesLoading');
 			try {
 				const response = await $axios.get('quizzes');
-				set({ quizzes: response.data }, false, 'getQuizzes');
+				set({ quizzes: response.data, sortedQuizzes: response.data }, false, 'getQuizzes');
+				return response.data;
 			} catch (err) {
 				set({ error: JSON.stringify(err) }, false, 'getQuizzesError');
 			} finally {
 				set({ isLoading: false });
 			}
+		},
+
+		setSortedQuizzes: (quizzes) => {
+			set({ sortedQuizzes: quizzes });
 		},
 
 		removeQuiz: async (quizId: string) => {

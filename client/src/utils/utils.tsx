@@ -1,11 +1,13 @@
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
 import { baseAnswer } from '@/constants/answers';
 import { questionTypes } from '@/constants/questions';
-import { IAnswerForm, IQuestionForm, QuestionType } from 'types/types';
+import { IAnswerForm, IQuestionForm, IQuiz, QuestionType } from 'types/types';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 import { TimerLimit } from 'types/timer';
+import { SortDirectionType, SortFieldType } from 'types/sort';
 import { DecreasingTimerProps, IncreasingTimerProps } from '@/hooks/useTimer';
+import { QuizService } from '@/services/QuizService';
 
 export const initAnswers = (amount: number) => {
 	return Array(amount)
@@ -133,4 +135,13 @@ export const calculatePassedTime = (timerLimit: TimerLimit, minutes: number, sec
 	const secondsResult = (totalSeconds - totalSecondsLeft) % 60;
 	const minutesResult = Math.floor((totalSeconds - totalSecondsLeft) / 60);
 	return { seconds: secondsResult, minutes: minutesResult };
+}
+
+export const sortQuizzes = (quizzes: IQuiz[], field: SortFieldType, direction: SortDirectionType) => {
+	switch(field) {
+		case 'date':
+			return QuizService.sortByDate(quizzes, direction);
+		case 'name':
+			return QuizService.sortByName(quizzes, direction);
+	}
 }

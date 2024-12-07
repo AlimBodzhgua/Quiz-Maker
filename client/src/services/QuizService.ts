@@ -1,8 +1,10 @@
-import { ICompletedQuiz, IQuiz } from 'types/types';
 import $axios from '@/api/axios';
 import { dateOptions } from '@/constants/options';
+import { ICompletedQuiz, IQuiz } from 'types/types';
+import { SortDirectionType } from 'types/sort';
 
 export class QuizService {
+
 	static getQuiz = async (quizId: string): Promise<IQuiz> => {
 		try {
 			const response = await $axios.get<IQuiz>(`quizzes/${quizId}`);
@@ -54,5 +56,23 @@ export class QuizService {
 		const uniqueUsersAmount = new Set(selectedQuizzesUsers).size;
 
 		return uniqueUsersAmount;
+	};
+
+	static sortByName = (quizzes: IQuiz[], direction: SortDirectionType): IQuiz[] => {
+		if (direction === 'asc') {
+			return [...quizzes].sort((a, b) => a.title.localeCompare(b.title));
+		}
+		return [...quizzes].sort((a, b) => b.title.localeCompare(a.title));
+	};
+
+	static sortByDate = (quizzes: IQuiz[], direction: SortDirectionType): IQuiz[] => {
+		if (direction === 'asc') {
+			return [...quizzes].sort(
+				(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+			);
+		}
+		return [...quizzes].sort(
+			(a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+		);
 	};
 }

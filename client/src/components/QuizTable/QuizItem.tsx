@@ -60,14 +60,13 @@ export const QuizItem: FC<QuizItemProps> = memo(({ quiz }) => {
 
 	return (
 		<Tr opacity={isLoading ? 0.2 : 1} transition={'opacity .4s linear'}>
-			<Td pr='0px' pl='-1px'>
+			<Td pr='0px' pl='-1px' w='20px'>
 				<ScaleFade in={isSelecting}>
 					<Checkbox
 						pointerEvents={isSelecting ? 'all' : 'none'}
 						onChange={toggleSelect}
 						isChecked={isSelected}
 						borderRadius='base'
-						w='35px'
 						size='lg'
 					/>
 				</ScaleFade>
@@ -79,7 +78,7 @@ export const QuizItem: FC<QuizItemProps> = memo(({ quiz }) => {
 			<Td isNumeric>{questionsAmount}</Td>
 			<Td isNumeric>{participiantsAmount}</Td>
 			<Td>
-				<Flex align='center' gap='10px'>
+				<Flex align='center' gap='10px' justifyContent='center'>
 					<Button
 						as={Link}
 						to={getQuizPage(quiz._id)}

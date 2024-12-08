@@ -1,9 +1,10 @@
 import { FC, useEffect } from 'react';
-import { Box, Button, Flex, Heading } from '@chakra-ui/react';
+import { Box, Button, Flex } from '@chakra-ui/react';
 import { QuizTable } from 'components/QuizTable/QuizTable';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '@/router/router';
 import { useQuizzesStore } from 'store/quizzes';
+import { SearchBar } from '@/components/SearchBar/SearchBar';
 
 const MainPage: FC = () => {
 	const toggleSelect = useQuizzesStore((state) => state.toggleSelect);
@@ -21,10 +22,12 @@ const MainPage: FC = () => {
 			<Flex
 				justify='space-between'
 				align='center'
-				p='2px 14px'
+				p='2px 0px'
 				mb='14px'
 			>
-				<Heading>My quizzes</Heading>
+				<Flex w='80%'>
+					<SearchBar />
+				</Flex>
 				<Flex gap='8px'>
 					<Button size='sm' as={Link} to={AppRoutes.CREATE_QUIZ}>
 						Create

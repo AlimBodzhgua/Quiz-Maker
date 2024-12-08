@@ -16,7 +16,7 @@ interface SortToggleProps {
 export const SortToggle: FC<SortToggleProps> = memo((props) => {
 	const { text, sortField, activeField, onChangeActiveField } = props;
 	const [direction, setDirection] = useState<SortDirectionType>(sortDirection.desc);
-	const setSortedQuizzes = useQuizzesStore((state) => state.setSortedQuizzes);
+	const setSortedAndFilteredQuizzes = useQuizzesStore((state) => state.setSortedAndFilteredQuizzes);
 	const quizzes = useQuizzesStore((state) => state.quizzes);
 
 	const onToggleSort = () => {
@@ -26,7 +26,7 @@ export const SortToggle: FC<SortToggleProps> = memo((props) => {
 
 		const sorted = sortQuizzes(quizzes, sortField, direction);
 
-		setSortedQuizzes(sorted);
+		setSortedAndFilteredQuizzes(sorted);
 		setDirection(nextDirection);
 		onChangeActiveField(sortField);
 	}

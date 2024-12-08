@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useState } from 'react';
 import { DeleteIcon, MinusIcon } from '@chakra-ui/icons';
-import { Button, ScaleFade, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react';
+import { Button, Flex, ScaleFade, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react';
 import { useQuizzesStore } from 'store/quizzes';
 import { AppDialog } from '../UI/AppDialog/AppDialog';
 import { SortFieldType } from '@/types/sort';
@@ -28,7 +28,7 @@ export const TableHeader: FC = memo(() => {
 	return (
 		<Thead>
 			<Tr>
-				<Th pl='10px'>
+				<Th p='24px 10px'>
 					<ScaleFade in={isSelecting}>
 						<Button
 							fontWeight='extrabold'
@@ -86,7 +86,9 @@ export const TableHeader: FC = memo(() => {
 				</Th>
 				<Th isNumeric>Questions</Th>
 				<Th isNumeric>Number of participants</Th>
-				<Th>Action</Th>
+				<Th>
+					<Flex justifyContent='center'>Action</Flex>
+				</Th>
 			</Tr>
 		</Thead>
 	);

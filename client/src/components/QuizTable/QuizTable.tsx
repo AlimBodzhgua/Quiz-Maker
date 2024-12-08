@@ -16,10 +16,10 @@ import { TableHeader } from './TableHeader';
 import { useSearchParams } from 'react-router-dom';
 
 export const QuizTable: FC = memo(() => {
-	const sortedQuizzes = useQuizzesStore((state) => state.sortedQuizzes);
+	const sortedAndFilteredQuizzes = useQuizzesStore((state) => state.sortedAndFilteredQuizzes);
 	const getQuizzes = useQuizzesStore((state) => state.getQuizzes);
 	const isLoading = useQuizzesStore((state) => state.isLoading);
-	const setSortedQuizzes = useQuizzesStore((state) => state.setSortedQuizzes);
+	const setSortedAndFilteredQuizzes = useQuizzesStore((state) => state.setSortedAndFilteredQuizzes);
 	const [searchParams, _] = useSearchParams();
 
 	useEffect(() => {
@@ -28,7 +28,7 @@ export const QuizTable: FC = memo(() => {
 				const sortValue = searchParams.get('field') as SortFieldType || 'date';
 				const sortDirection = searchParams.get('sort') as SortDirectionType;
 				const sortedQuizzes = sortQuizzes(data, sortValue, sortDirection);
-				setSortedQuizzes(sortedQuizzes)
+				setSortedAndFilteredQuizzes(sortedQuizzes)
 			}
 		});
 	}, []);
@@ -37,7 +37,7 @@ export const QuizTable: FC = memo(() => {
 		return <TableSkeleton />
 	}
 
-	if (!sortedQuizzes.length) {
+	if (!sortedAndFilteredQuizzes.length) {
 		return (
 			<Card align='center'>
 				<CardBody>
@@ -48,11 +48,11 @@ export const QuizTable: FC = memo(() => {
 	}
 
 	return (
-		<TableContainer>
-			<Table variant='simple' colorScheme='teal'>
+		<TableContainer border='1px solid black' borderRadius='12px' borderColor='#E2E8F0'>
+			<Table>
 				<TableHeader />
 				<Tbody>
-					{sortedQuizzes.map((quiz) => (
+					{sortedAndFilteredQuizzes.map((quiz) => (
 						<QuizItem quiz={quiz} key={quiz._id} />
 					))}
 				</Tbody>

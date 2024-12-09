@@ -53,14 +53,16 @@ const CreateQuizPage: FC = () => {
 
 	return (
 		<Page>
-			<Heading m='12px 0'>Сreating a new quiz</Heading>
+			<Heading m='20px 0' fontWeight='normal' color='blue.400'>
+				Create a new quiz
+			</Heading>
 			<Box
 				display='flex'
 				flexDirection='column'
 				gap='10px'
 				border='1px'
-				borderColor='blue.200'
-				borderRadius='base'
+				borderColor='blue.400'
+				borderRadius='12px'
 				w='70%'
 				p='20px'
 			>
@@ -68,7 +70,19 @@ const CreateQuizPage: FC = () => {
 
 				{!!questions.length && <AddQuestionFormList />}
 
-				<Button onClick={onAddQuestion}>+ Add Question</Button>
+				<Button
+					onClick={onAddQuestion}
+					bgColor='#e6007e'
+					color='white'
+					m='8px 0'
+					textTransform='uppercase'
+					size='lg'
+					bgImage='linear-gradient(to right, #ff512f 0%, #dd2476 51%, #ff512f 100%)'
+					_hover='none'
+					_active='none'
+				>
+					+ Add Question
+				</Button>
 				<Flex alignSelf='flex-end' alignItems='center' gap='10px'>
 					<Box>Questions: {savedQuestionsAmount}</Box>
 					<Button

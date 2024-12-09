@@ -143,7 +143,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 			<Flex
 				direction='column'
 				borderRadius='base'
-				bg='blue.100'
+				bg='blue.400'
 				p='10px 8px'
 				position='relative'
 				{...hoverProps}
@@ -155,8 +155,8 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 						right='-54px'
 						top='-10px'
 						gap='10px'
-						bg='blue.100'
 						p='10px 8px'
+						bg='blue.400'
 					>
 						<Button onClick={handleRemoveQuestion} size='sm'>
 							<DeleteIcon />
@@ -214,6 +214,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 							disabled={answersList.length >= 5 || isSaved ? true : false}
 							alignSelf='flex-end'
 							size='sm'
+							m='5px 0'
 						>
 							+ Add Answer
 						</Button>

@@ -72,14 +72,14 @@ const CreateQuizPage: FC = () => {
 
 				<Button
 					onClick={onAddQuestion}
+					size='lg'
 					bgColor='#e6007e'
 					color='white'
 					m='8px 0'
 					textTransform='uppercase'
-					size='lg'
 					bgImage='linear-gradient(to right, #ff512f 0%, #dd2476 51%, #ff512f 100%)'
-					_hover='none'
-					_active='none'
+					_hover={{}}
+					_active={{}}
 				>
 					+ Add Question
 				</Button>

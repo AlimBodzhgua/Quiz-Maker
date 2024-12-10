@@ -8,12 +8,12 @@ import {
 	Tbody,
 } from '@chakra-ui/react';
 import { useQuizzesStore } from 'store/quizzes';
-import { QuizItem } from './QuizItem';
+import { useSearchParams } from 'react-router-dom';
 import { sortQuizzes } from '@/utils/utils';
 import { SortDirectionType, SortFieldType } from 'types/sort';
 import { TableSkeleton } from './TableSkeleton';
 import { TableHeader } from './TableHeader';
-import { useSearchParams } from 'react-router-dom';
+import { QuizItem } from './QuizItem';
 
 export const QuizTable: FC = memo(() => {
 	const sortedAndFilteredQuizzes = useQuizzesStore((state) => state.sortedAndFilteredQuizzes);

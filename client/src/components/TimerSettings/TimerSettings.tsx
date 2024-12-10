@@ -10,17 +10,17 @@ import {
 	Switch,
 } from '@chakra-ui/react';
 import { QuizService } from '@/services/QuizService';
-import { useQuizzesStore } from 'store/quizzes';
-import { TimerLimit } from 'types/timer';
 import { getQueryParam } from '@/utils/utils';
+import { TimerLimit } from 'types/timer';
+import { useCreateQuiz } from 'store/createQuiz';
 
 export const TimerSettings: FC = memo(() => {
 	const [isTimerEnabled, setIsTimerEnabled] = useState<boolean>(false);
 	const [showLimit, setShowLimit] = useState<boolean>(false);
 	const [minutes, setMinutes] = useState<number>(1);
 	const [seconds, setSeconds] = useState<number>(0);
-	const updateQuiz = useQuizzesStore((state) => state.updateQuiz);
 	const [isDataChanged, setIsDataChanged] = useState<boolean>(false);
+	const updateQuiz = useCreateQuiz((state) => state.updateQuiz);
 
 	useEffect(() => {
 		const quizId = getQueryParam('id');
@@ -75,8 +75,6 @@ export const TimerSettings: FC = memo(() => {
 	};
 
 	const onSave = async () => {
-		const quizId = getQueryParam('id');
-
 		const quizTimerData = {
 			withTimer: isTimerEnabled,
 			...((minutes !== 0  && showLimit) || (seconds !== 0 && showLimit)) && {
@@ -87,7 +85,7 @@ export const TimerSettings: FC = memo(() => {
 			},
 		};
 
-		await updateQuiz(quizId, {
+		await updateQuiz({
 			withTimer: quizTimerData.withTimer,
 			timerLimit: quizTimerData.timerLimit as TimerLimit,
 		});

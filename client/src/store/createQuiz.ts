@@ -6,6 +6,7 @@ import { IAnswerForm, IQuestion, IQuestionForm, IQuiz } from 'types/types';
 import { addQueryParam, changeListOrder, create24CharId, removeItemAndFixListOrder } from '@/utils/utils';
 import { QUIZ_LOCALSTORAGE_KEY } from '@/constants/localStorage';
 import $axios from '@/api/axios';
+import { privacyValues } from '@/constants/privacy';
 
 interface CreateQuizState {
 	quizId: string | null;
@@ -36,7 +37,7 @@ export const useCreateQuiz = create<CreateQuizState & CreateQuizActions>()(
 		},
 
 		createQuiz: async (title: string) => {
-			const response = await $axios.post<IQuiz>('quizzes', { title });
+			const response = await $axios.post<IQuiz>('quizzes', { title, privacy: privacyValues.private });
 
 			const quizId = response.data._id;
 			set({ quizId: quizId }, false, 'createQuiz');
@@ -49,6 +50,7 @@ export const useCreateQuiz = create<CreateQuizState & CreateQuizActions>()(
 		updateQuiz: async (newQuiz) => {
 			const response = await $axios.put<IQuiz>(`/quizzes/${get().quizId}`, {
 				title: newQuiz.title,
+				privacy: newQuiz.privacy,
 				withTimer: newQuiz.withTimer,
 				timerLimit: newQuiz.timerLimit,
 			});

@@ -7,7 +7,7 @@ import { getQueryParam } from '@/utils/utils';
 import { useCreateQuiz } from 'store/createQuiz';
 import { useQuizzesStore } from 'store/quizzes';
 import { AppDialog } from '../UI/AppDialog/AppDialog';
-import { SettingsModal } from '../SettingsModal/SettingsModal';
+import { SettingsModal } from '../QuizSettings';
 
 export const CreateQuizForm: FC = memo(() => {
 	const { isOpen, onOpen, onClose } = useDisclosure();

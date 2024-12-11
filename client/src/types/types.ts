@@ -1,3 +1,4 @@
+import { privacyValues } from '@/constants/privacy';
 import { TimerLimit } from './timer';
 
 export interface IUser {
@@ -11,11 +12,13 @@ export interface IQuiz {
 	title: string;
 	authorId: string;
 	createdAt: string;
+	privacy: QuizPrivacy;
 	withTimer?: boolean;
 	timerLimit?: TimerLimit;
 }
 
 export type QuestionType = 'multipleAnswer' | 'oneAnswer' | 'inputAnswer' | 'trueOrFalse' // checkbox/radioButton/input
+export type QuizPrivacy = keyof typeof privacyValues;
 
 export interface IQuestion {
 	_id: string;

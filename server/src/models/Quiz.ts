@@ -21,6 +21,10 @@ const QuizSchema = new mongoose.Schema<IQuiz>({
 	timerLimit: {
 		type: Object,
 		required: false,
+	},
+	privacy: {
+		type: String,
+		required: true,
 	}
 }, { timestamps: true })
 

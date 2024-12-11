@@ -17,6 +17,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 			authorId: res.locals.userId,
 			withTimer: req.body.withTimer,
 			timerLimit: req.body.timerLimit,
+			privacy: req.body.privacy,
 		});
 
 		const quiz = await doc.save();
@@ -74,6 +75,12 @@ export const remove = async (req: Request, res: Response, next: NextFunction) =>
 
 export const update = async (req: Request, res: Response, next: NextFunction) => {
 	try {
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			return next(ApiError.ValidationError(errors.array()));
+		}
+
 		const quiz = await QuizModel.findOneAndUpdate(
 			{
 				_id: req.params.quizId,
@@ -83,6 +90,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
 				title: req.body.title,
 				withTimer: req.body.withTimer,
 				timerLimit: req.body.timerLimit,
+				privacy: req.body.privacy,
 			},
 			{ new: true }
 		);

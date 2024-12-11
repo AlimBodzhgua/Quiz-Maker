@@ -12,6 +12,14 @@ export const loginValidation = [
 
 export const quizCreateValidation = [
 	body('title').notEmpty().isString().isLength({ min: 4 }),
+	body('privacy').notEmpty().isString(),
+	body('withTimer').optional().isBoolean(),
+	body('timerLimit').optional().isObject(),
+];
+
+export const quizUpdateValidation = [
+	body('title').optional().isString().isLength({ min: 4 }),
+	body('privacy').optional().isString(),
 	body('withTimer').optional().isBoolean(),
 	body('timerLimit').optional().isObject(),
 ];

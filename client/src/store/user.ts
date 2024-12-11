@@ -6,6 +6,7 @@ import $axios from '@/api/axios';
 
 interface UserState {
 	user: IUser | null;
+	_mounted: boolean;
 
 	isLoading: boolean;
 	error?: string | undefined;
@@ -23,6 +24,7 @@ export const useUserStore = create<UserAction & UserState>()(
 		user: null,
 		isLoading: false,
 		error: undefined,
+		_mounted: false,
 
 		logout: () => {
 			set({ user: null, error: undefined, isLoading: false }, false, 'logout');
@@ -43,11 +45,11 @@ export const useUserStore = create<UserAction & UserState>()(
 
 				localStorage.setItem(AUTH_LOCALSTORAGE_KEY, user.token);
 
-				set({ isLoading: false, user: user, error: undefined }, false, 'initUser');
+				set({ user: user, error: undefined }, false, 'initUser');
 			} catch (err) {
 				set({ error: JSON.stringify(err) });
 			} finally {
-				set({ isLoading: false });
+				set({ isLoading: false, _mounted: true });
 			}
 		},
 
@@ -66,6 +68,7 @@ export const useUserStore = create<UserAction & UserState>()(
 				localStorage.setItem(AUTH_LOCALSTORAGE_KEY, user.token);
 
 				set({ user, error: undefined }, false, 'login');
+				console.log('LOGIN');
 				window.location.replace('/');
 			} catch (err) {
 				set({ error: JSON.stringify(err) }, false, 'loginError');

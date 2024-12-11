@@ -12,7 +12,7 @@ import {
 	Heading,
 } from '@chakra-ui/react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { AppRoutes } from '@/router/router';
+import { AppRoutes } from '@/router/routes';
 import { useUserStore } from 'store/user';
 import ProfileIcon from '@/assets/profile.svg';
 

@@ -14,6 +14,7 @@ export const Page: FC<PageProps> = memo((props) => {
 			justify={centered ? 'center' : 'flex-start'}
 			align='center'
 			direction='column'
+			h='100%'
 			w='100%'
 		>
 			{children}

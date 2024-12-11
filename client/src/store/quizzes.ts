@@ -56,7 +56,10 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 		removeQuiz: async (quizId: string) => {
 			try {
 				await $axios.delete(`/quizzes/${quizId}`);
-				set({ quizzes: get().quizzes.filter((quiz) => quiz._id !== quizId) });
+				const allQuizzes = get().quizzes.filter((quiz) => quiz._id !== quizId);
+				const sortedQuizzes = get().sortedAndFilteredQuizzes.filter((quiz) => quiz._id !== quizId);
+
+				set({ quizzes: allQuizzes, sortedAndFilteredQuizzes: sortedQuizzes });
 			} catch (err) {
 				set({ error: JSON.stringify(err) }, false, 'removeQuizError');
 			}

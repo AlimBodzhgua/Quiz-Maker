@@ -10,10 +10,8 @@ interface AuthRequireProps {
 export const AuthRequire: FC<AuthRequireProps> = ({ children }) => {
 	const user = useUserStore((state) => state.user);
 	const [authMounted, setAuthMounted] = useState<boolean>(false);
-	//const isLoading = useUserStore((state) => state.isLoading);
 
 	useEffect(() => {
-		console.log('AUTH_REQUIRE')
 		setAuthMounted(true);
 	}, []);
 

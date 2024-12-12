@@ -10,6 +10,7 @@ const MainPage: FC = () => {
 	const toggleSelect = useQuizzesStore((state) => state.toggleSelect);
 	const isSelecting = useQuizzesStore((state) => state.isSelecting);
 	const fullResetSelectState = useQuizzesStore((state) => state.fullResetSelectState);
+	const quizzes = useQuizzesStore((state) => state.quizzes);
 
 	useEffect(() => {
 		return () => {
@@ -35,6 +36,7 @@ const MainPage: FC = () => {
 					<Button
 						size='sm'
 						onClick={toggleSelect}
+						disabled={!quizzes.length}
 						colorScheme='cyan'
 						color='white'
 					>

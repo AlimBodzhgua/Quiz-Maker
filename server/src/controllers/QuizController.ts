@@ -30,7 +30,20 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const quizzes = await QuizModel.find({ authorId: res.locals.userId });
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			return next(ApiError.ValidationError(errors.array()));
+		}
+		
+		const privacy = req.query.privacy;
+		let quizzes;
+
+		if (privacy) {
+			quizzes = await QuizModel.find({ authorId: res.locals.userId, privacy });
+		} else {
+			quizzes = await QuizModel.find({ authorId: res.locals.userId });
+		}
 
 		res.json(quizzes);
 	} catch (err) {
@@ -40,10 +53,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getOne = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const quiz = await QuizModel.findOne({
-			_id: req.params.quizId,
-			authorId: res.locals.userId,
-		});
+		const quiz = await QuizModel.findOne({ _id: req.params.quizId });
 
 		if (!quiz) {
 			return next(ApiError.BadRequest('Quiz with such id not found'));

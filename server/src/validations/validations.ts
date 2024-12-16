@@ -1,4 +1,4 @@
-import { body } from 'express-validator';
+import { body, query } from 'express-validator';
 
 export const registerValidation = [
 	body('email').notEmpty().isEmail(),
@@ -54,4 +54,13 @@ export const answerValidation = [
 	body('value').notEmpty().isString(),
 	body('isCorrect').notEmpty().isBoolean(),
 	body('order').notEmpty().isNumeric(),
+];
+
+export const quizzesQueryValidation = [
+	query('privacy')
+		.optional()
+		.isIn(['public', 'private', 'privateLink', 'privateLinkPassword', 'privateUsers'])
+		.withMessage(
+			'Privacy value must be one of the following listed values: public, private, privateLink, privateLinkPassword, privateUsers',
+		),
 ];

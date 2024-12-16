@@ -26,7 +26,6 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 			type: req.body.type,
 			order: req.body.order,
 		});
-		console.log(doc);
 
 		const question = await doc.save();
 
@@ -122,7 +121,6 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
 			},
 			{ new: true },
 		);
-		console.log(question);
 		res.json(question);
 	} catch (err) {
 		next(err);

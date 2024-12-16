@@ -58,7 +58,6 @@ export const useUserStore = create<UserAction & UserState>()(
 
 			try {
 				const response = await $axios.post<IUser>('/users/login', { email, password });
-				console.log(response);
 				const user = {
 					_id: response.data._id,
 					email: response.data.email,
@@ -68,7 +67,6 @@ export const useUserStore = create<UserAction & UserState>()(
 				localStorage.setItem(AUTH_LOCALSTORAGE_KEY, user.token);
 
 				set({ user, error: undefined }, false, 'login');
-				console.log('LOGIN');
 				window.location.replace('/');
 			} catch (err) {
 				set({ error: JSON.stringify(err) }, false, 'loginError');

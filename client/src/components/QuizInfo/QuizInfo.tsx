@@ -28,7 +28,6 @@ export const QuizInfo: FC<QuizInfoProps> = memo((props) => {
 	}, []);
 
 	const onScroll = useThrottle(() => {
-		console.log('scroll')
 		const windowTop = window.scrollY;
 		const infoTop = infoRef.current?.offsetTop || 75;
 

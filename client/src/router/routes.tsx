@@ -5,6 +5,7 @@ import { CompletedQuizzesPage } from 'pages/CompletedQuizzesPage/CompletedQuizze
 import { CreateQuizPage } from 'pages/CreateQuizPage/CreateQuizPage.async';
 import { QuizPage } from 'pages/QuizPage/QuizPage.async';
 import { NotFoundPage } from 'pages/NotFoundPage/NotFoundPage';
+import { AppRouteObject } from '@/types/route';
 
 export enum AppRoutes {
 	MAIN = '/',
@@ -17,7 +18,7 @@ export enum AppRoutes {
 	NOT_FOUND = '*',
 }
 
-export const routes = [
+export const routes: AppRouteObject[] = [
 	{
 		path: AppRoutes.MAIN,
 		element: <MainPage />,

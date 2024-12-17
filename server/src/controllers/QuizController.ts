@@ -2,7 +2,9 @@ import { Response, Request, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 
 import { ApiError } from '../exceptions/ApiError';
+import { IQuiz } from '../types/types';
 import QuizModel from '../models/Quiz';
+import UserModel from '../models/User';
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -35,14 +37,24 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 		if (!errors.isEmpty()) {
 			return next(ApiError.ValidationError(errors.array()));
 		}
-		
+
+		let quizzes = await QuizModel.find<IQuiz>();
+
 		const privacy = req.query.privacy;
-		let quizzes;
+		const authorId = req.query.authorId;
+
+		
+		if (authorId) {
+			const user = await UserModel.findById(authorId);
+
+			if (!user) {
+				return next(ApiError.BadRequest('User does not exist'));
+			}
+			quizzes = quizzes.filter((quiz) => String(quiz.authorId) === authorId);
+		}
 
 		if (privacy) {
-			quizzes = await QuizModel.find({ authorId: res.locals.userId, privacy });
-		} else {
-			quizzes = await QuizModel.find({ authorId: res.locals.userId });
+			quizzes = quizzes.filter((quiz) => quiz.privacy === privacy);
 		}
 
 		res.json(quizzes);

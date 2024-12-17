@@ -63,4 +63,9 @@ export const quizzesQueryValidation = [
 		.withMessage(
 			'Privacy value must be one of the following listed values: public, private, privateLink, privateLinkPassword, privateUsers',
 		),
+	query('authorId').optional().isString()
 ];
+
+export const usersQueryValidation = [
+	query('userId').optional().isString(),
+]

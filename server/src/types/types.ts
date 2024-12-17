@@ -16,6 +16,8 @@ export interface IUser extends DocResult<IUser> {
 	passwordHash: string;
 }
 
+export type IPublicUserData = Omit<IUser, 'passwordHash'>;
+
 export type TimerValues = 'minutes' | 'seconds';
 export type TimerLimit = Record<TimerValues, number>;
 

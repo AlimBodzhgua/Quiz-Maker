@@ -1,3 +1,4 @@
+import { IPublicUserData } from './../types/types';
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
@@ -6,6 +7,7 @@ import { ApiError } from '../exceptions/ApiError';
 import { HashService } from '../services/HashService';
 import { TokenService } from '../services/TokenService';
 import UserModel from '../models/User';
+import { IUser } from '../types/types';
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -81,6 +83,29 @@ export const getMe = async (req: Request, res: Response, next: NextFunction) => 
 		const { passwordHash, ...userData } = user._doc;
 
 		res.json({...userData, token: res.locals.token});
+	} catch (err) {
+		next(err);
+	}
+}
+
+export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			return next(ApiError.ValidationError(errors.array()));
+		}
+
+		const userId = req.query.userId;
+
+		const users = await UserModel.find<IUser>();
+		let publicUsersData = users.map((user) => ({_id: user._id, email: user.email})) as IPublicUserData[];
+
+		if (userId) {
+			publicUsersData = publicUsersData.filter((user) => String(user._id) === userId);
+		}
+
+		res.json(publicUsersData);
 	} catch (err) {
 		next(err);
 	}

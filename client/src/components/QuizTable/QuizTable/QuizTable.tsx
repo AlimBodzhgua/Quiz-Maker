@@ -13,8 +13,8 @@ import { sortQuizzes } from '@/utils/utils';
 import { SortDirectionType, SortFieldType } from 'types/sort';
 import { useUserStore } from 'store/user';
 import { QuizItem } from './QuizItem';
+import { TableHeader } from '../TableHeader/TableHeader';
 import { TableSkeleton } from '../TableSkeleton';
-import { TableHeader } from '../TableHeader';
 
 export const QuizTable: FC = memo(() => {
 	const sortedAndFilteredQuizzes = useQuizzesStore((state) => state.sortedAndFilteredQuizzes);

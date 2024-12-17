@@ -11,10 +11,10 @@ import { useQuizzesStore } from 'store/quizzes';
 import { useSearchParams } from 'react-router-dom';
 import { sortQuizzes } from '@/utils/utils';
 import { SortDirectionType, SortFieldType } from 'types/sort';
-import { TableSkeleton } from './TableSkeleton';
-import { TableHeader } from './TableHeader';
+import { useUserStore } from 'store/user';
 import { QuizItem } from './QuizItem';
-import { useUserStore } from '@/store/user';
+import { TableSkeleton } from '../TableSkeleton';
+import { TableHeader } from '../TableHeader';
 
 export const QuizTable: FC = memo(() => {
 	const sortedAndFilteredQuizzes = useQuizzesStore((state) => state.sortedAndFilteredQuizzes);
@@ -30,7 +30,7 @@ export const QuizTable: FC = memo(() => {
 				const sortValue = searchParams.get('field') as SortFieldType || 'date';
 				const sortDirection = searchParams.get('sort') as SortDirectionType;
 				const sortedQuizzes = sortQuizzes(data, sortValue, sortDirection);
-				setSortedAndFilteredQuizzes(sortedQuizzes)
+				setSortedAndFilteredQuizzes(sortedQuizzes);
 			}
 		});
 	}, []);

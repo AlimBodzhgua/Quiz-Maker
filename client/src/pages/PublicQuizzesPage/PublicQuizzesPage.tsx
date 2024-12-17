@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import { Box } from '@chakra-ui/react';
-import { PublicQuizTable } from 'components/PublicQuizTable/PublicQuizTable';
+import { PublicQuizTable } from 'components/QuizTable';
 import { SearchBar } from 'components/SearchBar/SearchBar';
 
 

@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react';
 import { Box, Button, Flex } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '@/router/routes';
-import { QuizTable } from 'components/QuizTable/QuizTable';
+import { QuizTable } from 'components/QuizTable';
 import { SearchBar } from 'components/SearchBar/SearchBar';
 import { useQuizzesStore } from 'store/quizzes';
 

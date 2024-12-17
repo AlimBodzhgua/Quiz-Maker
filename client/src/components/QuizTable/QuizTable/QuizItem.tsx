@@ -4,10 +4,10 @@ import { DeleteIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { getQuizPage } from '@/router/router';
 import { QuizService } from '@/services/QuizService';
 import { useQuizzesStore } from 'store/quizzes';
+import { AppDialog } from 'components/UI/AppDialog/AppDialog';
 import { IQuiz } from 'types/types';
 import { Link } from 'react-router-dom';
 import { formatterOptions } from '@/constants/options';
-import { AppDialog } from '../UI/AppDialog/AppDialog';
 import { QuestionService } from '@/services/QuestionService';
 
 interface QuizItemProps {
@@ -39,7 +39,7 @@ export const QuizItem: FC<QuizItemProps> = memo(({ quiz }) => {
 		if (isSelectedQuiz(quiz._id)) {
 			setIsSelected(true);
 		} else setIsSelected(false);
-	}, [selectedQuizzes])
+	}, [selectedQuizzes]);
 
 	const toggleSelect = () => {
 		if (isSelected) {
@@ -49,7 +49,7 @@ export const QuizItem: FC<QuizItemProps> = memo(({ quiz }) => {
 			selectQuiz(quiz._id);
 			setIsSelected(true);
 		}
-	}
+	};
 
 	const handleRemove = useCallback(async () => {
 		setIsLoading(true);

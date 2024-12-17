@@ -1,9 +1,10 @@
 import { FC, memo, useCallback, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { DeleteIcon, MinusIcon } from '@chakra-ui/icons';
 import { Button, Flex, ScaleFade, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react';
 import { useQuizzesStore } from 'store/quizzes';
-import { sortField } from '@/constants/sort';
 import { SortFieldType } from 'types/sort';
+import { sortField } from '@/constants/sort';
 import { AppDialog } from '../UI/AppDialog/AppDialog';
 import { SortToggle } from '../SortToggle/SortToggle';
 
@@ -14,6 +15,7 @@ export const TableHeader: FC = memo(() => {
 	const isSelecting = useQuizzesStore((state) => state.isSelecting);
 	const removeSelectedList = useQuizzesStore((state) => state.removeSelectedList);
 	const [acitveField, setActiveField] = useState<SortFieldType | null>(null);
+	const location = useLocation();
 
 	const handleRemove = useCallback(() => {
 		removeSelectedList();
@@ -27,46 +29,50 @@ export const TableHeader: FC = memo(() => {
 	return (
 		<Thead>
 			<Tr>
-				<Th p='24px 10px'>
-					<ScaleFade in={isSelecting}>
-						<Button
-							fontWeight='extrabold'
-							variant='outline'
-							size='xs'
-							p='0 2px'
-							mr='5px'
-							color='blue.400'
-							borderColor='blue.400'
-							borderWidth='2px'
-							disabled={!selectedQuizzes.length}
-							onClick={resetSelectedList}
-						>
-							<MinusIcon />
-						</Button>
-						<AppDialog
-							isOpen={isOpen}
-							headerText={'Delete selected quizzes'}
-							bodyText={"Are you sure? You can't undo this action afterwards."}
-							actionText={'Delete'}
-							actionHandler={handleRemove}
-							onClose={onClose}
-						>
+				{location.pathname === '/' && (
+					<Th p='10px 10px'>
+						<ScaleFade in={isSelecting}>
 							<Button
 								fontWeight='extrabold'
 								variant='outline'
 								size='xs'
 								p='0 2px'
-								color='red.400'
-								borderColor='red.400'
+								mr='5px'
+								color='blue.400'
+								borderColor='blue.400'
 								borderWidth='2px'
 								disabled={!selectedQuizzes.length}
-								onClick={onOpen}
+								onClick={resetSelectedList}
 							>
-								<DeleteIcon />
+								<MinusIcon />
 							</Button>
-						</AppDialog>
-					</ScaleFade>
-				</Th>
+							<AppDialog
+								isOpen={isOpen}
+								headerText={'Delete selected quizzes'}
+								bodyText={
+									"Are you sure? You can't undo this action afterwards."
+								}
+								actionText={'Delete'}
+								actionHandler={handleRemove}
+								onClose={onClose}
+							>
+								<Button
+									fontWeight='extrabold'
+									variant='outline'
+									size='xs'
+									p='0 2px'
+									color='red.400'
+									borderColor='red.400'
+									borderWidth='2px'
+									disabled={!selectedQuizzes.length}
+									onClick={onOpen}
+								>
+									<DeleteIcon />
+								</Button>
+							</AppDialog>
+						</ScaleFade>
+					</Th>
+				)}
 				<Th>
 					<SortToggle
 						text='Name'
@@ -86,7 +92,7 @@ export const TableHeader: FC = memo(() => {
 				<Th isNumeric>Questions</Th>
 				<Th isNumeric>Number of participants</Th>
 				<Th>
-					<Flex justifyContent='center'>Action</Flex>
+					{location.pathname === '/' ? <Flex justifyContent='center'>Action</Flex> : 'Author'}
 				</Th>
 			</Tr>
 		</Thead>

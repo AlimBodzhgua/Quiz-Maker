@@ -10,11 +10,14 @@ import {
 	PopoverContent,
 	PopoverBody,
 	Heading,
+	Link,
+	Text,
 } from '@chakra-ui/react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AppRoutes } from '@/router/routes';
 import { useUserStore } from 'store/user';
 import ProfileIcon from '@/assets/profile.svg';
+import ListIcon from '@/assets/list.svg';
 
 export const Header: FC = memo(() => {
 	const user = useUserStore((state) => state.user);
@@ -41,35 +44,50 @@ export const Header: FC = memo(() => {
 				<Box fontWeight='medium'>Quiz</Box>Maker
 			</Heading>
 			{user ? (
-				<Popover closeDelay={15}>
-					<PopoverTrigger>
-						<Button variant='unstyled'>
-							<Avatar icon={<ProfileIcon />} size='sm' bg='gray.50' />
-						</Button>
-					</PopoverTrigger>
-					<PopoverContent w='175px' mt='5px'>
-						<PopoverBody display='flex' flexDirection='column' gap='4px'>
-							<Button
-								as={RouterLink}
-								to={AppRoutes.MAIN}
-								size='sm'
-							>
-								My Quizzes
+				<Box display='flex'>
+					<Link
+						as={RouterLink}
+						to={AppRoutes.PUBLIC_QUIZZES}
+						color='white'
+						mr='24px'
+						display='flex'
+						alignItems='center'
+						justifyContent='center'
+						gap='4px'
+					>
+						<ListIcon />
+						<Text fontSize='15px'>Public quizzes</Text>
+					</Link>
+					<Popover closeDelay={15}>
+						<PopoverTrigger>
+							<Button variant='unstyled'>
+								<Avatar icon={<ProfileIcon />} size='sm' bg='gray.50' />
 							</Button>
-							<Button
-								as={RouterLink}
-								to={AppRoutes.COMPLETED_QUIZZES}
-								size='sm'
-							>
-								Completed
-							</Button>
-							<Button size='sm'>Profile</Button>
-							<Button size='sm' onClick={handleLogout}>
-								Logout
-							</Button>
-						</PopoverBody>
-					</PopoverContent>
-				</Popover>
+						</PopoverTrigger>
+						<PopoverContent w='175px' mt='5px'>
+							<PopoverBody display='flex' flexDirection='column' gap='4px'>
+								<Button
+									as={RouterLink}
+									to={AppRoutes.MAIN}
+									size='sm'
+								>
+									My Quizzes
+								</Button>
+								<Button
+									as={RouterLink}
+									to={AppRoutes.COMPLETED_QUIZZES}
+									size='sm'
+								>
+									Completed
+								</Button>
+								<Button size='sm'>Profile</Button>
+								<Button size='sm' onClick={handleLogout}>
+									Logout
+								</Button>
+							</PopoverBody>
+						</PopoverContent>
+					</Popover>
+				</Box>
 			) : (
 				<Wrap spacing='20px'>
 					<WrapItem>

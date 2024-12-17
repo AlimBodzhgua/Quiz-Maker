@@ -14,16 +14,18 @@ import { SortDirectionType, SortFieldType } from 'types/sort';
 import { TableSkeleton } from './TableSkeleton';
 import { TableHeader } from './TableHeader';
 import { QuizItem } from './QuizItem';
+import { useUserStore } from '@/store/user';
 
 export const QuizTable: FC = memo(() => {
 	const sortedAndFilteredQuizzes = useQuizzesStore((state) => state.sortedAndFilteredQuizzes);
-	const getQuizzes = useQuizzesStore((state) => state.getQuizzes);
 	const isLoading = useQuizzesStore((state) => state.isLoading);
+	const userId = useUserStore((state) => state.user?._id);
+	const getUserQuizzes = useQuizzesStore((state) => state.getUserQuizzes);
 	const setSortedAndFilteredQuizzes = useQuizzesStore((state) => state.setSortedAndFilteredQuizzes);
 	const [searchParams, _] = useSearchParams();
 
 	useEffect(() => {
-		getQuizzes().then((data) => {
+		getUserQuizzes(userId!).then((data) => {
 			if (searchParams.has('field') || searchParams.has('sort')) {
 				const sortValue = searchParams.get('field') as SortFieldType || 'date';
 				const sortDirection = searchParams.get('sort') as SortDirectionType;

@@ -7,6 +7,8 @@ export interface IUser {
 	email: string;
 }
 
+export type IPublicUserData = Omit<IUser, 'token'>;
+
 export interface IQuiz {
 	_id: string;
 	title: string;

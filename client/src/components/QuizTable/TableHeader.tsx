@@ -2,10 +2,10 @@ import { FC, memo, useCallback, useState } from 'react';
 import { DeleteIcon, MinusIcon } from '@chakra-ui/icons';
 import { Button, Flex, ScaleFade, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react';
 import { useQuizzesStore } from 'store/quizzes';
-import { AppDialog } from '../UI/AppDialog/AppDialog';
-import { SortFieldType } from '@/types/sort';
-import { SortToggle } from '../SortToggle/SortToggle';
 import { sortField } from '@/constants/sort';
+import { SortFieldType } from 'types/sort';
+import { AppDialog } from '../UI/AppDialog/AppDialog';
+import { SortToggle } from '../SortToggle/SortToggle';
 
 export const TableHeader: FC = memo(() => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -22,8 +22,7 @@ export const TableHeader: FC = memo(() => {
 
 	const onChangeActiveField = useCallback((field: SortFieldType) => {
 		setActiveField(field);
-	}, [])
-
+	}, []);
 
 	return (
 		<Thead>

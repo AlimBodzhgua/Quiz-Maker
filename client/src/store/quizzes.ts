@@ -13,7 +13,8 @@ interface QuizState {
 }
 
 interface QuizAction {
-	getQuizzes: () => Promise<IQuiz[]>;
+	getUserQuizzes: (userId: string) => Promise<IQuiz[]>;
+	getPublicQuizzes: () => Promise<IQuiz[]>;
 	removeQuiz: (quizId: string) => Promise<void>;
 	setSortedAndFilteredQuizzes: (quizzes: IQuiz[]) => void;
 
@@ -36,10 +37,28 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 		isLoading: false,
 		error: undefined,
 
-		getQuizzes: async () => {
+		getUserQuizzes: async (userId) => {
 			set({ isLoading: true }, false, 'getQuizzesLoading');
 			try {
-				const response = await $axios.get('quizzes');
+				const response = await $axios.get('quizzes', {
+					params: { 'authorId': userId },
+				});
+				set({ quizzes: response.data, sortedAndFilteredQuizzes: response.data }, false, 'getQuizzes');
+				return response.data;
+			} catch (err) {
+				set({ error: JSON.stringify(err) }, false, 'getQuizzesError');
+			} finally {
+				set({ isLoading: false });
+			}
+		},
+
+		getPublicQuizzes: async () => {
+			set({ isLoading: true }, false, 'getQuizzesLoading');
+			try {
+				const response = await $axios.get('quizzes', {
+					params: { 'privacy': 'public' },
+				});
+				
 				set({ quizzes: response.data, sortedAndFilteredQuizzes: response.data }, false, 'getQuizzes');
 				return response.data;
 			} catch (err) {

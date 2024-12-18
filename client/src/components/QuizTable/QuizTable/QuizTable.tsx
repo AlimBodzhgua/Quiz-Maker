@@ -12,7 +12,7 @@ import { useSearchParams } from 'react-router-dom';
 import { sortQuizzes } from '@/utils/utils';
 import { SortDirectionType, SortFieldType } from 'types/sort';
 import { useUserStore } from 'store/user';
-import { QuizItem } from './QuizItem';
+import { QuizTableRow } from './QuizTableRow';
 import { TableHeader } from '../TableHeader/TableHeader';
 import { TableSkeleton } from '../TableSkeleton';
 
@@ -55,7 +55,7 @@ export const QuizTable: FC = memo(() => {
 				<TableHeader />
 				<Tbody>
 					{sortedAndFilteredQuizzes.map((quiz) => (
-						<QuizItem quiz={quiz} key={quiz._id} />
+						<QuizTableRow quiz={quiz} key={quiz._id} />
 					))}
 				</Tbody>
 			</Table>

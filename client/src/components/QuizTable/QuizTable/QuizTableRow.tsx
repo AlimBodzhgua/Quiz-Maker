@@ -10,11 +10,11 @@ import { Link } from 'react-router-dom';
 import { formatterOptions } from '@/constants/options';
 import { QuestionService } from '@/services/QuestionService';
 
-interface QuizItemProps {
+interface QuizTableRowProps {
 	quiz: IQuiz;
 }
 
-export const QuizItem: FC<QuizItemProps> = memo(({ quiz }) => {
+export const QuizTableRow: FC<QuizTableRowProps> = memo(({ quiz }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [participiantsAmount, setParticipiantsAmount] = useState<number>(0);

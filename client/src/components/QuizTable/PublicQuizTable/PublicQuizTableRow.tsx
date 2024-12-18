@@ -8,11 +8,11 @@ import { QuizService } from '@/services/QuizService';
 import { UserService } from '@/services/UserService';
 import { IQuiz } from 'types/types';
 
-interface QuizItemProps {
+interface PublicQuizTableRowProps {
 	quiz: IQuiz;
 }
 
-export const QuizItem: FC<QuizItemProps> = memo((props) => {
+export const PublicQuizTableRow: FC<PublicQuizTableRowProps> = memo((props) => {
 	const { quiz } = props;
 	const [authorEmail, setAuthorEmail] = useState<string>('');
 	const [participiantsAmount, setParticipiantsAmount] = useState<number>(0);

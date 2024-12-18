@@ -4,7 +4,7 @@ import { Table, TableContainer, Tbody } from '@chakra-ui/react';
 import { useQuizzesStore } from 'store/quizzes';
 import { SortDirectionType, SortFieldType } from 'types/sort';
 import { sortQuizzes } from '@/utils/utils';
-import { QuizItem } from './QuizItem';
+import { PublicQuizTableRow } from './PublicQuizTableRow';
 import { TableHeader } from '../TableHeader/TableHeader';
 import { TableSkeleton } from '../TableSkeleton';
 
@@ -43,7 +43,7 @@ export const PublicQuizTable: FC = memo(() => {
 				<TableHeader />
 				<Tbody>
 					{sortedAndFilteredQuizzes.map((quiz) => (
-						<QuizItem quiz={quiz} key={quiz._id} />
+						<PublicQuizTableRow quiz={quiz} key={quiz._id} />
 					))}
 				</Tbody>
 			</Table>

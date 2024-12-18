@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, Checkbox, Flex, ScaleFade, Td, Tr, useDisclosure } from '@chakra-ui/react';
 import { DeleteIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { getQuizPage } from '@/router/router';
@@ -19,14 +19,13 @@ export const QuizTableRow: FC<QuizTableRowProps> = memo(({ quiz }) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [participiantsAmount, setParticipiantsAmount] = useState<number>(0);
 	const [questionsAmount, setQuestionsAmount] = useState<number>(0);
-	const [isSelected, setIsSelected] = useState<boolean>(false);
 	
 	const isSelecting = useQuizzesStore((state) => state.isSelecting);
 	const selectQuiz = useQuizzesStore((state) => state.selectQuiz);
 	const deselectQuiz = useQuizzesStore((state) => state.deselectQuiz);
 	const removeQuiz = useQuizzesStore((state) => state.removeQuiz);
-	const selectedQuizzes = useQuizzesStore((state) => state.selectedQuizzes);
-	const isSelectedQuiz = useQuizzesStore((state) => state.isSelected); 
+	const selectedQuizzes = useQuizzesStore(state => state.selectedQuizzes);
+	const isQuizSelected = useMemo(() => selectedQuizzes.includes(quiz._id), [selectedQuizzes, quiz._id]);
 
 	const formatter = new Intl.DateTimeFormat('en-US', formatterOptions);
 
@@ -34,12 +33,6 @@ export const QuizTableRow: FC<QuizTableRowProps> = memo(({ quiz }) => {
 		initQuizExtraData();
 	}, []);
 	
-	useEffect(() => {
-		if (isSelectedQuiz(quiz._id)) {
-			setIsSelected(true);
-		} else setIsSelected(false);
-	}, [selectedQuizzes]);
-
 	const initQuizExtraData = async () => {
 		const [participantsAmount, questionsAmount] = await Promise.all([
 			QuizService.countParticipiants(quiz._id),
@@ -51,12 +44,10 @@ export const QuizTableRow: FC<QuizTableRowProps> = memo(({ quiz }) => {
 	};
 
 	const toggleSelect = () => {
-		if (isSelected) {
-			setIsSelected(false);
+		if (isQuizSelected) {
 			deselectQuiz(quiz._id);
 		} else {
 			selectQuiz(quiz._id);
-			setIsSelected(true);
 		}
 	};
 
@@ -74,7 +65,7 @@ export const QuizTableRow: FC<QuizTableRowProps> = memo(({ quiz }) => {
 					<Checkbox
 						pointerEvents={isSelecting ? 'all' : 'none'}
 						onChange={toggleSelect}
-						isChecked={isSelected}
+						isChecked={isQuizSelected}
 						borderRadius='base'
 						size='lg'
 					/>

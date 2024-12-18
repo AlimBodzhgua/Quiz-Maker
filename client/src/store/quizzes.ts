@@ -21,7 +21,7 @@ interface QuizAction {
 	toggleSelect: () => void;
 	selectQuiz: (quizId: string) => void;
 	deselectQuiz: (quizId: string) => void;
-	isSelected: (quizId: string) => boolean;
+	isSelectedQuiz: (quizId: string) => boolean;
 	fullResetSelectState: () => void;
 	resetSelectedList: () => void;
 	removeSelectedList: () => void;
@@ -99,13 +99,7 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 			set({ selectedQuizzes: get().selectedQuizzes.filter((quiz) => quiz !== quizId )});
 		},
 		
-		isSelected: (quizId) => {
-			const selected = get().selectedQuizzes.find((quiz) => quiz === quizId);
-			if (selected) {
-				return true;
-			}
-			return false;
-		},
+		isSelectedQuiz: (quizId) => get().selectedQuizzes.includes(quizId),
 
 		fullResetSelectState: () => {
 			set({ selectedQuizzes: [],  isSelecting: false });

@@ -31,15 +31,24 @@ export const QuizTableRow: FC<QuizTableRowProps> = memo(({ quiz }) => {
 	const formatter = new Intl.DateTimeFormat('en-US', formatterOptions);
 
 	useEffect(() => {
-		QuizService.countParticipiants(quiz._id).then(setParticipiantsAmount);
-		QuestionService.countQuizQuestions(quiz._id).then(setQuestionsAmount);
+		initQuizExtraData();
 	}, []);
-
+	
 	useEffect(() => {
 		if (isSelectedQuiz(quiz._id)) {
 			setIsSelected(true);
 		} else setIsSelected(false);
 	}, [selectedQuizzes]);
+
+	const initQuizExtraData = async () => {
+		const [participantsAmount, questionsAmount] = await Promise.all([
+			QuizService.countParticipiants(quiz._id),
+			QuestionService.countQuizQuestions(quiz._id),
+		])
+
+		setParticipiantsAmount(participantsAmount);
+		setQuestionsAmount(questionsAmount);
+	};
 
 	const toggleSelect = () => {
 		if (isSelected) {

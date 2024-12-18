@@ -17,16 +17,19 @@ export const PublicQuizTable: FC = memo(() => {
 	const [searchParams, _] = useSearchParams();
 
 	useEffect(() => {
-		getPublicQuizzes().then((data) => {
-			if (searchParams.has('field') || searchParams.has('sort')) {
-				const sortValue = searchParams.get('field') as SortFieldType || 'date';
-				const sortDirection = searchParams.get('sort') as SortDirectionType;
-				const sortedQuizzes = sortQuizzes(data, sortValue, sortDirection);
-				setSortedAndFilteredQuizzes(sortedQuizzes);
-			}
-		});
+		fetchQuizzesAndSort();
 	}, []);
 
+	const fetchQuizzesAndSort = async () => {
+		const quizzes = await getPublicQuizzes();
+
+		if (searchParams.has('field') || searchParams.has('sort')) {
+			const sortValue = searchParams.get('field') as SortFieldType || 'date';
+			const sortDirection = searchParams.get('sort') as SortDirectionType;
+			const sortedQuizzes = sortQuizzes(quizzes, sortValue, sortDirection);
+			setSortedAndFilteredQuizzes(sortedQuizzes);
+		}
+	}
 
 	if (isLoading) {
 		return <TableSkeleton />

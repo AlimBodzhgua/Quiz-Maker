@@ -1,6 +1,6 @@
 import { FC, useEffect, useState, memo } from 'react';
 import { Link } from 'react-router-dom';
-import { Td, Tr } from '@chakra-ui/react';
+import { Skeleton, Td, Tr } from '@chakra-ui/react';
 import { formatterOptions } from '@/constants/options';
 import { getQuizPage } from '@/router/router';
 import { QuestionService } from '@/services/QuestionService';
@@ -17,13 +17,28 @@ export const QuizItem: FC<QuizItemProps> = memo((props) => {
 	const [authorEmail, setAuthorEmail] = useState<string>('');
 	const [participiantsAmount, setParticipiantsAmount] = useState<number>(0);
 	const [questionsAmount, setQuestionsAmount] = useState<number>(0);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const formatter = new Intl.DateTimeFormat('en-US', formatterOptions);
 
 	useEffect(() => {
-		UserService.getUserData(quiz.authorId).then((data) => setAuthorEmail(data.email));
-		QuizService.countParticipiants(quiz._id).then(setParticipiantsAmount);
-		QuestionService.countQuizQuestions(quiz._id).then(setQuestionsAmount);
+		initQuizExtraData();
 	}, []);
+
+	const initQuizExtraData = async () => {
+		setIsLoading(true);
+
+		const [participantsAmount, questionsAmount, user] = await Promise.all([
+			QuizService.countParticipiants(quiz._id),
+			QuestionService.countQuizQuestions(quiz._id),
+			UserService.getUserData(quiz.authorId)
+		]);
+
+		setParticipiantsAmount(participantsAmount);
+		setQuestionsAmount(questionsAmount);
+		setAuthorEmail(user.email);
+
+		setIsLoading(false);
+	}
 
 	return (
 		<Tr>
@@ -31,9 +46,13 @@ export const QuizItem: FC<QuizItemProps> = memo((props) => {
 				<Link to={getQuizPage(quiz._id)}>{quiz.title}</Link>
 			</Td>
 			<Td>{formatter.format(new Date(quiz.createdAt)).split('/').join('.')}</Td>
-			<Td isNumeric>{questionsAmount}</Td>
-			<Td isNumeric>{participiantsAmount}</Td>
-			<Td>{authorEmail}</Td>
+			<Td isNumeric>
+				{isLoading ? <Skeleton height='15px' width='30px' margin='0 0 0 auto'/> : questionsAmount}
+			</Td>
+			<Td isNumeric>
+				{isLoading ? <Skeleton height='15px' width='30px' margin='0 0 0 auto'/> : participiantsAmount}
+			</Td>
+			<Td>{isLoading ? <Skeleton height='15px' width='120px' /> : authorEmail}</Td>
 		</Tr>
 	);
 });

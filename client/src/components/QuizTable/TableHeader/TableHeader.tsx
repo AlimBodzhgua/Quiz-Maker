@@ -50,7 +50,7 @@ export const TableHeader: FC = memo(() => {
 								isOpen={isOpen}
 								headerText={'Delete selected quizzes'}
 								bodyText={
-									"Are you sure? You can't undo this action afterwards."
+									'Are you sure? You can\'t undo this action afterwards.'
 								}
 								actionText={'Delete'}
 								actionHandler={handleRemove}

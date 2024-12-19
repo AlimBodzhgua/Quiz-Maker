@@ -37,7 +37,7 @@ export const QuizTableRow: FC<QuizTableRowProps> = memo(({ quiz }) => {
 		const [participantsAmount, questionsAmount] = await Promise.all([
 			QuizService.countParticipiants(quiz._id),
 			QuestionService.countQuizQuestions(quiz._id),
-		])
+		]);
 
 		setParticipiantsAmount(participantsAmount);
 		setQuestionsAmount(questionsAmount);

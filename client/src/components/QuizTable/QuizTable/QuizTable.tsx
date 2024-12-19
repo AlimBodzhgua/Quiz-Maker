@@ -22,7 +22,7 @@ export const QuizTable: FC = memo(() => {
 	const userId = useUserStore((state) => state.user?._id);
 	const getUserQuizzes = useQuizzesStore((state) => state.getUserQuizzes);
 	const setSortedAndFilteredQuizzes = useQuizzesStore((state) => state.setSortedAndFilteredQuizzes);
-	const [searchParams, _] = useSearchParams();
+	const [searchParams] = useSearchParams();
 
 	useEffect(() => {
 		fetchQuizzesAndSort();

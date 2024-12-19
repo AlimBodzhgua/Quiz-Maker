@@ -53,7 +53,12 @@ export const SearchBar: FC = memo(() => {
 				onChange={onChangeValue}
 				disabled={quizzes.length <= 1}
 			/>
-			<InputRightElement display='flex' textAlign='center' gap='5px' pr='60px'>
+			<InputRightElement
+				display='flex'
+				textAlign='center'
+				gap='5px'
+				pr='60px'
+			>
 				<Kbd borderRadius='none'>alt</Kbd>+<Kbd borderRadius='none'>enter</Kbd>
 			</InputRightElement>
 		</InputGroup>

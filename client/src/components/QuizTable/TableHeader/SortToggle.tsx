@@ -32,7 +32,13 @@ export const SortToggle: FC<SortToggleProps> = memo((props) => {
 	}
 
 	return (
-		<Flex alignItems='center' gap='8px' role='button' onClick={onToggleSort} userSelect='none'>
+		<Flex
+			onClick={onToggleSort}
+			role='button'
+			userSelect='none'
+			alignItems='center'
+			gap='8px'
+		>
 			<Text>{text}</Text>
 			{activeField === sortField &&
 				<Flex flexDir='column' fontSize='xx-small'>

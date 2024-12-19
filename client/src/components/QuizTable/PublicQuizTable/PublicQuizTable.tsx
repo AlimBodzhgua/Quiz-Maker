@@ -14,7 +14,7 @@ export const PublicQuizTable: FC = memo(() => {
 	const isLoading = useQuizzesStore((state) => state.isLoading);
 	const getPublicQuizzes = useQuizzesStore((state) => state.getPublicQuizzes);
 	const setSortedAndFilteredQuizzes = useQuizzesStore((state) => state.setSortedAndFilteredQuizzes);
-	const [searchParams, _] = useSearchParams();
+	const [searchParams] = useSearchParams();
 
 	useEffect(() => {
 		fetchQuizzesAndSort();

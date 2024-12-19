@@ -40,24 +40,23 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 		}
 	}, []);
 
-	useEffect(() => {
-		if (questionType === questionTypes.inputAnswer) {
-			setAnswersList([inputAnswer]);
-		} else if (questionType === questionTypes.trueOrFalse) {
-			setAnswersList([trueAnswer, falseAnswer]);
-		}
-	}, [questionType]);
-
 	const onChnageTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTitle(e.target.value);
 	};
 
 	const onChangeType = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
 		if (answersList) {
-			setQuestionType(e.target.value as QuestionType);
-			const updatedAnswers = answersList.map((answer) => ({ ...answer, isCorrect: false }));
-	
-			setAnswersList(updatedAnswers);
+			const questionType = e.target.value as QuestionType; 
+			setQuestionType(questionType);
+
+			if (questionType === questionTypes.inputAnswer) {
+				setAnswersList([inputAnswer]);
+			} else if (questionType === questionTypes.trueOrFalse) {
+				setAnswersList([trueAnswer, falseAnswer]);
+			} else {
+				const updatedAnswers = answersList.map((answer) => ({ ...answer, isCorrect: false }));
+				setAnswersList(updatedAnswers);
+			}
 		}
 	}, [answersList]);
 

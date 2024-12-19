@@ -1,19 +1,20 @@
-import { FC, memo, useState, useCallback, useEffect } from 'react';
+import { FC, memo, useState, useCallback } from 'react';
 import { Button, Flex, Input, ScaleFade, Tooltip, useToast } from '@chakra-ui/react';
 import { questionTypes } from '@/constants/questions';
-import { baseAnswer, falseAnswer, inputAnswer, trueAnswer } from '@/constants/answers';
-import { changeListOrder, fixCorrectFieldForTypes, getQueryParam, initAnswers, removeItemAndFixListOrder } from '@/utils/utils';
+import { baseAnswer } from '@/constants/answers';
+import { changeListOrder, fixCorrectFieldForTypes, getQueryParam, removeItemAndFixListOrder } from '@/utils/utils';
 import { DragEndEvent } from '@dnd-kit/core';
 import { SortableList } from '@/lib/components/SortableList';
 import { CheckIcon, DeleteIcon, DragHandleIcon, EditIcon } from '@chakra-ui/icons';
 import { useHover } from '@/hooks/useHover';
 import { SortableItem } from '@/lib/components/SortableItem';
-import { IAnswerForm, IQuestionForm, QuestionType } from 'types/types';
 import { QuestionService } from '@/services/QuestionService';
 import { AnswersService } from '@/services/AnswersService';
+import { useQuestionForm } from '@/hooks/useQuestionForm';
+import { useCreateQuiz } from 'store/createQuiz';
+import { IAnswerForm, IQuestionForm, QuestionType } from 'types/types';
 import { AddAnswerForm } from '../../AddAnswerForm/AddAnswerForm';
 import { QuestionTypeSelector } from '../../QuestionTypeSelector/QuestionTypeSelector';
-import { useCreateQuiz } from '@/store/createQuiz';
 
 interface AddQuestionFormProps {
 	question: IQuestionForm;
@@ -21,43 +22,31 @@ interface AddQuestionFormProps {
 
 export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 	const { question } = props;
-	const [questionType, setQuestionType] = useState<QuestionType>(questionTypes.multipleAnswer);
-	const [title, setTitle] = useState<string>('');
-	const [answersList, setAnswersList] = useState<IAnswerForm[] | null>(null);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [isHover, hoverProps] = useHover();
-	const [isSaved, setIsSaved] = useState<boolean>(false);
 	const toast = useToast();
-	const showAddBtn = questionType === questionTypes.multipleAnswer || questionType === questionTypes.oneAnswer;
-	const showSaveBtn = answersList && title.length;
-
 	const removeQuestion = useCreateQuiz((state) => state.removeQuestion);
 	const saveQuestion = useCreateQuiz((state) => state.saveQuestion);
 
-	useEffect(() => {
-		if (!answersList) {
-			setAnswersList(initAnswers(3));
-		}
-	}, []);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isHover, hoverProps] = useHover();
+	const [isSaved, setIsSaved] = useState<boolean>(false);
+	const {
+		questionType,
+        title,
+        answersList,
+        setTitle,
+        setAnswersList,
+        onChangeType,
+	} = useQuestionForm();
+	const showAddBtn = questionType === questionTypes.multipleAnswer || questionType === questionTypes.oneAnswer;
+	const showSaveBtn = answersList && title.length;
 
 	const onChnageTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTitle(e.target.value);
 	};
 
-	const onChangeType = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-		if (answersList) {
-			const questionType = e.target.value as QuestionType; 
-			setQuestionType(questionType);
-
-			if (questionType === questionTypes.inputAnswer) {
-				setAnswersList([inputAnswer]);
-			} else if (questionType === questionTypes.trueOrFalse) {
-				setAnswersList([trueAnswer, falseAnswer]);
-			} else {
-				const updatedAnswers = answersList.map((answer) => ({ ...answer, isCorrect: false }));
-				setAnswersList(updatedAnswers);
-			}
-		}
+	const handleChangeType = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+		const questionType = e.target.value as QuestionType;
+		onChangeType(questionType);
 	}, [answersList]);
 
 	const onChangeValue = useCallback((answerId: string, value: string) => {
@@ -136,7 +125,6 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 		}
 	};
 
-
 	return (
 		<SortableItem id={question._id}>
 			<Flex
@@ -182,7 +170,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 					/>
 					<QuestionTypeSelector
 						value={questionType}
-						onChange={onChangeType}
+						onChange={handleChangeType}
 						disabled={isSaved}
 					/>
 				</Flex>

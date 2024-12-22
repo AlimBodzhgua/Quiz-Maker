@@ -32,13 +32,17 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 	const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
 	useEffect(() => {
-		setIsLoading(true);
-		if (currentQuiz) {
-			AnswersService.fetchQuestionAnswers(currentQuiz._id, question._id)
-				.then(setAnswers)
-				.then(() => setIsLoading(false))
-		}
+		initAnswrers();
 	}, []);
+
+	const initAnswrers = async () => {
+		if (currentQuiz) {
+			setIsLoading(true);
+			const answers = await AnswersService.fetchQuestionAnswers(currentQuiz._id, question._id);
+			setAnswers(answers);
+			setIsLoading(false);
+		}
+	};
 
 	const mapToQuestionTypeAnswers: Record<QuestionType, JSX.Element> = useMemo(() => ({
 		multipleAnswer: <CheckBoxAnswers answers={answers} isAnswerSubmit={isSubmitted}/>,
@@ -66,9 +70,8 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 					</CardBody>
 				</Card>
 			</ListItem>
-		)
+		);
 	}
-
 	
 	return (
 		<ListItem m='16px 0'>

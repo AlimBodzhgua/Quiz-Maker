@@ -29,10 +29,6 @@ export const QuizTableRow: FC<QuizTableRowProps> = memo(({ quiz }) => {
 
 	const formatter = new Intl.DateTimeFormat('en-US', formatterOptions);
 
-	useEffect(() => {
-		initQuizExtraData();
-	}, []);
-	
 	const initQuizExtraData = async () => {
 		const [participantsAmount, questionsAmount] = await Promise.all([
 			QuizService.countParticipiants(quiz._id),
@@ -42,6 +38,10 @@ export const QuizTableRow: FC<QuizTableRowProps> = memo(({ quiz }) => {
 		setParticipiantsAmount(participantsAmount);
 		setQuestionsAmount(questionsAmount);
 	};
+
+	useEffect(() => {
+		initQuizExtraData();
+	}, []);
 
 	const toggleSelect = () => {
 		if (isQuizSelected) {

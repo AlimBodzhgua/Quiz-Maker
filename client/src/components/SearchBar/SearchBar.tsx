@@ -11,6 +11,18 @@ export const SearchBar: FC = memo(() => {
 	const debouncedValue = useDebounce(value);
 	const setSortedAndFilteredQuizzes = useQuizzesStore((state) => state.setSortedAndFilteredQuizzes);
 
+	const onHotkeyPress = (e: KeyboardEvent) => {
+		if (e.altKey === true && e.key === 'Enter') {
+			if (document.activeElement === inputRef.current) {
+				return inputRef.current?.blur();
+			}
+			return inputRef.current?.focus();
+		}
+		if (document.activeElement === inputRef.current && e.key === 'Escape') {
+			return inputRef.current?.blur();
+		}
+	};
+
 	useEffect(() => {
 		window.addEventListener('keydown', onHotkeyPress);
 
@@ -24,22 +36,9 @@ export const SearchBar: FC = memo(() => {
 		setSortedAndFilteredQuizzes(result);
 	}, [debouncedValue]);
 
-	const onHotkeyPress = (e: KeyboardEvent) => {
-		if (e.altKey === true && e.key === 'Enter') {
-			if (document.activeElement === inputRef.current) {
-				return inputRef.current?.blur();
-			}
-			return inputRef.current?.focus();
-		}
-		if (document.activeElement === inputRef.current && e.key === 'Escape') {
-			return inputRef.current?.blur();
-		}
-	};
-
 	const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
 	};
-
 
 	return (
 		<InputGroup>

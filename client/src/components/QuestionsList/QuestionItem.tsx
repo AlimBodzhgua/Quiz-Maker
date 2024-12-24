@@ -31,10 +31,6 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 	const [answers, setAnswers] = useState<IAnswer[]>([]);
 	const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-	useEffect(() => {
-		initAnswrers();
-	}, []);
-
 	const initAnswrers = async () => {
 		if (currentQuiz) {
 			setIsLoading(true);
@@ -43,6 +39,10 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 			setIsLoading(false);
 		}
 	};
+
+	useEffect(() => {
+		initAnswrers();
+	}, []);
 
 	const mapToQuestionTypeAnswers: Record<QuestionType, JSX.Element> = useMemo(() => ({
 		multipleAnswer: <CheckBoxAnswers answers={answers} isAnswerSubmit={isSubmitted}/>,

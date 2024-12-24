@@ -23,11 +23,7 @@ export const QuizTable: FC = memo(() => {
 	const getUserQuizzes = useQuizzesStore((state) => state.getUserQuizzes);
 	const setSortedAndFilteredQuizzes = useQuizzesStore((state) => state.setSortedAndFilteredQuizzes);
 	const [searchParams] = useSearchParams();
-
-	useEffect(() => {
-		fetchQuizzesAndSort();
-	}, []);
-
+	
 	const fetchQuizzesAndSort = async () => {
 		const quizzes = await getUserQuizzes(userId!);
 
@@ -38,6 +34,10 @@ export const QuizTable: FC = memo(() => {
 			setSortedAndFilteredQuizzes(sortedQuizzes);
 		}
 	}
+
+	useEffect(() => {
+		fetchQuizzesAndSort();
+	}, []);
 
 	if (isLoading) {
 		return <TableSkeleton />

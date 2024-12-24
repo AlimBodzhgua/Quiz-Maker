@@ -20,10 +20,6 @@ export const PublicQuizTableRow: FC<PublicQuizTableRowProps> = memo((props) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const formatter = new Intl.DateTimeFormat('en-US', formatterOptions);
 
-	useEffect(() => {
-		initQuizExtraData();
-	}, []);
-
 	const initQuizExtraData = async () => {
 		setIsLoading(true);
 
@@ -39,6 +35,10 @@ export const PublicQuizTableRow: FC<PublicQuizTableRowProps> = memo((props) => {
 
 		setIsLoading(false);
 	}
+
+	useEffect(() => {
+		initQuizExtraData();
+	}, []);
 
 	return (
 		<Tr>

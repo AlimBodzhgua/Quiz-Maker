@@ -8,15 +8,15 @@ export const CompletedQuizzesList: FC = memo(() => {
 	const [quizzes, setQuizzes] = useState<ICompletedQuiz[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	useEffect(() => {
-		initQuizzes()
-	}, []);
-
 	const initQuizzes = useCallback(async () => {
 		setIsLoading(true);
 		const quizzes = await QuizService.getCompletedQuizzes();
 		setQuizzes(quizzes);
 		setIsLoading(false);
+	}, []);
+
+	useEffect(() => {
+		initQuizzes()
 	}, []);
 
 	const onRemove = useCallback(async (quizId: string) => {

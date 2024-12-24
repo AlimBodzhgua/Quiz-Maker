@@ -27,6 +27,12 @@ const QuizPage: FC = () => {
 	const timerProps = getMathcedTimerProps(quiz?.timerLimit);
 	const { minutes, seconds, start, pause } = useTimer(timerProps);
 
+	const initQuiz = async (id: string) => {
+		const quiz = await getCurrentQuiz(id);
+		if (!quiz?.withTimer) {
+			setIsStarted(true);
+		}
+	}
 
 	useEffect(() => {
 		if (id) {
@@ -41,13 +47,6 @@ const QuizPage: FC = () => {
 
 		return () => resetQuizResult();
 	}, []);
-
-	const initQuiz = async (id: string) => {
-		const quiz = await getCurrentQuiz(id);
-		if (!quiz?.withTimer) {
-			setIsStarted(true);
-		}
-	}
 
 	const handleStart = () => {
 		setIsStarted(true);

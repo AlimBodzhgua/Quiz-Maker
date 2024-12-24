@@ -11,16 +11,16 @@ import { QuizPrivacy } from 'types/types';
 export const PrivacySettings: FC = memo(() => {
 	const updateQuiz = useCreateQuiz((state) => state.updateQuiz);
 	const [privacy, setPrivacy] = useState<QuizPrivacy>(privacyValues.private);
+	
+	const initQuizPrivacy = async (id: string) => {
+		const quiz = await QuizService.getQuiz(id);
+		setPrivacy(quiz.privacy);
+	};
 
 	useEffect(() => {
 		const quizId = getQueryParam('id');
 		initQuizPrivacy(quizId);
 	}, []);
-
-	const initQuizPrivacy = async (id: string) => {
-		const quiz = await QuizService.getQuiz(id);
-		setPrivacy(quiz.privacy);
-	};
 
 	const onChangeValue = async (value: QuizPrivacy) => {
 		await updateQuiz({ privacy: value });

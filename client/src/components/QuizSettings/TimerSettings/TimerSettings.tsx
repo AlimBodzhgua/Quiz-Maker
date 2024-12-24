@@ -22,11 +22,6 @@ export const TimerSettings: FC = memo(() => {
 	const [isDataChanged, setIsDataChanged] = useState<boolean>(false);
 	const updateQuiz = useCreateQuiz((state) => state.updateQuiz);
 
-	useEffect(() => {
-		const quizId = getQueryParam('id');
-		initQuizTimerData(quizId);
-	}, []);
-
 	const initQuizTimerData = useCallback(async(quizId: string) => {
 		const data = await QuizService.getQuiz(quizId);
 
@@ -44,6 +39,11 @@ export const TimerSettings: FC = memo(() => {
 			}
 		}
 	}, []);
+
+	useEffect(() => {
+		const quizId = getQueryParam('id');
+		initQuizTimerData(quizId);
+	}, [initQuizTimerData]);
 
 	const onToggleTimerEnable = () => {
 		setIsTimerEnabled((prev) => !prev);

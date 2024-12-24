@@ -21,12 +21,6 @@ export const QuizInfo: FC<QuizInfoProps> = memo((props) => {
 
 	const [isSrolledAfter, setIsSrolledAfter] = useState<boolean>(false);
 
-	useEffect(() => {
-		window.addEventListener('scroll', onScroll);
-
-		return () => window.removeEventListener('scroll', onScroll);
-	}, []);
-
 	const onScroll = useThrottle(() => {
 		const windowTop = window.scrollY;
 		const infoTop = infoRef.current?.offsetTop || 75;
@@ -37,6 +31,12 @@ export const QuizInfo: FC<QuizInfoProps> = memo((props) => {
 			setIsSrolledAfter(false);
 		}
 	}, 200);
+
+	useEffect(() => {
+		window.addEventListener('scroll', onScroll);
+
+		return () => window.removeEventListener('scroll', onScroll);
+	}, []);
 
 	const infoBar = (
 		<Fragment>

@@ -1,7 +1,7 @@
-import { Page } from '@/components/UI/Page/Page';
 import { FC, memo } from 'react';
 import { Heading } from '@chakra-ui/react';
-import { CompletedQuizzesList } from '@/components/CompletedQuizzesList/CompletedQuizzesList';
+import { Page } from 'components/UI/Page/Page';
+import { CompletedQuizzesList } from 'components/CompletedQuizzesList';
 
 const CompletedQuizzesPage: FC = memo(() => {
 

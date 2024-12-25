@@ -1,4 +1,6 @@
-import { ICompletedQuiz } from '@/types/types';
+import { FC, memo, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { ICompletedQuiz } from 'types/types';
 import {
 	Button,
 	Card,
@@ -11,27 +13,24 @@ import {
 	ListItem,
 	Text,
 } from '@chakra-ui/react';
-import { FC, memo, useState } from 'react';
-import { Timer } from '../UI/Timer/Timer';
 import { DeleteIcon, RepeatIcon } from '@chakra-ui/icons';
-import { Link as RouterLink } from 'react-router-dom';
 import { getQuizPage } from '@/router/router';
+import { Timer } from '../UI/Timer/Timer';
 
 interface CompletedQuizzesItemProps {
 	quiz: ICompletedQuiz;
-	onRemove: (quizId: string) => void;
+	onRemove: (quizId: string) => Promise<void>;
 }
 
 export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo((props) => {
 	const { quiz, onRemove } = props;
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	const handleRemove = () => {
+	const handleRemove = async () => {
 		setIsLoading(true);
-		onRemove(quiz._id);
+		await onRemove(quiz._id);
 		setIsLoading(false);
 	}
-
 
 	return (
 		<ListItem

@@ -1,6 +1,6 @@
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
 import { baseAnswer } from '@/constants/answers';
-import { questionTypes } from '@/constants/questions';
+import { QuestionTypes } from '@/constants/questions';
 import { IAnswerForm, IQuestionForm, IQuiz, QuestionType } from 'types/types';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
@@ -25,8 +25,8 @@ export const fixCorrectFieldForTypes = (
 	questionType: QuestionType,
 ) => {
 	if (
-		questionType === questionTypes.oneAnswer ||
-		questionType === questionTypes.trueOrFalse
+		questionType === QuestionTypes.oneAnswer ||
+		questionType === QuestionTypes.trueOrFalse
 	) {
 		return answers.map((answer) => {
 			if (answer._id === answerId) {

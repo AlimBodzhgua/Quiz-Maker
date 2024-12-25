@@ -1,6 +1,5 @@
-import { QuestionType } from 'types/types';
 
-export const questionTypes: Record<QuestionType, QuestionType> = {
+export const QuestionTypes = {
 	multipleAnswer: 'multipleAnswer',
 	oneAnswer: 'oneAnswer',
 	inputAnswer: 'inputAnswer',

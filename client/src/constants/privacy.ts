@@ -1,6 +1,6 @@
 import { QuizPrivacy } from 'types/types';
 
-export const privacyValues = {
+export const PrivacyValues = {
 	public: 'public',
 	private: 'private',
 	privateLink: 'privateLink',

@@ -1,6 +1,6 @@
 import { FC, memo, useState, useCallback } from 'react';
 import { Button, Flex, Input, ScaleFade, Tooltip, useToast } from '@chakra-ui/react';
-import { questionTypes } from '@/constants/questions';
+import { QuestionTypes } from '@/constants/questions';
 import { baseAnswer } from '@/constants/answers';
 import { changeListOrder, fixCorrectFieldForTypes, getQueryParam, removeItemAndFixListOrder } from '@/utils/utils';
 import { DragEndEvent } from '@dnd-kit/core';
@@ -37,7 +37,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
         setAnswersList,
         onChangeType,
 	} = useQuestionForm();
-	const showAddBtn = questionType === questionTypes.multipleAnswer || questionType === questionTypes.oneAnswer;
+	const showAddBtn = questionType === QuestionTypes.multipleAnswer || questionType === QuestionTypes.oneAnswer;
 	const showSaveBtn = answersList && title.length;
 
 	const onChnageTitle = (e: React.ChangeEvent<HTMLInputElement>) => {

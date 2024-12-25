@@ -1,7 +1,7 @@
 import { FC, memo, useEffect, useState } from 'react';
 import { Flex, Heading, Radio, RadioGroup, Stack, Tooltip } from '@chakra-ui/react';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import { mapToPrivacyLabelText, mapToPrivacyText, privacyValues } from '@/constants/privacy';
+import { mapToPrivacyLabelText, mapToPrivacyText, PrivacyValues } from '@/constants/privacy';
 import { QuizService } from '@/services/QuizService';
 import { getQueryParam } from '@/utils/utils';
 import { useCreateQuiz } from 'store/createQuiz';
@@ -10,7 +10,7 @@ import { QuizPrivacy } from 'types/types';
 
 export const PrivacySettings: FC = memo(() => {
 	const updateQuiz = useCreateQuiz((state) => state.updateQuiz);
-	const [privacy, setPrivacy] = useState<QuizPrivacy>(privacyValues.private);
+	const [privacy, setPrivacy] = useState<QuizPrivacy>(PrivacyValues.private);
 	
 	const initQuizPrivacy = async (id: string) => {
 		const quiz = await QuizService.getQuiz(id);
@@ -38,9 +38,9 @@ export const PrivacySettings: FC = memo(() => {
 					value={privacy}
 				>
 					<Stack direction='column'>
-						{Object.values(privacyValues).map((privacyValue) => (
+						{Object.values(PrivacyValues).map((privacyValue) => (
 							<Flex alignItems='center' key={privacyValue}>
-								<Radio value={privacyValues[privacyValue]} mr='10px'>
+								<Radio value={PrivacyValues[privacyValue]} mr='10px'>
 									{mapToPrivacyText[privacyValue]}
 								</Radio>
 								<Tooltip

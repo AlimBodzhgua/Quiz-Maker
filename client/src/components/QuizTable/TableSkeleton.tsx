@@ -1,8 +1,8 @@
-import { FC, memo } from 'react';
+import { FC } from 'react';
 import { Skeleton, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 
 
-export const TableSkeleton: FC = memo(() => {
+export const TableSkeleton: FC = () => {
 	return (
 		<TableContainer>
 			<Table variant='simple'>
@@ -24,4 +24,4 @@ export const TableSkeleton: FC = memo(() => {
 			</Table>
 		</TableContainer>
 	)
-})
+}

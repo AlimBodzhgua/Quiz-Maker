@@ -1,5 +1,5 @@
 import $axios from '@/api/axios';
-import { IPublicUserData } from '@/types/types';
+import { IPublicUserData } from 'types/types';
 
 export class UserService {
 

@@ -1,4 +1,4 @@
-import { QuizPrivacy } from '@/types/types';
+import { QuizPrivacy } from 'types/types';
 
 export const privacyValues = {
 	public: 'public',

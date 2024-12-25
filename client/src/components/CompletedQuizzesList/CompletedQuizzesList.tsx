@@ -16,7 +16,7 @@ export const CompletedQuizzesList: FC = memo(() => {
 	}, []);
 
 	useEffect(() => {
-		initQuizzes()
+		initQuizzes();
 	}, []);
 
 	const onRemove = useCallback(async (quizId: string) => {

@@ -6,7 +6,7 @@ import { CreateQuizPage } from 'pages/CreateQuizPage/CreateQuizPage.async';
 import { QuizPage } from 'pages/QuizPage/QuizPage.async';
 import { NotFoundPage } from 'pages/NotFoundPage/NotFoundPage';
 import { PublicQuizzesPage } from 'pages/PublicQuizzesPage/PublicQuizzesPage.async';
-import { AppRouteObject } from '@/types/route';
+import { AppRouteObject } from 'types/route';
 
 export enum AppRoutes {
 	MAIN = '/',

@@ -6,14 +6,14 @@ import { addQueryParam, sortQuizzes } from '@/utils/utils';
 import { useQuizzesStore } from 'store/quizzes';
 import { SortDirectionType, SortFieldType } from 'types/sort';
 
-interface SortToggleProps {
+interface ColumnToggleSortProps {
 	text: string;
 	sortField: SortFieldType;
 	activeField: SortFieldType | null;
 	onChangeActiveField: (field: SortFieldType) => void;
 }
 
-export const SortToggle: FC<SortToggleProps> = memo((props) => {
+export const ColumnToggleSort: FC<ColumnToggleSortProps> = memo((props) => {
 	const { text, sortField, activeField, onChangeActiveField } = props;
 	const [direction, setDirection] = useState<SortDirectionType>(sortDirection.desc);
 	const setSortedAndFilteredQuizzes = useQuizzesStore((state) => state.setSortedAndFilteredQuizzes);

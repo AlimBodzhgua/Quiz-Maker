@@ -1,4 +1,4 @@
-import { FC, memo, useEffect } from 'react';
+import { FC, memo, ReactNode } from 'react';
 import {
 	Card,
 	CardBody,
@@ -7,43 +7,29 @@ import {
 	TableContainer,
 	Tbody,
 } from '@chakra-ui/react';
-import { useQuizzesStore } from 'store/quizzes';
-import { useSearchParams } from 'react-router-dom';
-import { sortQuizzes } from '@/utils/utils';
-import { SortDirectionType, SortFieldType } from 'types/sort';
-import { useUserStore } from 'store/user';
-import { QuizTableRow } from './QuizTableRow';
-import { TableHeader } from '../TableHeader/TableHeader';
-import { TableSkeleton } from '../TableSkeleton';
+import { IQuiz } from 'types/types';
+import { TableSkeleton } from './TableSkeleton';
 
-export const QuizTable: FC = memo(() => {
-	const sortedAndFilteredQuizzes = useQuizzesStore((state) => state.sortedAndFilteredQuizzes);
-	const isLoading = useQuizzesStore((state) => state.isLoading);
-	const userId = useUserStore((state) => state.user?._id);
-	const getUserQuizzes = useQuizzesStore((state) => state.getUserQuizzes);
-	const setSortedAndFilteredQuizzes = useQuizzesStore((state) => state.setSortedAndFilteredQuizzes);
-	const [searchParams] = useSearchParams();
-	
-	const fetchQuizzesAndSort = async () => {
-		const quizzes = await getUserQuizzes(userId!);
+interface QuizTableProps {
+	header: ReactNode;
+	quizzes: IQuiz[];
+	isLoading: boolean;
+	renderQuizRow: (quiz: IQuiz) => ReactNode;
+}
 
-		if (searchParams.has('field') || searchParams.has('sort')) {
-			const sortValue = searchParams.get('field') as SortFieldType || 'date';
-			const sortDirection = searchParams.get('sort') as SortDirectionType;
-			const sortedQuizzes = sortQuizzes(quizzes, sortValue, sortDirection);
-			setSortedAndFilteredQuizzes(sortedQuizzes);
-		}
-	}
-
-	useEffect(() => {
-		fetchQuizzesAndSort();
-	}, []);
+export const QuizTable: FC<QuizTableProps> = memo((props) => {
+	const {
+		quizzes,
+		header,
+		isLoading,
+		renderQuizRow,
+	} = props;
 
 	if (isLoading) {
-		return <TableSkeleton />
+		return <TableSkeleton />;
 	}
 
-	if (!sortedAndFilteredQuizzes.length) {
+	if (!quizzes.length) {
 		return (
 			<Card align='center'>
 				<CardBody>
@@ -56,12 +42,8 @@ export const QuizTable: FC = memo(() => {
 	return (
 		<TableContainer border='1px solid black' borderRadius='12px' borderColor='#E2E8F0'>
 			<Table>
-				<TableHeader />
-				<Tbody>
-					{sortedAndFilteredQuizzes.map((quiz) => (
-						<QuizTableRow quiz={quiz} key={quiz._id} />
-					))}
-				</Tbody>
+				{header}
+				<Tbody>{quizzes.map(renderQuizRow)}</Tbody>
 			</Table>
 		</TableContainer>
 	);

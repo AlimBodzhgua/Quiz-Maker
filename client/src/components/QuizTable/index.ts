@@ -1,2 +1,2 @@
-export { PublicQuizTable } from './PublicQuizTable/PublicQuizTable';
-export { QuizTable } from './QuizTable/QuizTable';
+export { MyQuizzesTable } from './MyQuizzesTable/MyQuizzesTable';
+export { PublicQuizzesTable } from './PublicQuizzesTable/PublicQuizzesTable';

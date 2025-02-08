@@ -1,10 +1,10 @@
 import { FC, useEffect } from 'react';
-import { Box, Button, Flex } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '@/router/routes';
-import { QuizTable } from 'components/QuizTable';
 import { SearchBar } from 'components/SearchBar/SearchBar';
 import { useQuizzesStore } from 'store/quizzes';
+import { MyQuizzesTable } from 'components/QuizTable';
 
 const MainPage: FC = () => {
 	const toggleSelect = useQuizzesStore((state) => state.toggleSelect);
@@ -16,15 +16,14 @@ const MainPage: FC = () => {
 		return () => {
 			fullResetSelectState();
 		}
-	}, [])
+	}, []);
 
 	return (
-		<Box w='80%' p='15px 0'>
+		<Flex w='80%' p='15px 0' direction='column' gap='14px'>
 			<Flex
 				justify='space-between'
 				align='center'
 				p='2px 0px'
-				mb='14px'
 			>
 				<Flex w='80%'>
 					<SearchBar />
@@ -44,8 +43,8 @@ const MainPage: FC = () => {
 					</Button>
 				</Flex>
 			</Flex>
-			<QuizTable />
-		</Box>
+			<MyQuizzesTable />
+		</Flex>
 	);
 };
 

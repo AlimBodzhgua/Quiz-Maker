@@ -1,16 +1,16 @@
 import { FC, memo } from 'react';
-import { Box } from '@chakra-ui/react';
-import { PublicQuizTable } from 'components/QuizTable';
+import { Flex } from '@chakra-ui/react';
 import { SearchBar } from 'components/SearchBar/SearchBar';
+import { PublicQuizzesTable } from 'components/QuizTable';
 
 
 const PublicQuizzesPage: FC = memo(() => {
 
 	return (
-		<Box w='80%' p='25px 0'>
+		<Flex w='80%' p='25px 0' direction='column' gap='14px'>
 			<SearchBar />
-			<PublicQuizTable />
-		</Box>
+			<PublicQuizzesTable />
+		</Flex>
 	);
 });
 

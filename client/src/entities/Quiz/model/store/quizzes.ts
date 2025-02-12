@@ -8,8 +8,6 @@ interface QuizState {
 	sortedAndFilteredQuizzes: Quiz[];
 	isSelecting: boolean;
 	selectedQuizzes: string[];
-	isLoading: boolean;
-	error?: string;
 
 	getUserQuizzesStatus: 'idle' | 'pending' | 'success' | 'failed';
 	getPublicQuizzesStaus: 'idle' | 'pending' | 'success' | 'failed';
@@ -38,8 +36,6 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 
 		isSelecting: false,
 		selectedQuizzes: [],
-		isLoading: false,
-		error: undefined,
 
 		getUserQuizzesStatus: 'idle',
 		getPublicQuizzesStaus: 'idle',

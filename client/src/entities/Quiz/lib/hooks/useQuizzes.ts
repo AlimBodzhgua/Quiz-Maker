@@ -11,12 +11,10 @@ type useQuizzesProps = {
 
 type UseQuizzesResult = {
 	quizzes: Quiz[];
-	isLoading: boolean;
 };
 
 export const useQuizzes = ({ fetchQuizzesFn }: useQuizzesProps): UseQuizzesResult => {
 	const sortedAndFilteredQuizzes = useQuizzesStore((state) => state.sortedAndFilteredQuizzes);
-	const isLoading = useQuizzesStore((state) => state.isLoading);
 	const setSortedAndFilteredQuizzes = useQuizzesStore((state) => state.setSortedAndFilteredQuizzes);
 	const [searchParams] = useSearchParams();
 	
@@ -35,5 +33,5 @@ export const useQuizzes = ({ fetchQuizzesFn }: useQuizzesProps): UseQuizzesResul
 		fetchQuizzesAndSort();
 	}, []);
 
-	return { quizzes: sortedAndFilteredQuizzes, isLoading };
+	return { quizzes: sortedAndFilteredQuizzes };
 }

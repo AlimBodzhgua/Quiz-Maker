@@ -1,6 +1,5 @@
 import $axios from 'shared/api/axios';
-import { CompletedQuiz } from 'entities/CompletedQuiz/model/types';
-import { Quiz } from '../model/types';
+import type { Quiz, CompletedQuiz } from '../model/types';
 import { dateOptions } from '../lib/options';
 import { SortDirectionType, SortFieldType } from '../model/types';
 

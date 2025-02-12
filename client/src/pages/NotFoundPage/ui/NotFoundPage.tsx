@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Heading, Text } from '@chakra-ui/react';
-import { AppRoutes } from 'shared/constants/routes';
+import { AppRoutes } from 'shared/constants';
 import { Page } from 'widgets/Page';
 
 export const NotFoundPage: FC = () => {

@@ -2,12 +2,11 @@ import { FC, memo, useState, useCallback } from 'react';
 import { Button, Flex, Input, ScaleFade, Tooltip, useToast } from '@chakra-ui/react';
 import { CheckIcon, DeleteIcon, DragHandleIcon, EditIcon } from '@chakra-ui/icons';
 import { DragEndEvent } from '@dnd-kit/core';
-import { QuestionTypes } from 'shared/constants/questions';
-import { baseAnswer } from 'shared/constants/answers';
+import { QuestionTypes, baseAnswer } from 'shared/constants';
 import { SortableList } from 'shared/lib/components/SortableList';
 import { useHover } from 'shared/lib/hooks';
 import { SortableItem } from 'shared/lib/components/SortableItem';
-import { getQueryParam } from 'shared/utils/utils';
+import { getQueryParam } from 'shared/utils';
 import type { QuestionForm, QuestionType, AnswerForm } from 'entities/Quiz';
 import {
 	changeListOrder,

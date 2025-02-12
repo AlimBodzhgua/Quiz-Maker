@@ -1,8 +1,8 @@
 import { FC, memo, useState } from 'react';
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { Flex, Text } from '@chakra-ui/react';
-import { addQueryParam } from 'shared/utils/utils';
-import { sortDirection } from 'shared/constants/sort';
+import { addQueryParam } from 'shared/utils';
+import { sortDirection } from 'shared/constants';
 import { useQuizzesStore } from '../../model/store/quizzes';
 import { SortDirectionType, SortFieldType } from '../../model/types';
 import { QuizService } from '../../api/QuizService';

@@ -2,8 +2,8 @@ import { FC, Fragment, memo, useEffect, useRef, useState } from 'react';
 import { Flex, Text } from '@chakra-ui/react';
 import { Timer } from 'shared/UI';
 import { useThrottle } from 'shared/lib/hooks';
-import { useCurrentQuiz } from '../../model/store/currentQuiz';
 import { QuizProgressBar } from '../QuizProgressBar/QuizProgressBar';
+import { useCurrentQuiz } from '../../model/store/currentQuiz';
 
 interface QuizInfoProps {
 	isTimerStarted: boolean;

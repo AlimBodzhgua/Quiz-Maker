@@ -1,6 +1,6 @@
-import { PrivacyValues } from 'shared/constants/privacy';
-import { QuestionTypes } from 'shared/constants/questions';
-import { sortDirection, sortField } from 'shared/constants/sort';
+import { PrivacyValues } from 'shared/constants';
+import { QuestionTypes } from 'shared/constants';
+import { sortDirection, sortField } from 'shared/constants';
 
 
 type TimerValues = 'minutes' | 'seconds';

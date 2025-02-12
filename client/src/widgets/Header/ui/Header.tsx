@@ -14,7 +14,7 @@ import {
 	Text,
 } from '@chakra-ui/react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { AppRoutes } from 'shared/constants/routes';
+import { AppRoutes } from 'shared/constants';
 import { useSignOutUser } from 'entities/User';
 import ProfileIcon from '../assets/profile.svg';
 import ListIcon from '../assets/list.svg';

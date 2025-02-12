@@ -1,7 +1,7 @@
 import { FC, memo, useCallback, useState } from 'react';
 import { DeleteIcon, MinusIcon } from '@chakra-ui/icons';
 import { Button, Flex, ScaleFade, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react';
-import { sortField } from 'shared/constants/sort';
+import { sortField } from 'shared/constants';
 import { AppDialog } from 'shared/UI';
 import { useQuizzesStore } from '../../model/store/quizzes';
 import { SortFieldType } from '../../model/types';

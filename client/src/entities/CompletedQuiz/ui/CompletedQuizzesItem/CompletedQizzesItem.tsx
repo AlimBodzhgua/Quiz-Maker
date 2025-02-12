@@ -13,8 +13,8 @@ import {
 	Text,
 } from '@chakra-ui/react';
 import { DeleteIcon, RepeatIcon } from '@chakra-ui/icons';
-import { getQuizPage } from 'shared/utils/utils';
-import { Timer } from 'shared/UI/Timer/Timer';
+import { getQuizPage } from 'shared/utils';
+import { Timer } from 'shared/UI';
 import { CompletedQuiz } from '../../model/types';
 import { useCompletedQuizzes } from '../../model/store';
 

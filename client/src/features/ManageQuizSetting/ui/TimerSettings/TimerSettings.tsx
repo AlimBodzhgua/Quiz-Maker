@@ -9,7 +9,7 @@ import {
 	Select,
 	Switch,
 } from '@chakra-ui/react';
-import { getQueryParam } from 'shared/utils/utils';
+import { getQueryParam } from 'shared/utils';
 import type { Quiz } from 'entities/Quiz';
 import { QuizService } from '../../api/QuizService';
 

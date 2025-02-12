@@ -7,7 +7,7 @@ import { QuizPage } from 'pages/QuizPage';
 import { CompletedQuizzesPage } from 'pages/CompletedQuizzesPage';
 import { PublicQuizzesPage } from 'pages/PublicQuizzesPage';
 import { NotFoundPage } from 'pages/NotFoundPage';
-import { AppRoutes } from 'shared/constants/routes';
+import { AppRoutes } from 'shared/constants';
 import { AppRouteObject } from './types';
 import { AuthRequire } from './AuthRequire';
 import { Layout } from '../../Layout/Layout';

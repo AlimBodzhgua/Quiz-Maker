@@ -1,11 +1,11 @@
 export { useQuizzesStore } from './model/store/quizzes';
 export { useCurrentQuiz } from './model/store/currentQuiz';
 
+export { QuizInfo } from './ui/QuizInfo/QuizInfo';
 export { UserQuizzesTable } from './ui/UserQuizzesTable/UserQuizzesTable';
 export { PublicQuizzesTable } from './ui/PublicQuizzesTable/PublicQuizzesTable';
 
 export { useQuizResult } from './lib/hooks/useQuizResult';
-
 export type {
 	Quiz,
 	QuizPrivacy,

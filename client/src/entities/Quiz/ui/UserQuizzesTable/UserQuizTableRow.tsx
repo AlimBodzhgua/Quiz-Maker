@@ -2,7 +2,7 @@ import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, Checkbox, Flex, ScaleFade, Td, Tr, useDisclosure } from '@chakra-ui/react';
 import { DeleteIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
-import { getQuizPage } from 'shared/utils/utils';
+import { getQuizPage } from 'shared/utils';
 import { AppDialog } from 'shared/UI';
 import { QuestionService } from '../../api/QuestionService';
 import { QuizService } from '../../api/QuizService';

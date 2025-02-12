@@ -1,6 +1,6 @@
 import { FC, ReactNode, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { AppRoutes } from 'shared/constants/routes';
+import { AppRoutes } from 'shared/constants';
 import { useInitUser } from 'entities/User';
 
 interface AuthRequireProps {

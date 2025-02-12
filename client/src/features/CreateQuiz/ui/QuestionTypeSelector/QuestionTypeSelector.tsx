@@ -1,9 +1,9 @@
 import { FC, memo } from 'react';
 import { Select } from '@chakra-ui/react';
-import { QuestionTypes } from 'shared/constants/questions';
+import { QuestionTypes } from 'shared/constants';
+import type { QuestionType } from 'entities/Quiz';
 import { splitCamelCaseLetter } from '../../lib/utils';
 import { capitalizeFirstLetter } from '../../lib/utils';
-import type { QuestionType } from 'entities/Quiz';
 
 interface QuestionTypeSelectorProps {
 	value: QuestionType;

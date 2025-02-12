@@ -3,7 +3,7 @@ import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
 import { useLocation, useParams } from 'react-router-dom';
 import { StarIcon } from '@chakra-ui/icons';
 import { Page } from 'widgets/Page';
-import { QuizInfo } from 'entities/Quiz/ui/QuizInfo/QuizInfo';
+import { QuizInfo } from 'entities/Quiz';
 import { QuestionsList } from 'entities/Quiz/ui/QuestionsList/QuestionsList';
 import { useTimer } from 'shared/lib/hooks';
 import { FinishQuizButton } from 'features/SaveQuizResult';

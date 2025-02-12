@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { AUTH_LOCALSTORAGE_KEY } from 'shared/constants/localStorage';
+import { AUTH_LOCALSTORAGE_KEY } from 'shared/constants';
 import $axios from 'shared/api/axios';
-import { User } from './types';
+import type { User } from './types';
 
 interface UserState {
 	user: User | null;

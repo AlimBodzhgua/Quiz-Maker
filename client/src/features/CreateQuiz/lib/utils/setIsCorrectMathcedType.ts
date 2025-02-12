@@ -1,4 +1,4 @@
-import { QuestionTypes } from 'shared/constants/questions';
+import { QuestionTypes } from 'shared/constants';
 import type { AnswerForm, QuestionType } from 'entities/Quiz';
 
 export const setIsCorrectMathcedType = (

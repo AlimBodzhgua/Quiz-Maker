@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
-import { falseAnswer, inputAnswer, trueAnswer } from 'shared/constants/answers';
-import { QuestionTypes } from 'shared/constants/questions';
+import { falseAnswer, inputAnswer, trueAnswer } from 'shared/constants';
+import { QuestionTypes } from 'shared/constants';
 import type { AnswerForm, QuestionType } from 'entities/Quiz';
 import { initAnswers } from '../utils';
 

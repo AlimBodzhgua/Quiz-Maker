@@ -13,8 +13,6 @@ export const getQueryParam = (key: string) => {
 	return url.searchParams.get(key) || '';
 };
 
-
-// entities, shared (Answer)
 export const getDataMatchedAnswer = (isCorrect: boolean) => {
 	return {
 		color: isCorrect ? '#68AF15' : '#D30000',
@@ -26,7 +24,6 @@ export const getDataMatchedAnswer = (isCorrect: boolean) => {
 	};
 };
 
-// shared (Timer)
 export const subtractPixelsFromString = (px: string, amount: number) => {
 	return `${Number(px.substring(0, px.length - 2)) - amount}px`;
 };

@@ -1,7 +1,7 @@
 import { FC, useEffect, useState, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Skeleton, Td, Tr } from '@chakra-ui/react';
-import { getQuizPage } from 'shared/utils/utils';
+import { getQuizPage } from 'shared/utils';
 import { QuizService } from '../../api/QuizService';
 import { UserService } from '../../api/UserService';
 import { formatterOptions } from '../../lib/options';

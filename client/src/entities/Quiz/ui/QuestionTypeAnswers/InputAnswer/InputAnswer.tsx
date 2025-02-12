@@ -1,6 +1,6 @@
 import { FC, memo, useEffect, useRef, useState } from 'react';
 import { Box, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
-import { getDataMatchedAnswer } from 'shared/utils/utils';
+import { getDataMatchedAnswer } from 'shared/utils';
 import { useCurrentQuiz } from '../../../model/store/currentQuiz';
 import { Answer } from '../../../model/types';
 

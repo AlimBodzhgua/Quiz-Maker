@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useState } from 'react';
 import { Th, Thead, Tr } from '@chakra-ui/react';
-import { sortField } from 'shared/constants/sort';
+import { sortField } from 'shared/constants';
 import { ColumnToggleSort } from './ColumnToggleSort';
 import { SortFieldType } from '../../model/types';
 

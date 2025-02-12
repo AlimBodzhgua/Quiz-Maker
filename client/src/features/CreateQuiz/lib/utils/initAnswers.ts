@@ -1,4 +1,4 @@
-import { baseAnswer } from 'shared/constants/answers';
+import { baseAnswer } from 'shared/constants';
 
 export const initAnswers = (amount: number) => {
 	return Array(amount)

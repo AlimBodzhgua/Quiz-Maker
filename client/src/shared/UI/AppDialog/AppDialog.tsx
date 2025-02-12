@@ -1,4 +1,13 @@
-import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogProps, Button } from '@chakra-ui/react';
+import {
+	AlertDialog,
+	AlertDialogBody,
+	AlertDialogContent,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogOverlay,
+	AlertDialogProps,
+	Button,
+} from '@chakra-ui/react';
 import { FC, memo, ReactElement, ReactNode, useRef } from 'react';
 
 interface AppDialogProps extends Omit<AlertDialogProps, 'leastDestructiveRef'> {
@@ -40,9 +49,7 @@ export const AppDialog: FC<AppDialogProps> = memo((props) => {
 							{headerText}
 						</AlertDialogHeader>
 
-						<AlertDialogBody>
-							{bodyText}
-						</AlertDialogBody>
+						<AlertDialogBody>{bodyText}</AlertDialogBody>
 
 						<AlertDialogFooter>
 							<Button onClick={onClose} ref={cancelRef}>
@@ -57,4 +64,4 @@ export const AppDialog: FC<AppDialogProps> = memo((props) => {
 			</AlertDialog>
 		</>
 	);
-})
+});

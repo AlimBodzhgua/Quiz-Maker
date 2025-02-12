@@ -1,4 +1,4 @@
-import { TimerLimit } from 'entities/Quiz/model/types';
+import type { TimerLimit } from 'entities/Quiz';
 
 export interface IncreasingTimerProps {
 	type: 'increasing';

@@ -1,8 +1,8 @@
 import { FC, memo, useEffect, useState } from 'react';
 import { Flex, Heading, Radio, RadioGroup, Stack, Tooltip } from '@chakra-ui/react';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import { mapToPrivacyLabelText, mapToPrivacyText, PrivacyValues } from 'shared/constants/privacy';
-import { getQueryParam } from 'shared/utils/utils';
+import { mapToPrivacyLabelText, mapToPrivacyText, PrivacyValues } from 'shared/constants';
+import { getQueryParam } from 'shared/utils';
 import type { Quiz, QuizPrivacy } from 'entities/Quiz';
 import { QuizService } from '../../api/QuizService';
 

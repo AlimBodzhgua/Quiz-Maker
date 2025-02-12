@@ -1,0 +1,71 @@
+import $axios from 'shared/api/axios';
+import { CompletedQuiz } from 'entities/CompletedQuiz/model/types';
+import { Quiz } from '../model/types';
+import { dateOptions } from '../lib/options';
+import { SortDirectionType, SortFieldType } from '../model/types';
+
+export class QuizService {
+
+	static fetchCompletedQuizzes = async () => {
+		try {
+			const response = await $axios.get<CompletedQuiz[]>('/completed-quizzes');
+
+			return response.data;
+		} catch (err) {
+			throw new Error(`Error fetching completed quizzes ${err}`);
+		}
+	};
+
+	static saveQuizResult = async (result: Omit<CompletedQuiz, '_id' | 'userId' | 'date'>) => {
+		try {
+			const date = new Date().toLocaleDateString('ru-Ru', dateOptions);
+
+			await $axios.post('/completed-quizzes', {
+				quizId: result.quizId,
+				quizTitle: result.quizTitle,
+				correct: result.correct,
+				incorrect: result.incorrect,
+				timeResult: result.timeResult,
+				date,
+			});
+		} catch (err) {
+			throw new Error(`Error saving quiz reult ${err}`);
+		}
+	};
+
+	static countParticipiants = async (quizId: string): Promise<number> => {
+		const completedQuizzes = await QuizService.fetchCompletedQuizzes();
+		const selectedQuizzes = completedQuizzes.filter((quiz) => quiz.quizId === quizId);
+		const selectedQuizzesUsers = selectedQuizzes.map((quiz) => quiz.userId);
+		const uniqueUsersAmount = new Set(selectedQuizzesUsers).size;
+
+		return uniqueUsersAmount;
+	};
+	
+	static sortByName = (quizzes: Quiz[], direction: SortDirectionType): Quiz[] => {
+		if (direction === 'asc') {
+			return [...quizzes].sort((a, b) => a.title.localeCompare(b.title));
+		}
+		return [...quizzes].sort((a, b) => b.title.localeCompare(a.title));
+	};
+
+	static sortByDate = (quizzes: Quiz[], direction: SortDirectionType): Quiz[] => {
+		if (direction === 'asc') {
+			return [...quizzes].sort(
+				(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+			);
+		}
+		return [...quizzes].sort(
+			(a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+		);
+	};
+
+	static sortQuizzes = (quizzes: Quiz[], field: SortFieldType, direction: SortDirectionType) => {
+		switch(field) {
+			case 'date':
+				return QuizService.sortByDate(quizzes, direction);
+			case 'name':
+				return QuizService.sortByName(quizzes, direction);
+		}
+	}
+}

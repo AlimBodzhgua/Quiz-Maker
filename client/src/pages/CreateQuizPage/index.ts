@@ -1,0 +1,1 @@
+export { CreateQuizPageAsync as CreateQuizPage } from './ui/CreateQuizPage.async';

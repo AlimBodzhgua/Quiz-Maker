@@ -1,0 +1,9 @@
+export { removeItemAndFixListOrder } from './removeItemAndFixListOrder';
+export { setIsCorrectMathcedType } from './setIsCorrectMathcedType';
+export { changeListOrder } from './changeListOrder';
+export { initAnswers } from './initAnswers';
+export { capitalizeFirstLetter } from './capitalizeFirstLetter';
+export { create24CharId } from './create25CharId';
+export { isCorrectAnswerExist } from './isCorrectAnswerExist';
+export { isNoEmptyValuesAnswers } from './isNoEmptyValuesAnswers';
+export { splitCamelCaseLetter } from './splitCamelCaseLetter';

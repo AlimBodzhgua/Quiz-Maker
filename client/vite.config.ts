@@ -19,11 +19,11 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@': '/src',
+			shared: '/src/shared',
+			entities: '/src/entities',
+			features: '/src/features',
+			widgets: '/src/widgets',
 			pages: '/src/pages',
-			components: '/src/components',
-			types: '/src/types',
-			styles: '/src/styles',
-			store: '/src/store',
 		},
 	},
 });

@@ -80,7 +80,13 @@ export const Header: FC = memo(() => {
 								>
 									Completed
 								</Button>
-								<Button size='sm'>Profile</Button>
+								<Button
+									as={RouterLink}
+									to={AppRoutes.PROFILE}
+									size='sm'
+								>
+									Profile
+								</Button>
 								<Button size='sm' onClick={handleLogout}>
 									Logout
 								</Button>

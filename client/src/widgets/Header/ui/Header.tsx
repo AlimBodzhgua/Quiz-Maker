@@ -38,6 +38,7 @@ export const Header: FC = memo(() => {
 			minH='65px'
 			p='0 64px'
 			as='header'
+			zIndex='101'
 		>
 			<Heading size='md' color='gray.50' display='flex'>
 				<Box fontWeight='medium'>Quiz</Box>Maker

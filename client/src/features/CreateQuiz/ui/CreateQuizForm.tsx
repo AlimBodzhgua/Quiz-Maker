@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Flex, Input, InputGroup, InputRightAddon, Tooltip, useDisclosure } from '@chakra-ui/react';
 import { CheckIcon, DeleteIcon, EditIcon, SettingsIcon } from '@chakra-ui/icons';
 import { useHover } from 'shared/lib/hooks';
-import { getQueryParam } from 'shared/utils/utils';
+import { getQueryParam } from 'shared/utils';
 import { Quiz, useQuizzesStore } from 'entities/Quiz';
-import { AppDialog } from 'shared/UI/AppDialog/AppDialog';
+import { AppDialog } from 'shared/UI';
 import { useCreateQuiz } from '../model/store';
 
 type QuizSettingsManagerParams = {

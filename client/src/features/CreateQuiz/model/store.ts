@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { UniqueIdentifier } from '@dnd-kit/core';
-import { addQueryParam } from 'shared/utils/utils';
-import { QUIZ_LOCALSTORAGE_KEY } from 'shared/constants/localStorage';
+import { addQueryParam } from 'shared/utils';
+import { QUIZ_LOCALSTORAGE_KEY } from 'shared/constants';
 import { PrivacyValues } from 'shared/constants/privacy';
 import type { AnswerForm, Quiz, Question, QuestionForm } from 'entities/Quiz';
 import $axios from 'shared/api/axios';

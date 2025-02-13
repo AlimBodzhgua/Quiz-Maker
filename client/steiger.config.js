@@ -10,4 +10,12 @@ export default defineConfig([
 			'fsd/public-api': 'off',
 		},
 	},
+	{
+		files: ['./src/*/**'],
+		rules: {
+			// allow slices that have just one reference
+			'fsd/insignificant-slice': 'off',
+			'fsd/segments-by-purpose': 'off',
+		}
+	}
 ]);

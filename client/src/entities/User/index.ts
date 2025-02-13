@@ -1,3 +1,5 @@
+export { ProfileCard } from './ui/ProfileCard';
+
 export { useUserStore } from './model/store';
 
 export { useSignOutUser } from './lib/hooks/useSignOut';

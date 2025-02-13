@@ -7,6 +7,7 @@ export enum AppRoutes {
 	QUIZ = '/quiz/:id',
 	COMPLETED_QUIZZES = '/quizzes/completed',
 	PUBLIC_QUIZZES = '/public-quizzes',
+	PROFILE = '/profile',
 
 	NOT_FOUND = '*',
 }

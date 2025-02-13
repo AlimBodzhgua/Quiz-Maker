@@ -4,6 +4,7 @@ import { LoginPage } from 'pages/Login';
 import { RegisterPage } from 'pages/Register';
 import { CreateQuizPage } from 'pages/CreateQuiz';
 import { QuizPage } from 'pages/Quiz';
+import { ProfilePage } from 'pages/Profile';
 import { CompletedQuizzesPage } from 'pages/CompletedQuizzes';
 import { PublicQuizzesPage } from 'pages/PublicQuizzes';
 import { NotFoundPage } from 'pages/NotFound';
@@ -46,6 +47,11 @@ export const routes: AppRouteObject[] = [
 	{
 		path: AppRoutes.PUBLIC_QUIZZES,
 		element: <PublicQuizzesPage />,
+		authRequire: false, 
+	},
+	{
+		path: AppRoutes.PROFILE,
+		element: <ProfilePage />,
 		authRequire: false, 
 	},
 	{

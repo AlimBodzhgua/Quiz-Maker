@@ -12,7 +12,7 @@ interface UserQuizzesTableProps {
 export const UserQuizzesTable: FC<UserQuizzesTableProps> = memo(({ userId }) => {
 	const getUserQuizzes = useQuizzesStore((state) => state.getUserQuizzes);
 	const { quizzes } = useQuizzes({ fetchQuizzesFn: () => getUserQuizzes(userId!) });
-	const getUserQuizzesStatus = useQuizzesStore((state) => state.getPublicQuizzesStaus);
+	const getUserQuizzesStatus = useQuizzesStore((state) => state.getUserQuizzesStatus);
 	const isLoading = getUserQuizzesStatus === 'pending';
 
 	return (

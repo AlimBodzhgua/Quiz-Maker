@@ -1,13 +1,26 @@
-import { FC, useState, memo } from 'react';
-import { Box, Input, Heading, Button, InputRightElement, InputGroup } from '@chakra-ui/react';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { FC, useState, memo, useEffect } from 'react';
+import { Input, Heading, Button, InputRightElement, InputGroup, Card, InputLeftElement } from '@chakra-ui/react';
+import { EmailIcon, LockIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useSignUpUser } from 'entities/User';
 
 export const RegisterForm: FC = memo(() => {
-	const { signUpUser, isLoading, error} = useSignUpUser();
+	const { signUpUser, isLoading, error } = useSignUpUser();
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	const [showPassword, setShowPassword] = useState<boolean>(true);
+	const [showPassword, setShowPassword] = useState<boolean>(false);
+
+	const onPressEnter = (e: KeyboardEvent) => {
+		e.preventDefault();
+		if (e.key === 'Enter') {
+			signUpUser(email, password);
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('keydown', onPressEnter);
+
+		return () => window.removeEventListener('keydown', onPressEnter);
+	}, []);
 
 	const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.target.value);
@@ -24,50 +37,65 @@ export const RegisterForm: FC = memo(() => {
 	};
 
 	return (
-		<Box
+		<Card
 			display='flex'
 			alignItems='center'
 			flexDirection='column'
-			bg='gray.800'
-			minW='575px'
+			maxW='435px'
+			w='100%'
 			gap='10px'
 			p='14px 18px'
-			borderRadius='base'
+			as='form'
 		>
-			<Heading size='xl' color='gray.50' mb='12px'>
+			<Heading size='xl' color='gray.600' mb='12px'>
 				Register
 			</Heading>
-			<Input
-				placeholder='Email'
-				value={email}
-				onChange={onEmailChange}
-				size='lg'
-				color='gray.50'
-				isInvalid={error ? true : false}
-			/>
 			<InputGroup>
+				<InputLeftElement>
+					<EmailIcon />
+				</InputLeftElement>
 				<Input
-					placeholder='Password'
-					size='lg'
-					color='gray.50'
-					type={showPassword ? 'text' : 'password'}
+					placeholder='Email'
+					value={email}
+					onChange={onEmailChange}
+					variant='filled'
+					size='md'
+					isInvalid={error ? true : false}
+				/>
+			</InputGroup>
+			<InputGroup>
+				<InputLeftElement>
+					<LockIcon />
+				</InputLeftElement>
+				<Input
 					value={password}
 					onChange={onPasswordChange}
+					type={showPassword ? 'text' : 'password'}
 					isInvalid={error ? true : false}
+					placeholder='Password'
+					variant='filled'
+					size='md'
 				/>
 				<InputRightElement width='4.5rem'>
 					<Button variant='unstyled' onClick={onToggleShowPassword}>
 						{showPassword ? (
-							<ViewOffIcon color='#ffff' />
+							<ViewOffIcon color='#000' />
 						) : (
-							<ViewIcon color='#ffff' />
+							<ViewIcon color='#000' />
 						)}
 					</Button>
 				</InputRightElement>
 			</InputGroup>
-			<Button onClick={handleRegister} disabled={isLoading}>
+			<Button
+				onClick={handleRegister}
+				disabled={isLoading}
+				colorScheme='cyan'
+				color='white'
+				w='100%'
+				mt='20px'
+			>
 				Register
 			</Button>
-		</Box>
+		</Card>
 	);
 });

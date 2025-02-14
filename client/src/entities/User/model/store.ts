@@ -16,6 +16,7 @@ interface UserState {
 interface UserAction {
 	signInUser: (email: string, password: string) => Promise<void>;
 	signUpUser: (email: string, password: string) => Promise<void>;
+	resetStatuses: () => void;
 	signOutUser: () => void;
 	initUser: () => void;
 }
@@ -31,6 +32,14 @@ export const useUserStore = create<UserAction & UserState>()(
 		signOutUser: () => {
 			set({ user: null }, false, 'signOut');
 			localStorage.removeItem(AUTH_LOCALSTORAGE_KEY);
+		},
+
+		resetStatuses: () => {
+			set({
+				signInStatus: 'idle',
+				signUpStatus: 'idle',
+				initUserStatus: 'idle',
+			})
 		},
 
 		initUser: async () => {

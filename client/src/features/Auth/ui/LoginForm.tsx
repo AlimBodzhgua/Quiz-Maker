@@ -1,6 +1,6 @@
-import { FC, memo, useState } from 'react';
-import { Box, Heading, Input, Button, InputGroup, InputRightElement } from '@chakra-ui/react';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { FC, memo, useEffect, useState } from 'react';
+import { Heading, Input, Button, InputGroup, InputRightElement, Card, InputLeftElement } from '@chakra-ui/react';
+import { EmailIcon, LockIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useSignInUser } from 'entities/User';
 
 export const LoginForm: FC = memo(() => {
@@ -8,6 +8,19 @@ export const LoginForm: FC = memo(() => {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [showPassword, setShowPassword] = useState<boolean>(false);
+
+	const onPressEnter = (e: KeyboardEvent) => {
+		e.preventDefault();
+		if (e.key === 'Enter') {
+			signInUser(email, password);
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('keydown', onPressEnter);
+
+		return () => window.removeEventListener('keydown', onPressEnter);
+	}, []);
 
 	const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.target.value);
@@ -24,50 +37,65 @@ export const LoginForm: FC = memo(() => {
 	};
 
 	return (
-		<Box
+		<Card
 			display='flex'
 			alignItems='center'
 			flexDirection='column'
-			bg='gray.800'
-			minW='575px'
+			maxW='435px'
+			w='100%'
 			gap='10px'
 			p='14px 18px'
-			borderRadius='base'
+			as='form'
 		>
-			<Heading size='xl' color='gray.50' mb='12px'>
+			<Heading size='xl' mb='12px' color='gray.600'>
 				Login
 			</Heading>
-			<Input
-				placeholder='Login'
-				value={email}
-				onChange={onEmailChange}
-				size='lg'
-				color='gray.50'
-				isInvalid={error ? true : false}
-			/>
 			<InputGroup>
+				<InputLeftElement>
+					<EmailIcon />
+				</InputLeftElement>
 				<Input
-					placeholder='Password'
-					color='gray.50'
-					size='lg'
-					type={showPassword ? 'text' : 'password'}
+					placeholder='Login'
+					value={email}
+					onChange={onEmailChange}
+					variant='filled'
+					size='md'
+					isInvalid={error ? true : false}
+				/>
+			</InputGroup>
+			<InputGroup>
+				<InputLeftElement>
+					<LockIcon/>
+				</InputLeftElement>
+				<Input
 					value={password}
 					onChange={onPasswordChange}
+					type={showPassword ? 'text' : 'password'}
 					isInvalid={error ? true : false}
+					placeholder='Password'
+					variant='filled'
+					size='md'
 				/>
 				<InputRightElement width='4.5rem'>
 					<Button variant='unstyled' onClick={onToggleShowPassword}>
 						{showPassword ? (
-							<ViewOffIcon color='#ffff' />
+							<ViewOffIcon color='#000' />
 						) : (
-							<ViewIcon color='#ffff' />
+							<ViewIcon color='#000' />
 						)}
 					</Button>
 				</InputRightElement>
 			</InputGroup>
-			<Button onClick={handleLogin} disabled={isLoading}>
+			<Button
+				onClick={handleLogin}
+				disabled={isLoading}
+				colorScheme='cyan'
+				color='white'
+				w='100%'
+				mt='20px'
+			>
 				Login
 			</Button>
-		</Box>
+		</Card>
 	);
 });

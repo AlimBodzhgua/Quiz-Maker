@@ -10,7 +10,6 @@ export const RegisterForm: FC = memo(() => {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
 	const onPressEnter = (e: KeyboardEvent) => {
-		e.preventDefault();
 		if (e.key === 'Enter') {
 			signUpUser(email, password);
 		}

@@ -10,7 +10,6 @@ export const LoginForm: FC = memo(() => {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
 	const onPressEnter = (e: KeyboardEvent) => {
-		e.preventDefault();
 		if (e.key === 'Enter') {
 			signInUser(email, password);
 		}

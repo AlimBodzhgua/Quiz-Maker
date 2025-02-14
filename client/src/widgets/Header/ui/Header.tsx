@@ -33,7 +33,7 @@ export const Header: FC = memo(() => {
 			display='flex'
 			alignItems='center'
 			justifyContent='space-between'
-			bg='gray.800'
+			bg='blue.500'
 			w='100%'
 			minH='65px'
 			p='0 64px'

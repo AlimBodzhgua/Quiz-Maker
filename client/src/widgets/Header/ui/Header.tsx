@@ -4,20 +4,25 @@ import {
 	Wrap,
 	WrapItem,
 	Avatar,
-	PopoverTrigger,
 	Button,
-	Popover,
-	PopoverContent,
-	PopoverBody,
 	Heading,
 	Link,
 	Text,
+	Menu,
+	MenuButton,
+	MenuList,
+	MenuItem,
 } from '@chakra-ui/react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AppRoutes } from 'shared/constants';
 import { useSignOutUser } from 'entities/User';
+import { CheckIcon } from '@chakra-ui/icons';
 import ProfileIcon from '../assets/profile.svg';
 import ListIcon from '../assets/list.svg';
+import SignOutIcon from '../assets/signOut.svg';
+import AvatarIcon from '../assets/avatar.svg'
+import ListBulletsIcon from '../assets/unorderedList.svg';
+
 
 export const Header: FC = memo(() => {
 	const { signOut, isAuthorized } = useSignOutUser();
@@ -58,41 +63,46 @@ export const Header: FC = memo(() => {
 						<ListIcon />
 						<Text fontSize='15px'>Public quizzes</Text>
 					</Link>
-					<Popover closeDelay={15}>
-						<PopoverTrigger>
-							<Button variant='unstyled'>
-								<Avatar icon={<ProfileIcon />} size='sm' bg='gray.50' />
-							</Button>
-						</PopoverTrigger>
-						<PopoverContent w='175px' mt='5px'>
-							<PopoverBody display='flex' flexDirection='column' gap='4px'>
-								<Button
-									as={RouterLink}
-									to={AppRoutes.MAIN}
-									size='sm'
-								>
-									My Quizzes
-								</Button>
-								<Button
-									as={RouterLink}
-									to={AppRoutes.COMPLETED_QUIZZES}
-									size='sm'
-								>
-									Completed
-								</Button>
-								<Button
-									as={RouterLink}
-									to={AppRoutes.PROFILE}
-									size='sm'
-								>
-									Profile
-								</Button>
-								<Button size='sm' onClick={handleLogout}>
-									Logout
-								</Button>
-							</PopoverBody>
-						</PopoverContent>
-					</Popover>
+					<Menu placement='bottom' >
+						<MenuButton>
+							<Avatar icon={<ProfileIcon />} size='sm' bg='gray.50' />
+						</MenuButton>
+						<MenuList
+							display='flex'
+							flexDirection='column'
+							justifyContent='center'
+							minW='0'
+							w='145px'
+						>
+							<MenuItem
+								as={RouterLink}
+								to={AppRoutes.MAIN}
+								icon={<ListBulletsIcon />}
+							>
+								My Quizzes
+							</MenuItem>
+							<MenuItem
+								as={RouterLink}
+								to={AppRoutes.COMPLETED_QUIZZES}
+								icon={<CheckIcon />}
+							>
+								Completed
+							</MenuItem>
+							<MenuItem
+								as={RouterLink}
+								to={AppRoutes.PROFILE}
+								icon={<AvatarIcon />}
+							>
+								Profile
+							</MenuItem>
+							<MenuItem
+								onClick={handleLogout}
+								icon={<SignOutIcon />}
+							>
+								Logout
+							</MenuItem>
+						</MenuList>
+					</Menu>
 				</Box>
 			) : (
 				<Wrap spacing='20px'>

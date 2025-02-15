@@ -19,7 +19,7 @@ export const RegisterForm: FC = memo(() => {
 		window.addEventListener('keydown', onPressEnter);
 
 		return () => window.removeEventListener('keydown', onPressEnter);
-	}, []);
+	}, [onPressEnter]);
 
 	const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.target.value);

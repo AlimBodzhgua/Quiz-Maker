@@ -5,13 +5,13 @@ import { useThrottle } from 'shared/lib/hooks';
 import { QuizProgressBar } from '../QuizProgressBar/QuizProgressBar';
 import { useCurrentQuiz } from '../../model/store/currentQuiz';
 
-interface QuizInfoProps {
+interface QuizHeaderProps {
 	isTimerStarted: boolean;
 	minutes: number;
 	seconds: number;
 }
 
-export const QuizInfo: FC<QuizInfoProps> = memo((props) => {
+export const QuizHeader: FC<QuizHeaderProps> = memo((props) => {
 	const { isTimerStarted, minutes, seconds } = props;
 	const quiz = useCurrentQuiz((state) => state.quiz);
 	const correctAnswers = useCurrentQuiz((state) => state.correctAnswers);
@@ -38,7 +38,7 @@ export const QuizInfo: FC<QuizInfoProps> = memo((props) => {
 		return () => window.removeEventListener('scroll', onScroll);
 	}, []);
 
-	const infoBar = (
+	const headerInfo = (
 		<Fragment>
 			{isTimerStarted ? (
 				<Flex
@@ -69,7 +69,7 @@ export const QuizInfo: FC<QuizInfoProps> = memo((props) => {
 	return (
 		<Fragment>
 			<Flex justifyContent='space-between' ref={infoRef}>
-				{infoBar}
+				{headerInfo}
 			</Flex>
 
 			<Flex
@@ -85,7 +85,7 @@ export const QuizInfo: FC<QuizInfoProps> = memo((props) => {
 				bg='linear-gradient(#0E6FE4, #0447CC)'
 				transition='opacity .2s linear'
 			>
-				{infoBar}
+				{headerInfo}
 			</Flex>
 		</Fragment>
 	);

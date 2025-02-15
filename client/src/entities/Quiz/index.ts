@@ -1,9 +1,8 @@
-
 export { useQuizzesStore } from './model/store/quizzes';
 export { useCurrentQuiz } from './model/store/currentQuiz';
 
 export { QuestionsList } from './ui/QuestionsList/QuestionsList';
-export { QuizInfo } from './ui/QuizInfo/QuizInfo';
+export { QuizHeader } from './ui/QuizHeader/QuizHeader';
 export { UserQuizzesTable } from './ui/UserQuizzesTable/UserQuizzesTable';
 export { PublicQuizzesTable } from './ui/PublicQuizzesTable/PublicQuizzesTable';
 

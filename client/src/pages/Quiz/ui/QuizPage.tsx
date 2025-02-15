@@ -3,7 +3,7 @@ import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
 import { useLocation, useParams } from 'react-router-dom';
 import { StarIcon } from '@chakra-ui/icons';
 import { Page } from 'widgets/Page';
-import { QuizInfo, QuestionsList } from 'entities/Quiz';
+import { QuizHeader, QuestionsList } from 'entities/Quiz';
 import { useTimer } from 'shared/lib/hooks';
 import { FinishQuizButton } from 'features/SaveQuizResult';
 import { useCurrentQuiz } from 'entities/Quiz';
@@ -63,7 +63,7 @@ const QuizPage: FC = () => {
 					{quizTitle}
 				</Heading>
 
-				<QuizInfo isTimerStarted={isStarted} minutes={minutes} seconds={seconds}/>
+				<QuizHeader isTimerStarted={isStarted} minutes={minutes} seconds={seconds}/>
 
 				{withTimer && (
 					<Button

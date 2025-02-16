@@ -2,7 +2,7 @@ import { Response, Request, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 
 import { ApiError } from '../exceptions/ApiError';
-import { IQuiz } from '../types/types';
+import { Quiz } from '../types/types';
 import QuizModel from '../models/Quiz';
 import UserModel from '../models/User';
 
@@ -38,7 +38,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 			return next(ApiError.ValidationError(errors.array()));
 		}
 
-		let quizzes = await QuizModel.find<IQuiz>();
+		let quizzes = await QuizModel.find<Quiz>();
 
 		const privacy = req.query.privacy;
 		const authorId = req.query.authorId;

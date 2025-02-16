@@ -1,8 +1,8 @@
-import { IPublicUserData } from './../types/types';
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 
+import { PublicUserData } from './../types/types';
 import { ApiError } from '../exceptions/ApiError';
 import { HashService } from '../services/HashService';
 import { TokenService } from '../services/TokenService';
@@ -99,7 +99,7 @@ export const getUsers = async (req: Request, res: Response, next: NextFunction) 
 		const userId = req.query.userId;
 
 		const users = await UserModel.find<IUser>();
-		let publicUsersData = users.map((user) => ({_id: user._id, email: user.email})) as IPublicUserData[];
+		let publicUsersData = users.map((user) => ({_id: user._id, email: user.email})) as PublicUserData[];
 
 		if (userId) {
 			publicUsersData = publicUsersData.filter((user) => String(user._id) === userId);

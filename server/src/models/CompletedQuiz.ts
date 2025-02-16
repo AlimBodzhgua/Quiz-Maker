@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { ICompletedQuiz } from '../types/types';
+import { CompletedQuiz } from '../types/types';
 
-const CompletedQuizSchema = new mongoose.Schema<ICompletedQuiz>({
+const CompletedQuizSchema = new mongoose.Schema<CompletedQuiz>({
 	userId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
@@ -34,6 +34,6 @@ const CompletedQuizSchema = new mongoose.Schema<ICompletedQuiz>({
 	},
 })
 
-const CompletedQuizModel = mongoose.model<ICompletedQuiz>('CompletedQuiz', CompletedQuizSchema);
+const CompletedQuizModel = mongoose.model<CompletedQuiz>('CompletedQuiz', CompletedQuizSchema);
 
 export default CompletedQuizModel;

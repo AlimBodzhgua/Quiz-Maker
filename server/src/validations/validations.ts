@@ -68,4 +68,8 @@ export const quizzesQueryValidation = [
 
 export const usersQueryValidation = [
 	query('userId').optional().isString(),
-]
+];
+
+export const rateQuizValidation = [
+	body('rate').notEmpty().isNumeric(),
+];

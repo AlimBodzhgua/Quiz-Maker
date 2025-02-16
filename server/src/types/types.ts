@@ -16,12 +16,12 @@ export interface IUser extends DocResult<IUser> {
 	passwordHash: string;
 }
 
-export type IPublicUserData = Omit<IUser, 'passwordHash'>;
+export type PublicUserData = Omit<IUser, 'passwordHash'>;
 
 export type TimerValues = 'minutes' | 'seconds';
 export type TimerLimit = Record<TimerValues, number>;
 
-export interface IQuiz {
+export type Quiz = {
 	_id: Types.ObjectId;
 	title: string;
 	authorId: Types.ObjectId;
@@ -31,7 +31,7 @@ export interface IQuiz {
 	timerLimit?: TimerLimit;
 }
 
-export interface IQuestion {
+export type Question = {
 	_id: Types.ObjectId;
 	description: string;
 	quizId: Types.ObjectId;
@@ -39,15 +39,15 @@ export interface IQuestion {
 	order: number; // question number
 }
 
-export interface IAnswer {
+export type Answer = {
 	_id: Types.ObjectId;
 	value: string;
 	isCorrect: boolean;
 	order: number;
 	questionId: Types.ObjectId;
-}
+};
 
-export interface ICompletedQuiz {
+export type CompletedQuiz = {
 	_id: Types.ObjectId;
 	userId: Types.ObjectId;
 	quizId: Types.ObjectId;
@@ -56,7 +56,14 @@ export interface ICompletedQuiz {
 	incorrect: number;
 	timeResult?: TimerLimit;
 	date: string;
-}
+};
+
+export type QuizRating = {
+	_id: Types.ObjectId;
+	authorId: Types.ObjectId;
+	quizId: Types.ObjectId;
+	rate: number;
+};
 
 
 // export interface IUserAnswer {

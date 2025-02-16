@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import AnswerModel from './Answer';
-import { IQuestion } from './../types/types';
+import { Question } from './../types/types';
 
-const QuestionSchema = new mongoose.Schema<IQuestion>({
+const QuestionSchema = new mongoose.Schema<Question>({
 	_id: {
 		type: mongoose.Schema.Types.ObjectId,
 	},

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { IAnswer } from '../types/types';
+import { Answer } from '../types/types';
 
-export const AnswerSchema = new mongoose.Schema<IAnswer>({
+export const AnswerSchema = new mongoose.Schema<Answer>({
 	// _id;
 	value: {
 		type: String,
@@ -22,6 +22,6 @@ export const AnswerSchema = new mongoose.Schema<IAnswer>({
 	}
 });
 
-const AnswerModel = mongoose.model<IAnswer>('Answer', AnswerSchema);
+const AnswerModel = mongoose.model<Answer>('Answer', AnswerSchema);
 
 export default AnswerModel;

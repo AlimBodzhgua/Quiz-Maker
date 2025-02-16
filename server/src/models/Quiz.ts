@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 import QuestionModel from './Question';
 import AnswerModel from './Answer';
-import type { IQuiz } from '../types/types';
+import type { Quiz } from '../types/types';
+import QuizRatingModel from './QuizRating';
 
-const QuizSchema = new mongoose.Schema<IQuiz>({
+const QuizSchema = new mongoose.Schema<Quiz>({
 	// _id;
 	title: {
 		type: String,
@@ -36,10 +37,11 @@ QuizSchema.pre('findOneAndDelete', async function(next) {
 	if (questionsToDelete.length) {
 		await QuestionModel.deleteMany({ quizId: { $in: questionsToDelete.map((question) => question.quizId) }});
 		await AnswerModel.deleteMany({ questionId: { $in: questionsToDelete.map((question) => question._id) }});
+		await QuizRatingModel.deleteMany({ quizId: { $in: questionsToDelete.map((question) => question.quizId) } });
 	}
 	next();
 })
 
-const QuizModel = mongoose.model<IQuiz>('Quiz', QuizSchema);
+const QuizModel = mongoose.model<Quiz>('Quiz', QuizSchema);
 
 export default QuizModel;

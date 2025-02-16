@@ -8,7 +8,6 @@ import { useTimer } from 'shared/lib/hooks';
 import { FinishQuizButton } from 'features/SaveQuizResult';
 import { useCurrentQuiz } from 'entities/Quiz';
 import { getMathcedTimerProps } from '../lib/getMathcedTimerProps';
-import { QuizRating } from 'features/RateQuiz';
 
 const QuizPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();
@@ -65,7 +64,6 @@ const QuizPage: FC = () => {
 				</Heading>
 
 				<QuizHeader isTimerStarted={isStarted} minutes={minutes} seconds={seconds}/>
-				{id && <QuizRating quizId={id}/>}
 				{withTimer && (
 					<Button
 						onClick={handleStart}

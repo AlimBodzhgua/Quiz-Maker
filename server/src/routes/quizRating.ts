@@ -9,7 +9,7 @@ const router = Router({ mergeParams: true });
 
 router.post('/', requireAuth, rateQuizValidation, QuizRatingController.create);
 router.get('/', requireAuth, QuizRatingController.getAll);
+router.delete('/', requireAuth, QuizRatingController.remove);
 router.get('/:ratingId', requireAuth, QuizRatingController.getOne);
-router.delete('/:ratingId', requireAuth, QuizRatingController.remove);
 
 export default router;

@@ -48,6 +48,11 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 			return next(ApiError.BadRequest('Quiz with such id does not exist'));
 		}
 
+		await QuizRatingModel.findOneAndDelete({
+			quizId: req.params.quizId,
+			authorId: res.locals.userId,
+		});
+
 		const quizRating = new QuizRatingModel({
 			rate: req.body.rate,
 			quizId: req.params.quizId,
@@ -71,7 +76,6 @@ export const remove = async (req: Request, res: Response, next: NextFunction) =>
 		}
 
 		const quizRating = await QuizRatingModel.findOneAndDelete({
-			_id: req.params.ratingId,
 			quizId: req.params.quizId,
 			authorId: res.locals.userId,
 		});

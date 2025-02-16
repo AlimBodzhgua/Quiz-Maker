@@ -9,30 +9,41 @@ interface QuizRatingProps {
 };
 
 export const QuizRating: FC<QuizRatingProps> = memo(({ quizId }) => {
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [isHover, setIsHover] = useState<boolean>(false)
 	const [hoveredStar, setHoveredStar] = useState<number>(0);
 
 	const [selectedStar, setSelectedStar] = useState<number>(0);
 	const [isRated, setIsRated] = useState<boolean>(false);
 
-	const onRate = (starNumber: number) => {
+	const onRate = async (starNumber: number) => {
+		setIsLoading(true);
+
 		if (selectedStar === starNumber) {
+			await QuizRatingService.removeRating(quizId);
 			setIsRated(false);
 			setSelectedStar(0);
 			setHoveredStar(0);
 		} else {
-			QuizRatingService.rate(quizId, starNumber);
+			await QuizRatingService.rate(quizId, starNumber);
 			setIsRated(true);
 			setSelectedStar(starNumber);
 		}
-	}
+
+		setIsLoading(false);
+	};
 
 	const onToggleHover = useCallback(() => {
 		setIsHover((prev) => !prev);
 	}, []);
 
 	return (
-		<Flex gap='5px'>
+		<Flex
+			gap='5px'
+			pointerEvents={ isLoading ? 'none' : 'all' }
+			opacity={isLoading ? '.4' : '1'}
+			transition={'opacity .2s linear'}
+		>
 			{RATING_STARS.map((starNumber) => (
 				<RatingStar
 					key={starNumber}

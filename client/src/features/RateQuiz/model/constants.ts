@@ -1,1 +1,2 @@
-export const RATING_STARS = [1, 2, 3, 4, 5];
+const STARS_AMOUNT = 5;
+export const RATING_STARS = Array(STARS_AMOUNT).fill(0).map((_, index) => index + 1);

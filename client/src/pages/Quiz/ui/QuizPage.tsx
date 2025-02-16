@@ -64,7 +64,6 @@ const QuizPage: FC = () => {
 				</Heading>
 
 				<QuizHeader isTimerStarted={isStarted} minutes={minutes} seconds={seconds}/>
-
 				{withTimer && (
 					<Button
 						onClick={handleStart}

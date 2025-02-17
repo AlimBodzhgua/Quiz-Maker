@@ -27,7 +27,7 @@ export const useQuizResult = (time: QuizResultProps) => {
 					timeResult = { minutes: time.minutes, seconds: time.seconds };
 				}
 			}
-
+			
 			await QuizService.saveQuizResult({
 				quizId: quizId,
 				quizTitle: quizId,
@@ -36,7 +36,7 @@ export const useQuizResult = (time: QuizResultProps) => {
 				timeResult,
 			})
 		}
-	}, [])
+	}, [incorrectAnswers, correctAnswers])
 
 	return { saveQuizResult, correctAnswers, incorrectAnswers, questionsAmount };
 }

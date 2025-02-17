@@ -7,10 +7,10 @@ import './styles/index.css';
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
-		<ErrorBoundary>
-			<ChakraProvider>
+		<ChakraProvider>
+			<ErrorBoundary>
 				<App />
-			</ChakraProvider>
-		</ErrorBoundary>
+			</ErrorBoundary>
+		</ChakraProvider>
 	</StrictMode>,
 );

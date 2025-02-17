@@ -1,16 +1,19 @@
-import { FC, useEffect, useState } from 'react';
-import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { Box, Button, Collapse, Flex, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import { useLocation, useParams } from 'react-router-dom';
 import { StarIcon } from '@chakra-ui/icons';
 import { Page } from 'widgets/Page';
-import { QuizHeader, QuestionsList } from 'entities/Quiz';
+import { QuizHeader, QuestionsList, QuizResult, useCurrentQuiz } from 'entities/Quiz';
 import { useTimer } from 'shared/lib/hooks';
 import { FinishQuizButton } from 'features/SaveQuizResult';
-import { useCurrentQuiz } from 'entities/Quiz';
+import { useUserStore } from 'entities/User';
+import { QuizRating } from 'features/RateQuiz';
 import { getMathcedTimerProps } from '../lib/getMathcedTimerProps';
 
 const QuizPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();
+	const { isOpen, onToggle } = useDisclosure()
+	const user = useUserStore((state) => state.user);
 	const [isStarted, setIsStarted] = useState<boolean>(false);
 	const [isPreview, setIsPreview] = useState<boolean>(false);
 	const getCurrentQuiz = useCurrentQuiz((state) => state.getCurrentQuiz);
@@ -49,6 +52,11 @@ const QuizPage: FC = () => {
 		start();
 	};
 
+	const handleFinish = useCallback(() => {
+		pause();
+		onToggle();
+	}, [pause, onToggle]);
+
 	return (
 		<Page>
 			<Box
@@ -63,7 +71,7 @@ const QuizPage: FC = () => {
 					{quizTitle}
 				</Heading>
 
-				<QuizHeader isTimerStarted={isStarted} minutes={minutes} seconds={seconds}/>
+				<QuizHeader isTimerStarted={isStarted} minutes={minutes} seconds={seconds} />
 				{withTimer && (
 					<Button
 						onClick={handleStart}
@@ -75,18 +83,27 @@ const QuizPage: FC = () => {
 					</Button>
 				)}
 				<QuestionsList isBlured={isStarted} />
-				{!isPreview && (
-					<Flex gap='16px'>
+				{!isPreview && !isOpen && (
+					<Flex gap='16px' mb='16px'>
 						<FinishQuizButton
 							minutes={minutes}
 							seconds={seconds}
-							onFinish={pause}
+							onFinish={handleFinish}
 						/>
 						<Flex alignItems='center' gap='12px' color='white'>
 							<Text>{correctAnswers}</Text>
 							<StarIcon />
 						</Flex>
 					</Flex>
+				)}
+				{user && (
+					<Collapse in={isOpen} animateOpacity>
+						<QuizResult
+							userId={user?._id}
+							userEmail={user?.email}
+							renderQuizRating={(params) => <QuizRating {...params}/>}
+						/>
+					</Collapse>
 				)}
 			</Box>
 		</Page>

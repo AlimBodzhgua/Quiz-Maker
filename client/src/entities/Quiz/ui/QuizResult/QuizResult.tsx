@@ -1,6 +1,7 @@
 import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react';
 import { useCurrentQuiz } from 'entities/Quiz/model/store/currentQuiz';
 import { FC, memo, ReactNode } from 'react';
+import { PrintButton } from 'shared/UI';
 
 type QuizRatingParams = {
 	quizId: string;
@@ -25,9 +26,12 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 
 	return (
 		<Box bgColor='#ffff' borderRadius='base' padding='10px 14px'>
-			<Heading size='md' mb='12px' color='gray.700'>
-				Your Result
-			</Heading>
+			<Flex justifyContent='space-between'>
+				<Heading size='md' mb='12px' color='gray.700'>
+					Your Result
+				</Heading>
+				<PrintButton />
+			</Flex>
 			<Flex
 				justifyContent='space-between'
 				bgColor='rgb(249, 249, 249)'

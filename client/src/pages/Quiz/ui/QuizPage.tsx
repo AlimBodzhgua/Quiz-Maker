@@ -8,6 +8,7 @@ import { useTimer } from 'shared/lib/hooks';
 import { FinishQuizButton } from 'features/SaveQuizResult';
 import { useUserStore } from 'entities/User';
 import { QuizRating } from 'features/RateQuiz';
+import { NoPrint } from 'shared/lib/components/NoPrint';
 import { getMathcedTimerProps } from '../lib/getMathcedTimerProps';
 
 const QuizPage: FC = () => {
@@ -67,22 +68,27 @@ const QuizPage: FC = () => {
 				borderRadius='base'
 				boxShadow='base'
 			>
-				<Heading size='lg' fontWeight='medium' color='white'>
-					{quizTitle}
-				</Heading>
+				<NoPrint>
+					<Heading size='lg' fontWeight='medium' color='white'>
+						{quizTitle}
+					</Heading>
 
-				<QuizHeader isTimerStarted={isStarted} minutes={minutes} seconds={seconds} />
-				{withTimer && (
-					<Button
-						onClick={handleStart}
-						borderRadius='md'
-						size='sm'
-						m='5px 0'
-					>
-						Start quiz
-					</Button>
-				)}
-				<QuestionsList isBlured={isStarted} />
+					<QuizHeader isTimerStarted={isStarted} minutes={minutes} seconds={seconds}  />
+					
+					{withTimer && (
+						<Button
+							onClick={handleStart}
+							borderRadius='md'
+							size='sm'
+							m='5px 0'
+						>
+							Start quiz
+						</Button>
+					)}
+
+					<QuestionsList isBlured={isStarted} />
+				</NoPrint>
+
 				{!isPreview && !isOpen && (
 					<Flex gap='16px' mb='16px'>
 						<FinishQuizButton

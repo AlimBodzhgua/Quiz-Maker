@@ -6,3 +6,10 @@
 .css-14iyyou[data-disabled] {
     opacity: 0.9!important;
 }
+
+.printme { display: none; }
+
+@media print { 
+    .no-printme  { display: none; }
+    .printme  { display: block; }
+}

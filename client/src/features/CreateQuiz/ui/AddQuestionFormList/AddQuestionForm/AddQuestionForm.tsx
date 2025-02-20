@@ -1,13 +1,16 @@
 import { FC, memo, useState, useCallback } from 'react';
-import { Button, Flex, Input, ScaleFade, Tooltip, useToast } from '@chakra-ui/react';
-import { CheckIcon, DeleteIcon, DragHandleIcon, EditIcon } from '@chakra-ui/icons';
+import { Flex, useToast } from '@chakra-ui/react';
 import { DragEndEvent } from '@dnd-kit/core';
 import { QuestionTypes, baseAnswer } from 'shared/constants';
-import { SortableList } from 'shared/lib/components/SortableList';
 import { useHover } from 'shared/lib/hooks';
 import { SortableItem } from 'shared/lib/components/SortableItem';
 import { getQueryParam } from 'shared/utils';
 import type { QuestionForm, QuestionType, AnswerForm } from 'entities/Quiz';
+import { AnswersList } from './AnswersList';
+import { AddAnswerButton } from './AddAnswerButton';
+import { SaveButton } from './SaveButton';
+import { QuestionHeader } from './QuestionHeader';
+import { QuestionFormActions } from './QuestionFormActions';
 import {
 	changeListOrder,
 	setIsCorrectMathcedType,
@@ -17,8 +20,6 @@ import { QuestionService } from '../../../api/QuestionService';
 import { AnswersService } from '../../../api/AnswersService';
 import { useQuestionForm } from '../../../lib/hooks/useQuestionForm';
 import { useCreateQuiz } from '../../../model/store';
-import { AddAnswerForm } from '../../AddAnswerForm/AddAnswerForm';
-import { QuestionTypeSelector } from '../../QuestionTypeSelector/QuestionTypeSelector';
 
 interface AddQuestionFormProps {
 	question: QuestionForm;
@@ -90,22 +91,22 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 		setAnswersList(newAnswers);
 	};
 	
-	const handleRemoveQuestion = () => {
+	const handleRemoveQuestion = useCallback(() => {
 		removeQuestion(question._id);
 		
 		if (isSaved) {
 			const quizId = getQueryParam('id');
 			QuestionService.removeQuestionOnServer(quizId, question._id);
 		}
-	};
+	}, [question._id]);
 
-	const onEdit = () => {
+	const onEdit = useCallback(() => {
 		const quizId = getQueryParam('id');
 		QuestionService.removeQuestionOnServer(quizId, question._id);
 		setIsSaved(false);
-	};
+	}, [question._id]);
 
-	const onSave = async () => {
+	const onSave = useCallback(async () => {
 		if (AnswersService.isAnswersValid(answersList!)) {
 			setIsLoading(true);
 			const newQuestion = {
@@ -127,7 +128,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 				position: 'bottom',
 			});
 		}
-	};
+	}, [answersList, question, questionType, title, saveQuestion]);
 
 	return (
 		<SortableItem id={question._id}>
@@ -139,93 +140,45 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 				position='relative'
 				{...hoverProps}
 			>
-				<ScaleFade in={isHover}>
-					<Flex
-						direction='column'
-						position='absolute'
-						right='-54px'
-						top='-10px'
-						gap='10px'
-						p='10px 8px'
-						bg='blue.400'
-					>
-						<Button onClick={handleRemoveQuestion} size='sm'>
-							<DeleteIcon />
-						</Button>
-						<Button size='sm' cursor='grab'>
-							<DragHandleIcon />
-						</Button>
-						{isSaved && (
-							<Button size='sm' onClick={onEdit}>
-								<EditIcon />
-							</Button>
-						)}
-					</Flex>
-				</ScaleFade>
-				<Flex gap='10px'>
-					<Input
-						value={title}
-						onChange={onChnageTitle}
-						disabled={isSaved}
-						placeholder='Question title'
-						bg='whiteAlpha.900'
-						w='75%'
-						mb='8px'
-					/>
-					<QuestionTypeSelector
-						value={questionType}
-						onChange={handleChangeType}
-						disabled={isSaved}
-					/>
-				</Flex>
+				<QuestionHeader 
+					title={title}
+					questionType={questionType}
+					onTitleChange={onChnageTitle}
+					onTypeChange={handleChangeType}
+					isSaved={isSaved}
+				/>
+
+				<QuestionFormActions
+					isHover={isHover}
+					isSaved={isSaved}
+					onRemove={handleRemoveQuestion}
+					onEdit={onEdit}
+				/>
 
 				{answersList && (
-					<SortableList
-						items={answersList.map((answer) => answer._id)}
+					<AnswersList
+						answers={answersList}
 						onDragEnd={onAnswersDragEnd}
-					>
-						{!!answersList.length &&
-							answersList.map((answer) => (
-								<AddAnswerForm
-									key={answer._id}
-									answer={answer}
-									onChangeValue={onChangeValue}
-									onChangeIsCorrect={onChangeIsCorrect}
-									onDeleteAnswer={onDeleteAnswer}
-									isSaved={isSaved}
-								/>
-							))}
-					</SortableList>
+						onChangeValue={onChangeValue}
+						onChangeIsCorrect={onChangeIsCorrect}
+						onDeleteAnswer={onDeleteAnswer}
+						isSaved={isSaved}
+					/>
 				)}
 
 				{showAddBtn && answersList && (
-					<Tooltip label={answersList.length >= 5 && 'max answers amount is 5'}>
-						<Button
-							onClick={onAddAnswer}
-							disabled={answersList.length >= 5 || isSaved ? true : false}
-							alignSelf='flex-end'
-							size='sm'
-							m='5px 0'
-						>
-							+ Add Answer
-						</Button>
-					</Tooltip>
+					<AddAnswerButton
+						onClick={onAddAnswer}
+						isDisabled={answersList.length >= 5 || isSaved}
+					/>
 				)}
 				
 				{!!showSaveBtn && (
-					<Button
-						mt='8px'
+					<SaveButton 
 						onClick={onSave}
-						disabled={isSaved}
 						isLoading={isLoading}
-						loadingText={'Saving question'}
-						spinnerPlacement='end'
-					>
-						{isSaved
-							? <Flex gap='10px' alignItems='center'>Saved<CheckIcon/></Flex>
-							: 'Save question'
-						}
-					</Button>
+						isSaved={isSaved}
+					/>	
 				)}
 			</Flex>
 		</SortableItem>

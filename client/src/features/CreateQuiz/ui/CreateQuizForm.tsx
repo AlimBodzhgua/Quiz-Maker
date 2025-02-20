@@ -121,7 +121,6 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 					onClose: onCloseSettingsModal,
 					onUpdate: updateQuiz
 				})}
-				{/* <SettingsModal isOpen={isSettingsModalOpen} onClose={onCloseSettingsModal}/> */}
 			</InputGroup>
 		</Flex>
 	);

@@ -1,6 +1,6 @@
+import { FC, memo, useState } from 'react';
 import { Button, useToast } from '@chakra-ui/react';
 import { useQuizResult } from 'entities/Quiz';
-import { FC, memo, useState } from 'react';
 
 interface FinishQuizButtonProps {
 	minutes: number;
@@ -21,13 +21,14 @@ export const FinishQuizButton: FC<FinishQuizButtonProps> = memo((props) => {
 
 	const onFinishQuiz = async () => {
 		const answeredQuestionsAmount = correctAnswers + incorrectAnswers;
-		if (onFinish) onFinish();
+		
 
 		if (answeredQuestionsAmount === questionsAmount) {
 			setIsLoading(true);
 			await saveQuizResult()
 			setIsLoading(false);
-			
+
+			if (onFinish) onFinish();
 		} else {
 			toast({
 				title: 'You haven\'t answered all the questions.',

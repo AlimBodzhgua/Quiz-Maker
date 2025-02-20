@@ -6,8 +6,14 @@ import { Page } from 'widgets/Page';
 const CompletedQuizzesPage: FC = memo(() => {
 
 	return (
-		<Page centered>
-			<Heading m='12px 0'>Completed quizzes</Heading>
+		<Page>
+			<Heading
+				m='12px 0'
+				fontWeight='medium'
+				color='blue.400'
+			>
+				Completed quizzes
+			</Heading>
 			<CompletedQuizzesList />
 		</Page>
 	)

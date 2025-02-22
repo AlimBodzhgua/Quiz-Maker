@@ -24,7 +24,7 @@ const QuizSchema = new mongoose.Schema<Quiz>({
 		required: false,
 	},
 	privacy: {
-		type: String,
+		type: Object,
 		required: true,
 	}
 }, { timestamps: true })

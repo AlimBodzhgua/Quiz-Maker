@@ -12,20 +12,16 @@ export const loginValidation = [
 
 export const quizCreateValidation = [
 	body('title').notEmpty().isString().isLength({ min: 4 }),
-	body('privacy').notEmpty().isString(),
+	body('privacy').notEmpty().isObject(),
 	body('withTimer').optional().isBoolean(),
 	body('timerLimit').optional().isObject(),
 ];
 
 export const quizUpdateValidation = [
 	body('title').optional().isString().isLength({ min: 4 }),
-	body('privacy').optional().isString(),
+	body('privacy').optional().isObject(),
 	body('withTimer').optional().isBoolean(),
 	body('timerLimit').optional().isObject(),
-];
-
-export const quizRemoveValidation = [
-	body('quizId').notEmpty(),
 ];
 
 export const completedQuizCreateValidation = [
@@ -59,7 +55,8 @@ export const answerValidation = [
 export const quizzesQueryValidation = [
 	query('privacy')
 		.optional()
-		.isIn(['public', 'private', 'privateLink', 'privateLinkPassword', 'privateUsers'])
+		.isString()
+		.isIn(['public', 'publicProtected', 'private', 'privateLink', 'linkProtected', 'restrictedUsers'])
 		.withMessage(
 			'Privacy value must be one of the following listed values: public, private, privateLink, privateLinkPassword, privateUsers',
 		),

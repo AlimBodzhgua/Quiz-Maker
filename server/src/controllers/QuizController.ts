@@ -43,7 +43,6 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 		const privacy = req.query.privacy;
 		const authorId = req.query.authorId;
 
-		
 		if (authorId) {
 			const user = await UserModel.findById(authorId);
 
@@ -54,7 +53,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 		}
 
 		if (privacy) {
-			quizzes = quizzes.filter((quiz) => quiz.privacy === privacy);
+			quizzes = quizzes.filter((quiz) => quiz.privacy.type === privacy);
 		}
 
 		res.json(quizzes);

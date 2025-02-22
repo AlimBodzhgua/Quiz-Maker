@@ -9,28 +9,35 @@ import { FinishQuizButton } from 'features/SaveQuizResult';
 import { useUserStore } from 'entities/User';
 import { QuizRating } from 'features/RateQuiz';
 import { NoPrint } from 'shared/lib/components/NoPrint';
+import { PassworodRequireDialog, RestrictedAccessDialog, useQuizAccess } from 'features/QuizAccessControl';
 import { getMathcedTimerProps } from '../lib/getMathcedTimerProps';
+
 
 const QuizPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();
 	const { isOpen, onToggle } = useDisclosure()
+	const location = useLocation();
 	const user = useUserStore((state) => state.user);
 	const [isStarted, setIsStarted] = useState<boolean>(false);
 	const [isPreview, setIsPreview] = useState<boolean>(false);
 	const getCurrentQuiz = useCurrentQuiz((state) => state.getCurrentQuiz);
 	const resetQuizResult = useCurrentQuiz((state) => state.resetQuizResult);
+	const quiz = useCurrentQuiz((state) => state.quiz);
 	const correctAnswers = useCurrentQuiz((state) => state.correctAnswers);
-	const quizTitle = useCurrentQuiz((state) => state.quiz?.title);
-	const withTimer = useCurrentQuiz((state) => state.quiz)?.withTimer || false;
-	const timerLimit = useCurrentQuiz((state) => state.quiz?.timerLimit);
-	const location = useLocation();
-	
-	const timerProps = getMathcedTimerProps(timerLimit);
+	const withTimer = useCurrentQuiz((state) => state.quiz?.withTimer) || false;
+	const timerProps = getMathcedTimerProps(quiz?.timerLimit);
 	const { minutes, seconds, start, pause } = useTimer(timerProps);
-	
+
+	const {
+		havePermission,
+		correctPassword,
+		isOpenPasswordDialog,
+		closePasswordDialog,
+	} = useQuizAccess({ quiz: quiz, userId: user?._id})
+
+
 	const initQuiz = async (id: string) => {
 		const quiz = await getCurrentQuiz(id);
-
 		if (!quiz?.withTimer) {
 			setIsStarted(true);
 		}
@@ -68,9 +75,21 @@ const QuizPage: FC = () => {
 				borderRadius='base'
 				boxShadow='base'
 			>
+				{quiz?.privacy?.type === 'publicProtected' &&
+					<PassworodRequireDialog
+						correctPassword={correctPassword}
+						isOpen={isOpenPasswordDialog}
+						onClose={closePasswordDialog}
+					/>
+				}
+				{quiz?.privacy?.type === 'restrictedUsers' &&
+					<RestrictedAccessDialog havePermission={havePermission}/>
+				}
+		
+					
 				<NoPrint>
 					<Heading size='lg' fontWeight='medium' color='white'>
-						{quizTitle}
+						{quiz?.title}
 					</Heading>
 
 					<QuizHeader isTimerStarted={isStarted} minutes={minutes} seconds={seconds}  />

@@ -46,10 +46,8 @@ export const MyQuizzesTableHeader: FC = memo(() => {
 						</Button>
 						<AppDialog
 							isOpen={isOpen}
-							headerText={'Delete selected quizzes'}
-							bodyText={
-								'Are you sure? You can\'t undo this action afterwards.'
-							}
+							header={'Delete selected quizzes'}
+							body={'Are you sure? You can\'t undo this action afterwards.'}
 							actionText={'Delete'}
 							actionHandler={handleRemove}
 							onClose={onClose}

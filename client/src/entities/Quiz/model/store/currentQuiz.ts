@@ -49,6 +49,7 @@ export const useCurrentQuiz = create<CurrentQuizState & CurrentQuizAction>()(
 					createdAt: response.data.createdAt,
 					withTimer: response.data.withTimer,
 					timerLimit: response.data.timerLimit,
+					privacy: response.data.privacy,
 				} as Quiz;
 
 				set({ quiz: quiz, fetchQuizStatus: 'success' }, false, 'fetchQuizSuccess');

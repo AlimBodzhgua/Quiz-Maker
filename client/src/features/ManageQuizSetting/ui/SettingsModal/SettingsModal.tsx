@@ -27,7 +27,7 @@ export const SettingsModal: FC<SettingsModalProps> = memo((props) => {
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<ModalOverlay />
-			<ModalContent minW='475px'>
+			<ModalContent minW='540px' minH='460px'>
 				<ModalHeader>Settings</ModalHeader>
 				<ModalBody>
 					<TimerSettings onUpdate={onUpdate}/>

@@ -91,8 +91,8 @@ export const MyQuizTableRow: FC<MyQuizTableRowProps> = memo(({ quiz }) => {
 
 					<AppDialog
 						isOpen={isOpen}
-						headerText={`Delete Quiz: ${quiz.title}`}
-						bodyText={'Are you sure? You can\'t undo this action afterwards.'}
+						header={`Delete Quiz: ${quiz.title}`}
+						body={'Are you sure? You can\'t undo this action afterwards.'}
 						actionText={'Delete'}
 						actionHandler={handleRemove}
 						onClose={onClose}

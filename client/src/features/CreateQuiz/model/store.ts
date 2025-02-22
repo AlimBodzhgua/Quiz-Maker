@@ -38,7 +38,10 @@ export const useCreateQuiz = create<CreateQuizState & CreateQuizActions>()(
 		},
 
 		createQuiz: async (title: string) => {
-			const response = await $axios.post<Quiz>('quizzes', { title, privacy: PrivacyValues.private });
+			const response = await $axios.post<Quiz>('quizzes', {
+				title,
+				privacy: { type: PrivacyValues.private },
+			});
 
 			const quizId = response.data._id;
 			set({ quizId: quizId }, false, 'createQuiz');

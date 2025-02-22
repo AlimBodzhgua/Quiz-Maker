@@ -1,20 +1,38 @@
-import { PrivacyValues } from 'shared/constants';
 import { QuestionTypes } from 'shared/constants';
 import { sortDirection, sortField } from 'shared/constants';
-
 
 type TimerValues = 'minutes' | 'seconds';
 export type TimerLimit = Record<TimerValues, number>;
 export type QuestionType = keyof typeof QuestionTypes;
 
-export type QuizPrivacy = keyof typeof PrivacyValues;
+type PublicQuiz = {
+	type: 'public' | 'publicProtected';
+	password?: string; // publicProtected
+}
+
+type PrivateQuiz = {
+	type: 'private';
+}
+
+type RestrictedUsersQuiz = {
+	type: 'restrictedUsers';
+	userIds: string[];
+}
+
+type LinkProtectedQuiz = {
+	type: 'privateLink' | 'linkProtected',
+	link: string;
+	password?: string; // linkProtectedQuiz
+}
+
+export type PrivacyType = PublicQuiz | PrivateQuiz | RestrictedUsersQuiz | LinkProtectedQuiz;
 
 export type Quiz = {
 	_id: string;
 	title: string;
 	authorId: string;
 	createdAt: string;
-	privacy: QuizPrivacy;
+	privacy: PrivacyType;
 	withTimer?: boolean;
 	timerLimit?: TimerLimit;
 };

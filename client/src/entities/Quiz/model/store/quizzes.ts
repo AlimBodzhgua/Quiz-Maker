@@ -61,18 +61,33 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 		getPublicQuizzes: async () => {
 			set({ getPublicQuizzesStaus: 'pending' }, false, 'getPublicQuizzesPending');
 			try {
-				const response = await $axios.get('quizzes', {
+				const publicQuizzesResponse = await $axios.get('quizzes', {
 					params: { 'privacy': 'public' },
 				});
+
+				const publicProtectedQuizzesResponse = await $axios.get('quizzes', {
+					params: { 'privacy': 'publicProtected' },
+				});
+
+				const restrictedUsersReponse =  await $axios.get('quizzes', {
+					params: { 'privacy': 'restrictedUsers' },
+				});
 				
+				const quizzes = [
+					...publicQuizzesResponse.data,
+					...restrictedUsersReponse.data,
+					...publicProtectedQuizzesResponse.data,
+				];
+
 				set({
-					quizzes: response.data,
-					sortedAndFilteredQuizzes: response.data,
+					quizzes: quizzes,
+					sortedAndFilteredQuizzes: quizzes,
 					getPublicQuizzesStaus: 'success',
 				}, false, 'getPublicQuizzesSuccess');
-				return response.data;
+				return quizzes as Quiz[];
 			} catch (err) {
 				set({ getPublicQuizzesStaus: 'failed' }, false, 'getPublicQuizzesFailed');
+				throw new Error('Failed to fecth public quizzes');
 			}
 		},
 

@@ -23,6 +23,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 			_id: mongoose.Types.ObjectId.createFromHexString(req.body._id),
 			description: req.body.description,
 			quizId: req.params.quizId,
+			isRequired: req.body.isRequired,
 			type: req.body.type,
 			order: req.body.order,
 		});
@@ -117,6 +118,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
 				description: req.body.description,
 				quizId: req.params.quizId,
 				type: req.body.type,
+				isRequired: req.body.isRequired,
 				order: req.body.order,
 			},
 			{ new: true },

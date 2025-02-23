@@ -19,6 +19,10 @@ const QuestionSchema = new mongoose.Schema<Question>({
 		type: String,
 		required: true,
 	},
+	isRequired: {
+		type: Boolean,
+		required: true,
+	},
 	order: {
 		type: Number,
 		required: true,

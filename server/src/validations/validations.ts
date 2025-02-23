@@ -36,6 +36,7 @@ export const completedQuizCreateValidation = [
 export const questionValidation = [
 	body('_id').notEmpty().isString(),
 	body('description').notEmpty().isString(),
+	body('isRequired').notEmpty().isBoolean(),
 	body('type').notEmpty().isString(),
 	body('order').notEmpty().isNumeric(),
 ];

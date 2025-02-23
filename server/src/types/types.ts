@@ -36,6 +36,7 @@ export type Question = {
 	description: string;
 	quizId: Types.ObjectId;
 	type: QuestionType; 
+	isRequired: boolean;
 	order: number; // question number
 }
 

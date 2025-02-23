@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { Quiz } from '../../model/types';
 import { TableSkeleton } from './TableSkeleton';
+import BoxIcon from '../../assets/box.svg';
 
 interface QuizTableProps {
 	header: ReactNode;
@@ -32,8 +33,20 @@ export const QuizTable: FC<QuizTableProps> = memo((props) => {
 	if (!quizzes.length) {
 		return (
 			<Card align='center'>
-				<CardBody>
-					<Heading size='md'>You have not quizzes yet</Heading>
+				<CardBody
+					display='flex'
+					justifyContent='center'
+					alignItems='center'
+					flexDirection='column'
+				>
+					<BoxIcon/>
+					<Heading
+						size='md'
+						fontWeight='medium'
+						color='gray.400'
+					>
+						No Quizzes
+					</Heading>
 				</CardBody>
 			</Card>
 		);

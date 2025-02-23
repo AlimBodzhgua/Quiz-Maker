@@ -52,6 +52,7 @@ export type Question = {
 	_id: string;
 	description: string;
 	quizId: string;
+	isRequired: boolean;
 	type: QuestionType;
 	order: number;
 };

@@ -8,6 +8,9 @@ export const useQuestionForm = () => {
 	const [title, setTitle] = useState<string>('');
 	const [questionType, setQuestionType] = useState<QuestionType>(QuestionTypes.multipleAnswer);
 	const [answersList, setAnswersList] = useState<AnswerForm[] | null>(initAnswers(3));
+	const [isRequired, setIsRequired] = useState<boolean>(true);
+
+	const onToggleIsRequired = () => setIsRequired((prev) => !prev);
 
 	const onChangeType = useCallback((newType: QuestionType) => {
 		setQuestionType(newType);
@@ -27,6 +30,8 @@ export const useQuestionForm = () => {
 		questionType,
 		title,
 		answersList,
+		isRequired,
+		onToggleIsRequired,
 		setTitle,
 		setAnswersList,
 		onChangeType,

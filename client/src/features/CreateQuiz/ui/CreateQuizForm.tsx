@@ -113,7 +113,7 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 						</Tooltip>
 					)}
 				</InputRightAddon>
-				<Button onClick={onOpenSettingsModal} disabled={false} ml='5px'>
+				<Button onClick={onOpenSettingsModal} disabled={!isSaved} ml='5px'>
 					<SettingsIcon />
 				</Button>
 				{renderQuizSettingsManager({

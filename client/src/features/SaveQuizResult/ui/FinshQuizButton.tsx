@@ -14,6 +14,7 @@ export const FinishQuizButton: FC<FinishQuizButtonProps> = memo((props) => {
 	const toast = useToast();
 	const {
 		saveQuizResult,
+		requiredQuestionsAmount,
 		correctAnswers,
 		incorrectAnswers,
 		questionsAmount,
@@ -21,9 +22,9 @@ export const FinishQuizButton: FC<FinishQuizButtonProps> = memo((props) => {
 
 	const onFinishQuiz = async () => {
 		const answeredQuestionsAmount = correctAnswers + incorrectAnswers;
-		
+		const requiredAmountToFinishQuiz = questionsAmount - requiredQuestionsAmount;
 
-		if (answeredQuestionsAmount === questionsAmount) {
+		if (answeredQuestionsAmount === requiredAmountToFinishQuiz) {
 			setIsLoading(true);
 			await saveQuizResult()
 			setIsLoading(false);

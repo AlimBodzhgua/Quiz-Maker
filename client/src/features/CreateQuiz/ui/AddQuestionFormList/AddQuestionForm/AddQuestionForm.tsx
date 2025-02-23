@@ -38,13 +38,16 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 		questionType,
         title,
         answersList,
+		isRequired,
+		onToggleIsRequired,
         setTitle,
         setAnswersList,
         onChangeType,
 	} = useQuestionForm();
+
 	const showAddBtn = questionType === QuestionTypes.multipleAnswer || questionType === QuestionTypes.oneAnswer;
 	const showSaveBtn = answersList && title.length;
-
+	
 	const onChnageTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTitle(e.target.value);
 	};
@@ -53,7 +56,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 		const questionType = e.target.value as QuestionType;
 		onChangeType(questionType);
 	}, [answersList]);
-
+	
 	const onChangeValue = useCallback((answerId: string, value: string) => {
 		if (answersList) {
 			const newAnswers = answersList.map((answer) =>
@@ -63,9 +66,10 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 		}
 	}, [answersList]);
 
+
 	const onChangeIsCorrect = useCallback((answerId: string) => {
 		const answers = setIsCorrectMathcedType(answersList!, answerId, questionType);
-
+		
 		setAnswersList(answers);
 	}, [answersList, questionType]);
 
@@ -114,6 +118,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 				description: title,
 				type: questionType,
 				order: question.order,
+				isRequired: isRequired,
 			}
 			await saveQuestion(newQuestion, answersList!);
 			setIsSaved(true);
@@ -128,7 +133,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 				position: 'bottom',
 			});
 		}
-	}, [answersList, question, questionType, title, saveQuestion]);
+	}, [answersList, question, questionType, title, isRequired, saveQuestion]);
 
 	return (
 		<SortableItem id={question._id}>
@@ -140,11 +145,13 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 				position='relative'
 				{...hoverProps}
 			>
-				<QuestionHeader 
+				<QuestionHeader
 					title={title}
 					questionType={questionType}
 					onTitleChange={onChnageTitle}
 					onTypeChange={handleChangeType}
+					onToggleIsRequired={onToggleIsRequired}
+					isRequired={isRequired}
 					isSaved={isSaved}
 				/>
 

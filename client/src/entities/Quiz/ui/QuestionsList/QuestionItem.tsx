@@ -10,6 +10,8 @@ import {
 	Text,
 	CardFooter,
 	Button,
+	Tooltip,
+	Box,
 } from '@chakra-ui/react';
 import {
 	CheckBoxAnswers,
@@ -20,6 +22,7 @@ import {
 import { Answer, Question, QuestionType } from '../../model/types';
 import { useCurrentQuiz } from '../../model/store/currentQuiz';
 import { AnswersService } from '../../api/AnswersService';
+import RequiredIcon from '../../assets/required.svg';
 
 interface QuestionItemProps {
 	question: Question;
@@ -80,12 +83,18 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 					<Flex align='center'>
 						<Text size='lg' mr='6px'>{`${question.order})`}</Text>
 						<Heading size='md' as='h4'>{question.description}</Heading>
+						{!question.isRequired && (
+							<Tooltip hasArrow placement='right-end' label='This question is not required'>
+								<Box><RequiredIcon /></Box>
+							</Tooltip>
+						)}
 					</Flex>
 				</CardHeader>
 				<CardBody>
 					{mapToQuestionTypeAnswers[question.type]}
 				</CardBody>
 				<CardFooter justify='flex-end' pt='0'>
+					
 					<Button
 						size='sm'
 						onClick={onSubmit}

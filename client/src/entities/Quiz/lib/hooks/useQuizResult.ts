@@ -9,13 +9,16 @@ type QuizResultProps = {
 };
 
 export const useQuizResult = (time: QuizResultProps) => {
-	const correctAnswers = useCurrentQuiz((state) => state.correctAnswers);
-	const incorrectAnswers = useCurrentQuiz((state) => state.incorrectAnswers);
-	const questionsAmount = useCurrentQuiz((state) => state.questions)?.length;
 	const quiz = useCurrentQuiz((state) => state.quiz);
 	const quizId = useCurrentQuiz((state) => state.quiz?._id);
 	const quizTitle = useCurrentQuiz((state) => state.quiz?.title);
-
+	const correctAnswers = useCurrentQuiz((state) => state.correctAnswers);
+	const incorrectAnswers = useCurrentQuiz((state) => state.incorrectAnswers);
+	const questionsAmount = useCurrentQuiz((state) => state.questions)?.length || 0;
+	const requiredQuestionsAmount = useCurrentQuiz((state) => state.questions)?.filter(
+		(question) => question.isRequired,
+	).length || 0;
+	
 	const saveQuizResult = useCallback(async () => {
 		if (quizId && quizTitle) {
 			let timeResult;
@@ -38,5 +41,11 @@ export const useQuizResult = (time: QuizResultProps) => {
 		}
 	}, [incorrectAnswers, correctAnswers])
 
-	return { saveQuizResult, correctAnswers, incorrectAnswers, questionsAmount };
+	return {
+		saveQuizResult,
+		correctAnswers,
+		incorrectAnswers,
+		requiredQuestionsAmount,
+		questionsAmount,
+	};
 }

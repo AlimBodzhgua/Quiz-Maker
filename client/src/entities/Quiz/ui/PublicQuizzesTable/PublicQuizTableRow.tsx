@@ -1,12 +1,13 @@
 import { FC, useEffect, useState, memo } from 'react';
 import { Link } from 'react-router-dom';
-import { Skeleton, Td, Tr } from '@chakra-ui/react';
+import { Flex, Skeleton, Td, Tr } from '@chakra-ui/react';
 import { getQuizPage } from 'shared/utils';
 import { QuizService } from '../../api/QuizService';
 import { UserService } from '../../api/UserService';
 import { formatterOptions } from '../../lib/options';
 import { QuestionService } from '../../api/QuestionService';
 import { Quiz } from '../../model/types';
+import { PrivacyIcons } from '../QuizTable/PrivacyIcons';
 
 interface PublicQuizTableRowProps {
 	quiz: Quiz;
@@ -43,7 +44,10 @@ export const PublicQuizTableRow: FC<PublicQuizTableRowProps> = memo((props) => {
 	return (
 		<Tr>
 			<Td>
-				<Link to={getQuizPage(quiz._id)}>{quiz.title}</Link>
+				<Flex alignItems='center' gap='10px'>
+					<Link to={getQuizPage(quiz._id)}>{quiz.title}</Link>
+					<PrivacyIcons privacy={quiz.privacy}/>
+				</Flex>
 			</Td>
 			<Td>{formatter.format(new Date(quiz.createdAt)).split('/').join('.')}</Td>
 			<Td isNumeric>

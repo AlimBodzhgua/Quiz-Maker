@@ -9,6 +9,7 @@ import { QuizService } from '../../api/QuizService';
 import { useQuizzesStore } from '../../model/store/quizzes';
 import { Quiz } from '../../model/types';
 import { formatterOptions } from '../../lib/options';
+import { PrivacyIcons } from '../QuizTable/PrivacyIcons';
 
 interface MyQuizTableRowProps {
 	quiz: Quiz;
@@ -72,7 +73,10 @@ export const MyQuizTableRow: FC<MyQuizTableRowProps> = memo(({ quiz }) => {
 				</ScaleFade>
 			</Td>
 			<Td>
-				<Link to={getQuizPage(quiz._id)}>{quiz.title}</Link>
+				<Flex alignItems='center' gap='10px'>
+					<Link to={getQuizPage(quiz._id)}>{quiz.title}</Link>
+					<PrivacyIcons privacy={quiz.privacy}/>
+				</Flex>
 			</Td>
 			<Td>{formatter.format(new Date(quiz.createdAt)).split('/').join('.')}</Td>
 			<Td isNumeric>{questionsAmount}</Td>

@@ -1,11 +1,16 @@
 import { useState } from 'react';
 
-interface HoverProps {
+type HoverProps = {
 	onMouseEnter: () => void;
 	onMouseLeave: () => void;
 }
 
-export const useHover = (): [boolean, HoverProps] => {
+type HoverReturn = {
+	isHover: boolean;
+	hoverProps: HoverProps;
+}
+
+export const useHover = (): HoverReturn => {
 	const [isHover, setIsHover] = useState<boolean>(false);
 
 	const hoverProps: HoverProps = {
@@ -13,5 +18,5 @@ export const useHover = (): [boolean, HoverProps] => {
 		onMouseLeave: () => setIsHover(false),
 	}
 
-	return [isHover, hoverProps];
+	return { isHover, hoverProps };
 }

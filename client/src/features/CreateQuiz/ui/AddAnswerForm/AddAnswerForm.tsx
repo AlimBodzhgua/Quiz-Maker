@@ -22,7 +22,7 @@ export const AddAnswerForm: FC<AddAnswerFormProps> = memo((props) => {
 		onDeleteAnswer,
 	} = props;
 
-	const [isHover, hoverProps] = useHover();
+	const { isHover, hoverProps } = useHover();
 	const [value, setValue] = useState<string>(answer.value);
 	const debouncedValue = useDebounce(value);
 	const showActionButtons = isHover && !isSaved;

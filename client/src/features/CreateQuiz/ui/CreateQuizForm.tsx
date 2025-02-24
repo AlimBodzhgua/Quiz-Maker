@@ -28,7 +28,7 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 	} = useDisclosure();
 	const [title, setTitle] = useState<string>('');
 	const [isSaved, setIsSaved] = useState<boolean>(false);
-	const [isHover, hoverProps] = useHover();
+	const { isHover, hoverProps } = useHover();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const createQuiz = useCreateQuiz((state) => state.createQuiz);
 	const updateQuiz = useCreateQuiz((state) => state.updateQuiz);

@@ -32,7 +32,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 	const saveQuestion = useCreateQuiz((state) => state.saveQuestion);
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [isHover, hoverProps] = useHover();
+	const { isHover, hoverProps } = useHover();
 	const [isSaved, setIsSaved] = useState<boolean>(false);
 	const {
 		questionType,

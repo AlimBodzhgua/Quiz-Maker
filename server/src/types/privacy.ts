@@ -15,7 +15,7 @@ type RestrictedUsersQuiz = {
 
 type LinkProtectedQuiz = {
 	type: 'privateLink' | 'linkProtected',
-	link: string;
+	token: string;
 	password?: string; // linkProtectedQuiz
 }
 

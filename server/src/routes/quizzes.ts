@@ -11,5 +11,6 @@ router.get('/', requireAuth, quizzesQueryValidation, QuizController.getAll);
 router.get('/:quizId', requireAuth, QuizController.getOne);
 router.delete('/:quizId', requireAuth, QuizController.remove);
 router.put('/:quizId', requireAuth, quizUpdateValidation, QuizController.update);
+router.get('/:quizId/generate-link', requireAuth, QuizController.generateLink);
 
 export default router;

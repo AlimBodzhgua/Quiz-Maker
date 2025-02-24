@@ -39,7 +39,7 @@ const QuizSchema = new mongoose.Schema<Quiz>(
 				required: false,
 				default: undefined,
 			},
-			link: {
+			token: {
 				type: String,
 				required: false,
 			},

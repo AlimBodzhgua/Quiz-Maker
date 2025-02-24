@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
-
+import { TokenService } from './../services/TokenService';
 import { ApiError } from '../exceptions/ApiError';
 import { Quiz } from '../types/types';
 import QuizModel from '../models/Quiz';
@@ -121,6 +121,24 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
 		}
 
 		res.status(200).send(quiz);
+	} catch (err) {
+		next(err);
+	}
+}
+
+export const generateLink = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const quiz = await QuizModel.findById(req.params.quizId);
+
+		if (!quiz) {
+			return next(ApiError.BadRequest('Quiz with such id does not exist'));
+		}
+
+		const token = TokenService.generateLinkToken();
+
+		const link = `http://localhost:3000/quiz/${req.params.quizId}?token=${token}`;
+
+		res.send({ link, token });
 	} catch (err) {
 		next(err);
 	}

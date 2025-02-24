@@ -17,4 +17,8 @@ export class TokenService {
 			return null;
 		}
 	}
+
+	static generateLinkToken = () => {
+		return crypto.randomUUID().toString();
+	}
 }

@@ -3,31 +3,50 @@ import QuestionModel from './Question';
 import AnswerModel from './Answer';
 import type { Quiz } from '../types/types';
 import QuizRatingModel from './QuizRating';
+import { privacyValues } from '../constants/privacy';
 
-const QuizSchema = new mongoose.Schema<Quiz>({
-	// _id;
-	title: {
-		type: String,
-		required: true,
+const QuizSchema = new mongoose.Schema<Quiz>(
+	{
+		// _id;
+		title: {
+			type: String,
+			required: true,
+		},
+		authorId: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User',
+			required: true,
+		},
+		withTimer: {
+			type: Boolean,
+			required: false,
+		},
+		timerLimit: {
+			type: Object,
+			required: false,
+		},
+		privacy: {
+			type: {
+				type: String,
+				enum: privacyValues,
+			},
+			password: {
+				type: String,
+				required: false,
+			},
+			userIds: {
+				type: [String],
+				required: false,
+				default: undefined,
+			},
+			link: {
+				type: String,
+				required: false,
+			},
+		},
 	},
-	authorId: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User',
-		required: true,
-	},
-	withTimer: {
-		type: Boolean,
-		required: false,
-	},
-	timerLimit: {
-		type: Object,
-		required: false,
-	},
-	privacy: {
-		type: Object,
-		required: true,
-	}
-}, { timestamps: true })
+	{ timestamps: true },
+);
 
 
 QuizSchema.pre('findOneAndDelete', async function(next) {

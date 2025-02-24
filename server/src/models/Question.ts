@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import AnswerModel from './Answer';
 import { Question } from './../types/types';
+import { questionTypes } from '../constants/question';
 
 const QuestionSchema = new mongoose.Schema<Question>({
 	_id: {
@@ -17,6 +18,7 @@ const QuestionSchema = new mongoose.Schema<Question>({
 	},
 	type: {
 		type: String,
+		enum: questionTypes,
 		required: true,
 	},
 	isRequired: {

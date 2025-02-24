@@ -1,3 +1,4 @@
+import { questionTypes } from './../constants/question';
 import { JwtPayload } from 'jsonwebtoken';
 import { Types } from 'mongoose';
 import { QuizPrivacyType } from './privacy';
@@ -8,7 +9,6 @@ export interface DocResult<T> {
 
 export type DecodePayloadType = JwtPayload & { _id: string };
 
-type QuestionType = 'multipleAnswer' | 'oneAnswer' | 'inputAnswer' | 'trueOrFalse' // checkbox/radioButton/input
 
 export interface IUser extends DocResult<IUser> {
 	_id: Types.ObjectId;
@@ -16,6 +16,7 @@ export interface IUser extends DocResult<IUser> {
 	passwordHash: string;
 }
 
+type QuestionType = typeof questionTypes[number]
 export type PublicUserData = Omit<IUser, 'passwordHash'>;
 
 export type TimerValues = 'minutes' | 'seconds';
@@ -65,8 +66,3 @@ export type QuizRating = {
 	quizId: Types.ObjectId;
 	rate: number;
 };
-
-
-// export interface IUserAnswer {
-
-// }

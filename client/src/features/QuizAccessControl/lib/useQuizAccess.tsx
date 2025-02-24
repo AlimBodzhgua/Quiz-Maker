@@ -1,5 +1,6 @@
 import { Quiz } from 'entities/Quiz';
 import { useEffect, useState } from 'react';
+import { getQueryParam } from 'shared/utils';
 
 type QuizAccessParams = {
 	quiz: Quiz | null;
@@ -20,6 +21,22 @@ export const useQuizAccess = ({ quiz, userId }: QuizAccessParams) => {
 				const isQuizOwner = quiz.authorId === userId 
 				const havePermission = quiz.privacy.userIds.includes(userId);
 				havePermission || isQuizOwner ? setHavePermission(true) : setHavePermission(false); 
+			} else if (quiz.privacy.type === 'privateLink') {
+				const token = getQueryParam('token');
+				if (token.length && token === quiz.privacy.token) {
+					setHavePermission(true);
+				} else {
+					setHavePermission(false);
+				}
+			} else if (quiz.privacy.type === 'linkProtected') {
+				const token = getQueryParam('token');
+				if (token.length && token === quiz.privacy.token) {
+					setHavePermission(true)
+					setCorrectPassword(quiz.privacy.password);
+					setIsOpenPasswordDialog(true);
+				} else {
+					setHavePermission(false);
+				}
 			}
 		}
 	}, [quiz, userId]);

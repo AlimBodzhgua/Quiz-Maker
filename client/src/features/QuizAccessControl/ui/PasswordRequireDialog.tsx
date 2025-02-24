@@ -23,7 +23,7 @@ export const PassworodRequireDialog: FC<PasswordRequireDialog> = (props) => {
 		setPassword(e.target.value);
 	}
 
-	const onCloseDialog = () => navigate(-1);
+	const onCloseDialog = () => navigate('/');
 
 	const onSubmitPassword = () => {
 		if (password === correctPassword) {

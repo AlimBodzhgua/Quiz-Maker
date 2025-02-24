@@ -10,7 +10,7 @@ export const RestrictedAccessDialog: FC<RestrictedAccessDialogProps> = (props) =
 	const { havePermission } = props;
 	const navigate = useNavigate();
 
-	const onCloseDialog = () => navigate(-1);
+	const onCloseDialog = () => navigate('/');
 
 	return (
 		<AppDialog

@@ -23,14 +23,13 @@ interface PrivacySettingProps {
 	onUpdate: (quiz: Partial<Quiz>) => Promise<Quiz>;
 }
 
-const LINK = 'http://localhost:3000/create-quiz';
-
 export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 	const toast = useToast();
 	const [privacy, setPrivacy] = useState<PrivacyTypeValue>(PrivacyValues.restrictedUsers);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>('');
 	const [userIds, setUserIds] = useState<string[]>([]);
+	const [link, setLink] = useState<string>('');
 
 	const initQuizPrivacy = async (id: string) => {
 		const quiz = await QuizService.getQuiz(id);
@@ -62,9 +61,7 @@ export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 
 	const onSave = async () => {
 		setIsLoading(true);
-		const link = LINK
 		const privacyData = getMatchedPrivacyData(privacy, password, link, userIds);
-	
 		await onUpdate({ privacy: privacyData })
 
 		toast({
@@ -111,7 +108,7 @@ export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 					</Collapse>
 
 					<Collapse in={privacy === 'privateLink' || privacy === 'linkProtected'}>
-						<LinkPrivacy link={LINK}/>
+						<LinkPrivacy link={link} setLink={setLink}/>
 					</Collapse>
 
 					<Collapse in={privacy === 'restrictedUsers'}>

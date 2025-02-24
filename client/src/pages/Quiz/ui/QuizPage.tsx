@@ -9,7 +9,7 @@ import { FinishQuizButton } from 'features/SaveQuizResult';
 import { useUserStore } from 'entities/User';
 import { QuizRating } from 'features/RateQuiz';
 import { NoPrint } from 'shared/lib/components/NoPrint';
-import { PassworodRequireDialog, RestrictedAccessDialog, useQuizAccess } from 'features/QuizAccessControl';
+import { PassworodRequireDialog, PrivateLinkDialog, RestrictedAccessDialog, useQuizAccess } from 'features/QuizAccessControl';
 import { getMathcedTimerProps } from '../lib/getMathcedTimerProps';
 
 
@@ -82,8 +82,21 @@ const QuizPage: FC = () => {
 						onClose={closePasswordDialog}
 					/>
 				}
-				{quiz?.privacy?.type === 'restrictedUsers' &&
+				{quiz?.privacy.type === 'restrictedUsers' &&
 					<RestrictedAccessDialog havePermission={havePermission}/>
+				}
+				{quiz?.privacy.type === 'privateLink' && 
+					<PrivateLinkDialog isOpen={!havePermission}/>
+				}
+				{quiz?.privacy.type === 'linkProtected' && 
+					<>
+						<PrivateLinkDialog isOpen={!havePermission}/>
+						<PassworodRequireDialog
+							correctPassword={correctPassword}
+							isOpen={isOpenPasswordDialog}
+							onClose={closePasswordDialog}
+						/>
+					</>
 				}
 		
 					

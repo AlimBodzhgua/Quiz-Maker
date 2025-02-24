@@ -1,4 +1,6 @@
 import { PrivacyType, PrivacyTypeValue } from 'entities/Quiz';
+import { extractTokenFromLink } from './extractTokenFromLink';
+
 
 export const getMatchedPrivacyData = (
 	privacy: PrivacyTypeValue,
@@ -7,6 +9,7 @@ export const getMatchedPrivacyData = (
 	userIds: string[],
 ) => {
 	let privacyData: PrivacyType;
+	let token: string;
 
 	switch (privacy) {
 		case 'public':
@@ -19,10 +22,12 @@ export const getMatchedPrivacyData = (
 			privacyData = { type: 'publicProtected', password: password };
 			break;
 		case 'privateLink':
-			privacyData = { type: 'privateLink', link: link };
+			token = extractTokenFromLink(link);
+			privacyData = { type: 'privateLink', token: token };
 			break;
 		case 'linkProtected':
-			privacyData = { type: 'linkProtected', password: password, link: link };
+			token = extractTokenFromLink(link);
+			privacyData = { type: 'linkProtected', password: password, token: token };
 			break;
 		case 'restrictedUsers':
 			privacyData = { type: 'restrictedUsers', userIds: userIds };

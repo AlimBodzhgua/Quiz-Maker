@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode, useState } from 'react';
+import { FC, memo, ReactNode, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Flex, Input, InputGroup, InputRightAddon, Tooltip, useDisclosure } from '@chakra-ui/react';
 import { CheckIcon, DeleteIcon, EditIcon, SettingsIcon } from '@chakra-ui/icons';
@@ -34,6 +34,7 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 	const updateQuiz = useCreateQuiz((state) => state.updateQuiz);
 	const removeQuiz = useQuizzesStore((state) => state.removeQuiz);
 	const navigate = useNavigate();
+	const inputRef = useRef<HTMLInputElement | null>(null)
 	const quizId = useCreateQuiz((state) => state.quizId);
 	const isSmallLength = title.length <= 3;
 
@@ -42,6 +43,14 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 	};
 	
 	const onEdit = () => setIsSaved(false);
+
+	const onRemove = async () => {
+		if (quizId) {
+			await removeQuiz(quizId);
+			onClose();
+			navigate('/');
+		}
+	};
 
 	const onSaveQuiz = async () => {
 		const quizId = getQueryParam('id');
@@ -57,13 +66,20 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 		setIsSaved(true);
 	};
 
-	const onRemove = async () => {
-		if (quizId) {
-			await removeQuiz(quizId);
-			onClose();
-			navigate('/');
+	const onPressEnter = (e: KeyboardEvent) => {
+		const isFocued = document.activeElement === inputRef.current;
+		if (e.key === 'Enter' && isFocued) {
+			onSaveQuiz();
+		} else if (e.key === 'Escape' && isFocued) {
+			inputRef.current?.blur();
 		}
 	};
+	
+	useEffect(() => {
+		window.addEventListener('keydown', onPressEnter);
+
+		return () => window.removeEventListener('keydown', onPressEnter);
+	}, [onPressEnter]);
 
 	return (
 		<Flex gap='15px' {...hoverProps}>
@@ -73,13 +89,9 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 					value={title}
 					onChange={onTitleChange}
 					disabled={isSaved}
+					ref={inputRef}
 				/>
-				<InputRightAddon
-					maxW='15%'
-					w='100%'
-					display='flex'
-					justifyContent='center'
-				>
+				<InputRightAddon maxW='15%' w='100%' display='flex' justifyContent='center'>
 					{isSaved && isHover ? (
 						<Flex justify='center' align='flex-start' width='100%'>
 							<Button size='sm' onClick={onEdit} _hover={{ color: 'blue.500' }}>
@@ -93,22 +105,35 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 								onClose={onClose}
 								actionHandler={onRemove}
 							>
-								<Button size='sm' onClick={onOpen} _hover={{ color: 'red.400' }}>
+								<Button
+									size='sm'
+									onClick={onOpen}
+									_hover={{ color: 'red.400' }}
+								>
 									<DeleteIcon />
 								</Button>
 							</AppDialog>
 						</Flex>
 					) : (
-						<Tooltip label={isSmallLength && 'Title must be at least 4 characters long'}>
+						<Tooltip
+							hasArrow
+							placement='bottom'
+							isDisabled={!isSmallLength}
+							label='Title must be at least 4 characters long'
+						>
 							<Button
 								onClick={onSaveQuiz}
 								disabled={isSaved || isSmallLength}
 								isLoading={isLoading}
+								
 							>
-								{isSaved
-									?	<Flex gap='3px' align='center'>Saved <CheckIcon /></Flex>
-									:	'Save'
-								}
+								{isSaved ? (
+									<Flex gap='5px' align='center'>
+										Saved <CheckIcon fontSize='14px' />
+									</Flex>
+								) : (
+									'Save'
+								)}
 							</Button>
 						</Tooltip>
 					)}
@@ -119,7 +144,7 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 				{renderQuizSettingsManager({
 					isOpen: isSettingsModalOpen,
 					onClose: onCloseSettingsModal,
-					onUpdate: updateQuiz
+					onUpdate: updateQuiz,
 				})}
 			</InputGroup>
 		</Flex>

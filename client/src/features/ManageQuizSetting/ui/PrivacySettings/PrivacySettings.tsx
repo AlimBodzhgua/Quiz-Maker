@@ -7,15 +7,17 @@ import {
 	Input,
 	RadioGroup,
 	Stack,
+	useToast,
 } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 import { PrivacyValues } from 'shared/constants';
 import { getQueryParam } from 'shared/utils';
-import type { Quiz, QuizPrivacy } from 'entities/Quiz';
-import { QuizService } from '../../api/QuizService';
-import { LinkPrivacy } from './LinkPrivacy';
+import type { Quiz, PrivacyTypeValue } from 'entities/Quiz';
 import { RestrictedUsersPrivacy } from './RestrictedUsersPrivacy';
+import { LinkPrivacy } from './LinkPrivacy';
 import { PrivacyItem } from './PrivacyItem';
+import { getMatchedPrivacyData } from '../../lib/utils/getMatchedPrivacyData';
+import { QuizService } from '../../api/QuizService';
 
 interface PrivacySettingProps {
 	onUpdate: (quiz: Partial<Quiz>) => Promise<Quiz>;
@@ -24,8 +26,9 @@ interface PrivacySettingProps {
 const LINK = 'http://localhost:3000/create-quiz';
 
 export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
-	const [privacy, setPrivacy] = useState<QuizPrivacy>(PrivacyValues.restrictedUsers);
-
+	const toast = useToast();
+	const [privacy, setPrivacy] = useState<PrivacyTypeValue>(PrivacyValues.restrictedUsers);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>('');
 	const [userIds, setUserIds] = useState<string[]>([]);
 
@@ -39,7 +42,7 @@ export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 		initQuizPrivacy(quizId);
 	}, []);
 
-	const onChangePrivacy = async (value: QuizPrivacy) => {
+	const onChangePrivacy = async (value: PrivacyTypeValue) => {
 		setPrivacy(value);
 	};
 
@@ -57,20 +60,21 @@ export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 		setUserIds(updatedIds);
 	}, [userIds]);
 
-	const onSave = () => {
-		if (privacy === 'public') {
-			onUpdate({ privacy: { type: 'public' }});
-		} else if (privacy === 'private') {
-			onUpdate({ privacy: { type: 'private' }});
-		} else if (privacy === 'publicProtected') {
-			onUpdate({ privacy: { type: 'publicProtected', password: password }});
-		} else if (privacy === 'privateLink') {
-			onUpdate({ privacy: { type: 'privateLink', link: LINK} });
-		} else if (privacy === 'linkProtected') {
-			onUpdate({ privacy: { type: 'linkProtected', password: password, link: LINK }});
-		} else if (privacy === 'restrictedUsers') {
-			onUpdate({ privacy: { type: 'restrictedUsers', userIds: userIds }});
-		}
+	const onSave = async () => {
+		setIsLoading(true);
+		const link = LINK
+		const privacyData = getMatchedPrivacyData(privacy, password, link, userIds);
+	
+		await onUpdate({ privacy: privacyData })
+
+		toast({
+			title: 'Privacy Saved',
+			status: 'success',
+			position: 'top',
+			isClosable: true,
+			duration: 2000,
+		});
+		setIsLoading(false);
 	};
 
 	return (
@@ -84,6 +88,7 @@ export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 					variant='outline'
 					borderRadius='initial'
 					onClick={onSave}
+					isLoading={isLoading}
 				><CheckIcon /></Button>
 			</Flex>
 			<RadioGroup colorScheme='blue' onChange={onChangePrivacy} value={privacy}>

@@ -10,7 +10,8 @@ export { QuizResult } from './ui/QuizResult/QuizResult';
 export { useQuizResult } from './lib/hooks/useQuizResult';
 export type {
 	Quiz,
-	QuizPrivacy,
+	PrivacyType,
+	PrivacyTypeValue,
 	Question,
 	QuestionForm,
 	QuestionType,

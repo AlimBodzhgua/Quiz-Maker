@@ -1,9 +1,10 @@
-import { QuestionTypes } from 'shared/constants';
+import { PrivacyValues, QuestionTypes } from 'shared/constants';
 import { sortDirection, sortField } from 'shared/constants';
 
 type TimerValues = 'minutes' | 'seconds';
 export type TimerLimit = Record<TimerValues, number>;
 export type QuestionType = keyof typeof QuestionTypes;
+export type PrivacyTypeValue = keyof typeof PrivacyValues;
 
 type PublicQuiz = {
 	type: 'public' | 'publicProtected';

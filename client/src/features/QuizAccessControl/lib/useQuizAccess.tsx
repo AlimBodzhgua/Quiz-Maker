@@ -14,23 +14,27 @@ export const useQuizAccess = ({ quiz, userId }: QuizAccessParams) => {
 
 	useEffect(() => {
 		if (quiz && userId) {
+			const isQuizAuthor = quiz.authorId === userId;
+
 			if (quiz.privacy.type === 'publicProtected') {
 				setCorrectPassword(quiz.privacy.password);
 				setIsOpenPasswordDialog(true);
 			} else if (quiz.privacy.type === 'restrictedUsers') {
-				const isQuizOwner = quiz.authorId === userId 
 				const havePermission = quiz.privacy.userIds.includes(userId);
-				havePermission || isQuizOwner ? setHavePermission(true) : setHavePermission(false); 
+
+				havePermission || isQuizAuthor ? setHavePermission(true) : setHavePermission(false); 
 			} else if (quiz.privacy.type === 'privateLink') {
 				const token = getQueryParam('token');
-				if (token.length && token === quiz.privacy.token) {
+				
+				if ((token.length && token === quiz.privacy.token) || isQuizAuthor) {
 					setHavePermission(true);
 				} else {
 					setHavePermission(false);
 				}
 			} else if (quiz.privacy.type === 'linkProtected') {
 				const token = getQueryParam('token');
-				if (token.length && token === quiz.privacy.token) {
+				
+				if ((token.length && token === quiz.privacy.token) || isQuizAuthor) {
 					setHavePermission(true)
 					setCorrectPassword(quiz.privacy.password);
 					setIsOpenPasswordDialog(true);

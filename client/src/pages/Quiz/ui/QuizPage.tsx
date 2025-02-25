@@ -3,13 +3,24 @@ import { Box, Button, Collapse, Flex, Heading, Text, useDisclosure } from '@chak
 import { useLocation, useParams } from 'react-router-dom';
 import { StarIcon } from '@chakra-ui/icons';
 import { Page } from 'widgets/Page';
-import { QuizHeader, QuestionsList, QuizResult, useCurrentQuiz } from 'entities/Quiz';
+import {
+	QuizHeader,
+	QuestionsList,
+	QuizResult,
+	useCurrentQuiz,
+	PrivacyDrawer,
+} from 'entities/Quiz';
 import { useTimer } from 'shared/lib/hooks';
 import { FinishQuizButton } from 'features/SaveQuizResult';
 import { useUserStore } from 'entities/User';
 import { QuizRating } from 'features/RateQuiz';
 import { NoPrint } from 'shared/lib/components/NoPrint';
-import { PassworodRequireDialog, PrivateLinkDialog, RestrictedAccessDialog, useQuizAccess } from 'features/QuizAccessControl';
+import {
+	PassworodRequireDialog,
+	PrivateLinkDialog,
+	RestrictedAccessDialog,
+	useQuizAccess,
+} from 'features/QuizAccessControl';
 import { getMathcedTimerProps } from '../lib/getMathcedTimerProps';
 
 
@@ -34,7 +45,6 @@ const QuizPage: FC = () => {
 		isOpenPasswordDialog,
 		closePasswordDialog,
 	} = useQuizAccess({ quiz: quiz, userId: user?._id})
-
 
 	const initQuiz = async (id: string) => {
 		const quiz = await getCurrentQuiz(id);
@@ -75,45 +85,50 @@ const QuizPage: FC = () => {
 				borderRadius='base'
 				boxShadow='base'
 			>
-				{quiz?.privacy?.type === 'publicProtected' &&
+				{quiz?.privacy?.type === 'publicProtected' && (
 					<PassworodRequireDialog
 						correctPassword={correctPassword}
 						isOpen={isOpenPasswordDialog}
 						onClose={closePasswordDialog}
 					/>
-				}
-				{quiz?.privacy.type === 'restrictedUsers' &&
-					<RestrictedAccessDialog havePermission={havePermission}/>
-				}
-				{quiz?.privacy.type === 'privateLink' && 
-					<PrivateLinkDialog isOpen={!havePermission}/>
-				}
-				{quiz?.privacy.type === 'linkProtected' && 
+				)}
+				{quiz?.privacy.type === 'restrictedUsers' && (
+					<RestrictedAccessDialog havePermission={havePermission} />
+				)}
+				{quiz?.privacy.type === 'privateLink' && (
+					<PrivateLinkDialog isOpen={!havePermission} />
+				)}
+				{quiz?.privacy.type === 'linkProtected' && (
 					<>
-						<PrivateLinkDialog isOpen={!havePermission}/>
+						<PrivateLinkDialog isOpen={!havePermission} />
 						<PassworodRequireDialog
 							correctPassword={correctPassword}
 							isOpen={isOpenPasswordDialog}
 							onClose={closePasswordDialog}
 						/>
 					</>
-				}
-		
-					
-				<NoPrint>
-					<Heading size='lg' fontWeight='medium' color='white'>
-						{quiz?.title}
-					</Heading>
+				)}
 
-					<QuizHeader isTimerStarted={isStarted} minutes={minutes} seconds={seconds}  />
-					
+				<NoPrint>
+					<Flex>
+						<Flex justifyContent='space-between' alignItems='center' w='100%'>
+							<Heading size='lg' fontWeight='medium' color='white'>
+								{quiz?.title}
+							</Heading>
+							{quiz && quiz?.authorId === user?._id && (
+								<PrivacyDrawer quiz={quiz} />
+							)}
+						</Flex>
+					</Flex>
+
+					<QuizHeader
+						isTimerStarted={isStarted}
+						minutes={minutes}
+						seconds={seconds}
+					/>
+
 					{withTimer && (
-						<Button
-							onClick={handleStart}
-							borderRadius='md'
-							size='sm'
-							m='5px 0'
-						>
+						<Button onClick={handleStart} borderRadius='md' size='sm' m='5px 0'>
 							Start quiz
 						</Button>
 					)}
@@ -139,7 +154,7 @@ const QuizPage: FC = () => {
 						<QuizResult
 							userId={user?._id}
 							userEmail={user?.email}
-							renderQuizRating={(params) => <QuizRating {...params}/>}
+							renderQuizRating={(params) => <QuizRating {...params} />}
 						/>
 					</Collapse>
 				)}

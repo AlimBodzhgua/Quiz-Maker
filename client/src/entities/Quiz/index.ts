@@ -1,6 +1,8 @@
+
 export { useQuizzesStore } from './model/store/quizzes';
 export { useCurrentQuiz } from './model/store/currentQuiz';
 
+export { PrivacyDrawer } from './ui/PrivacyInfo/PrivacyDrawer';
 export { QuestionsList } from './ui/QuestionsList/QuestionsList';
 export { QuizHeader } from './ui/QuizHeader/QuizHeader';
 export { UserQuizzesTable } from './ui/UserQuizzesTable/UserQuizzesTable';

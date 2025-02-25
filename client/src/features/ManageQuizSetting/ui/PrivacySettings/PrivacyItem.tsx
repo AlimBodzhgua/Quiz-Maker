@@ -2,10 +2,10 @@ import { FC, memo } from 'react';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import { Flex, Radio, Tooltip } from '@chakra-ui/react';
 import { mapToPrivacyLabelText, mapToPrivacyText, PrivacyValues } from 'shared/constants';
-import { QuizPrivacy } from 'entities/Quiz';
+import type { PrivacyTypeValue } from 'entities/Quiz';
 
 interface PrivacyItemProps {
-	privacy: QuizPrivacy;
+	privacy: PrivacyTypeValue;
 }
 
 export const PrivacyItem: FC<PrivacyItemProps> = memo((props) => {

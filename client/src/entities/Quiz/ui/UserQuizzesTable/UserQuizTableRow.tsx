@@ -74,7 +74,14 @@ export const MyQuizTableRow: FC<MyQuizTableRowProps> = memo(({ quiz }) => {
 			</Td>
 			<Td>
 				<Flex alignItems='center' gap='10px'>
-					<Link to={getQuizPage(quiz._id)}>{quiz.title}</Link>
+					<Link
+						to={getQuizPage(quiz._id)}
+						style={{
+							maxWidth: '200px',
+							textOverflow: 'ellipsis',
+							overflow: 'hidden'
+						}}
+					>{quiz.title}</Link>
 					<PrivacyIcons privacy={quiz.privacy}/>
 				</Flex>
 			</Td>

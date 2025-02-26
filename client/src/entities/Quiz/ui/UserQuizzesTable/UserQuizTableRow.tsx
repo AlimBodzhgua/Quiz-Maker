@@ -11,11 +11,11 @@ import { Quiz } from '../../model/types';
 import { formatterOptions } from '../../lib/options';
 import { PrivacyIcons } from '../QuizTable/PrivacyIcons';
 
-interface MyQuizTableRowProps {
+interface UserQuizTableRowProps {
 	quiz: Quiz;
 }
 
-export const MyQuizTableRow: FC<MyQuizTableRowProps> = memo(({ quiz }) => {
+export const UserQuizTableRow: FC<UserQuizTableRowProps> = memo(({ quiz }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [participiantsAmount, setParticipiantsAmount] = useState<number>(0);

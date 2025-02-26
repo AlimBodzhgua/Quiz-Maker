@@ -7,8 +7,7 @@ import { useQuizzesStore } from '../../model/store/quizzes';
 import { SortFieldType } from '../../model/types';
 import { ColumnToggleSort } from './ColumnToggleSort';
 
-
-export const MyQuizzesTableHeader: FC = memo(() => {
+export const UserQuizzesTableHeader: FC = memo(() => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const resetSelectedList = useQuizzesStore((state) => state.resetSelectedList);
 	const selectedQuizzes = useQuizzesStore((state) => state.selectedQuizzes);

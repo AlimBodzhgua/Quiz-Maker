@@ -1,8 +1,8 @@
 import { FC, memo } from 'react';
 import { useQuizzesStore } from '../../model/store/quizzes';
-import { MyQuizTableRow } from './UserQuizTableRow';
+import { UserQuizTableRow } from './UserQuizTableRow';
 import { useQuizzes } from '../../lib/hooks/useQuizzes';
-import { MyQuizzesTableHeader } from '../TableHeader/MyQuizzesTableHeader';
+import { UserQuizzesTableHeader } from '../TableHeader/UserQuizzesTableHeader';
 import { QuizTable } from '../QuizTable/QuizTable';
 
 interface UserQuizzesTableProps {
@@ -19,8 +19,8 @@ export const UserQuizzesTable: FC<UserQuizzesTableProps> = memo(({ userId }) => 
 		<QuizTable
 			quizzes={quizzes}
 			isLoading={isLoading}
-			header={<MyQuizzesTableHeader />}
-			renderQuizRow={(quiz) => <MyQuizTableRow quiz={quiz} key={quiz._id}/>}
+			header={<UserQuizzesTableHeader />}
+			renderQuizRow={(quiz) => <UserQuizTableRow quiz={quiz} key={quiz._id}/>}
 		/>
 	);
 });

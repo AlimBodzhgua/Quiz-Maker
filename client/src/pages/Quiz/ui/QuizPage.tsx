@@ -15,6 +15,7 @@ import { FinishQuizButton } from 'features/SaveQuizResult';
 import { useUserStore } from 'entities/User';
 import { QuizRating } from 'features/RateQuiz';
 import { NoPrint } from 'shared/lib/components/NoPrint';
+import { ShareButton } from 'widgets/ShareButton';
 import {
 	PassworodRequireDialog,
 	PrivateLinkDialog,
@@ -22,7 +23,6 @@ import {
 	useQuizAccess,
 } from 'features/QuizAccessControl';
 import { getMathcedTimerProps } from '../lib/getMathcedTimerProps';
-
 
 const QuizPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();
@@ -115,9 +115,12 @@ const QuizPage: FC = () => {
 							<Heading size='lg' fontWeight='medium' color='white'>
 								{quiz?.title}
 							</Heading>
-							{quiz && quiz?.authorId === user?._id && (
-								<PrivacyDrawer quiz={quiz} />
-							)}
+							<Flex gap='10px'>
+								{quiz && quiz?.authorId === user?._id && (
+									<PrivacyDrawer quiz={quiz} />
+								)}
+								<ShareButton link={window.location.href}/>
+							</Flex>
 						</Flex>
 					</Flex>
 

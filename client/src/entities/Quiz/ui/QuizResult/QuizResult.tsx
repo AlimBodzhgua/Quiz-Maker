@@ -1,6 +1,8 @@
-import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react';
-import { useCurrentQuiz } from 'entities/Quiz/model/store/currentQuiz';
 import { FC, memo, ReactNode } from 'react';
+import { DownloadIcon } from '@chakra-ui/icons';
+import { Box, Button, Divider, Flex, Heading, Text } from '@chakra-ui/react';
+import { useCurrentQuiz } from 'entities/Quiz/model/store/currentQuiz';
+import { Margin, usePDF } from 'react-to-pdf';
 import { PrintButton } from 'shared/UI';
 
 type QuizRatingParams = {
@@ -23,14 +25,45 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 	const incorrect = useCurrentQuiz((state) => state.incorrectAnswers);
 	const questinsAmount = useCurrentQuiz((state) => state.questions)?.length;
 	const quiz = useCurrentQuiz((state) => state.quiz);
+	const { toPDF, targetRef } = usePDF({
+		filename: 'result.pdf',
+		page: {
+			margin: Margin.SMALL
+		}
+	});
+
+	const onDownloadPDF = () => {
+		const elementsToHide = document.querySelectorAll<HTMLDivElement>('#hide-in-pdf');
+
+		elementsToHide.forEach((element) => {
+			element.style.opacity = '0';
+		});
+
+		toPDF();
+
+		elementsToHide.forEach((element) => {
+			element.style.opacity = '1';
+		});
+	};
+	
 
 	return (
-		<Box bgColor='#ffff' borderRadius='base' padding='10px 14px'>
-			<Flex justifyContent='space-between'>
+		<Box bgColor='#ffff' borderRadius='base' padding='10px 14px' ref={targetRef}>
+			<Flex justifyContent='space-between' alignItems='center'>
 				<Heading size='md' mb='12px' color='gray.700'>
 					Your Result
 				</Heading>
-				<PrintButton />
+				<Flex alignItems='center' gap='6px' id='hide-in-pdf'>
+					<Button
+						size='sm'
+						variant='unstyled'
+						onClick={onDownloadPDF}
+						_hover={{ transform: 'scale(1.1)' }}
+					>
+						<DownloadIcon fontSize='18px'/>
+					</Button>
+					<PrintButton />
+				</Flex>
 			</Flex>
 			<Flex
 				justifyContent='space-between'
@@ -140,6 +173,7 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 					padding='10px'
 					gap='12px'
 					m='16px 0'
+					id='hide-in-pdf'
 				>
 					<Heading size='md' fontWeight='medium'>How do you rate this quiz?</Heading>
 					{renderQuizRating({quizId: quiz._id})}

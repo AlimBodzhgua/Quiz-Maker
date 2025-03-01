@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 import { Box, Button, Collapse, Flex, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import { useLocation, useParams } from 'react-router-dom';
-import { StarIcon } from '@chakra-ui/icons';
+import { DownloadIcon, StarIcon } from '@chakra-ui/icons';
 import { Page } from 'widgets/Page';
 import {
 	QuizHeader,
@@ -23,6 +23,8 @@ import {
 	useQuizAccess,
 } from 'features/QuizAccessControl';
 import { getMathcedTimerProps } from '../lib/getMathcedTimerProps';
+import { Margin, usePDF } from 'react-to-pdf';
+
 
 const QuizPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();
@@ -38,6 +40,12 @@ const QuizPage: FC = () => {
 	const withTimer = useCurrentQuiz((state) => state.quiz?.withTimer) || false;
 	const timerProps = getMathcedTimerProps(quiz?.timerLimit);
 	const { minutes, seconds, start, pause } = useTimer(timerProps);
+	const { toPDF, targetRef } = usePDF({
+		filename: 'quiz.pdf',
+		page: {
+			margin: Margin.SMALL,
+		},
+	});
 
 	const {
 		havePermission,
@@ -75,6 +83,22 @@ const QuizPage: FC = () => {
 		onToggle();
 	}, [pause, onToggle]);
 
+	
+	const onDownloadPDF = () => {
+		const elementsToHide = document.querySelectorAll<HTMLDivElement>('#hide-in-pdf');
+
+		elementsToHide.forEach((element) => {
+			element.style.opacity = '0';
+		});
+
+		toPDF();
+
+		elementsToHide.forEach((element) => {
+			element.style.opacity = '1';
+		});
+	}
+
+
 	return (
 		<Page>
 			<Box
@@ -84,6 +108,7 @@ const QuizPage: FC = () => {
 				bg='linear-gradient(#0E6FE4, #0447CC)'
 				borderRadius='base'
 				boxShadow='base'
+				ref={targetRef}
 			>
 				{quiz?.privacy?.type === 'publicProtected' && (
 					<PassworodRequireDialog
@@ -115,11 +140,24 @@ const QuizPage: FC = () => {
 							<Heading size='lg' fontWeight='medium' color='white'>
 								{quiz?.title}
 							</Heading>
-							<Flex gap='10px'>
+							<Flex gap='8px' alignItems='center5' id='hide-in-pdf'>
 								{quiz && quiz?.authorId === user?._id && (
 									<PrivacyDrawer quiz={quiz} />
 								)}
 								<ShareButton link={window.location.href}/>
+								<Button
+									onClick={onDownloadPDF}
+									size='xs'
+									alignItems='center'
+									variant='unstyled'
+									bgColor='#e6007e'
+									bgImage='linear-gradient(to right, #ff512f 0%, #dd2476 51%, #ff512f 100%)'
+									color='#ffff'
+									_hover={{ color: '#dcd9d9' }}
+									_active={{ color: 'none'}}
+								>
+									<DownloadIcon fontSize='15px'/>
+								</Button>
 							</Flex>
 						</Flex>
 					</Flex>
@@ -140,7 +178,7 @@ const QuizPage: FC = () => {
 				</NoPrint>
 
 				{!isPreview && !isOpen && (
-					<Flex gap='16px' mb='16px'>
+					<Flex gap='16px' mb='16px' id='hide-in-pdf'>
 						<FinishQuizButton
 							minutes={minutes}
 							seconds={seconds}

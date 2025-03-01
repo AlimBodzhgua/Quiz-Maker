@@ -3,6 +3,7 @@ import { Card, CardBody, CardHeader, List, ListItem, Skeleton } from '@chakra-ui
 import { QuestionItem } from './QuestionItem';
 import { useCurrentQuiz } from '../../model/store/currentQuiz';
 
+
 interface QuestionsListProps {
 	isBlured?: boolean;
 }
@@ -12,7 +13,7 @@ export const QuestionsList: FC<QuestionsListProps> = memo((props) => {
 	const questions = useCurrentQuiz((state) => state.questions);
 	const status = useCurrentQuiz((state) => state.getCurrentQuizStatus);
 	const isLoading = status === 'pending';
-
+	
 	if (isLoading) {
 		return (
 			<List>

@@ -46,6 +46,7 @@ export const QuizHeader: FC<QuizHeaderProps> = memo((props) => {
 					alignItems='center'
 					w='50%'
 					m='8px 0'
+					id='hide-in-pdf'
 				>
 					<QuizProgressBar
 						currentValue={correctAnswers + incorrectAnswers}

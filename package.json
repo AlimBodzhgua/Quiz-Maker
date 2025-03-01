@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "react-share": "^5.2.2"
+    "jspdf": "^3.0.0",
+    "react-share": "^5.2.2",
+    "react-to-pdf": "^1.0.1"
   }
 }

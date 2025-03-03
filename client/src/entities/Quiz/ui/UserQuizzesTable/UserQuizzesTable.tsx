@@ -18,6 +18,7 @@ export const UserQuizzesTable: FC<UserQuizzesTableProps> = memo(({ userId }) => 
 	const getUserQuizzesStatus = useQuizzesStore((state) => state.getUserQuizzesStatus);
 	const page = useQuizzesStore((state) => state.page);
 	const isLoading = getUserQuizzesStatus === 'pending';
+	const haveError = getUserQuizzesStatus === 'failed';
 
 	const handlePageChange = (page: number) => {
 		getUserQuizzes(userId!, page)
@@ -28,6 +29,7 @@ export const UserQuizzesTable: FC<UserQuizzesTableProps> = memo(({ userId }) => 
 			<QuizTable
 				quizzes={quizzes}
 				isLoading={isLoading}
+				haveError={haveError}
 				header={<UserQuizzesTableHeader />}
 				renderQuizRow={(quiz) => <UserQuizTableRow quiz={quiz} key={quiz._id}/>}
 			/>

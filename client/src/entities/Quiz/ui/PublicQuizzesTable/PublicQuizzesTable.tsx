@@ -12,12 +12,14 @@ export const PublicQuizzesTable: FC = memo(() => {
 	const getPublicQiuzzesStatus = useQuizzesStore((state) => state.getPublicQuizzesStaus);
 	const page = useQuizzesStore((state) => state.page);
 	const isLoading = getPublicQiuzzesStatus === 'pending';
+	const haveError = getPublicQiuzzesStatus === 'failed';
 
 	return (
 		<>
 			<QuizTable
 				quizzes={quizzes}
 				isLoading={isLoading}
+				haveError={haveError}
 				header={<PublicQuizzesTableHeader />}
 				renderQuizRow={(quiz) => <PublicQuizTableRow quiz={quiz} key={quiz._id}/>}
 			/>

@@ -1,20 +1,26 @@
 import { FC, memo, ReactNode } from 'react';
 import {
+	Alert,
+	AlertDescription,
+	AlertIcon,
+	AlertTitle,
 	Card,
 	CardBody,
+	Flex,
 	Heading,
 	Table,
 	TableContainer,
 	Tbody,
 } from '@chakra-ui/react';
-import { Quiz } from '../../model/types';
 import { TableSkeleton } from './TableSkeleton';
+import { Quiz } from '../../model/types';
 import BoxIcon from '../../assets/box.svg';
 
 interface QuizTableProps {
 	header: ReactNode;
 	quizzes: Quiz[];
 	isLoading: boolean;
+	haveError: boolean;
 	renderQuizRow: (quiz: Quiz) => ReactNode;
 }
 
@@ -23,11 +29,28 @@ export const QuizTable: FC<QuizTableProps> = memo((props) => {
 		quizzes,
 		header,
 		isLoading,
+		haveError,
 		renderQuizRow,
 	} = props;
 
 	if (isLoading) {
 		return <TableSkeleton />;
+	}
+
+	if (haveError) {
+		return (
+			<Alert status='error' variant='left-accent'>
+				<Flex direction='column'>
+					<Flex>
+						<AlertIcon />
+						<AlertTitle>Error fetching quizzes!</AlertTitle>
+					</Flex>
+					<AlertDescription p='0 32px'>
+						Something went wrong trying to fetch quizzes data. Reload the page or try it later.
+					</AlertDescription>
+				</Flex>
+			</Alert>
+		)
 	}
 
 	if (!quizzes.length) {

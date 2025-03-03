@@ -58,12 +58,13 @@ export const answerValidation = [
 export const quizzesQueryValidation = [
 	query('privacy')
 		.optional()
-		.isString()
 		.isIn(privacyValues)
 		.withMessage(
 			'Privacy value must be one of the following listed values: public, private, privateLink, privateLinkPassword, privateUsers',
 		),
-	query('authorId').optional().isString()
+	query('authorId').optional().isString(),
+	query('page').optional().isNumeric().toInt(),
+	query('limit').optional().isNumeric().toInt(),
 ];
 
 export const usersQueryValidation = [

@@ -6,8 +6,10 @@ import * as QuizController from '../controllers/QuizController';
 const router = Router();
 
 // /quizzes
-router.post('/', requireAuth, quizCreateValidation, QuizController.create);;
+router.post('/', requireAuth, quizCreateValidation, QuizController.create);
 router.get('/', requireAuth, quizzesQueryValidation, QuizController.getAll);
+router.get('/count-public', requireAuth, QuizController.countPublicQuizzes);
+router.get('/count-users', requireAuth, QuizController.countUserQuizzes);
 router.get('/:quizId', requireAuth, QuizController.getOne);
 router.delete('/:quizId', requireAuth, QuizController.remove);
 router.put('/:quizId', requireAuth, quizUpdateValidation, QuizController.update);

@@ -38,25 +38,28 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 			return next(ApiError.ValidationError(errors.array()));
 		}
 
-		let quizzes = await QuizModel.find<Quiz>();
-
-		const privacy = req.query.privacy;
-		const authorId = req.query.authorId;
+		const { privacy, authorId } = req.query;
+		const page = (req.query.page || 1) as number;
+		const limit = (req.query.limit || 10) as number;
 
 		if (authorId) {
 			const user = await UserModel.findById(authorId);
 
 			if (!user) {
-				return next(ApiError.BadRequest('User does not exist'));
+				return next(ApiError.BadRequest('User with such id does not exist'));
 			}
-			quizzes = quizzes.filter((quiz) => String(quiz.authorId) === authorId);
 		}
 
-		if (privacy) {
-			quizzes = quizzes.filter((quiz) => quiz.privacy.type === privacy);
-		}
+		const quizzes = await QuizModel.find<Quiz>({
+			...(privacy && { 'privacy.type' : privacy }),
+			...(authorId && { authorId : authorId }),
+		});
 
-		res.json(quizzes);
+		const from = page === 1 ? 1 : limit * page - limit;
+		const to = limit * page;
+		const result = quizzes.slice(from, to)
+
+		res.json(result);
 	} catch (err) {
 		next(err);
 	}
@@ -139,6 +142,31 @@ export const generateLink = async (req: Request, res: Response, next: NextFuncti
 		const link = `http://localhost:3000/quiz/${req.params.quizId}?token=${token}`;
 
 		res.send({ link, token });
+	} catch (err) {
+		next(err);
+	}
+}
+
+
+export const countPublicQuizzes = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const count = await QuizModel.countDocuments({
+			'privacy.type' : ['public', 'publicProtected', 'restrictedUsers']
+		});
+
+		res.json(count);
+	} catch (err) {
+		next(err);
+	}
+}
+
+export const countUserQuizzes = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const count = await QuizModel.countDocuments({
+			'authorId' : res.locals.userId,
+		});
+
+		res.json(count);
 	} catch (err) {
 		next(err);
 	}

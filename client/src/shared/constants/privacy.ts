@@ -13,7 +13,7 @@ export const mapToPrivacyText: Record<QuizPrivacy, string> = {
 	private: 'Private',
 	publicProtected: 'Public Protected with password',
 	public: 'Public',
-	privateLink: 'Private Access with a link',
+	privateLink: 'Private access with a link',
 	linkProtected: 'Private access with a link & password',
 	restrictedUsers: 'Private access for selected users',
 };

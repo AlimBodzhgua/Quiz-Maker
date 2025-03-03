@@ -51,7 +51,7 @@ const CreateQuizPage: FC = () => {
 
 	const onComplete = () => {
 		resetQuiz();
-		navigate('/');
+		navigate('/user-quizzes');
 	};
 
 	return (

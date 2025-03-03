@@ -67,4 +67,26 @@ export class QuizService {
 				return QuizService.sortByName(quizzes, direction);
 		}
 	}
+
+	static getPublicQuizzesPagesAmount = async (limit: number) => {
+		try {
+			const response = await $axios.get('quizzes/count-public');
+			const pagesAmount = Math.ceil(response.data / limit);
+
+			return pagesAmount;
+		} catch (err) {
+			throw new Error(`Error getting public quizzes pages amount ${err}`);
+		}
+	}
+
+	static getUserQuizzesPagesAmount = async (limit: number) => {
+		try {
+			const response = await $axios.get('quizzes/count-users');
+			const pagesAmount = Math.ceil(response.data / limit);
+
+			return pagesAmount
+		} catch (err) {
+			throw new Error(`Error getting user quizzes pages amount ${err}`);
+		}
+	}
 }

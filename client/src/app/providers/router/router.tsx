@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { MainPage } from 'pages/Main';
+import { UserQuizzesPage } from 'pages/UserQuizzes';
 import { LoginPage } from 'pages/Login';
 import { RegisterPage } from 'pages/Register';
 import { CreateQuizPage } from 'pages/CreateQuiz';
@@ -15,8 +15,8 @@ import { Layout } from '../../Layout/Layout';
 
 export const routes: AppRouteObject[] = [
 	{
-		path: AppRoutes.MAIN,
-		element: <MainPage />,
+		path: AppRoutes.USER_QUIZZES,
+		element: <UserQuizzesPage />,
 		authRequire: true,
 	},
 	{

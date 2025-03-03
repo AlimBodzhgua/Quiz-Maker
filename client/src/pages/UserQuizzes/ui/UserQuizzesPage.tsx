@@ -7,7 +7,7 @@ import { SearchBar } from 'features/SearchQuizzes';
 import { useQuizzesStore } from 'entities/Quiz';
 import { useUserStore } from 'entities/User';
 
-const MainPage: FC = () => {
+const UserQuizzesPage: FC = () => {
 	const toggleSelect = useQuizzesStore((state) => state.toggleSelect);
 	const isSelecting = useQuizzesStore((state) => state.isSelecting);
 	const fullResetSelectState = useQuizzesStore((state) => state.fullResetSelectState);
@@ -50,4 +50,4 @@ const MainPage: FC = () => {
 	);
 };
 
-export default MainPage;
+export default UserQuizzesPage;

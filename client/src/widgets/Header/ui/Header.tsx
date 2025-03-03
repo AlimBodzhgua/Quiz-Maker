@@ -76,7 +76,7 @@ export const Header: FC = memo(() => {
 						>
 							<MenuItem
 								as={RouterLink}
-								to={AppRoutes.MAIN}
+								to={AppRoutes.USER_QUIZZES}
 								icon={<ListBulletsIcon />}
 							>
 								My Quizzes

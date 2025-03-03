@@ -15,7 +15,7 @@ export const TableSkeleton: FC = () => {
 					</Tr>
 				</Thead>
 				<Tbody>
-					{Array(4).fill(0).map((_, index) => (
+					{Array(12).fill(0).map((_, index) => (
 						<Tr key={index}>
 							<Td colSpan={4}><Skeleton height='20px'/></Td>
 						</Tr>

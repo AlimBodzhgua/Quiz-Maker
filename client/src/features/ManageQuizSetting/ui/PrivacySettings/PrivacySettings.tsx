@@ -4,7 +4,6 @@ import {
 	Collapse,
 	Flex,
 	Heading,
-	Input,
 	RadioGroup,
 	Stack,
 	useToast,
@@ -16,6 +15,7 @@ import type { Quiz, PrivacyTypeValue } from 'entities/Quiz';
 import { RestrictedUsersPrivacy } from './RestrictedUsersPrivacy';
 import { LinkPrivacy } from './LinkPrivacy';
 import { PrivacyItem } from './PrivacyItem';
+import { PasswordPrivacy } from './PasswordPrivacy';
 import { getMatchedPrivacyData } from '../../lib/utils/getMatchedPrivacyData';
 import { QuizService } from '../../api/QuizService';
 
@@ -34,6 +34,16 @@ export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 	const initQuizPrivacy = async (id: string) => {
 		const quiz = await QuizService.getQuiz(id);
 		setPrivacy(quiz.privacy.type);
+
+		if (quiz.privacy.type === 'linkProtected' || quiz.privacy.type === 'publicProtected') {
+			setPassword(quiz.privacy.password || '');
+		}
+		if (quiz.privacy.type === 'privateLink' || quiz.privacy.type === 'linkProtected') {
+			setLink(`${import.meta.env.VITE_CLIENT_URL}/quiz/${id}?token=${quiz.privacy.token}`);
+		}
+		if (quiz.privacy.type === 'restrictedUsers') {
+			setUserIds(quiz.privacy.userIds);
+		}
 	};
 
 	useEffect(() => {
@@ -86,7 +96,9 @@ export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 					borderRadius='initial'
 					onClick={onSave}
 					isLoading={isLoading}
-				><CheckIcon /></Button>
+				>
+					<CheckIcon />
+				</Button>
 			</Flex>
 			<RadioGroup colorScheme='blue' onChange={onChangePrivacy} value={privacy}>
 				<Stack direction='column'>
@@ -98,17 +110,14 @@ export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 						in={privacy === 'publicProtected' || privacy === 'linkProtected'}
 						animateOpacity
 					>
-						<Input
-							size='sm'
-							placeholder='Password'
-							value={password}
-							type='password'
-							onChange={onPasswordChange}
+						<PasswordPrivacy
+							password={password}
+							onPasswordChange={onPasswordChange}
 						/>
 					</Collapse>
 
 					<Collapse in={privacy === 'privateLink' || privacy === 'linkProtected'}>
-						<LinkPrivacy link={link} setLink={setLink}/>
+						<LinkPrivacy link={link} setLink={setLink} />
 					</Collapse>
 
 					<Collapse in={privacy === 'restrictedUsers'}>

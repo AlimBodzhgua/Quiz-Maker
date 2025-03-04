@@ -1,7 +1,7 @@
+import { FC, memo, useEffect, useRef, useState } from 'react';
 import { CheckIcon, CopyIcon } from '@chakra-ui/icons';
 import { InputGroup, Tooltip, Input, InputRightAddon } from '@chakra-ui/react';
 import { QuizService } from 'features/ManageQuizSetting/api/QuizService';
-import { FC, memo, useEffect, useRef, useState } from 'react';
 import { getQueryParam } from 'shared/utils';
 
 interface LinkPrivacyProps {
@@ -26,9 +26,12 @@ export const LinkPrivacy: FC<LinkPrivacyProps> = memo((props) => {
 
 	useEffect(() => {
 		const quizId = getQueryParam('id');
-		QuizService.generateLink(quizId).then((data) => {
-			setLink(data.link)
-		});
+
+		if (!link.length) {
+			QuizService.generateLink(quizId).then((data) => {
+				setLink(data.link)
+			});
+		}
 	}, []);
 	
 	const onCopy = () => {

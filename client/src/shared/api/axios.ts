@@ -5,7 +5,7 @@ const appHeaders = {
 };
 
 const $axios = axios.create({
-	baseURL: import.meta.env.VITE_BASE_URL,
+	baseURL: import.meta.env.VITE_SERVER_URL,
 	headers: appHeaders,
 });
 

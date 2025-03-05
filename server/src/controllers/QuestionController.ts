@@ -1,9 +1,9 @@
 import { Response, Request, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
-import { ApiError } from '../exceptions/ApiError';
-import QuizModel from '../models/Quiz';
-import QuestionModel from '../models/Question';
 import mongoose from 'mongoose';
+import { ApiError } from '../exceptions/ApiError';
+import { QuizService } from '../services/QuizService';
+import QuestionModel from '../models/Question';
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -13,11 +13,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 			return next(ApiError.ValidationError(errors.array()));
 		}
 
-		const quiz = await QuizModel.findById({ _id: req.params.quizId });
-
-		if (!quiz) {
-			return next(ApiError.BadRequest('Quiz with such id not found'));
-		}
+		await QuizService.checkIfQuizExists(req.params.quizId);
 
 		const doc = await QuestionModel.create({
 			_id: mongoose.Types.ObjectId.createFromHexString(req.body._id),
@@ -39,11 +35,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 
 export const remove = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const quiz = await QuizModel.findById(req.params.quizId);
-
-		if (!quiz) {
-			return next(ApiError.BadRequest('Quiz with such id not found'));
-		}
+		await QuizService.checkIfQuizExists(req.params.quizId);
 
 		const result = await QuestionModel.findOneAndDelete({
 			quizId: req.params.quizId,
@@ -62,13 +54,9 @@ export const remove = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const quiz = await QuizModel.findById(req.params.quizId);
+		await QuizService.checkIfQuizExists(req.params.quizId);
 
-		if (!quiz) {
-			return next(ApiError.BadRequest('Quiz with such id not found'));
-		}
-
-		const questions = await QuestionModel.find({ quizId: quiz._id });
+		const questions = await QuestionModel.find({ quizId: req.params.quizId });
 
 		if (!questions.length) {
 			return next(ApiError.BadRequest('Questions not found'));
@@ -83,13 +71,9 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getOne = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const quiz = await QuizModel.findById(req.params.quizId);
+		await QuizService.checkIfQuizExists(req.params.quizId);
 
-		if (!quiz) {
-			return next(ApiError.BadRequest('Quiz with such id not found'));
-		}
-
-		const question = await QuestionModel.findOne({ quizId: quiz._id, _id: req.params.id });
+		const question = await QuestionModel.findOne({ quizId: req.params.quizId, _id: req.params.id });
 
 		if (!question) {
 			return next(ApiError.BadRequest('Question with such id not found'));
@@ -103,15 +87,12 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
 
 export const update = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const quiz = await QuizModel.findById(req.params.quizId);
+		await QuizService.checkIfQuizExists(req.params.quizId);
 
-		if (!quiz) {
-			return next(ApiError.BadRequest('Quiz with such id not found'));
-		}
 
 		const question = await QuestionModel.findOneAndUpdate(
 			{
-				quizId: quiz._id,
+				quizId: req.params.quizId,
 				_id: req.params.id,
 			},
 			{

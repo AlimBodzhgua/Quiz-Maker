@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import { ApiError } from '../exceptions/ApiError';
-import QuizModel from '../models/Quiz';
+import { QuizService } from '../services/QuizService';
 import QuizRatingModel from '../models/QuizRating';
 
 export const getOne = async (req: Request, res: Response, next: NextFunction) => {
@@ -42,11 +42,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 			return next(ApiError.ValidationError);
 		}
 
-		const quiz = await QuizModel.findById(req.params.quizId);
-
-		if (!quiz) {
-			return next(ApiError.BadRequest('Quiz with such id does not exist'));
-		}
+		await QuizService.checkIfQuizExists(req.params.quizId);
 
 		await QuizRatingModel.findOneAndDelete({
 			quizId: req.params.quizId,

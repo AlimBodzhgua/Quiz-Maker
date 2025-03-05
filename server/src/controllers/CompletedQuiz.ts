@@ -1,6 +1,5 @@
 import { Response, Request, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
-
 import { ApiError } from '../exceptions/ApiError';
 import CompletedQuizModel from '../models/CompletedQuiz';
 

@@ -4,7 +4,7 @@ import { TokenService } from './../services/TokenService';
 import { ApiError } from '../exceptions/ApiError';
 import { Quiz } from '../types/types';
 import QuizModel from '../models/Quiz';
-import UserModel from '../models/User';
+import { UserService } from '../services/UserService';
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -43,11 +43,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 		const limit = (req.query.limit || 10) as number;
 
 		if (authorId) {
-			const user = await UserModel.findById(authorId);
-
-			if (!user) {
-				return next(ApiError.BadRequest('User with such id does not exist'));
-			}
+			await UserService.checkIfUserExists({ id: String(authorId) });
 		}
 
 		const quizzes = await QuizModel.find<Quiz>({

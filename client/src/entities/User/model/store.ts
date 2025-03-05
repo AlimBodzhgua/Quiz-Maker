@@ -78,7 +78,6 @@ export const useUserStore = create<UserAction & UserState>()(
 				localStorage.setItem(AUTH_LOCALSTORAGE_KEY, user.token);
 
 				set({ user, signInStatus: 'success' }, false, 'signInUserSuccess');
-				window.location.replace('/');
 			} catch (err) {
 				set({ signInStatus: 'failed' }, false, 'signInUserFailed');
 			}
@@ -102,7 +101,6 @@ export const useUserStore = create<UserAction & UserState>()(
 				localStorage.setItem(AUTH_LOCALSTORAGE_KEY, user.token);
 
 				set({ user: user, signUpStatus: 'success' }, false, 'signUpSuccess');
-				window.location.replace('/');
 			} catch (err) {
 				set({ signUpStatus: 'failed' }, false, 'signUpFailed');
 			}

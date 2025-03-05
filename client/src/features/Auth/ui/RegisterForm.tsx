@@ -31,8 +31,9 @@ export const RegisterForm: FC = memo(() => {
 
 	const onToggleShowPassword = () => setShowPassword((prev) => !prev);
 
-	const handleRegister = () => {
-		signUpUser(email, password);
+	const handleRegister = async () => {
+		await signUpUser(email, password);
+		window.location.replace('/user-quizzes');
 	};
 
 	return (

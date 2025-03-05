@@ -31,8 +31,9 @@ export const LoginForm: FC = memo(() => {
 
 	const onToggleShowPassword = () => setShowPassword((prev) => !prev);
 
-	const handleLogin = () => {
-		signInUser(email, password);
+	const handleLogin = async () => {
+		await signInUser(email, password);
+		window.location.replace('/user-quizzes');
 	};
 
 	return (

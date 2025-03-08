@@ -10,24 +10,33 @@ import { PublicQuizzesPage } from 'pages/PublicQuizzes';
 import { NotFoundPage } from 'pages/NotFound';
 import { AppRoutes } from 'shared/constants';
 import { AppRouteObject } from './types';
-import { AuthRequire } from './AuthRequire';
+import { AuthRequire, ProtectedFromAuthtorized } from '../../../features/Auth';
 import { Layout } from '../../Layout/Layout';
+
 
 export const routes: AppRouteObject[] = [
 	{
-		path: AppRoutes.USER_QUIZZES,
-		element: <UserQuizzesPage />,
-		authRequire: true,
-	},
-	{
 		path: AppRoutes.LOGIN,
-		element: <LoginPage />,
+		element: (
+			<ProtectedFromAuthtorized>
+				<LoginPage />
+			</ProtectedFromAuthtorized>
+		),
 		authRequire: false,
 	},
 	{
 		path: AppRoutes.REGISTER,
-		element: <RegisterPage />,
+		element: (
+			<ProtectedFromAuthtorized>
+				<RegisterPage />
+			</ProtectedFromAuthtorized>
+		),
 		authRequire: false,
+	},
+	{
+		path: AppRoutes.USER_QUIZZES,
+		element: <UserQuizzesPage />,
+		authRequire: true,
 	},
 	{
 		path: AppRoutes.CREATE_QUIZ,
@@ -47,12 +56,12 @@ export const routes: AppRouteObject[] = [
 	{
 		path: AppRoutes.PUBLIC_QUIZZES,
 		element: <PublicQuizzesPage />,
-		authRequire: false, 
+		authRequire: true,
 	},
 	{
 		path: AppRoutes.PROFILE,
 		element: <ProfilePage />,
-		authRequire: false, 
+		authRequire: true,
 	},
 	{
 		path: AppRoutes.NOT_FOUND,

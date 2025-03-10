@@ -23,11 +23,13 @@ export const PublicQuizzesTable: FC = memo(() => {
 				header={<PublicQuizzesTableHeader />}
 				renderQuizRow={(quiz) => <PublicQuizTableRow quiz={quiz} key={quiz._id}/>}
 			/>
-			<Pagination
-				activePage={page}
-				pagesAmount={publicPagesAmount}
-				onPageChange={getPublicQuizzes}
-			/>
+			{!haveError && (
+				<Pagination
+					activePage={page}
+					pagesAmount={publicPagesAmount}
+					onPageChange={getPublicQuizzes}
+				/>
+			)}
 		</>
 	);
 });

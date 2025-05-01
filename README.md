@@ -18,7 +18,7 @@ This app is using mongodb, so you need to create your own [mongodb cluster](http
 ### Create .env files
 To use this app you should create .env file in client and server folder and put next env variables:
 
-For Cliean folder:
+For Client folder:
 
 VITE_SERVER_URL='http://localhost:4000' <br />
 VITE_CLIENT_URL='http://localhost:3000' <br />

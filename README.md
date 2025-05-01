@@ -18,15 +18,17 @@ This app is using mongodb, so you need to create your own [mongodb cluster](http
 ### Create .env files
 To use this app you should create .env file in client and server folder and put next env variables:
 
-VITE_SERVER_URL='http://localhost:4000'
-VITE_CLIENT_URL='http://localhost:3000'
+For Cliean folder:
 
-For Server folder
+VITE_SERVER_URL='http://localhost:4000' <br />
+VITE_CLIENT_URL='http://localhost:3000' <br />
 
-PORT="4000" - here you can set post number.
-DB_PASSWORD="" - your db password here. 
-JWT_SECRET="" - your jwt secret key (you can set any value).
-DATABASE="mongodb+srv://"username":<PASSWORD>@testconstuctorcluster.irsbj.mongodb.net/?retryWrites=true&w=majority&appName=TestConstuctorCluster" - put your cluster link and set your username instaed "username" and put  <PASSWORD> keyword instead of password like in example.
+For Server folder:
+
+PORT="4000" - here you can set post number. <br />
+DB_PASSWORD="" - your db password here. <br />
+JWT_SECRET="" - your jwt secret key (you can set any value). <br />
+DATABASE="mongodb+srv://"username":<PASSWORD>@testconstuctorcluster.irsbj.mongodb.net/?retryWrites=true&w=majority&appName=TestConstuctorCluster" - put your cluster link and set your username instaed "username"  and put  <PASSWORD> keyword instead of password like in example. <br />
 
 ###  To run this app use: npm run start
 Use npm run start in server and clien folder with 2 consoles and the same time.

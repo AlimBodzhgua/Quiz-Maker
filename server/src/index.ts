@@ -14,7 +14,7 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 4000;
 const DATABASE = process.env.DATABASE!.replace(
-	'PASSWORD',
+	'<PASSWORD>',
 	process.env.DB_PASSWORD!
 );
 

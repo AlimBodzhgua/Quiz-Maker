@@ -20,8 +20,9 @@ Backend - ExpressJS with mongodb.
 To install and run the aplication you need [NodeJs](https://nodejs.org/en)
 
 ### Install Dependencies
+```
 $ npm install
-
+```
 ### Create mongodb Cluster
 This app is using mongodb, so you need to create your own [mongodb cluster](https://www.mongodb.com/docs/guides/atlas/cluster/) to use it 
 

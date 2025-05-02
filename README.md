@@ -1,6 +1,6 @@
 # Quiz Maker
 
-Full Stack web application to make diffrent quizzes with diffrent types of questions and share it with any users.
+Full Stack web application to make diffrent quizzes with diffrent types of questions and share it with any users. <br />
 Frontend part of aplication made in React. <br />
 Backend - ExpressJS with mongodb.
 

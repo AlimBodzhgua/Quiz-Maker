@@ -1,7 +1,7 @@
 # Quiz Maker
 
 Full Stack web application to make diffrent quizzes with diffrent types of questions and share it with any users. <br />
-Frontend part of aplication made in React. <br />
+Frontend part of application made in React. <br />
 Backend - ExpressJS with mongodb.
 
 # List of technologies used
@@ -17,7 +17,7 @@ Backend - ExpressJS with mongodb.
 ## How to run the project
 
 ### Requirements
-To install and run the aplication you need [NodeJs](https://nodejs.org/en)
+To install and run the application you need [NodeJs](https://nodejs.org/en)
 
 ### Install Dependencies
 ```

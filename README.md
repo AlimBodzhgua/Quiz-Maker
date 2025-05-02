@@ -1,8 +1,18 @@
 # Quiz Maker
 
 Full Stack web application to make diffrent quizzes with diffrent types of questions and share it with any users.
-Frontend part of aplication made in React. 
-Backend - next js with mongodb.
+Frontend part of aplication made in React. <br />
+Backend - ExpressJS with mongodb.
+
+# List of technologies used
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Zustand]([https://redux-toolkit.js.org/](https://zustand-demo.pmnd.rs/))
+- [ChakraUI](https://v2.chakra-ui.com/)
+- [Vite](https://vite.dev/)
+- [ExpressJS](https://expressjs.com/)
+- [MongoDB](https://www.mongodb.com/)
+- [Mongoose](https://mongoosejs.com/)
 
 ## How to run the project
 

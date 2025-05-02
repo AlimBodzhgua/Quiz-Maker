@@ -7,7 +7,7 @@ Backend - ExpressJS with mongodb.
 # List of technologies used
 - [React](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
-- [Zustand]([https://redux-toolkit.js.org/](https://zustand-demo.pmnd.rs/))
+- [Zustand](https://zustand-demo.pmnd.rs/)
 - [ChakraUI](https://v2.chakra-ui.com/)
 - [Vite](https://vite.dev/)
 - [ExpressJS](https://expressjs.com/)

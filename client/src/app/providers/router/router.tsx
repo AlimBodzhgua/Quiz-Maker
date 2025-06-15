@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, replace } from 'react-router-dom';
 import { UserQuizzesPage } from 'pages/UserQuizzes';
 import { LoginPage } from 'pages/Login';
 import { RegisterPage } from 'pages/Register';
@@ -74,10 +74,16 @@ export const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <Layout />,
-		children: routes.map((route) =>
-			route.authRequire
-				? { ...route, element: <AuthRequire>{route.element}</AuthRequire> }
-				: route,
-		),
+		children: [
+			{
+				index: true,
+				loader: () => replace(AppRoutes.USER_QUIZZES),
+			},
+			...routes.map((route) =>
+				route.authRequire
+					? { ...route, element: <AuthRequire>{route.element}</AuthRequire> }
+					: route,
+			),
+		]
 	},
 ]);

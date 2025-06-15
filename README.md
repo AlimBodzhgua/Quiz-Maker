@@ -1,17 +1,28 @@
 # Quiz Maker
 
-Full Stack web application to make diffrent quizzes with diffrent types of questions and share it with any users.
-Frontend part of aplication made in React. 
-Backend - next js with mongodb.
+Full Stack web application to make diffrent quizzes with diffrent types of questions and share it with any users. <br />
+Frontend part of application made in React. <br />
+Backend - ExpressJS with mongodb.
+
+# List of technologies used
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Zustand](https://zustand-demo.pmnd.rs/)
+- [ChakraUI](https://v2.chakra-ui.com/)
+- [Vite](https://vite.dev/)
+- [ExpressJS](https://expressjs.com/)
+- [MongoDB](https://www.mongodb.com/)
+- [Mongoose](https://mongoosejs.com/)
 
 ## How to run the project
 
 ### Requirements
-To install and run the aplication you need [NodeJs](https://nodejs.org/en)
+To install and run the application you need [NodeJs](https://nodejs.org/en)
 
 ### Install Dependencies
+```
 $ npm install
-
+```
 ### Create mongodb Cluster
 This app is using mongodb, so you need to create your own [mongodb cluster](https://www.mongodb.com/docs/guides/atlas/cluster/) to use it 
 
@@ -31,4 +42,4 @@ JWT_SECRET="" - your jwt secret key (you can set any value). <br />
 DATABASE="mongodb+srv://"username":<PASSWORD>@testconstuctorcluster.irsbj.mongodb.net/?retryWrites=true&w=majority&appName=TestConstuctorCluster" - put your cluster link and set your username instaed "username"  and put  <PASSWORD> keyword instead of password like in example. <br />
 
 ###  To run this app use: npm run start
-Use npm run start in server and clien folder with 2 consoles and the same time.
+Use npm run start in server and client folder with 2 consoles at the same time.

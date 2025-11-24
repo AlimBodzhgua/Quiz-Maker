@@ -9,7 +9,7 @@ export const NotFoundPage: FC = () => {
 		<Page centered>
 			<Heading mb='15px'>404 Page not Found</Heading>
 			<Text mb='25px'>Sorry we can&apos;t find the page your looking for.</Text>
-			<Button as={Link} to={AppRoutes.MAIN} colorScheme='purple'>
+			<Button as={Link} to={AppRoutes.USER_QUIZZES} colorScheme='purple'>
 				Home Page
 			</Button>
 		</Page>

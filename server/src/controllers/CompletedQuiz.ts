@@ -3,6 +3,10 @@ import { validationResult } from 'express-validator';
 import { ApiError } from '../exceptions/ApiError';
 import CompletedQuizModel from '../models/CompletedQuiz';
 
+type CompletedQuizParams = {
+	quizId: string;
+}
+
 export const create = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const errors = validationResult(req);
@@ -30,7 +34,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 }
 
 
-export const getOne = async (req: Request, res: Response, next: NextFunction) => {
+export const getOne = async (req: Request<CompletedQuizParams>, res: Response, next: NextFunction) => {
 	try {
 		const quiz = await CompletedQuizModel.findOne({
 			_id: req.params.quizId,
@@ -57,7 +61,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 	}
 }
 
-export const remove = async (req: Request, res: Response, next: NextFunction) => {
+export const remove = async (req: Request<CompletedQuizParams>, res: Response, next: NextFunction) => {
 	try {
 		const quiz = await CompletedQuizModel.findOneAndDelete({
 			_id: req.params.quizId,

@@ -5,7 +5,12 @@ import { ApiError } from '../exceptions/ApiError';
 import { QuizService } from '../services/QuizService';
 import QuestionModel from '../models/Question';
 
-export const create = async (req: Request, res: Response, next: NextFunction) => {
+type QuestionParams = {
+	id?: string;
+	quizId: string;
+}
+
+export const create = async (req: Request<QuestionParams>, res: Response, next: NextFunction) => {
 	try {
 		const errors = validationResult(req);
 
@@ -33,7 +38,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 }
 
 
-export const remove = async (req: Request, res: Response, next: NextFunction) => {
+export const remove = async (req: Request<QuestionParams>, res: Response, next: NextFunction) => {
 	try {
 		await QuizService.checkIfQuizExists(req.params.quizId);
 
@@ -52,7 +57,7 @@ export const remove = async (req: Request, res: Response, next: NextFunction) =>
 	}
 }
 
-export const getAll = async (req: Request, res: Response, next: NextFunction) => {
+export const getAll = async (req: Request<QuestionParams>, res: Response, next: NextFunction) => {
 	try {
 		await QuizService.checkIfQuizExists(req.params.quizId);
 
@@ -69,7 +74,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 }
 
 
-export const getOne = async (req: Request, res: Response, next: NextFunction) => {
+export const getOne = async (req: Request<QuestionParams>, res: Response, next: NextFunction) => {
 	try {
 		await QuizService.checkIfQuizExists(req.params.quizId);
 
@@ -85,7 +90,7 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
 	}
 }
 
-export const update = async (req: Request, res: Response, next: NextFunction) => {
+export const update = async (req: Request<QuestionParams>, res: Response, next: NextFunction) => {
 	try {
 		await QuizService.checkIfQuizExists(req.params.quizId);
 

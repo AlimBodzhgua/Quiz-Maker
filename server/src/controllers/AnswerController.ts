@@ -3,10 +3,15 @@ import { QuizService } from '../services/QuizService';
 import { QuestionService } from '../services/QuestionService';
 import AnswerModel from '../models/Answer';
 
-export const create = async (req: Request, res: Response, next: NextFunction) => {
+type AnswerParams = {
+	quizId: string;
+	questionId: string;
+}
+
+export const create = async (req: Request<AnswerParams>, res: Response, next: NextFunction) => {
 	try {
 		await QuizService.checkIfQuizExists(req.params.quizId);
-		await QuestionService.checkIfQuestionExists(req.params.quizId);
+		await QuestionService.checkIfQuestionExists(req.params.questionId);
 	
 		const doc = new AnswerModel({
 			isCorrect: req.body.isCorrect,
@@ -24,10 +29,10 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 }
 
 
-export const getAll = async (req: Request, res: Response, next: NextFunction) => {
+export const getAll = async (req: Request<AnswerParams>, res: Response, next: NextFunction) => {
 	try {
 		await QuizService.checkIfQuizExists(req.params.quizId);
-		await QuestionService.checkIfQuestionExists(req.params.quizId);
+		await QuestionService.checkIfQuestionExists(req.params.questionId);
 
 		const answers = await AnswerModel.find({ questionId: req.params.questionId });
 

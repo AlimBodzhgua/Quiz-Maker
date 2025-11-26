@@ -4,7 +4,12 @@ import { ApiError } from '../exceptions/ApiError';
 import { QuizService } from '../services/QuizService';
 import QuizRatingModel from '../models/QuizRating';
 
-export const getOne = async (req: Request, res: Response, next: NextFunction) => {
+type QuizRatingParams = {
+	quizId: string;
+	ratingId: string;
+}
+
+export const getOne = async (req: Request<QuizRatingParams>, res: Response, next: NextFunction) => {
 	try {
 		const rating = await QuizRatingModel.findById(req.params.ratingId);
 
@@ -18,7 +23,7 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
 	}
 }
 
-export const getAll = async (req: Request, res: Response, next: NextFunction) => {
+export const getAll = async (req: Request<QuizRatingParams>, res: Response, next: NextFunction) => {
 	try {
 		const quizRatings = QuizRatingModel.find({
 			quizId: req.params.quizId
@@ -34,7 +39,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 	}
 }
 
-export const create = async (req: Request, res: Response, next: NextFunction) => {
+export const create = async (req: Request<QuizRatingParams>, res: Response, next: NextFunction) => {
 	try {
 		const errors = validationResult(req);
 
@@ -63,7 +68,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 	}
 }
 
-export const remove = async (req: Request, res: Response, next: NextFunction) => {
+export const remove = async (req: Request<QuizRatingParams>, res: Response, next: NextFunction) => {
 	try {
 		const errors = validationResult(req);
 

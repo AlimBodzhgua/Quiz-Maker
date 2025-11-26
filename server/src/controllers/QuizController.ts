@@ -6,6 +6,10 @@ import { Quiz } from '../types/types';
 import QuizModel from '../models/Quiz';
 import { UserService } from '../services/UserService';
 
+type QuizParams = {
+	quizId: string;
+}
+
 export const create = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const errors = validationResult(req);
@@ -61,7 +65,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 	}
 }
 
-export const getOne = async (req: Request, res: Response, next: NextFunction) => {
+export const getOne = async (req: Request<QuizParams>, res: Response, next: NextFunction) => {
 	try {
 		const quiz = await QuizModel.findOne({ _id: req.params.quizId });
 
@@ -76,7 +80,7 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
 }
 
 
-export const remove = async (req: Request, res: Response, next: NextFunction) => {
+export const remove = async (req: Request<QuizParams>, res: Response, next: NextFunction) => {
 	try {
 		const quiz = await QuizModel.findOneAndDelete({
 			_id: req.params.quizId,
@@ -93,7 +97,7 @@ export const remove = async (req: Request, res: Response, next: NextFunction) =>
 	}
 }
 
-export const update = async (req: Request, res: Response, next: NextFunction) => {
+export const update = async (req: Request<QuizParams>, res: Response, next: NextFunction) => {
 	try {
 		const errors = validationResult(req);
 
@@ -125,7 +129,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
 	}
 }
 
-export const generateLink = async (req: Request, res: Response, next: NextFunction) => {
+export const generateLink = async (req: Request<QuizParams>, res: Response, next: NextFunction) => {
 	try {
 		const quiz = await QuizModel.findById(req.params.quizId);
 

@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
+import 'dotenv/config'
+import { DatabaseService } from './services/DatabaseService';
 import errorHandler from './middleware/errorHandler';
-import mongoose from 'mongoose';
-import 'dotenv/config';
 import router from './routes';
 
 const app = express();
@@ -13,13 +13,8 @@ app.use(router);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 4000;
-const DATABASE = process.env.DATABASE!.replace('<PASSWORD>', process.env.DB_PASSWORD!);
 
-mongoose
-	.connect(DATABASE)
-	.then(() => console.log('DB Connection successful'))
-	.catch(() => console.log('DB Connection failed'))
-
+DatabaseService.connectDB();
 
 app.listen(PORT, () => {
 	console.log(`Server is running at http://localhost:${PORT}`)

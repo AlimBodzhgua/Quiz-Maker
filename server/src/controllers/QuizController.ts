@@ -55,10 +55,10 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 			...(authorId && { authorId : authorId }),
 		});
 
-		const from = page === 1 ? 1 : limit * page - limit;
+		const from = page === 1 ? 0 : limit * page - limit;
 		const to = limit * page;
 		const result = quizzes.slice(from, to)
-
+		
 		res.json(result);
 	} catch (err) {
 		next(err);

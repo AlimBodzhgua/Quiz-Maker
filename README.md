@@ -21,6 +21,7 @@ To run the application you need to install [Docker](https://docs.docker.com/comp
 
 ### Create .env files
 Next you have to create .env files in server, client and base folder and follow env.example files
+Nest you have to create .env files in server, client and base folder and follow env.example files
 
 ### Build docker images
 ```

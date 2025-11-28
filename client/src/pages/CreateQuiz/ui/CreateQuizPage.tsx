@@ -1,9 +1,8 @@
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useCallback, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button, Flex, Heading, useToast, Text } from '@chakra-ui/react';
 import { ViewIcon } from '@chakra-ui/icons';
 import { getQueryParam } from 'shared/utils';
-import { QUIZ_LOCALSTORAGE_KEY } from 'shared/constants';
 import { Page } from 'widgets/Page';
 import { CreateQuizForm } from 'features/CreateQuiz';
 import { useCreateQuiz } from 'features/CreateQuiz';
@@ -18,22 +17,20 @@ const CreateQuizPage: FC = () => {
 	const savedQuestionsAmount = useCreateQuiz((state) => state.savedQuestionsAmount);
 	const quizId = useCreateQuiz((state) => state.quizId);
 	const questions = useCreateQuiz((state) => state.questions);
-	const resetQuiz = useCreateQuiz((state) => state.resetQuiz);
+	const resetQuizData = useCreateQuiz((state) => state.resetQuizData);
 	const addQuestion = useCreateQuiz((state) => state.addQuestion);
-
 	const removeQuiz = useQuizzesStore((state) => state.removeQuiz);
+	const shouldDeleteQuizRef = useRef<boolean>(true);
 
 	useEffect(() => {
 		return () => {
-			const quizId = localStorage.getItem(QUIZ_LOCALSTORAGE_KEY);
-			
-			if (quizId) {
+			if (quizId && shouldDeleteQuizRef.current) {
 				window.history.pushState({}, document.title, window.location.pathname);
 				removeQuiz(quizId);
-				resetQuiz();
+				resetQuizData();
 			}
 		};
-	}, []);
+	}, [quizId]);
 
 	const onAddQuestion = useCallback(() => {
 		if (!quizId) {
@@ -50,7 +47,8 @@ const CreateQuizPage: FC = () => {
 	}, [quizId]);
 
 	const onComplete = () => {
-		resetQuiz();
+		shouldDeleteQuizRef.current = false;
+		resetQuizData();
 		navigate('/user-quizzes');
 	};
 

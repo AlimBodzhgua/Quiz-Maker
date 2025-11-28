@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { addQueryParam } from 'shared/utils';
-import { QUIZ_LOCALSTORAGE_KEY } from 'shared/constants';
 import { PrivacyValues } from 'shared/constants/privacy';
 import type { AnswerForm, Quiz, Question, QuestionForm } from 'entities/Quiz';
 import $axios from 'shared/api/axios';
@@ -16,7 +15,7 @@ interface CreateQuizState {
 }
 
 interface CreateQuizActions {
-	resetQuiz: () => void;
+	resetQuizData: () => void;
 	createQuiz: (title: string) => Promise<Quiz>;
 	updateQuiz: (newQuiz: Partial<Quiz>) => Promise<Quiz>;
 	addQuestion: () => void;
@@ -32,8 +31,7 @@ export const useCreateQuiz = create<CreateQuizState & CreateQuizActions>()(
 		questions: [],
 		savedQuestionsAmount: 0,
 
-		resetQuiz: () => {
-			localStorage.removeItem(QUIZ_LOCALSTORAGE_KEY);
+		resetQuizData: () => {
 			set({ quizId: null, questions: [], savedQuestionsAmount: 0 }, false, 'resetQuiz');
 		},
 
@@ -46,7 +44,6 @@ export const useCreateQuiz = create<CreateQuizState & CreateQuizActions>()(
 			const quizId = response.data._id;
 			set({ quizId: quizId }, false, 'createQuiz');
 
-			localStorage.setItem(QUIZ_LOCALSTORAGE_KEY, quizId);
 			addQueryParam('id', quizId);
 			return response.data;
 		},

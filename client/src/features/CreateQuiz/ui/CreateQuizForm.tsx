@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Flex, Input, InputGroup, InputRightAddon, Tooltip, useDisclosure } from '@chakra-ui/react';
 import { CheckIcon, DeleteIcon, EditIcon, SettingsIcon } from '@chakra-ui/icons';
 import { useHover } from 'shared/lib/hooks';
-import { addQueryParam, getQueryParam } from 'shared/utils';
+import { getQueryParam } from 'shared/utils';
 import { Quiz, useQuizzesStore } from 'entities/Quiz';
 import { AppDialog } from 'shared/UI';
 import { useCreateQuiz } from '../model/store';
@@ -36,7 +36,6 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 	const navigate = useNavigate();
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const quizId = useCreateQuiz((state) => state.quizId);
-	const quizIdRef = useRef<string | null>(null);
 	const isSmallLength = title.length <= 3;
 
 	const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,9 +59,7 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 		if (quizId.length) {
 			await updateQuiz({ title });
 		} else {
-			const quiz = await createQuiz(title);
-			quizIdRef.current = quiz._id;
-			addQueryParam('id', quiz._id);
+			await createQuiz(title);
 		}
 
 		setIsLoading(false);
@@ -77,15 +74,6 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 			inputRef.current?.blur();
 		}
 	};
-
-	useEffect(() => {
-		return () => {
-			if (quizIdRef.current) {
-				window.history.pushState({}, document.title, window.location.pathname);
-				removeQuiz(quizIdRef.current);
-			}
-		};
-	}, []);
 	
 	useEffect(() => {
 		window.addEventListener('keydown', onPressEnter);

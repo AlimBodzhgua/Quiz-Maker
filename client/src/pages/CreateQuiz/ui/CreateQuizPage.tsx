@@ -1,13 +1,15 @@
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button, Flex, Heading, useToast, Text } from '@chakra-ui/react';
 import { ViewIcon } from '@chakra-ui/icons';
 import { getQueryParam } from 'shared/utils';
+import { QUIZ_LOCALSTORAGE_KEY } from 'shared/constants';
 import { Page } from 'widgets/Page';
 import { CreateQuizForm } from 'features/CreateQuiz';
 import { useCreateQuiz } from 'features/CreateQuiz';
 import { AddQuestionFormList } from 'features/CreateQuiz';
 import { SettingsModal } from 'features/ManageQuizSetting';
+import { useQuizzesStore } from 'entities/Quiz';
 
 const CreateQuizPage: FC = () => {
 	const toast = useToast();
@@ -18,6 +20,20 @@ const CreateQuizPage: FC = () => {
 	const questions = useCreateQuiz((state) => state.questions);
 	const resetQuiz = useCreateQuiz((state) => state.resetQuiz);
 	const addQuestion = useCreateQuiz((state) => state.addQuestion);
+
+	const removeQuiz = useQuizzesStore((state) => state.removeQuiz);
+
+	useEffect(() => {
+		return () => {
+			const quizId = localStorage.getItem(QUIZ_LOCALSTORAGE_KEY);
+			
+			if (quizId) {
+				window.history.pushState({}, document.title, window.location.pathname);
+				removeQuiz(quizId);
+				resetQuiz();
+			}
+		};
+	}, []);
 
 	const onAddQuestion = useCallback(() => {
 		if (!quizId) {

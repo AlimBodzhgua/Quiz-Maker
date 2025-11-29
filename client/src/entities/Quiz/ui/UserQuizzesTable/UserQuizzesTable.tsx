@@ -1,10 +1,10 @@
 import { FC, memo } from 'react';
 import { Pagination } from 'shared/UI';
 import { useQuizzesStore } from '../../model/store/quizzes';
-import { UserQuizTableRow } from './UserQuizTableRow';
 import { useQuizzes } from '../../lib/hooks/useQuizzes';
 import { UserQuizzesTableHeader } from '../TableHeader/UserQuizzesTableHeader';
 import { QuizTable } from '../QuizTable/QuizTable';
+import { UserQuizTableRow } from './UserQuizTableRow';
 
 interface UserQuizzesTableProps {
 	userId: string;
@@ -12,9 +12,7 @@ interface UserQuizzesTableProps {
 
 export const UserQuizzesTable: FC<UserQuizzesTableProps> = memo(({ userId }) => {
 	const getUserQuizzes = useQuizzesStore((state) => state.getUserQuizzes);
-	const { quizzes, usersPagesAmount } = useQuizzes({
-		fetchQuizzesFn: (page) => getUserQuizzes(userId!, page),
-	});
+	const { quizzes, usersPagesAmount } = useQuizzes({ type: 'users', userId });
 	const getUserQuizzesStatus = useQuizzesStore((state) => state.getUserQuizzesStatus);
 	const page = useQuizzesStore((state) => state.page);
 	const isLoading = getUserQuizzesStatus === 'pending';
@@ -33,7 +31,7 @@ export const UserQuizzesTable: FC<UserQuizzesTableProps> = memo(({ userId }) => 
 				header={<UserQuizzesTableHeader />}
 				renderQuizRow={(quiz) => <UserQuizTableRow quiz={quiz} key={quiz._id}/>}
 			/>
-			{!haveError && (
+			{(!haveError && quizzes.length) && (
 				<Pagination
 					activePage={page}
 					pagesAmount={usersPagesAmount}

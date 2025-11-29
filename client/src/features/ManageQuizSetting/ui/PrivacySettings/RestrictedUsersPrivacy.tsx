@@ -44,7 +44,12 @@ export const RestrictedUsersPrivacy: FC<RestrictedUsersPrivacyProps> = memo((pro
 					<AddIcon />
 				</InputRightAddon>
 			</InputGroup>
-			<List display='flex' flexWrap='wrap' gap='5px' mt='8px'>
+			<List
+				display='flex'
+				flexWrap='wrap'
+				gap='5px'
+				mt='8px'
+			>
 				{users.map((user) => (
 					<RestrictedUserItem key={user} user={user} onRemove={onRemoveUserId}/> 
 				))}

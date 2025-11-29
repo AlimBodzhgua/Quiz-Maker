@@ -48,7 +48,12 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 	
 
 	return (
-		<Box bgColor='#ffff' borderRadius='base' padding='10px 14px' ref={targetRef}>
+		<Box
+			bgColor='#ffff'
+			borderRadius='base'
+			padding='10px 14px'
+			ref={targetRef}
+		>
 			<Flex justifyContent='space-between' alignItems='center'>
 				<Heading size='md' mb='12px' color='gray.700'>
 					Your Result

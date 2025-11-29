@@ -7,16 +7,16 @@ export class QuizRatingService {
 			const response = await $axios.post<Rating>(`quizzes/${quizId}/rating`, { rate });
 			
 			return response.data;
-		} catch (err) {
-			throw new Error('Error rate quiz');
+		} catch (error) {
+			throw new Error('Error rate quiz' + error);
 		}
 	}
 
 	static removeRating = async (quizId: string) => {
 		try {
 			await $axios.delete(`quizzes/${quizId}/rating`);
-		} catch (err) {
-			throw new Error('Error rate quiz');
+		} catch (error) {
+			throw new Error('Error rate quiz' + error);
 		}
 	}
 }

@@ -87,7 +87,12 @@ export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 	return (
 		<Flex direction='column'>
 			<Flex justifyContent='space-between' mb='8px'>
-				<Heading size='sm' fontWeight='medium' mr='15px' minW='90px'>
+				<Heading
+					size='sm'
+					fontWeight='medium'
+					mr='15px'
+					minW='90px'
+				>
 					Quiz Privacy
 				</Heading>
 				<Button

@@ -22,8 +22,8 @@ import {
 	RestrictedAccessDialog,
 	useQuizAccess,
 } from 'features/QuizAccessControl';
-import { getMathcedTimerProps } from '../lib/getMathcedTimerProps';
 import { Margin, usePDF } from 'react-to-pdf';
+import { getMathcedTimerProps } from '../lib/getMathcedTimerProps';
 
 
 const QuizPage: FC = () => {
@@ -169,7 +169,12 @@ const QuizPage: FC = () => {
 					/>
 
 					{withTimer && (
-						<Button onClick={handleStart} borderRadius='md' size='sm' m='5px 0'>
+						<Button
+							onClick={handleStart}
+							borderRadius='md'
+							size='sm'
+							m='5px 0'
+						>
 							Start quiz
 						</Button>
 					)}

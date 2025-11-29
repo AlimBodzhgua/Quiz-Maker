@@ -8,7 +8,12 @@ export const PageError: FC = () => {
 	const onBack = () => window.history.back();
 
 	return (
-		<Flex justifyContent='center' alignItems='center' direction='column' h='100vh'>
+		<Flex
+			justifyContent='center'
+			alignItems='center'
+			direction='column'
+			h='100vh'
+		>
 			<Heading size='lg' mb='12px'>
 				An unexpected error occured
 			</Heading>

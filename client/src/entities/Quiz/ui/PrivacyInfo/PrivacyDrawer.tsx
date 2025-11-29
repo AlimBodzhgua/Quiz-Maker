@@ -55,7 +55,12 @@ export const PrivacyDrawer: FC<PrivacyDrawerProps> = memo((props) => {
 					</DrawerBody>
 
 					<DrawerFooter>
-						<Button colorScheme='blue' variant='outline' mr={3} onClick={onClose}>
+						<Button
+							colorScheme='blue'
+							variant='outline'
+							mr={3}
+							onClick={onClose}
+						>
 							Close
 						</Button>
 					</DrawerFooter>

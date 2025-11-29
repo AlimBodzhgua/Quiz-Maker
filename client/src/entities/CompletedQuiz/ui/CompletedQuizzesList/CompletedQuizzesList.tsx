@@ -32,7 +32,12 @@ export const CompletedQuizzesList: FC = memo(() => {
 
 	if (haveError) {
 		return (
-			<Alert status='error' maxW='75%' m='40px 0' variant='left-accent'>
+			<Alert
+				status='error'
+				maxW='75%'
+				m='40px 0'
+				variant='left-accent'
+			>
 				<Flex direction='column'>
 					<Flex>
 						<AlertIcon />
@@ -56,7 +61,12 @@ export const CompletedQuizzesList: FC = memo(() => {
 					flexDirection='column'
 				>
 					<NoteIcon />
-					<Heading fontWeight='medium' size='md' mt='20px' color='gray.500'>
+					<Heading
+						fontWeight='medium'
+						size='md'
+						mt='20px'
+						color='gray.500'
+					>
 						You have no completed quizzes
 					</Heading>
 				</CardBody>

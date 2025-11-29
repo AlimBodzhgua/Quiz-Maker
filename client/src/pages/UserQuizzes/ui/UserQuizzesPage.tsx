@@ -21,7 +21,12 @@ const UserQuizzesPage: FC = () => {
 	}, []);
 
 	return (
-		<Flex w='80%' p='15px 0' direction='column' gap='14px'>
+		<Flex
+			w='80%'
+			p='15px 0'
+			direction='column'
+			gap='14px'
+		>
 			<Flex
 				justify='space-between'
 				align='center'

@@ -169,7 +169,12 @@ const QuizPage: FC = () => {
 					/>
 
 					{withTimer && (
-						<Button onClick={handleStart} borderRadius='md' size='sm' m='5px 0'>
+						<Button
+							onClick={handleStart}
+							borderRadius='md'
+							size='sm'
+							m='5px 0'
+						>
 							Start quiz
 						</Button>
 					)}

@@ -91,7 +91,12 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 					disabled={isSaved}
 					ref={inputRef}
 				/>
-				<InputRightAddon maxW='15%' w='100%' display='flex' justifyContent='center'>
+				<InputRightAddon
+					maxW='15%'
+					w='100%'
+					display='flex'
+					justifyContent='center'
+				>
 					{isSaved && isHover ? (
 						<Flex justify='center' align='flex-start' width='100%'>
 							<Button size='sm' onClick={onEdit} _hover={{ color: 'blue.500' }}>

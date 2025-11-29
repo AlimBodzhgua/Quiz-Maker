@@ -14,7 +14,6 @@ export const useQuizResult = (time: QuizResultProps) => {
 	const quizTitle = useCurrentQuiz((state) => state.quiz?.title);
 	const correctAnswers = useCurrentQuiz((state) => state.correctAnswers);
 	const incorrectAnswers = useCurrentQuiz((state) => state.incorrectAnswers);
-	const questionsAmount = useCurrentQuiz((state) => state.questions)?.length || 0;
 	const requiredQuestionsAmount = useCurrentQuiz((state) => state.questions)?.filter(
 		(question) => question.isRequired,
 	).length || 0;
@@ -46,6 +45,5 @@ export const useQuizResult = (time: QuizResultProps) => {
 		correctAnswers,
 		incorrectAnswers,
 		requiredQuestionsAmount,
-		questionsAmount,
 	};
 }

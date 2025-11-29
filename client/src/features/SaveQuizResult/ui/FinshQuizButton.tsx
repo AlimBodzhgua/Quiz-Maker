@@ -22,9 +22,8 @@ export const FinishQuizButton: FC<FinishQuizButtonProps> = memo((props) => {
 
 	const onFinishQuiz = async () => {
 		const answeredQuestionsAmount = correctAnswers + incorrectAnswers;
-		const requiredAmountToFinishQuiz = questionsAmount - requiredQuestionsAmount;
 		
-		if (answeredQuestionsAmount >= requiredAmountToFinishQuiz) {
+		if (answeredQuestionsAmount >= requiredQuestionsAmount) {
 			setIsLoading(true);
 			await saveQuizResult()
 			setIsLoading(false);

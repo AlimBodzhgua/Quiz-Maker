@@ -14,9 +14,26 @@ export const useQuizResult = (time: QuizResultProps) => {
 	const quizTitle = useCurrentQuiz((state) => state.quiz?.title);
 	const correctAnswers = useCurrentQuiz((state) => state.correctAnswers);
 	const incorrectAnswers = useCurrentQuiz((state) => state.incorrectAnswers);
-	const requiredQuestionsAmount = useCurrentQuiz((state) => state.questions)?.filter(
-		(question) => question.isRequired,
-	).length || 0;
+	const questions = useCurrentQuiz((state) => state.questions);
+	const answeredQuestionIds = useCurrentQuiz((state) => state.answerdQuestionIds);
+	const requiredQuestionsIds = questions?.reduce((acc: string[], currentValue) => {
+		if (currentValue.isRequired) acc.push(currentValue._id);
+		return acc;
+	}, []);
+	const requiredQuestionsAmount = requiredQuestionsIds?.length;
+
+	const isUserAskedAllRequiredQuestions = () => {
+		let answeredRequiredQuestionsAmount = 0;
+
+		answeredQuestionIds.forEach((questionId) => {
+			if (requiredQuestionsIds?.includes(questionId)) {
+				answeredRequiredQuestionsAmount++;
+			}
+		})
+		if (answeredRequiredQuestionsAmount === requiredQuestionsIds?.length) {
+			return true
+		} else return false;
+	}
 	
 	const saveQuizResult = useCallback(async () => {
 		if (quizId && quizTitle) {
@@ -42,6 +59,7 @@ export const useQuizResult = (time: QuizResultProps) => {
 
 	return {
 		saveQuizResult,
+		isUserAskedAllRequiredQuestions,
 		correctAnswers,
 		incorrectAnswers,
 		requiredQuestionsAmount,

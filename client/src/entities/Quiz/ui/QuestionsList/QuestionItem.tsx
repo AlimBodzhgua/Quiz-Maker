@@ -30,6 +30,7 @@ interface QuestionItemProps {
 
 export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 	const currentQuiz = useCurrentQuiz((state) => state.quiz);
+	const addAnsweredQuestionId = useCurrentQuiz((state) => state.addAnsweredQuestionId);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [answers, setAnswers] = useState<Answer[]>([]);
 	const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
@@ -56,6 +57,7 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 
 	const onSubmit = () => {
 		setIsSubmitted(true);
+		addAnsweredQuestionId(question._id);
 	};
 
 	if (isLoading) {

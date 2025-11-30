@@ -15,14 +15,12 @@ export const FinishQuizButton: FC<FinishQuizButtonProps> = memo((props) => {
 	const {
 		saveQuizResult,
 		requiredQuestionsAmount,
-		correctAnswers,
-		incorrectAnswers,
+		isUserAskedAllRequiredQuestions,
 	} = useQuizResult({ minutes, seconds });
 
 	const onFinishQuiz = async () => {
-		const answeredQuestionsAmount = correctAnswers + incorrectAnswers;
 		
-		if (answeredQuestionsAmount >= requiredQuestionsAmount) {
+		if (isUserAskedAllRequiredQuestions()) {
 			setIsLoading(true);
 			await saveQuizResult()
 			setIsLoading(false);
@@ -31,7 +29,7 @@ export const FinishQuizButton: FC<FinishQuizButtonProps> = memo((props) => {
 		} else {
 			toast({
 				title: 'You haven\'t answered all the questions.',
-				description: `To complete the quiz you need to answer at least ${requiredQuestionsAmount} questions.`,
+				description: `To finish the quiz you need to answer at least ${requiredQuestionsAmount} required questions.`,
 				status: 'error',
 				position: 'top',
 				duration: 5000,

@@ -9,6 +9,7 @@ interface CurrentQuizState {
 	questions: Question[] | null;
 	correctAnswers: number;
 	incorrectAnswers: number;
+	answerdQuestionIds: string[];
 
 	fetchQuizStatus: 'idle' | 'pending' | 'success' | 'failed';
 	fetchQuizQuestionsStatus: 'idle' | 'pending' | 'success' | 'failed';
@@ -20,6 +21,7 @@ interface CurrentQuizAction {
 	fetchQuizQuestions: (quizId: string) => Promise<void>;
 	getCurrentQuiz: (quizId: string) => Promise<Quiz | undefined>;
 	questionAnswer: (isCorrect: boolean) => void;
+	addAnsweredQuestionId: (questionId: string) => void;
 	resetQuizResult: () => void;
 }
 
@@ -30,6 +32,7 @@ export const useCurrentQuiz = create<CurrentQuizState & CurrentQuizAction>()(
 		answers: null,
 		correctAnswers: 0,
 		incorrectAnswers: 0,
+		answerdQuestionIds: [], 
 
 		fetchQuizStatus: 'idle',
 		fetchQuizQuestionsStatus: 'idle',
@@ -87,6 +90,10 @@ export const useCurrentQuiz = create<CurrentQuizState & CurrentQuizAction>()(
 			} else {
 				set({ incorrectAnswers: get().incorrectAnswers + 1 }, false, 'addIncorrectAnswer');
 			}
+		},
+
+		addAnsweredQuestionId: (questionId) => {
+			set({ answerdQuestionIds: [ ...get().answerdQuestionIds, questionId ]}, false ,'addAnsweredQuestionId ');
 		},
 
 		resetQuizResult: () => {

@@ -14,7 +14,7 @@ import {
 	removeItemAndFixListOrder,
 	setIsCorrectMatchedType,
 } from '../../../lib/utils';
-import { isAnswersValid } from '../../../lib/utils/isAnswerValid';
+import { isAnswersValid } from '../../../lib/utils';
 import { useCreateQuiz } from '../../../model/store';
 import { AddAnswerButton } from './AddAnswerButton';
 import { AnswersList } from './AnswersList';

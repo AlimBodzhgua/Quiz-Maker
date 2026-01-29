@@ -2,6 +2,7 @@ export { capitalizeFirstLetter } from './capitalizeFirstLetter';
 export { changeListOrder } from './changeListOrder';
 export { create24CharId } from './create25CharId';
 export { initAnswers } from './initAnswers';
+export { isAnswersValid } from './isAnswerValid';
 export { isCorrectAnswerExist } from './isCorrectAnswerExist';
 export { isNoEmptyValuesAnswers } from './isNoEmptyValuesAnswers';
 export { removeItemAndFixListOrder } from './removeItemAndFixListOrder';

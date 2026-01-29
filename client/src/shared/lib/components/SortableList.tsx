@@ -1,22 +1,25 @@
-import { FC, memo, ReactNode } from 'react';
-import { SortableContext } from '@dnd-kit/sortable';
-import { restrictToParentElement } from '@dnd-kit/modifiers';
-import {
-	DndContext,
+import type {
 	DragCancelEvent,
 	DragEndEvent,
 	DragMoveEvent,
 	DragOverEvent,
 	DragStartEvent,
-	PointerSensor,
 	UniqueIdentifier,
+} from '@dnd-kit/core';
+import type { FC, ReactNode } from 'react';
+import {
+	DndContext,
+	PointerSensor,
 	useSensor,
 	useSensors,
 } from '@dnd-kit/core';
+import { restrictToParentElement } from '@dnd-kit/modifiers';
+import { SortableContext } from '@dnd-kit/sortable';
+import { memo } from 'react';
 
 interface SortableListProps {
 	children: ReactNode;
-	items: ( UniqueIdentifier | { id: UniqueIdentifier })[];
+	items: (UniqueIdentifier | { id: UniqueIdentifier })[];
 	onDragEnd?: (e: DragEndEvent) => void;
 	onDragCancel?: (e: DragCancelEvent) => void;
 	onDragStart?: (e: DragStartEvent) => void;

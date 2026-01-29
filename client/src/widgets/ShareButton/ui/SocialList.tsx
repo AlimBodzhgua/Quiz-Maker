@@ -1,5 +1,6 @@
-import { FC, memo } from 'react';
+import type { FC } from 'react';
 import { Flex } from '@chakra-ui/react';
+import { memo } from 'react';
 import {
 	EmailIcon,
 	EmailShareButton,
@@ -20,7 +21,6 @@ interface SocialListProps {
 }
 
 export const SocialList: FC<SocialListProps> = memo(({ link }) => {
-
 	return (
 		<Flex gap='4px'>
 			<VKShareButton url={link}>

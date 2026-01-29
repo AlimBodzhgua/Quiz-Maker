@@ -1,8 +1,11 @@
-import { FC, memo } from 'react';
+import type { DragEndEvent } from '@dnd-kit/core';
+import type { AnswerForm } from 'entities/Quiz';
+import type { FC } from 'react';
+
+import { memo } from 'react';
 import { SortableList } from 'shared/lib/components/SortableList';
+
 import { AddAnswerForm } from '../../AddAnswerForm/AddAnswerForm';
-import { AnswerForm } from 'entities/Quiz';
-import { DragEndEvent } from '@dnd-kit/core';
 
 interface AnswersListProps {
 	answers: AnswerForm[];

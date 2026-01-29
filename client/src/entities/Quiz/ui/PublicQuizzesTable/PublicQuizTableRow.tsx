@@ -1,12 +1,13 @@
-import { FC, useEffect, useState, memo } from 'react';
-import { Link } from 'react-router-dom';
+import type { FC } from 'react';
+import type { Quiz } from '../../model/types';
 import { Flex, Skeleton, Td, Tr } from '@chakra-ui/react';
+import { memo, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getQuizPage } from 'shared/utils';
+import { QuestionService } from '../../api/QuestionService';
 import { QuizService } from '../../api/QuizService';
 import { UserService } from '../../api/UserService';
 import { formatterOptions } from '../../lib/options';
-import { QuestionService } from '../../api/QuestionService';
-import { Quiz } from '../../model/types';
 import { PrivacyIcons } from '../QuizTable/PrivacyIcons';
 
 interface PublicQuizTableRowProps {
@@ -27,7 +28,7 @@ export const PublicQuizTableRow: FC<PublicQuizTableRowProps> = memo((props) => {
 		const [participantsAmount, questionsAmount, user] = await Promise.all([
 			QuizService.countParticipiants(quiz._id),
 			QuestionService.countQuizQuestions(quiz._id),
-			UserService.getUserData(quiz.authorId)
+			UserService.getUserData(quiz.authorId),
 		]);
 
 		setParticipiantsAmount(participantsAmount);
@@ -35,7 +36,7 @@ export const PublicQuizTableRow: FC<PublicQuizTableRowProps> = memo((props) => {
 		setAuthorEmail(user.email);
 
 		setIsLoading(false);
-	}
+	};
 
 	useEffect(() => {
 		initQuizExtraData();
@@ -50,18 +51,20 @@ export const PublicQuizTableRow: FC<PublicQuizTableRowProps> = memo((props) => {
 						style={{
 							maxWidth: '200px',
 							textOverflow: 'ellipsis',
-							overflow: 'hidden'
+							overflow: 'hidden',
 						}}
-					>{quiz.title}</Link>
-					<PrivacyIcons privacy={quiz.privacy}/>
+					>
+{quiz.title}
+     </Link>
+					<PrivacyIcons privacy={quiz.privacy} />
 				</Flex>
 			</Td>
 			<Td>{formatter.format(new Date(quiz.createdAt)).split('/').join('.')}</Td>
 			<Td isNumeric>
-				{isLoading ? <Skeleton height='15px' width='30px' margin='0 0 0 auto'/> : questionsAmount}
+				{isLoading ? <Skeleton height='15px' width='30px' margin='0 0 0 auto' /> : questionsAmount}
 			</Td>
 			<Td isNumeric>
-				{isLoading ? <Skeleton height='15px' width='30px' margin='0 0 0 auto'/> : participiantsAmount}
+				{isLoading ? <Skeleton height='15px' width='30px' margin='0 0 0 auto' /> : participiantsAmount}
 			</Td>
 			<Td>{isLoading ? <Skeleton height='15px' width='120px' /> : authorEmail}</Td>
 		</Tr>

@@ -1,28 +1,29 @@
-import { FC, memo, useEffect, useMemo, useState } from 'react';
+import type { FC } from 'react';
+import type { Answer, Question, QuestionType } from '../../model/types';
 import {
+	Box,
+	Button,
 	Card,
 	CardBody,
+	CardFooter,
 	CardHeader,
-	Skeleton,
 	Flex,
 	Heading,
 	ListItem,
+	Skeleton,
 	Text,
-	CardFooter,
-	Button,
 	Tooltip,
-	Box,
 } from '@chakra-ui/react';
+import { memo, useEffect, useMemo, useState } from 'react';
+import { AnswersService } from '../../api/AnswersService';
+import RequiredIcon from '../../assets/required.svg';
+import { useCurrentQuiz } from '../../model/store/currentQuiz';
 import {
 	CheckBoxAnswers,
 	InputAnswer,
 	RadioButtonAnswers,
 	TrueOrFalseAnswers,
 } from '../QuestionTypeAnswers';
-import { Answer, Question, QuestionType } from '../../model/types';
-import { useCurrentQuiz } from '../../model/store/currentQuiz';
-import { AnswersService } from '../../api/AnswersService';
-import RequiredIcon from '../../assets/required.svg';
 
 interface QuestionItemProps {
 	question: Question;
@@ -49,10 +50,10 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 	}, []);
 
 	const mapToQuestionTypeAnswers: Record<QuestionType, JSX.Element> = useMemo(() => ({
-		multipleAnswer: <CheckBoxAnswers answers={answers} isAnswerSubmit={isSubmitted}/>,
-		oneAnswer: <RadioButtonAnswers answers={answers} isAnswerSubmit={isSubmitted}/>,
-		inputAnswer: <InputAnswer answers={answers} isAnswerSubmit={isSubmitted}/>,
-		trueOrFalse: <TrueOrFalseAnswers answers={answers} isAnswerSubmit={isSubmitted}/>,	
+		multipleAnswer: <CheckBoxAnswers answers={answers} isAnswerSubmit={isSubmitted} />,
+		oneAnswer: <RadioButtonAnswers answers={answers} isAnswerSubmit={isSubmitted} />,
+		inputAnswer: <InputAnswer answers={answers} isAnswerSubmit={isSubmitted} />,
+		trueOrFalse: <TrueOrFalseAnswers answers={answers} isAnswerSubmit={isSubmitted} />,
 	} as const), [answers, isSubmitted]);
 
 	const onSubmit = () => {
@@ -71,13 +72,13 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 					</Flex>
 					</CardHeader>
 					<CardBody>
-						<Skeleton height='72px'/>
+						<Skeleton height='72px' />
 					</CardBody>
 				</Card>
 			</ListItem>
 		);
 	}
-	
+
 	return (
 		<ListItem m='16px 0'>
 			<Card minW='md' maxW='xl'>
@@ -96,14 +97,16 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 					{mapToQuestionTypeAnswers[question.type]}
 				</CardBody>
 				<CardFooter justify='flex-end' pt='0'>
-					
+
 					<Button
 						size='sm'
 						onClick={onSubmit}
 						disabled={isSubmitted}
-					>Submit Answer</Button>
+					>
+Submit Answer
+     </Button>
 				</CardFooter>
 			</Card>
 		</ListItem>
-	)
+	);
 });

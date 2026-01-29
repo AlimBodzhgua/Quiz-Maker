@@ -1,4 +1,5 @@
-import { FC, memo, ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
+import type { Quiz } from '../../model/types';
 import {
 	Alert,
 	AlertDescription,
@@ -12,9 +13,9 @@ import {
 	TableContainer,
 	Tbody,
 } from '@chakra-ui/react';
-import { TableSkeleton } from './TableSkeleton';
-import { Quiz } from '../../model/types';
+import { memo } from 'react';
 import BoxIcon from '../../assets/box.svg';
+import { TableSkeleton } from './TableSkeleton';
 
 interface QuizTableProps {
 	header: ReactNode;
@@ -50,7 +51,7 @@ export const QuizTable: FC<QuizTableProps> = memo((props) => {
 					</AlertDescription>
 				</Flex>
 			</Alert>
-		)
+		);
 	}
 
 	if (!quizzes.length) {
@@ -62,7 +63,7 @@ export const QuizTable: FC<QuizTableProps> = memo((props) => {
 					alignItems='center'
 					flexDirection='column'
 				>
-					<BoxIcon/>
+					<BoxIcon />
 					<Heading
 						size='md'
 						fontWeight='medium'

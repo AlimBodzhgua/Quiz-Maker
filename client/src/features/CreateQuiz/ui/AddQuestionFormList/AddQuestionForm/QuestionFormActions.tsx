@@ -1,6 +1,7 @@
-import { FC, memo } from 'react';
-import { Button, Flex, ScaleFade } from '@chakra-ui/react';
+import type { FC } from 'react';
 import { DeleteIcon, DragHandleIcon, EditIcon } from '@chakra-ui/icons';
+import { Button, Flex, ScaleFade } from '@chakra-ui/react';
+import { memo } from 'react';
 
 interface QuestionFormActionsProps {
     isSaved: boolean;
@@ -19,20 +20,20 @@ export const QuestionFormActions: FC<QuestionFormActionsProps> = memo((props) =>
 
     return (
         <Flex
-            direction='column'
-            borderRadius='base'
-            bg='blue.400'
-            position='absolute'
-			right='5px'
-			top='0'
+	direction='column'
+	borderRadius='base'
+	bg='blue.400'
+	position='absolute'
+	right='5px'
+	top='0'
         >
             <ScaleFade in={isHover}>
                 <Flex
-                    direction='column'
-                    position='absolute'
-                    gap='10px'
-                    bg='blue.400'
-                    p='10px 8px'
+	direction='column'
+	position='absolute'
+	gap='10px'
+	bg='blue.400'
+	p='10px 8px'
                 >
                     <Button onClick={onRemove} size='sm'>
                         <DeleteIcon />

@@ -1,6 +1,7 @@
+import type { FC } from 'react';
 import { CheckIcon } from '@chakra-ui/icons';
 import { Button, Flex } from '@chakra-ui/react';
-import { FC, memo } from 'react';
+import { memo } from 'react';
 
 interface SaveButtonProps {
 	onClick: () => void;
@@ -21,15 +22,17 @@ export const SaveButton: FC<SaveButtonProps> = memo((props) => {
 			onClick={onClick}
 			disabled={isSaved}
 			isLoading={isLoading}
-			loadingText={'Saving question'}
+			loadingText='Saving question'
 			spinnerPlacement='end'
 		>
-			{isSaved ? (
+			{isSaved
+? (
 				<Flex gap='10px' alignItems='center'>
 					Saved
 					<CheckIcon />
 				</Flex>
-			) : (
+			)
+: (
 				'Save question'
 			)}
 		</Button>

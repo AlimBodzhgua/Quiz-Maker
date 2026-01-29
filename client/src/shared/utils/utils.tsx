@@ -16,9 +16,11 @@ export const getQueryParam = (key: string) => {
 export const getDataMatchedAnswer = (isCorrect: boolean) => {
 	return {
 		color: isCorrect ? '#68AF15' : '#D30000',
-		icon: isCorrect ? (
+		icon: isCorrect
+? (
 			<CheckIcon fontSize='12px' color='#fff' />
-		) : (
+		)
+: (
 			<CloseIcon fontSize='8px' color='#fff' />
 		),
 	};

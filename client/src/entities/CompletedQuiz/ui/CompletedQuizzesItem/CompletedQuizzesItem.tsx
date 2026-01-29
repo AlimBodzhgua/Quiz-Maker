@@ -1,5 +1,6 @@
-import { FC, memo } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import type { FC } from 'react';
+import type { CompletedQuiz } from '../../model/types';
+import { DeleteIcon, RepeatIcon } from '@chakra-ui/icons';
 import {
 	Button,
 	Card,
@@ -12,12 +13,11 @@ import {
 	ListItem,
 	Text,
 } from '@chakra-ui/react';
-import { DeleteIcon, RepeatIcon } from '@chakra-ui/icons';
-import { getQuizPage } from 'shared/utils';
+import { memo } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { Timer } from 'shared/UI';
-import { CompletedQuiz } from '../../model/types';
+import { getQuizPage } from 'shared/utils';
 import { useCompletedQuizzes } from '../../model/store';
-
 
 interface CompletedQuizzesItemProps {
 	quiz: CompletedQuiz;
@@ -30,14 +30,14 @@ export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo(({ quiz 
 
 	const handleRemove = () => {
 		removeQuiz(quiz._id);
-	}
+	};
 
 	return (
 		<ListItem
 			m='18px 20px'
 			minW='300px'
 			opacity={isLoading ? 0.5 : 1}
-			transition={'transform .2s linear'}
+			transition='transform .2s linear'
 			_hover={{ transform: 'scale(1.03)' }}
 		>
 			<Card w='100%'>
@@ -63,8 +63,14 @@ export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo(({ quiz 
 					<Flex m='5px 0' alignItems='center' justifyContent='space-between'>
 						<Heading size='sm'>Test result:</Heading>
 						<Flex flexDirection='column' textAlign='end'>
-							<Text color='green.400'>Correct: {quiz.correct}</Text>
-							<Text color='red.400'>Incorrect: {quiz.incorrect}</Text>
+							<Text color='green.400'>
+								Correct:
+								{quiz.correct}
+							</Text>
+							<Text color='red.400'>
+								Incorrect:
+								{quiz.incorrect}
+							</Text>
 						</Flex>
 					</Flex>
 					<Divider />

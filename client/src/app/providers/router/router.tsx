@@ -1,35 +1,34 @@
-import { createBrowserRouter, replace } from 'react-router-dom';
-import { UserQuizzesPage } from 'pages/UserQuizzes';
-import { LoginPage } from 'pages/Login';
-import { RegisterPage } from 'pages/Register';
-import { CreateQuizPage } from 'pages/CreateQuiz';
-import { QuizPage } from 'pages/Quiz';
-import { ProfilePage } from 'pages/Profile';
+import type { AppRouteObject } from './types';
 import { CompletedQuizzesPage } from 'pages/CompletedQuizzes';
-import { PublicQuizzesPage } from 'pages/PublicQuizzes';
+import { CreateQuizPage } from 'pages/CreateQuiz';
+import { LoginPage } from 'pages/Login';
 import { NotFoundPage } from 'pages/NotFound';
+import { ProfilePage } from 'pages/Profile';
+import { PublicQuizzesPage } from 'pages/PublicQuizzes';
+import { QuizPage } from 'pages/Quiz';
+import { RegisterPage } from 'pages/Register';
+import { UserQuizzesPage } from 'pages/UserQuizzes';
+import { createBrowserRouter, replace } from 'react-router-dom';
 import { AppRoutes } from 'shared/constants';
-import { AppRouteObject } from './types';
-import { AuthRequire, ProtectedFromAuthtorized } from '../../../features/Auth';
+import { AuthRequire, ProtectedFromAuthorized } from '../../../features/Auth';
 import { Layout } from '../../Layout/Layout';
-
 
 export const routes: AppRouteObject[] = [
 	{
 		path: AppRoutes.LOGIN,
 		element: (
-			<ProtectedFromAuthtorized>
+			<ProtectedFromAuthorized>
 				<LoginPage />
-			</ProtectedFromAuthtorized>
+			</ProtectedFromAuthorized>
 		),
 		authRequire: false,
 	},
 	{
 		path: AppRoutes.REGISTER,
 		element: (
-			<ProtectedFromAuthtorized>
+			<ProtectedFromAuthorized>
 				<RegisterPage />
-			</ProtectedFromAuthtorized>
+			</ProtectedFromAuthorized>
 		),
 		authRequire: false,
 	},
@@ -84,6 +83,6 @@ export const router = createBrowserRouter([
 					? { ...route, element: <AuthRequire>{route.element}</AuthRequire> }
 					: route,
 			),
-		]
+		],
 	},
 ]);

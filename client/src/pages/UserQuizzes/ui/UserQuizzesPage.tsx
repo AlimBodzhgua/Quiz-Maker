@@ -1,11 +1,12 @@
-import { FC, useEffect } from 'react';
+import type { FC } from 'react';
 import { Button, Flex } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
-import { UserQuizzesTable } from 'entities/Quiz';
-import { AppRoutes } from 'shared/constants';
-import { SearchBar } from 'features/SearchQuizzes';
-import { useQuizzesStore } from 'entities/Quiz';
+import { useQuizzesStore, UserQuizzesTable } from 'entities/Quiz';
 import { useUserStore } from 'entities/User';
+import { SearchBar } from 'features/SearchQuizzes';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
+import { AppRoutes } from 'shared/constants';
 
 const UserQuizzesPage: FC = () => {
 	const toggleSelect = useQuizzesStore((state) => state.toggleSelect);
@@ -17,7 +18,7 @@ const UserQuizzesPage: FC = () => {
 	useEffect(() => {
 		return () => {
 			fullResetSelectState();
-		}
+		};
 	}, []);
 
 	return (
@@ -50,7 +51,7 @@ const UserQuizzesPage: FC = () => {
 					</Button>
 				</Flex>
 			</Flex>
-			<UserQuizzesTable userId={userId!}/>
+			<UserQuizzesTable userId={userId!} />
 		</Flex>
 	);
 };

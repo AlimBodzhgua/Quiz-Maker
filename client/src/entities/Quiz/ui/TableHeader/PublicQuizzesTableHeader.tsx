@@ -1,8 +1,9 @@
-import { FC, memo, useCallback, useState } from 'react';
+import type { FC } from 'react';
+import type { SortFieldType } from '../../model/types';
 import { Th, Thead, Tr } from '@chakra-ui/react';
+import { memo, useCallback, useState } from 'react';
 import { sortField } from 'shared/constants';
 import { ColumnToggleSort } from './ColumnToggleSort';
-import { SortFieldType } from '../../model/types';
 
 export const PublicQuizzesTableHeader: FC = memo(() => {
 	const [acitveField, setActiveField] = useState<SortFieldType | null>(null);

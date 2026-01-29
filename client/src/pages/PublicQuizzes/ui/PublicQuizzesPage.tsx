@@ -1,10 +1,10 @@
-import { FC, memo } from 'react';
+import type { FC } from 'react';
 import { Flex } from '@chakra-ui/react';
-import { SearchBar } from 'features/SearchQuizzes';
 import { PublicQuizzesTable } from 'entities/Quiz';
+import { SearchBar } from 'features/SearchQuizzes';
+import { memo } from 'react';
 
 const PublicQuizzesPage: FC = memo(() => {
-
 	return (
 		<Flex
 			w='80%'

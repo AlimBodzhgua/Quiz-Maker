@@ -1,4 +1,6 @@
-import { FC, memo } from 'react';
+import type { FC } from 'react';
+
+import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppDialog } from 'shared/UI';
 
@@ -15,7 +17,7 @@ export const PrivateLinkDialog: FC<PrivateLinkDialogProps> = memo((props) => {
 	return (
 		<AppDialog
 			header='This quiz requires a private link with token'
-			body='You have no permission to this squiz'
+			body='You have no permission to this quiz'
 			actionText='ok'
 			isOpen={isOpen}
 			actionHandler={onCloseDialog}

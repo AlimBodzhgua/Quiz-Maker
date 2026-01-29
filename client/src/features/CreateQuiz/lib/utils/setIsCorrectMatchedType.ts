@@ -1,14 +1,14 @@
-import { QuestionTypes } from 'shared/constants';
 import type { AnswerForm, QuestionType } from 'entities/Quiz';
+import { QuestionTypes } from 'shared/constants';
 
-export const setIsCorrectMathcedType = (
+export const setIsCorrectMatchedType = (
 	answers: AnswerForm[],
 	answerId: string,
 	questionType: QuestionType,
 ) => {
 	if (
-		questionType === QuestionTypes.oneAnswer ||
-		questionType === QuestionTypes.trueOrFalse
+		questionType === QuestionTypes.oneAnswer
+		|| questionType === QuestionTypes.trueOrFalse
 	) {
 		return answers.map((answer) => {
 			if (answer._id === answerId) {

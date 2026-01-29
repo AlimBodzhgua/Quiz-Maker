@@ -1,8 +1,7 @@
+import type { CompletedQuiz } from '../model/types';
 import $axios from 'shared/api/axios';
-import { CompletedQuiz } from '../model/types';
 
 export class CompletedQuizService {
-	
 	static fetchQuizzes = async () => {
 		try {
 			const response = await $axios.get<CompletedQuiz[]>('/completed-quizzes');

@@ -1,7 +1,6 @@
-import { UniqueIdentifier } from '@dnd-kit/core/dist/types';
-import { arrayMove } from '@dnd-kit/sortable';
+import type { UniqueIdentifier } from '@dnd-kit/core/dist/types';
 import type { AnswerForm, QuestionForm } from 'entities/Quiz';
-
+import { arrayMove } from '@dnd-kit/sortable';
 
 export const changeListOrder = <T extends AnswerForm | QuestionForm>(
 	list: T[],

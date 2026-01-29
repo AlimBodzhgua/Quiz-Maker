@@ -1,6 +1,8 @@
-import { FC, memo } from 'react';
+import type { FC } from 'react';
+
 import { CloseIcon } from '@chakra-ui/icons';
 import { Button, ListItem, Text } from '@chakra-ui/react';
+import { memo } from 'react';
 
 interface RestrictedUserItemProps {
 	user: string;

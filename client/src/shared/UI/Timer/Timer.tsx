@@ -1,11 +1,12 @@
-import { FC, memo } from 'react';
+import type { FC } from 'react';
 import { TimeIcon } from '@chakra-ui/icons';
 import { Flex } from '@chakra-ui/react';
+import { memo } from 'react';
 import { subtractPixelsFromString } from '../../utils/utils';
 
 type TimerSize = 'sm' | 'md' | 'lg';
 
-const timereSizes: Record<TimerSize, string>  = {
+const timerSizes: Record<TimerSize, string> = {
 	sm: '12px',
 	md: '17px',
 	lg: '21px',
@@ -31,10 +32,10 @@ export const Timer: FC<TimerProps> = memo((props) => {
 			gap='6px'
 			color={color}
 			alignItems='center'
-			fontSize={timereSizes[size]}
+			fontSize={timerSizes[size]}
 		>
-			<TimeIcon fontSize={subtractPixelsFromString(timereSizes[size], 2)} />
-			{`${minutes <= 9 ? '0' + minutes : minutes}:${seconds <= 9 ? '0' + seconds : seconds}`}
+			<TimeIcon fontSize={subtractPixelsFromString(timerSizes[size], 2)} />
+			{`${minutes <= 9 ? `0${minutes}` : minutes}:${seconds <= 9 ? `0${seconds}` : seconds}`}
 		</Flex>
 	);
 });

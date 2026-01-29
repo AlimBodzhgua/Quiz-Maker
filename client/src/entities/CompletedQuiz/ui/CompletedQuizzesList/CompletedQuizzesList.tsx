@@ -1,4 +1,5 @@
-import { FC, memo, useEffect } from 'react';
+import type { FC } from 'react';
+
 import {
 	Alert,
 	AlertDescription,
@@ -10,10 +11,12 @@ import {
 	Heading,
 	List,
 } from '@chakra-ui/react';
-import { CompletedQuizzesSkeleton } from './CompletedQuizzesSkeleton';
-import { CompletedQuizzesItem } from '../CompletedQuizzesItem/CompletedQizzesItem';
-import { useCompletedQuizzes } from '../../model/store';
+import { memo, useEffect } from 'react';
+
 import NoteIcon from '../../assets/note.svg';
+import { useCompletedQuizzes } from '../../model/store';
+import { CompletedQuizzesItem } from '../CompletedQuizzesItem/CompletedQuizzesItem';
+import { CompletedQuizzesSkeleton } from './CompletedQuizzesSkeleton';
 
 export const CompletedQuizzesList: FC = memo(() => {
 	const fetchCompletedQuizzes = useCompletedQuizzes((state) => state.fetchQuizzes);
@@ -48,7 +51,7 @@ export const CompletedQuizzesList: FC = memo(() => {
 					</AlertDescription>
 				</Flex>
 			</Alert>
-		)
+		);
 	}
 
 	if (!quizzes.length) {

@@ -1,4 +1,4 @@
-import { TimerLimit } from '../model/types';
+import type { TimerLimit } from '../model/types';
 
 export const calculatePassedTime = (timerLimit: TimerLimit, minutes: number, seconds: number) => {
 	const totalSeconds = timerLimit.minutes * 60 + timerLimit.seconds;
@@ -7,4 +7,4 @@ export const calculatePassedTime = (timerLimit: TimerLimit, minutes: number, sec
 	const secondsResult = (totalSeconds - totalSecondsLeft) % 60;
 	const minutesResult = Math.floor((totalSeconds - totalSecondsLeft) / 60);
 	return { seconds: secondsResult, minutes: minutesResult };
-}
+};

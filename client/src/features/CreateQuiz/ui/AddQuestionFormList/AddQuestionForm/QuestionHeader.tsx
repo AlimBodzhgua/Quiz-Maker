@@ -1,6 +1,9 @@
-import { ChangeEvent, FC, memo, useId } from 'react';
-import { QuestionType } from 'entities/Quiz';
+import type { QuestionType } from 'entities/Quiz';
+import type { ChangeEvent, FC } from 'react';
+
 import { Flex, FormControl, FormLabel, Input, Switch } from '@chakra-ui/react';
+import { memo, useId } from 'react';
+
 import { QuestionTypeSelector } from '../../QuestionTypeSelector/QuestionTypeSelector';
 
 interface QuestionHeaderProps {

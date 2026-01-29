@@ -1,25 +1,28 @@
-import { FC, memo, useEffect, useState } from 'react';
+import type { FC } from 'react';
+import type { Answer } from '../../../model/types';
 import { Box, Flex, RadioGroup } from '@chakra-ui/react';
-import { RadioButtonItem } from './RadioButtonItem';
-import { Answer } from '../../../model/types';
+import { memo, useEffect, useState } from 'react';
 import { useCurrentQuiz } from '../../../model/store/currentQuiz';
+import { RadioButtonItem } from './RadioButtonItem';
 
 interface RadioButtonAnswersProps {
 	answers: Answer[];
 	isAnswerSubmit: boolean;
 }
 
-export const RadioButtonAnswers: FC<RadioButtonAnswersProps> = memo(({answers, isAnswerSubmit}) => {
+export const RadioButtonAnswers: FC<RadioButtonAnswersProps> = memo(({ answers, isAnswerSubmit }) => {
 	const [selectedAnswer, setSelectedAnswers] = useState<string>('');
 	const questionAnswer = useCurrentQuiz((state) => state.questionAnswer);
 
 	useEffect(() => {
 		if (isAnswerSubmit) {
 			const splittedAnswer = selectedAnswer.split(':');
-		
+
 			if (splittedAnswer[1] === 'true') {
 				questionAnswer(true);
-			} else questionAnswer(false);
+			} else {
+ questionAnswer(false);
+}
 		}
 	}, [isAnswerSubmit]);
 
@@ -42,4 +45,4 @@ export const RadioButtonAnswers: FC<RadioButtonAnswersProps> = memo(({answers, i
 			</RadioGroup>
 		</Box>
 	);
-})
+});

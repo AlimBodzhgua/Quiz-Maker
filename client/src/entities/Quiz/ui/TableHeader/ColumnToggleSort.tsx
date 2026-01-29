@@ -1,11 +1,12 @@
-import { FC, memo, useState } from 'react';
+import type { FC } from 'react';
+import type { SortDirectionType, SortFieldType } from '../../model/types';
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { Flex, Text } from '@chakra-ui/react';
-import { addQueryParam } from 'shared/utils';
+import { memo, useState } from 'react';
 import { sortDirection } from 'shared/constants';
-import { useQuizzesStore } from '../../model/store/quizzes';
-import { SortDirectionType, SortFieldType } from '../../model/types';
+import { addQueryParam } from 'shared/utils';
 import { QuizService } from '../../api/QuizService';
+import { useQuizzesStore } from '../../model/store/quizzes';
 
 interface ColumnToggleSortProps {
 	text: string;
@@ -21,7 +22,7 @@ export const ColumnToggleSort: FC<ColumnToggleSortProps> = memo((props) => {
 	const quizzes = useQuizzesStore((state) => state.quizzes);
 
 	const onToggleSort = () => {
-		const nextDirection = direction === sortDirection.asc ? sortDirection.desc : sortDirection.asc; 
+		const nextDirection = direction === sortDirection.asc ? sortDirection.desc : sortDirection.asc;
 		addQueryParam('field', sortField);
 		addQueryParam('sort', direction);
 
@@ -30,7 +31,7 @@ export const ColumnToggleSort: FC<ColumnToggleSortProps> = memo((props) => {
 		setSortedAndFilteredQuizzes(sorted);
 		setDirection(nextDirection);
 		onChangeActiveField(sortField);
-	}
+	};
 
 	return (
 		<Flex
@@ -41,14 +42,14 @@ export const ColumnToggleSort: FC<ColumnToggleSortProps> = memo((props) => {
 			gap='8px'
 		>
 			<Text>{text}</Text>
-			{activeField === sortField &&
-				<Flex flexDir='column' fontSize='xx-small'>
-					{direction === 'asc' 
+			{activeField === sortField
+				&& (
+<Flex flexDir='column' fontSize='xx-small'>
+					{direction === 'asc'
 						? <TriangleUpIcon />
-						: <TriangleDownIcon />
-					}
-				</Flex>
-			}
+						: <TriangleDownIcon />}
+</Flex>
+)}
 		</Flex>
-	)
-})
+	);
+});

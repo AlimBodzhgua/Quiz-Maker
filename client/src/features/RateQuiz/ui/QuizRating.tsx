@@ -1,8 +1,11 @@
+import type { FC } from 'react';
+
 import { Flex } from '@chakra-ui/icons';
 import { RatingStar } from 'entities/Rating';
-import { FC, memo, useCallback, useState } from 'react';
-import { RATING_STARS } from '../model/constants';
+import { memo, useCallback, useState } from 'react';
+
 import { QuizRatingService } from '../api/QuizRatingService';
+import { RATING_STARS } from '../model/constants';
 
 interface QuizRatingProps {
 	quizId: string;
@@ -10,7 +13,7 @@ interface QuizRatingProps {
 
 export const QuizRating: FC<QuizRatingProps> = memo(({ quizId }) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [isHover, setIsHover] = useState<boolean>(false)
+	const [isHover, setIsHover] = useState<boolean>(false);
 	const [hoveredStar, setHoveredStar] = useState<number>(0);
 
 	const [selectedStar, setSelectedStar] = useState<number>(0);
@@ -40,9 +43,9 @@ export const QuizRating: FC<QuizRatingProps> = memo(({ quizId }) => {
 	return (
 		<Flex
 			gap='5px'
-			pointerEvents={ isLoading ? 'none' : 'all' }
+			pointerEvents={isLoading ? 'none' : 'all'}
 			opacity={isLoading ? '.4' : '1'}
-			transition={'opacity .2s linear'}
+			transition='opacity .2s linear'
 		>
 			{RATING_STARS.map((starNumber) => (
 				<RatingStar

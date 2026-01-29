@@ -1,3 +1,6 @@
+import type { AlertDialogProps } from '@chakra-ui/react';
+import type { FC, ReactElement, ReactNode } from 'react';
+
 import {
 	AlertDialog,
 	AlertDialogBody,
@@ -5,10 +8,9 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogOverlay,
-	AlertDialogProps,
 	Button,
 } from '@chakra-ui/react';
-import { FC, memo, ReactElement, ReactNode, useRef } from 'react';
+import { memo, useRef } from 'react';
 
 interface AppDialogProps extends Omit<AlertDialogProps, 'leastDestructiveRef' | 'children'> {
 	header: ReactNode;

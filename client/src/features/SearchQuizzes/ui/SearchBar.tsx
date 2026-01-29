@@ -1,15 +1,19 @@
-import { FC, memo, useEffect, useRef, useState } from 'react';
-import { Input, InputGroup, InputLeftElement, InputRightElement, Kbd } from '@chakra-ui/react';
+import type { FC } from 'react';
+
 import { SearchIcon } from '@chakra-ui/icons';
-import { useDebounce } from 'shared/lib/hooks';
+import { Input, InputGroup, InputLeftElement, InputRightElement, Kbd } from '@chakra-ui/react';
 import { useQuizzesStore } from 'entities/Quiz';
+import { memo, useEffect, useRef, useState } from 'react';
+import { useDebounce } from 'shared/lib/hooks';
 
 export const SearchBar: FC = memo(() => {
 	const [value, setValue] = useState<string>('');
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const quizzes = useQuizzesStore((state) => state.quizzes);
 	const debouncedValue = useDebounce(value);
-	const setSortedAndFilteredQuizzes = useQuizzesStore((state) => state.setSortedAndFilteredQuizzes);
+	const setSortedAndFilteredQuizzes = useQuizzesStore(
+		(state) => state.setSortedAndFilteredQuizzes,
+	);
 
 	const onHotkeyPress = (e: KeyboardEvent) => {
 		if (e.altKey === true && e.key === 'Enter') {
@@ -52,14 +56,10 @@ export const SearchBar: FC = memo(() => {
 				onChange={onChangeValue}
 				disabled={quizzes.length <= 1}
 			/>
-			<InputRightElement
-				display='flex'
-				textAlign='center'
-				gap='5px'
-				pr='60px'
-			>
-				<Kbd borderRadius='none'>alt</Kbd><Kbd borderRadius='none'>enter</Kbd>
+			<InputRightElement display='flex' textAlign='center' gap='5px' pr='60px'>
+				<Kbd borderRadius='none'>alt</Kbd>
+				<Kbd borderRadius='none'>enter</Kbd>
 			</InputRightElement>
 		</InputGroup>
-	)
-})
+	);
+});

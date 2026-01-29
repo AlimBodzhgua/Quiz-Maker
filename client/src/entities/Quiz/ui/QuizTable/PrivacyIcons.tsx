@@ -1,7 +1,8 @@
-import { FC, memo } from 'react';
+import type { FC } from 'react';
+import type { PrivacyType } from '../../model/types';
 import { LinkIcon, LockIcon } from '@chakra-ui/icons';
 import { Flex, Tooltip } from '@chakra-ui/react';
-import { PrivacyType } from '../../model/types';
+import { memo } from 'react';
 import UsersIcon from '../../assets/users.svg';
 
 interface PrivacyIconsProps {
@@ -9,17 +10,16 @@ interface PrivacyIconsProps {
 };
 
 export const PrivacyIcons: FC<PrivacyIconsProps> = memo(({ privacy }) => {
-
 	return (
 		<Flex gap='10px' alignItems='center'>
-			{(privacy.type === 'privateLink' ||  privacy.type === 'linkProtected') && (
+			{(privacy.type === 'privateLink' || privacy.type === 'linkProtected') && (
 				<Tooltip label='Quiz available only with link' hasArrow>
-					<LinkIcon fontSize='14px'/>
+					<LinkIcon fontSize='14px' />
 				</Tooltip>
 			)}
-			{(privacy.type === 'publicProtected' ||  privacy.type === 'linkProtected') && (
+			{(privacy.type === 'publicProtected' || privacy.type === 'linkProtected') && (
 				<Tooltip label='Quiz with password' hasArrow>
-					<LockIcon fontSize='14px' color='gray.500'/>
+					<LockIcon fontSize='14px' color='gray.500' />
 				</Tooltip>
 			)}
 			{(privacy.type === 'restrictedUsers') && (

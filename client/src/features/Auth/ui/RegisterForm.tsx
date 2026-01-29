@@ -1,7 +1,8 @@
-import { FC, useState, memo, useEffect } from 'react';
-import { Input, Heading, Button, InputRightElement, InputGroup, Card, InputLeftElement } from '@chakra-ui/react';
+import type { FC } from 'react';
 import { EmailIcon, LockIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { Button, Card, Heading, Input, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react';
 import { useSignUpUser } from 'entities/User';
+import { memo, useEffect, useState } from 'react';
 
 export const RegisterForm: FC = memo(() => {
 	const { signUpUser, isLoading, error } = useSignUpUser();
@@ -60,7 +61,7 @@ export const RegisterForm: FC = memo(() => {
 					onChange={onEmailChange}
 					variant='filled'
 					size='md'
-					isInvalid={error ? true : false}
+					isInvalid={!!error}
 				/>
 			</InputGroup>
 			<InputGroup>
@@ -71,18 +72,17 @@ export const RegisterForm: FC = memo(() => {
 					value={password}
 					onChange={onPasswordChange}
 					type={showPassword ? 'text' : 'password'}
-					isInvalid={error ? true : false}
+					isInvalid={!!error}
 					placeholder='Password'
 					variant='filled'
 					size='md'
 				/>
 				<InputRightElement width='4.5rem'>
 					<Button variant='unstyled' onClick={onToggleShowPassword}>
-						{showPassword ? (
-							<ViewOffIcon color='#000' />
-						) : (
-							<ViewIcon color='#000' />
-						)}
+						{showPassword
+							? <ViewOffIcon color='#000' />
+							: <ViewIcon color='#000' />
+						}
 					</Button>
 				</InputRightElement>
 			</InputGroup>

@@ -1,4 +1,5 @@
-import { FC } from 'react';
+import type { FC } from 'react';
+
 import { RegisterForm } from 'features/Auth';
 import { Page } from 'widgets/Page';
 

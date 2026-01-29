@@ -1,21 +1,22 @@
-import { FC, memo, useEffect, useRef, useState } from 'react';
+import type { FC } from 'react';
+import type { Quiz } from '../../model/types';
+import { CheckIcon, CopyIcon, QuestionIcon } from '@chakra-ui/icons';
 import {
 	Card,
 	CardBody,
-	Text,
+	CardHeader,
 	Flex,
+	Heading,
 	Input,
 	InputGroup,
 	InputRightElement,
-	Tooltip,
-	CardHeader,
-	Heading,
 	List,
 	ListItem,
+	Text,
+	Tooltip,
 } from '@chakra-ui/react';
-import { CheckIcon, CopyIcon, QuestionIcon } from '@chakra-ui/icons';
+import { memo, useEffect, useRef, useState } from 'react';
 import { mapToPrivacyLabelText, mapToPrivacyText } from 'shared/constants';
-import type { Quiz } from '../../model/types';
 
 interface PrivacyInfoProps {
 	quiz: Quiz;
@@ -35,7 +36,8 @@ export const PrivacyInfo: FC<PrivacyInfoProps> = memo(({ quiz }) => {
 		}, 3000);
 
 		return () => {
-			if (timerRef.current) clearInterval(timerRef.current);
+			if (timerRef.current)
+clearInterval(timerRef.current);
 		};
 	}, [isLinkCopied, isTokenCopied, isPasswordCopied]);
 
@@ -67,11 +69,17 @@ export const PrivacyInfo: FC<PrivacyInfoProps> = memo(({ quiz }) => {
 				<Heading size='md' fontWeight='medium' mb='12px'>
 					{quiz.title}
 				</Heading>
-				<Text mb='8px'>Quiz ID: {quiz._id}</Text>
+				<Text mb='8px'>
+Quiz ID:
+{quiz._id}
+    </Text>
 			</CardHeader>
 			<CardBody>
 				<Flex align='center' gap='10px' mb='10px'>
-					<Text>Privacy type: {mapToPrivacyText[quiz.privacy.type]}</Text>
+					<Text>
+Privacy type:
+{mapToPrivacyText[quiz.privacy.type]}
+     </Text>
 					<Tooltip hasArrow label={mapToPrivacyLabelText[quiz.privacy.type]}>
 						<QuestionIcon />
 					</Tooltip>

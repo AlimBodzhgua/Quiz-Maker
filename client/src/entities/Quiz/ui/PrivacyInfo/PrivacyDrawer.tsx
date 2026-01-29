@@ -1,4 +1,6 @@
-import { FC, memo, useRef } from 'react';
+import type { FC } from 'react';
+import type { Quiz } from '../../model/types';
+import { LockIcon } from '@chakra-ui/icons';
 import {
 	Button,
 	Drawer,
@@ -10,9 +12,8 @@ import {
 	DrawerOverlay,
 	useDisclosure,
 } from '@chakra-ui/react';
-import { LockIcon } from '@chakra-ui/icons';
+import { memo, useRef } from 'react';
 import { PrivacyInfo } from './PrivacyInfo';
-import type { Quiz } from '../../model/types';
 
 interface PrivacyDrawerProps {
 	quiz: Quiz;
@@ -22,7 +23,7 @@ export const PrivacyDrawer: FC<PrivacyDrawerProps> = memo((props) => {
 	const { quiz } = props;
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const btnRef = useRef<HTMLButtonElement | null>(null);
-	
+
 	return (
 		<>
 			<Button
@@ -34,7 +35,7 @@ export const PrivacyDrawer: FC<PrivacyDrawerProps> = memo((props) => {
 				bgImage='linear-gradient(to right, #ff512f 0%, #dd2476 51%, #ff512f 100%)'
 				color='#ffff'
 				_hover={{ color: '#dcd9d9' }}
-				_active={{ color: 'none'}}
+				_active={{ color: 'none' }}
 			>
 				Privacy
 			</Button>
@@ -51,7 +52,7 @@ export const PrivacyDrawer: FC<PrivacyDrawerProps> = memo((props) => {
 					<DrawerCloseButton />
 
 					<DrawerBody>
-						<PrivacyInfo quiz={quiz}/>
+						<PrivacyInfo quiz={quiz} />
 					</DrawerBody>
 
 					<DrawerFooter>

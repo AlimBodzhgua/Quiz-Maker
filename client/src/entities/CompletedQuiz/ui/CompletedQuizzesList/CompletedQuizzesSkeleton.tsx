@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { List, ListItem, Skeleton } from '@chakra-ui/react';
 
 export const CompletedQuizzesSkeleton: FC = () => {
@@ -9,7 +9,7 @@ export const CompletedQuizzesSkeleton: FC = () => {
 			justifyContent='center'
 			gap='20px'
 		>
-			{Array(8)
+			{Array.from({ length: 8 })
 				.fill(0)
 				.map((_, index) => (
 					<ListItem m='16px 0' key={index}>

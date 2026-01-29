@@ -1,5 +1,5 @@
+import type { CompletedQuiz } from './types';
 import { create } from 'zustand';
-import { CompletedQuiz } from './types';
 import { devtools } from 'zustand/middleware';
 import { CompletedQuizService } from '../api/CompletedQuizService';
 
@@ -19,13 +19,13 @@ export const useCompletedQuizzes = create<CompletedQuizState & CompletedQuizActi
 		quizzes: [],
 		removeQuizStatus: 'idle',
 		fetchQuizzesStatus: 'idle',
-		
+
 		fetchQuizzes: async () => {
-			set({ fetchQuizzesStatus: 'pending'});
+			set({ fetchQuizzesStatus: 'pending' });
 
 			try {
 				const quizzes = await CompletedQuizService.fetchQuizzes();
-				set({ quizzes: quizzes, fetchQuizzesStatus: 'success' }, false, 'fetchCompletedQuizzes');
+				set({ quizzes, fetchQuizzesStatus: 'success' }, false, 'fetchCompletedQuizzes');
 
 				return quizzes;
 			} catch (err) {
@@ -34,17 +34,17 @@ export const useCompletedQuizzes = create<CompletedQuizState & CompletedQuizActi
 		},
 
 		removeQuiz: async (id) => {
-			set({ removeQuizStatus: 'pending'});
+			set({ removeQuizStatus: 'pending' });
 
 			try {
 				await CompletedQuizService.removeQuiz(id);
 
 				const quizzes = get().quizzes.filter((quiz) => quiz._id !== id);
 
-				set({ quizzes: quizzes, removeQuizStatus: 'success' });
+				set({ quizzes, removeQuizStatus: 'success' });
 			} catch (err) {
-				set({ removeQuizStatus: 'failed'});
+				set({ removeQuizStatus: 'failed' });
 			}
 		},
-	})),	
-)
+	})),
+);

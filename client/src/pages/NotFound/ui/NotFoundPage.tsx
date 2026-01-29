@@ -1,6 +1,6 @@
-import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import type { FC } from 'react';
 import { Button, Heading, Text } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import { AppRoutes } from 'shared/constants';
 import { Page } from 'widgets/Page';
 

@@ -1,9 +1,10 @@
-import { FC, memo, useEffect, useState } from 'react';
-import { Button, Checkbox, Flex, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
+import type { AnswerForm } from 'entities/Quiz';
+import type { FC } from 'react';
 import { DeleteIcon, DragHandleIcon } from '@chakra-ui/icons';
+import { Button, Checkbox, Flex, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
+import { memo, useEffect, useState } from 'react';
 import { SortableItem } from 'shared/lib/components/SortableItem';
 import { useDebounce, useHover } from 'shared/lib/hooks';
-import { AnswerForm } from 'entities/Quiz';
 
 interface AddAnswerFormProps {
 	onChangeIsCorrect: (answerId: string) => void;
@@ -26,22 +27,22 @@ export const AddAnswerForm: FC<AddAnswerFormProps> = memo((props) => {
 	const [value, setValue] = useState<string>(answer.value);
 	const debouncedValue = useDebounce(value);
 	const showActionButtons = isHover && !isSaved;
-	
+
 	useEffect(() => {
 		onChangeValue(answer._id, debouncedValue);
-	}, [debouncedValue])
+	}, [debouncedValue]);
 
 	const handleOnChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
-	}
+	};
 
 	const handleIsCorrect = () => {
 		onChangeIsCorrect(answer._id);
-	}
+	};
 
 	const handleDeleteAnswer = () => {
 		onDeleteAnswer(answer._id);
-	}
+	};
 
 	return (
 		<SortableItem id={answer._id}>

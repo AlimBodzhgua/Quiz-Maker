@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const useDebounce = <T>(value: T, delay: number = 350) => {
 	const [debouncedValue, setDebouncedValue] = useState<T>(value);
@@ -7,12 +7,13 @@ export const useDebounce = <T>(value: T, delay: number = 350) => {
 	useEffect(() => {
 		timerRef.current = setTimeout(() => {
 			setDebouncedValue(value);
-		}, delay)
+		}, delay);
 
 		return () => {
-			if (timerRef.current) clearTimeout(timerRef.current);
-		}
-	}, [value, delay])
+			if (timerRef.current)
+clearTimeout(timerRef.current);
+		};
+	}, [value, delay]);
 
 	return debouncedValue;
-}
+};

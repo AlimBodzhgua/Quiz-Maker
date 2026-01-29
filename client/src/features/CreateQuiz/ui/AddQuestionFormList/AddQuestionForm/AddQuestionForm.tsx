@@ -1,25 +1,26 @@
-import { FC, memo, useState, useCallback } from 'react';
+import type { DragEndEvent } from '@dnd-kit/core';
+import type { AnswerForm, QuestionForm, QuestionType } from 'entities/Quiz';
+import type { FC } from 'react';
 import { Flex, useToast } from '@chakra-ui/react';
-import { DragEndEvent } from '@dnd-kit/core';
-import { QuestionTypes, baseAnswer } from 'shared/constants';
-import { useHover } from 'shared/lib/hooks';
+import { memo, useCallback, useState } from 'react';
+import { baseAnswer, QuestionTypes } from 'shared/constants';
 import { SortableItem } from 'shared/lib/components/SortableItem';
+import { useHover } from 'shared/lib/hooks';
 import { getQueryParam } from 'shared/utils';
-import type { QuestionForm, QuestionType, AnswerForm } from 'entities/Quiz';
-import { AnswersList } from './AnswersList';
-import { AddAnswerButton } from './AddAnswerButton';
-import { SaveButton } from './SaveButton';
-import { QuestionHeader } from './QuestionHeader';
-import { QuestionFormActions } from './QuestionFormActions';
+import { QuestionService } from '../../../api/QuestionService';
+import { useQuestionForm } from '../../../lib/hooks/useQuestionForm';
 import {
 	changeListOrder,
-	setIsCorrectMathcedType,
 	removeItemAndFixListOrder,
+	setIsCorrectMatchedType,
 } from '../../../lib/utils';
-import { QuestionService } from '../../../api/QuestionService';
-import { AnswersService } from '../../../api/AnswersService';
-import { useQuestionForm } from '../../../lib/hooks/useQuestionForm';
+import { isAnswersValid } from '../../../lib/utils/isAnswerValid';
 import { useCreateQuiz } from '../../../model/store';
+import { AddAnswerButton } from './AddAnswerButton';
+import { AnswersList } from './AnswersList';
+import { QuestionFormActions } from './QuestionFormActions';
+import { QuestionHeader } from './QuestionHeader';
+import { SaveButton } from './SaveButton';
 
 interface AddQuestionFormProps {
 	question: QuestionForm;
@@ -47,8 +48,8 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 
 	const showAddBtn = questionType === QuestionTypes.multipleAnswer || questionType === QuestionTypes.oneAnswer;
 	const showSaveBtn = answersList && title.length;
-	
-	const onChnageTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+	const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTitle(e.target.value);
 	};
 
@@ -56,7 +57,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 		const questionType = e.target.value as QuestionType;
 		onChangeType(questionType);
 	}, [answersList]);
-	
+
 	const onChangeValue = useCallback((answerId: string, value: string) => {
 		if (answersList) {
 			const newAnswers = answersList.map((answer) =>
@@ -66,10 +67,9 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 		}
 	}, [answersList]);
 
-
 	const onChangeIsCorrect = useCallback((answerId: string) => {
-		const answers = setIsCorrectMathcedType(answersList!, answerId, questionType);
-		
+		const answers = setIsCorrectMatchedType(answersList!, answerId, questionType);
+
 		setAnswersList(answers);
 	}, [answersList, questionType]);
 
@@ -94,10 +94,10 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 		];
 		setAnswersList(newAnswers);
 	};
-	
+
 	const handleRemoveQuestion = useCallback(() => {
 		removeQuestion(question._id);
-		
+
 		if (isSaved) {
 			const quizId = getQueryParam('id');
 			QuestionService.removeQuestionOnServer(quizId, question._id);
@@ -111,22 +111,22 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 	}, [question._id]);
 
 	const onSave = useCallback(async () => {
-		if (AnswersService.isAnswersValid(answersList!)) {
+		if (isAnswersValid(answersList!)) {
 			setIsLoading(true);
 			const newQuestion = {
 				_id: question._id,
 				description: title,
 				type: questionType,
 				order: question.order,
-				isRequired: isRequired,
-			}
+				isRequired,
+			};
 			await saveQuestion(newQuestion, answersList!);
 			setIsSaved(true);
 			setIsLoading(false);
 		} else {
 			toast({
 				title: 'Empty value or no correct answer.',
-				description: 'All answser fileds should not be empty and should have at least 1 correct answer.',
+				description: 'All answer fields should not be empty and should have at least 1 correct answer.',
 				status: 'error',
 				duration: 5000,
 				isClosable: true,
@@ -148,7 +148,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 				<QuestionHeader
 					title={title}
 					questionType={questionType}
-					onTitleChange={onChnageTitle}
+					onTitleChange={onChangeTitle}
 					onTypeChange={handleChangeType}
 					onToggleIsRequired={onToggleIsRequired}
 					isRequired={isRequired}
@@ -179,15 +179,15 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 						isDisabled={answersList.length >= 5 || isSaved}
 					/>
 				)}
-				
+
 				{!!showSaveBtn && (
-					<SaveButton 
+					<SaveButton
 						onClick={onSave}
 						isLoading={isLoading}
 						isSaved={isSaved}
-					/>	
+					/>
 				)}
 			</Flex>
 		</SortableItem>
 	);
-})
+});

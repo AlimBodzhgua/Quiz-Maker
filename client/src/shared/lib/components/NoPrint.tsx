@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 
 interface NoPrintProps {
 	children: ReactNode;
@@ -7,5 +7,5 @@ interface NoPrintProps {
 export const NoPrint: FC<NoPrintProps> = ({ children }) => {
 	return (
 		<div className='no-printme'>{children}</div>
-	)
-}
+	);
+};

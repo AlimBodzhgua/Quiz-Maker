@@ -1,12 +1,13 @@
+import type { FC, ReactNode } from 'react';
 import { useUserStore } from 'entities/User';
-import { FC, ReactNode, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface ProtectedFromAuthorizedProps {
 	children: ReactNode;
 }
 
-export const ProtectedFromAuthtorized: FC<ProtectedFromAuthorizedProps> = ({ children }) => {
+export const ProtectedFromAuthorized: FC<ProtectedFromAuthorizedProps> = ({ children }) => {
 	const navigate = useNavigate();
 	const isAuthenticated = useUserStore((state) => state.user);
 
@@ -17,4 +18,4 @@ export const ProtectedFromAuthtorized: FC<ProtectedFromAuthorizedProps> = ({ chi
 	}, [isAuthenticated, navigate]);
 
 	return children;
-}
+};

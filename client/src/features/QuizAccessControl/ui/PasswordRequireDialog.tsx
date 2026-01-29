@@ -1,27 +1,25 @@
-import { ChangeEvent, FC, useState } from 'react';
+import type { ChangeEvent, FC } from 'react';
+
 import { Input, useToast } from '@chakra-ui/react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppDialog } from 'shared/UI';
 
-interface PasswordRequireDialog {
+interface PasswordRequireDialogProps {
 	correctPassword?: string;
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-export const PassworodRequireDialog: FC<PasswordRequireDialog> = (props) => {
-	const {
-		correctPassword,
-		isOpen,
-		onClose,
-	} = props;
+export const PasswordRequireDialog: FC<PasswordRequireDialogProps> = (props) => {
+	const { correctPassword, isOpen, onClose } = props;
 	const toast = useToast();
 	const navigate = useNavigate();
 	const [password, setPassword] = useState<string>('');
 
 	const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
 		setPassword(e.target.value);
-	}
+	};
 
 	const onCloseDialog = () => navigate('/');
 
@@ -35,23 +33,24 @@ export const PassworodRequireDialog: FC<PasswordRequireDialog> = (props) => {
 				status: 'error',
 				duration: 4000,
 				isClosable: true,
-			})
+			});
 		}
-	}
+	};
 
 	return (
 		<AppDialog
 			header='This quiz requires a password'
-			body={<Input
-				placeholder='Enter password'
-				value={password}
-				onChange={onChangePassword}
-			/>}
+			body={
+				<Input
+					placeholder='Enter password'
+					value={password}
+					onChange={onChangePassword}
+				/>
+			}
 			actionText='submit'
 			actionHandler={onSubmitPassword}
 			isOpen={isOpen}
 			onClose={onCloseDialog}
-		>
-		</AppDialog>
+		/>
 	);
 };

@@ -1,5 +1,6 @@
+import type { FC } from 'react';
 import { StarIcon } from '@chakra-ui/icons';
-import { FC, memo } from 'react';
+import { memo } from 'react';
 
 interface RatingStarProps {
 	starNumber: number;
@@ -9,7 +10,7 @@ interface RatingStarProps {
 	isRated: boolean;
 
 	onToggleHover: () => void;
-	setHoveredStar: (starNumber: number) => void; 
+	setHoveredStar: (starNumber: number) => void;
 	onStarClick: (starNumber: number) => void;
 }
 
@@ -24,7 +25,7 @@ export const RatingStar: FC<RatingStarProps> = memo((props) => {
 		onToggleHover,
 		onStarClick,
 	} = props;
-	
+
 	const isStarLessThenSelectedOrHavered = starNumber <= hoveredStar || starNumber <= selectedStar;
 	const isRatingHoveredOrRated = isHover || isRated;
 
@@ -50,5 +51,5 @@ export const RatingStar: FC<RatingStarProps> = memo((props) => {
 			_hover={{ cursor: 'pointer' }}
 			color={(isStarLessThenSelectedOrHavered) && (isRatingHoveredOrRated) ? 'orange' : 'black'}
 		/>
-	)
-})
+	);
+});

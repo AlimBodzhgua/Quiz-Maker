@@ -1,10 +1,11 @@
-import { FC, memo, useCallback, useState } from 'react';
+import type { FC } from 'react';
+import type { SortFieldType } from '../../model/types';
 import { DeleteIcon, MinusIcon } from '@chakra-ui/icons';
 import { Button, Flex, ScaleFade, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react';
+import { memo, useCallback, useState } from 'react';
 import { sortField } from 'shared/constants';
 import { AppDialog } from 'shared/UI';
 import { useQuizzesStore } from '../../model/store/quizzes';
-import { SortFieldType } from '../../model/types';
 import { ColumnToggleSort } from './ColumnToggleSort';
 
 export const UserQuizzesTableHeader: FC = memo(() => {
@@ -45,9 +46,9 @@ export const UserQuizzesTableHeader: FC = memo(() => {
 						</Button>
 						<AppDialog
 							isOpen={isOpen}
-							header={'Delete selected quizzes'}
+							header='Delete selected quizzes'
 							body={'Are you sure? You can\'t undo this action afterwards.'}
-							actionText={'Delete'}
+							actionText='Delete'
 							actionHandler={handleRemove}
 							onClose={onClose}
 						>

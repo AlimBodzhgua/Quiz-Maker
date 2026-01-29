@@ -1,5 +1,6 @@
-import { FC, memo, ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { Flex, SlideFade } from '@chakra-ui/react';
+import { memo } from 'react';
 import { getDataMatchedAnswer } from '../../utils/utils';
 
 interface AnswerProps {
@@ -19,8 +20,8 @@ export const Answer: FC<AnswerProps> = memo((props) => {
 			p='4px 10px'
 			mb='6px'
 			w='100%'
-			border={'1px solid #e8e8e8'}
-			transition={'.3s linear box-shadow'}
+			border='1px solid #e8e8e8'
+			transition='.3s linear box-shadow'
 			bgColor={isSubmit ? getDataMatchedAnswer(isCorrect).color : 'rgb(249, 249, 249)'}
 			color={isSubmit ? '#fff' : 'black'}
 			_hover={{ boxShadow: '0 6px 6px rgba(16, 81, 185, 0.15)' }}
@@ -31,4 +32,4 @@ export const Answer: FC<AnswerProps> = memo((props) => {
 			</SlideFade>
 		</Flex>
 	);
-})
+});

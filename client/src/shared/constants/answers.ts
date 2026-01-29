@@ -1,4 +1,3 @@
-
 export const baseAnswer = {
 	_id: crypto.randomUUID(),
 	value: '',
@@ -18,7 +17,6 @@ export const falseAnswer = {
 	isCorrect: false,
 	order: 1,
 };
-
 
 export const inputAnswer = {
 	_id: crypto.randomUUID(),

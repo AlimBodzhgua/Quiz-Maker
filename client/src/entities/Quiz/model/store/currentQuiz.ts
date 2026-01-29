@@ -1,15 +1,15 @@
+import type { Question, Quiz } from '../types';
+import $axios from 'shared/api/axios';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import $axios from 'shared/api/axios';
 import { QuestionService } from '../../api/QuestionService';
-import { Question, Quiz } from '../types';
 
 interface CurrentQuizState {
 	quiz: Quiz | null;
 	questions: Question[] | null;
 	correctAnswers: number;
 	incorrectAnswers: number;
-	answerdQuestionIds: string[];
+	answeredQuestionIds: string[];
 
 	fetchQuizStatus: 'idle' | 'pending' | 'success' | 'failed';
 	fetchQuizQuestionsStatus: 'idle' | 'pending' | 'success' | 'failed';
@@ -32,12 +32,11 @@ export const useCurrentQuiz = create<CurrentQuizState & CurrentQuizAction>()(
 		answers: null,
 		correctAnswers: 0,
 		incorrectAnswers: 0,
-		answerdQuestionIds: [], 
+		answeredQuestionIds: [],
 
 		fetchQuizStatus: 'idle',
 		fetchQuizQuestionsStatus: 'idle',
 		getCurrentQuizStatus: 'idle',
-
 
 		fetchQuiz: async (quizId) => {
 			set({ fetchQuizStatus: 'pending' }, false, 'fetchQuizPending');
@@ -55,7 +54,7 @@ export const useCurrentQuiz = create<CurrentQuizState & CurrentQuizAction>()(
 					privacy: response.data.privacy,
 				} as Quiz;
 
-				set({ quiz: quiz, fetchQuizStatus: 'success' }, false, 'fetchQuizSuccess');
+				set({ quiz, fetchQuizStatus: 'success' }, false, 'fetchQuizSuccess');
 				return quiz;
 			} catch (err) {
 				set({ fetchQuizStatus: 'failed' }, false, 'fetchQuizFailed');
@@ -93,11 +92,11 @@ export const useCurrentQuiz = create<CurrentQuizState & CurrentQuizAction>()(
 		},
 
 		addAnsweredQuestionId: (questionId) => {
-			set({ answerdQuestionIds: [ ...get().answerdQuestionIds, questionId ]}, false ,'addAnsweredQuestionId ');
+			set({ answeredQuestionIds: [...get().answeredQuestionIds, questionId] }, false, 'addAnsweredQuestionId ');
 		},
 
 		resetQuizResult: () => {
 			set({ correctAnswers: 0, incorrectAnswers: 0 });
-		}
-	}))
+		},
+	})),
 );

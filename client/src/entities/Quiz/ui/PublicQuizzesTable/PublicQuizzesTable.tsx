@@ -1,9 +1,10 @@
-import { FC, memo } from 'react';
+import type { FC } from 'react';
+import { memo } from 'react';
 import { Pagination } from 'shared/UI';
-import { useQuizzesStore } from '../../model/store/quizzes';
 import { useQuizzes } from '../../lib/hooks/useQuizzes';
-import { PublicQuizzesTableHeader } from '../TableHeader/PublicQuizzesTableHeader';
+import { useQuizzesStore } from '../../model/store/quizzes';
 import { QuizTable } from '../QuizTable/QuizTable';
+import { PublicQuizzesTableHeader } from '../TableHeader/PublicQuizzesTableHeader';
 import { PublicQuizTableRow } from './PublicQuizTableRow';
 
 export const PublicQuizzesTable: FC = memo(() => {

@@ -1,4 +1,6 @@
-import { ChangeEvent, FC, memo, useCallback, useEffect, useState } from 'react';
+import type { PrivacyTypeValue, Quiz } from 'entities/Quiz';
+import type { ChangeEvent, FC } from 'react';
+import { CheckIcon } from '@chakra-ui/icons';
 import {
 	Button,
 	Collapse,
@@ -8,16 +10,15 @@ import {
 	Stack,
 	useToast,
 } from '@chakra-ui/react';
-import { CheckIcon } from '@chakra-ui/icons';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { PrivacyValues } from 'shared/constants';
 import { getQueryParam } from 'shared/utils';
-import type { Quiz, PrivacyTypeValue } from 'entities/Quiz';
-import { RestrictedUsersPrivacy } from './RestrictedUsersPrivacy';
-import { LinkPrivacy } from './LinkPrivacy';
-import { PrivacyItem } from './PrivacyItem';
-import { PasswordPrivacy } from './PasswordPrivacy';
-import { getMatchedPrivacyData } from '../../lib/utils/getMatchedPrivacyData';
 import { QuizService } from '../../api/QuizService';
+import { getMatchedPrivacyData } from '../../lib/utils/getMatchedPrivacyData';
+import { LinkPrivacy } from './LinkPrivacy';
+import { PasswordPrivacy } from './PasswordPrivacy';
+import { PrivacyItem } from './PrivacyItem';
+import { RestrictedUsersPrivacy } from './RestrictedUsersPrivacy';
 
 interface PrivacySettingProps {
 	onUpdate: (quiz: Partial<Quiz>) => Promise<Quiz>;
@@ -60,7 +61,7 @@ export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 	};
 
 	const onAddUserId = useCallback((id: string) => {
-		const updatedIds = [...userIds, id]
+		const updatedIds = [...userIds, id];
 		setUserIds(updatedIds);
 	}, [userIds]);
 
@@ -72,7 +73,7 @@ export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 	const onSave = async () => {
 		setIsLoading(true);
 		const privacyData = getMatchedPrivacyData(privacy, password, link, userIds);
-		await onUpdate({ privacy: privacyData })
+		await onUpdate({ privacy: privacyData });
 
 		toast({
 			title: 'Privacy Saved',

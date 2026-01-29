@@ -1,14 +1,16 @@
+import type { FC } from 'react';
+
 import { Button, Tooltip } from '@chakra-ui/react';
-import { FC, memo } from 'react';
+import { memo } from 'react';
 
 interface AddAnswerButtonProps {
 	onClick: () => void;
-	isDisabled: boolean; 
+	isDisabled: boolean;
 }
 
 export const AddAnswerButton: FC<AddAnswerButtonProps> = memo((props) => {
 	const { onClick, isDisabled } = props;
-	
+
 	return (
 		<Tooltip label={isDisabled && 'max answers amount is 5'}>
 			<Button

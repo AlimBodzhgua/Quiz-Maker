@@ -15,7 +15,7 @@ export const useInitUser = () => {
 		if (token) {
 			initUser();
 		}
-	}, [initUser])
+	}, [initUser]);
 
 	return { initUserAuth, isLoading, error, isAuthorized };
-}
+};

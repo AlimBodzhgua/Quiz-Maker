@@ -1,10 +1,9 @@
+import type { CompletedQuiz, Quiz, SortDirectionType, SortFieldType } from '../model/types';
+
 import $axios from 'shared/api/axios';
-import type { Quiz, CompletedQuiz } from '../model/types';
 import { dateOptions } from '../lib/options';
-import { SortDirectionType, SortFieldType } from '../model/types';
 
 export class QuizService {
-
 	static fetchCompletedQuizzes = async () => {
 		try {
 			const response = await $axios.get<CompletedQuiz[]>('/completed-quizzes');
@@ -40,7 +39,7 @@ export class QuizService {
 
 		return uniqueUsersAmount;
 	};
-	
+
 	static sortByName = (quizzes: Quiz[], direction: SortDirectionType): Quiz[] => {
 		if (direction === 'asc') {
 			return [...quizzes].sort((a, b) => a.title.localeCompare(b.title));
@@ -60,13 +59,13 @@ export class QuizService {
 	};
 
 	static sortQuizzes = (quizzes: Quiz[], field: SortFieldType, direction: SortDirectionType) => {
-		switch(field) {
+		switch (field) {
 			case 'date':
 				return QuizService.sortByDate(quizzes, direction);
 			case 'name':
 				return QuizService.sortByName(quizzes, direction);
 		}
-	}
+	};
 
 	static getPublicQuizzesPagesAmount = async (limit: number) => {
 		try {
@@ -77,16 +76,16 @@ export class QuizService {
 		} catch (err) {
 			throw new Error(`Error getting public quizzes pages amount ${err}`);
 		}
-	}
+	};
 
 	static getUserQuizzesPagesAmount = async (limit: number) => {
 		try {
 			const response = await $axios.get('quizzes/count-users');
 			const pagesAmount = Math.ceil(response.data / limit);
 
-			return pagesAmount
+			return pagesAmount;
 		} catch (err) {
 			throw new Error(`Error getting user quizzes pages amount ${err}`);
 		}
-	}
+	};
 }

@@ -1,6 +1,5 @@
 import { useUserStore } from '../../model/store';
 
-
 export const useSignUpUser = () => {
 	const signUpUser = useUserStore((state) => state.signUpUser);
 	const status = useUserStore((state) => state.signUpStatus);

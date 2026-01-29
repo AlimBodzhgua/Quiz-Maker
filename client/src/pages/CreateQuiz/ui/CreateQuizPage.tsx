@@ -1,14 +1,15 @@
-import { FC, useCallback, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Box, Button, Flex, Heading, useToast, Text } from '@chakra-ui/react';
+import type { FC } from 'react';
+
 import { ViewIcon } from '@chakra-ui/icons';
+import { Box, Button, Flex, Heading, Text, useToast } from '@chakra-ui/react';
+import { useQuizzesStore } from 'entities/Quiz';
+import { AddQuestionFormList, CreateQuizForm, useCreateQuiz } from 'features/CreateQuiz';
+import { SettingsModal } from 'features/ManageQuizSetting';
+import { useCallback, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
 import { getQueryParam } from 'shared/utils';
 import { Page } from 'widgets/Page';
-import { CreateQuizForm } from 'features/CreateQuiz';
-import { useCreateQuiz } from 'features/CreateQuiz';
-import { AddQuestionFormList } from 'features/CreateQuiz';
-import { SettingsModal } from 'features/ManageQuizSetting';
-import { useQuizzesStore } from 'entities/Quiz';
 
 const CreateQuizPage: FC = () => {
 	const toast = useToast();
@@ -40,7 +41,7 @@ const CreateQuizPage: FC = () => {
 				status: 'info',
 				duration: 5000,
 				isClosable: true,
-				position: 'top-left'
+				position: 'top-left',
 			});
 		}
 		addQuestion();
@@ -68,7 +69,7 @@ const CreateQuizPage: FC = () => {
 				p='20px'
 			>
 				<CreateQuizForm
-					renderQuizSettingsManager={(params) => <SettingsModal {...params}/>}
+					renderQuizSettingsManager={(params) => <SettingsModal {...params} />}
 				/>
 
 				{!!questions.length && <AddQuestionFormList />}
@@ -87,7 +88,10 @@ const CreateQuizPage: FC = () => {
 					+ Add Question
 				</Button>
 				<Flex alignSelf='flex-end' alignItems='center' gap='10px'>
-					<Box>Questions: {savedQuestionsAmount}</Box>
+					<Box>
+						Questions:
+						{savedQuestionsAmount}
+					</Box>
 					<Button
 						as={Link}
 						state={{ page: '#PREVIEW' }}

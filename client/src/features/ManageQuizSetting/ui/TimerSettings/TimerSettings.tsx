@@ -1,4 +1,6 @@
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import type { Quiz } from 'entities/Quiz';
+import type { FC } from 'react';
+
 import { CheckIcon } from '@chakra-ui/icons';
 import {
 	Button,
@@ -9,8 +11,9 @@ import {
 	Select,
 	Switch,
 } from '@chakra-ui/react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { getQueryParam } from 'shared/utils';
-import type { Quiz } from 'entities/Quiz';
+
 import { QuizService } from '../../api/QuizService';
 
 interface TimerSettingProps {
@@ -24,7 +27,7 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 	const [seconds, setSeconds] = useState<number>(0);
 	const [isDataChanged, setIsDataChanged] = useState<boolean>(false);
 
-	const initQuizTimerData = useCallback(async(quizId: string) => {
+	const initQuizTimerData = useCallback(async (quizId: string) => {
 		const data = await QuizService.getQuiz(quizId);
 
 		if (data.withTimer) {
@@ -57,7 +60,7 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 		setShowLimit((prev) => !prev);
 		setIsDataChanged(true);
 	};
-	
+
 	const onChangeMinutes = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setMinutes(Number(e.target.value));
 		setIsDataChanged(true);
@@ -79,18 +82,18 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 	const onSave = async () => {
 		const quizTimerData = {
 			withTimer: isTimerEnabled,
-			...((minutes !== 0  && showLimit) || (seconds !== 0 && showLimit)) && {
+			...(((minutes !== 0 && showLimit) || (seconds !== 0 && showLimit)) && {
 				timerLimit: {
-					minutes: minutes,
-					seconds: seconds,
+					minutes,
+					seconds,
 				},
-			},
+			}),
 		};
 
 		await onUpdate({
 			withTimer: quizTimerData.withTimer,
 			timerLimit: quizTimerData.timerLimit,
-		})
+		});
 
 		setIsDataChanged(false);
 	};
@@ -100,9 +103,7 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 			<FormControl display='flex' alignItems='center' mb='5px'>
 				<Flex justifyContent='space-between' w='100%'>
 					<Flex alignItems='center'>
-						<FormLabel htmlFor='quiz-timer'>
-							Enable quiz timer
-						</FormLabel>
+						<FormLabel htmlFor='quiz-timer'>Enable quiz timer</FormLabel>
 						<Switch
 							id='quiz-timer'
 							isChecked={isTimerEnabled}
@@ -117,11 +118,11 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 						onClick={onSave}
 						disabled={!isDataChanged}
 					>
-						<CheckIcon/>
+						<CheckIcon />
 					</Button>
 				</Flex>
 			</FormControl>
-			{isTimerEnabled &&
+			{isTimerEnabled && (
 				<Flex>
 					<Button
 						onClick={onToggleShowLimit}
@@ -139,9 +140,13 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 								size='sm'
 								w='115px'
 							>
-								{Array(21).fill(0).map((_, index) => (
-									<option value={index} key={index}>{index} minutes</option>
-								))}
+								{Array.from({ length: 21 })
+									.fill(0)
+									.map((_, index) => (
+										<option value={index} key={index}>
+											{index} minutes
+										</option>
+									))}
 							</Select>
 							<Select
 								value={seconds}
@@ -149,14 +154,18 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 								size='sm'
 								w='115px'
 							>
-								{Array(61).fill(0).map((_, index) => (
-									<option value={index} key={index}>{index} seconds</option>
-								))}
+								{Array.from({ length: 61 })
+									.fill(0)
+									.map((_, index) => (
+										<option value={index} key={index}>
+											{index} seconds
+										</option>
+									))}
 							</Select>
 						</Flex>
 					</Collapse>
 				</Flex>
-			}
+			)}
 		</>
-	)
+	);
 });

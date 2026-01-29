@@ -1,15 +1,16 @@
-import { FC, memo, useState, useEffect } from 'react';
+import type { FC } from 'react';
+import type { Answer } from '../../../model/types';
 import { Box, CheckboxGroup, Flex } from '@chakra-ui/react';
-import { CheckboxItem } from './CheckBoxItem';
-import { Answer } from '../../../model/types';
+import { memo, useEffect, useState } from 'react';
 import { useCurrentQuiz } from '../../../model/store/currentQuiz';
+import { CheckboxItem } from './CheckBoxItem';
 
 interface CheckBoxAnswersProps {
 	answers: Answer[];
 	isAnswerSubmit: boolean;
 }
 
-export const CheckBoxAnswers: FC<CheckBoxAnswersProps> = memo(({answers, isAnswerSubmit}) => {
+export const CheckBoxAnswers: FC<CheckBoxAnswersProps> = memo(({ answers, isAnswerSubmit }) => {
 	const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
 	const amountOfCorrect = answers.filter((answer) => answer.isCorrect).length;
 	const questionAnswer = useCurrentQuiz((state) => state.questionAnswer);
@@ -22,14 +23,15 @@ export const CheckBoxAnswers: FC<CheckBoxAnswersProps> = memo(({answers, isAnswe
 				const splittedAnswer = answer.split(':');
 				if (splittedAnswer[1] === 'true') {
 					correctAnswersAmount++;
-				} 
-			})
+				}
+			});
 
 			if (correctAnswersAmount === amountOfCorrect) {
 				questionAnswer(true);
-			} else questionAnswer(false);
+			} else {
+ questionAnswer(false);
+}
 		}
-
 	}, [isAnswerSubmit]);
 
 	const onChange = (e: Array<string>) => {
@@ -51,4 +53,4 @@ export const CheckBoxAnswers: FC<CheckBoxAnswersProps> = memo(({answers, isAnswe
 			</CheckboxGroup>
 		</Box>
 	);
-})
+});

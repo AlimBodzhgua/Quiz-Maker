@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { calculatePassedTime } from '../calculatePassedTime';
 import { QuizService } from '../../api/QuizService';
-import { useCurrentQuiz } from '../../model/store/currentQuiz'
+import { useCurrentQuiz } from '../../model/store/currentQuiz';
+import { calculatePassedTime } from '../calculatePassedTime';
 
 type QuizResultProps = {
 	minutes: number;
@@ -15,9 +15,11 @@ export const useQuizResult = (time: QuizResultProps) => {
 	const correctAnswers = useCurrentQuiz((state) => state.correctAnswers);
 	const incorrectAnswers = useCurrentQuiz((state) => state.incorrectAnswers);
 	const questions = useCurrentQuiz((state) => state.questions);
-	const answeredQuestionIds = useCurrentQuiz((state) => state.answerdQuestionIds);
+	const answeredQuestionIds = useCurrentQuiz((state) => state.answeredQuestionIds);
 	const requiredQuestionsIds = questions?.reduce((acc: string[], currentValue) => {
-		if (currentValue.isRequired) acc.push(currentValue._id);
+		if (currentValue.isRequired) {
+			acc.push(currentValue._id);
+		}
 		return acc;
 	}, []);
 	const requiredQuestionsAmount = requiredQuestionsIds?.length;
@@ -29,12 +31,14 @@ export const useQuizResult = (time: QuizResultProps) => {
 			if (requiredQuestionsIds?.includes(questionId)) {
 				answeredRequiredQuestionsAmount++;
 			}
-		})
+		});
 		if (answeredRequiredQuestionsAmount === requiredQuestionsIds?.length) {
-			return true
-		} else return false;
-	}
-	
+			return true;
+		} else {
+			return false;
+		}
+	};
+
 	const saveQuizResult = useCallback(async () => {
 		if (quizId && quizTitle) {
 			let timeResult;
@@ -46,16 +50,16 @@ export const useQuizResult = (time: QuizResultProps) => {
 					timeResult = { minutes: time.minutes, seconds: time.seconds };
 				}
 			}
-			
+
 			await QuizService.saveQuizResult({
-				quizId: quizId,
+				quizId,
 				quizTitle: quizId,
 				correct: correctAnswers,
 				incorrect: incorrectAnswers,
 				timeResult,
-			})
+			});
 		}
-	}, [incorrectAnswers, correctAnswers])
+	}, [incorrectAnswers, correctAnswers]);
 
 	return {
 		saveQuizResult,
@@ -64,4 +68,4 @@ export const useQuizResult = (time: QuizResultProps) => {
 		incorrectAnswers,
 		requiredQuestionsAmount,
 	};
-}
+};

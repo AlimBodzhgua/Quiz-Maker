@@ -1,9 +1,9 @@
-import { FC } from 'react';
-import { Button, Flex, Heading } from '@chakra-ui/react';
+import type { FC } from 'react';
+
 import { ArrowBackIcon, RepeatClockIcon } from '@chakra-ui/icons';
+import { Button, Flex, Heading } from '@chakra-ui/react';
 
 export const PageError: FC = () => {
-
 	const onReload = () => window.location.reload();
 	const onBack = () => window.history.back();
 
@@ -15,7 +15,7 @@ export const PageError: FC = () => {
 			h='100vh'
 		>
 			<Heading size='lg' mb='12px'>
-				An unexpected error occured
+				An unexpected error occurred
 			</Heading>
 			<Heading size='md' mb='16px' fontWeight='medium'>
 				Reload the page or try it later
@@ -30,4 +30,4 @@ export const PageError: FC = () => {
 			</Flex>
 		</Flex>
 	);
-}
+};

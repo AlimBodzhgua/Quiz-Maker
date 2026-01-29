@@ -1,7 +1,9 @@
-import { FC, memo, useEffect, useRef, useState } from 'react';
+import type { FC } from 'react';
+
 import { CheckIcon, CopyIcon } from '@chakra-ui/icons';
-import { InputGroup, Tooltip, Input, InputRightAddon } from '@chakra-ui/react';
+import { Input, InputGroup, InputRightAddon, Tooltip } from '@chakra-ui/react';
 import { QuizService } from 'features/ManageQuizSetting/api/QuizService';
+import { memo, useEffect, useRef, useState } from 'react';
 import { getQueryParam } from 'shared/utils';
 
 interface LinkPrivacyProps {
@@ -13,14 +15,15 @@ export const LinkPrivacy: FC<LinkPrivacyProps> = memo((props) => {
 	const { link, setLink } = props;
 	const [isCopied, setIsCopied] = useState<boolean>(false);
 	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-	
+
 	useEffect(() => {
 		timerRef.current = setTimeout(() => {
 			setIsCopied(false);
 		}, 3000);
-		
+
 		return () => {
-			if (timerRef.current) clearInterval(timerRef.current);
+			if (timerRef.current)
+clearInterval(timerRef.current);
 		};
 	}, [isCopied]);
 
@@ -29,11 +32,11 @@ export const LinkPrivacy: FC<LinkPrivacyProps> = memo((props) => {
 
 		if (!link.length) {
 			QuizService.generateLink(quizId).then((data) => {
-				setLink(data.link)
+				setLink(data.link);
 			});
 		}
 	}, []);
-	
+
 	const onCopy = () => {
 		navigator.clipboard.writeText(link);
 		setIsCopied(true);
@@ -51,5 +54,5 @@ export const LinkPrivacy: FC<LinkPrivacyProps> = memo((props) => {
 				</InputRightAddon>
 			</Tooltip>
 		</InputGroup>
-	)
+	);
 });

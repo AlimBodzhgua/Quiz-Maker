@@ -1,14 +1,15 @@
-import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { Button, Checkbox, Flex, ScaleFade, Td, Tr, useDisclosure } from '@chakra-ui/react';
+import type { FC } from 'react';
+import type { Quiz } from '../../model/types';
 import { DeleteIcon, InfoOutlineIcon } from '@chakra-ui/icons';
+import { Button, Checkbox, Flex, ScaleFade, Td, Tr, useDisclosure } from '@chakra-ui/react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getQuizPage } from 'shared/utils';
 import { AppDialog } from 'shared/UI';
+import { getQuizPage } from 'shared/utils';
 import { QuestionService } from '../../api/QuestionService';
 import { QuizService } from '../../api/QuizService';
-import { useQuizzesStore } from '../../model/store/quizzes';
-import { Quiz } from '../../model/types';
 import { formatterOptions } from '../../lib/options';
+import { useQuizzesStore } from '../../model/store/quizzes';
 import { PrivacyIcons } from '../QuizTable/PrivacyIcons';
 
 interface UserQuizTableRowProps {
@@ -20,12 +21,12 @@ export const UserQuizTableRow: FC<UserQuizTableRowProps> = memo(({ quiz }) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [participiantsAmount, setParticipiantsAmount] = useState<number>(0);
 	const [questionsAmount, setQuestionsAmount] = useState<number>(0);
-	
+
 	const isSelecting = useQuizzesStore((state) => state.isSelecting);
 	const selectQuiz = useQuizzesStore((state) => state.selectQuiz);
 	const deselectQuiz = useQuizzesStore((state) => state.deselectQuiz);
 	const removeQuiz = useQuizzesStore((state) => state.removeQuiz);
-	const selectedQuizzes = useQuizzesStore(state => state.selectedQuizzes);
+	const selectedQuizzes = useQuizzesStore((state) => state.selectedQuizzes);
 	const isQuizSelected = useMemo(() => selectedQuizzes.includes(quiz._id), [selectedQuizzes, quiz._id]);
 
 	const formatter = new Intl.DateTimeFormat('en-US', formatterOptions);
@@ -60,7 +61,7 @@ export const UserQuizTableRow: FC<UserQuizTableRowProps> = memo(({ quiz }) => {
 	}, [removeQuiz, onClose]);
 
 	return (
-		<Tr opacity={isLoading ? 0.2 : 1} transition={'opacity .4s linear'}>
+		<Tr opacity={isLoading ? 0.2 : 1} transition='opacity .4s linear'>
 			<Td pr='0px' pl='-1px' w='20px'>
 				<ScaleFade in={isSelecting}>
 					<Checkbox
@@ -79,10 +80,12 @@ export const UserQuizTableRow: FC<UserQuizTableRowProps> = memo(({ quiz }) => {
 						style={{
 							maxWidth: '200px',
 							textOverflow: 'ellipsis',
-							overflow: 'hidden'
+							overflow: 'hidden',
 						}}
-					>{quiz.title}</Link>
-					<PrivacyIcons privacy={quiz.privacy}/>
+					>
+{quiz.title}
+     </Link>
+					<PrivacyIcons privacy={quiz.privacy} />
 				</Flex>
 			</Td>
 			<Td>{formatter.format(new Date(quiz.createdAt)).split('/').join('.')}</Td>
@@ -104,7 +107,7 @@ export const UserQuizTableRow: FC<UserQuizTableRowProps> = memo(({ quiz }) => {
 						isOpen={isOpen}
 						header={`Delete Quiz: ${quiz.title}`}
 						body={'Are you sure? You can\'t undo this action afterwards.'}
-						actionText={'Delete'}
+						actionText='Delete'
 						actionHandler={handleRemove}
 						onClose={onClose}
 					>

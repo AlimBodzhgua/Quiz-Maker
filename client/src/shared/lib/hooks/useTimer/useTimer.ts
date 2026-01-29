@@ -25,7 +25,6 @@ interface DecreasingTimerProps {
 
 type TimerProps = IncreasingTimerProps | DecreasingTimerProps;
 
-
 export const useTimer = (props: TimerProps): CreateTimerFnReturn => {
 	const {
 		limit,
@@ -50,18 +49,16 @@ export const useTimer = (props: TimerProps): CreateTimerFnReturn => {
 			}, 1000);
 
 			if (type === 'increasing') {
-
 				if (seconds >= 60) {
 					setMinutes((prev) => prev + 1);
 					setSeconds(0);
 				}
-				
+
 				if (limit && minutes >= limit.minutes && seconds >= limit.seconds) {
 					setIsRunning(false);
 					clearInterval(timerRef.current);
 				}
 			} else {
-
 				if (seconds <= 0 && minutes > 0) {
 					setMinutes((prev) => prev - 1);
 					setSeconds(59);

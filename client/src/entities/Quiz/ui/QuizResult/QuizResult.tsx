@@ -1,7 +1,8 @@
-import { FC, memo, ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { DownloadIcon } from '@chakra-ui/icons';
 import { Box, Button, Divider, Flex, Heading, Text } from '@chakra-ui/react';
 import { useCurrentQuiz } from 'entities/Quiz/model/store/currentQuiz';
+import { memo } from 'react';
 import { Margin, usePDF } from 'react-to-pdf';
 import { PrintButton } from 'shared/UI';
 
@@ -28,8 +29,8 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 	const { toPDF, targetRef } = usePDF({
 		filename: 'result.pdf',
 		page: {
-			margin: Margin.SMALL
-		}
+			margin: Margin.SMALL,
+		},
 	});
 
 	const onDownloadPDF = () => {
@@ -45,7 +46,6 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 			element.style.opacity = '1';
 		});
 	};
-	
 
 	return (
 		<Box
@@ -65,7 +65,7 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 						onClick={onDownloadPDF}
 						_hover={{ transform: 'scale(1.1)' }}
 					>
-						<DownloadIcon fontSize='18px'/>
+						<DownloadIcon fontSize='18px' />
 					</Button>
 					<PrintButton />
 				</Flex>
@@ -138,7 +138,9 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 				<Flex w='45%' justifyContent='space-between'>
 					<Text fontWeight='bold' color='gray.500'>Score</Text>
 					<Text>
-						{correct}/{questinsAmount}
+						{correct}
+/
+{questinsAmount}
 					</Text>
 				</Flex>
 			</Flex>
@@ -181,7 +183,7 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 					id='hide-in-pdf'
 				>
 					<Heading size='md' fontWeight='medium'>How do you rate this quiz?</Heading>
-					{renderQuizRating({quizId: quiz._id})}
+					{renderQuizRating({ quizId: quiz._id })}
 				</Flex>
 			)}
 		</Box>

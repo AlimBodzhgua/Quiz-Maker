@@ -1,7 +1,9 @@
-import { FC, memo } from 'react';
+import type { FC } from 'react';
+
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Button, Flex } from '@chakra-ui/react';
-import { addQueryParam} from 'shared/utils';
+import { memo } from 'react';
+import { addQueryParam } from 'shared/utils';
 
 interface PaginationProps {
 	activePage: number;
@@ -31,7 +33,9 @@ export const Pagination: FC<PaginationProps> = memo((props) => {
 		onPageChange(activePage + 1);
 	};
 
-	if (pagesAmount <= 1) return null;
+	if (pagesAmount <= 1) {
+		return null;
+	}
 
 	return (
 		<Flex
@@ -45,14 +49,14 @@ export const Pagination: FC<PaginationProps> = memo((props) => {
 				disabled={activePage === 1}
 				size='sm'
 			>
-				<ChevronLeftIcon fontSize='18px'/>
+				<ChevronLeftIcon fontSize='18px' />
 			</Button>
 			<Flex gap='6px'>
-				{Array(pagesAmount).fill(0).map((_, index) => (
+				{Array.from({ length: pagesAmount}).fill(0).map((_, index) => (
 					<Button
 						key={index}
 						size='sm'
-						colorScheme={activePage === index + 1 ? 'cyan' :'gray'}
+						colorScheme={activePage === index + 1 ? 'cyan' : 'gray'}
 						color={activePage === index + 1 ? '#ffff' : 'gray.500'}
 						onClick={() => handlePageClick(index + 1)}
 					>
@@ -61,11 +65,11 @@ export const Pagination: FC<PaginationProps> = memo((props) => {
 				))}
 			</Flex>
 			<Button
-				onClick={handleNextClick} 
+				onClick={handleNextClick}
 				disabled={activePage === pagesAmount}
 				size='sm'
 			>
-				<ChevronRightIcon fontSize='18px'/>
+				<ChevronRightIcon fontSize='18px' />
 			</Button>
 		</Flex>
 	);

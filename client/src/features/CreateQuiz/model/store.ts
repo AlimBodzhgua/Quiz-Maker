@@ -1,12 +1,12 @@
+import type { UniqueIdentifier } from '@dnd-kit/core';
+import type { AnswerForm, Question, QuestionForm, Quiz } from 'entities/Quiz';
+import $axios from 'shared/api/axios';
+import { PrivacyValues } from 'shared/constants/privacy';
+import { addQueryParam } from 'shared/utils';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { UniqueIdentifier } from '@dnd-kit/core';
-import { addQueryParam } from 'shared/utils';
-import { PrivacyValues } from 'shared/constants/privacy';
-import type { AnswerForm, Quiz, Question, QuestionForm } from 'entities/Quiz';
-import $axios from 'shared/api/axios';
-import { create24CharId, changeListOrder, removeItemAndFixListOrder } from '../lib/utils';
 import { QuestionService } from '../api/QuestionService';
+import { changeListOrder, create24CharId, removeItemAndFixListOrder } from '../lib/utils';
 
 interface CreateQuizState {
 	quizId: string | null;
@@ -42,7 +42,7 @@ export const useCreateQuiz = create<CreateQuizState & CreateQuizActions>()(
 			});
 
 			const quizId = response.data._id;
-			set({ quizId: quizId }, false, 'createQuiz');
+			set({ quizId }, false, 'createQuiz');
 
 			addQueryParam('id', quizId);
 			return response.data;
@@ -55,7 +55,7 @@ export const useCreateQuiz = create<CreateQuizState & CreateQuizActions>()(
 				withTimer: newQuiz.withTimer,
 				timerLimit: newQuiz.timerLimit,
 			});
-								
+
 			return response.data;
 		},
 
@@ -88,7 +88,7 @@ export const useCreateQuiz = create<CreateQuizState & CreateQuizActions>()(
 			const quizId = get().quizId!;
 
 			await QuestionService.saveQuestion(quizId, { ...question, quizId }, questionAnswers);
-			set({ savedQuestionsAmount: get().savedQuestionsAmount + 1}, false, 'saveQuestion');
+			set({ savedQuestionsAmount: get().savedQuestionsAmount + 1 }, false, 'saveQuestion');
 		},
-	}))
+	})),
 );

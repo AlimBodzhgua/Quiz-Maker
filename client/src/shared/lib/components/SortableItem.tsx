@@ -1,6 +1,7 @@
-import { FC, memo, ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { memo } from 'react';
 
 interface SortableItemProps {
 	id: number | string;
@@ -15,7 +16,7 @@ export const SortableItem: FC<SortableItemProps> = memo((props) => {
 		setNodeRef,
 		transform,
 		transition,
-	} = useSortable({ id: id });
+	} = useSortable({ id });
 
 	const style = {
 		transform: CSS.Translate.toString(transform),
@@ -32,4 +33,4 @@ export const SortableItem: FC<SortableItemProps> = memo((props) => {
 			{children}
 		</div>
 	);
-})
+});

@@ -1,5 +1,7 @@
-import { FC, memo, ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
+
 import { Flex } from '@chakra-ui/react';
+import { memo } from 'react';
 
 interface PageProps {
 	children: ReactNode;

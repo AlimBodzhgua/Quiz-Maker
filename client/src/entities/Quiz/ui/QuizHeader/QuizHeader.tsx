@@ -1,9 +1,10 @@
-import { FC, Fragment, memo, useEffect, useRef, useState } from 'react';
+import type { FC } from 'react';
 import { Flex, Text } from '@chakra-ui/react';
-import { Timer } from 'shared/UI';
+import { Fragment, memo, useEffect, useRef, useState } from 'react';
 import { useThrottle } from 'shared/lib/hooks';
-import { QuizProgressBar } from '../QuizProgressBar/QuizProgressBar';
+import { Timer } from 'shared/UI';
 import { useCurrentQuiz } from '../../model/store/currentQuiz';
+import { QuizProgressBar } from '../QuizProgressBar/QuizProgressBar';
 
 interface QuizHeaderProps {
 	isTimerStarted: boolean;
@@ -40,7 +41,8 @@ export const QuizHeader: FC<QuizHeaderProps> = memo((props) => {
 
 	const headerInfo = (
 		<Fragment>
-			{isTimerStarted ? (
+			{isTimerStarted
+? (
 				<Flex
 					color='white'
 					alignItems='center'
@@ -53,14 +55,17 @@ export const QuizHeader: FC<QuizHeaderProps> = memo((props) => {
 						maxValue={questions!.length}
 					/>
 				</Flex>
-			) : (
+			)
+: (
 				<Text
 					fontWeight='bold'
 					color='white'
 					w='30%'
 					m='8px 0'
 				>
-					Total quesetions: {questions?.length}
+					Total quesetions:
+{' '}
+{questions?.length}
 				</Text>
 			)}
 			{quiz && quiz.withTimer && <Timer minutes={minutes} seconds={seconds} />}

@@ -1,10 +1,9 @@
-import { useUserStore } from '../../model/store'
-
+import { useUserStore } from '../../model/store';
 
 export const useSignOutUser = () => {
 	const signOut = useUserStore((state) => state.signOutUser);
-	const user = useUserStore((state) => state.user)
+	const user = useUserStore((state) => state.user);
 	const isAuthorized = !!user;
 
 	return { signOut, isAuthorized };
-}
+};

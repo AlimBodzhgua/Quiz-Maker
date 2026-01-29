@@ -1,9 +1,10 @@
-import { FC, memo } from 'react';
+import type { FC } from 'react';
+import { memo } from 'react';
 import { Pagination } from 'shared/UI';
-import { useQuizzesStore } from '../../model/store/quizzes';
 import { useQuizzes } from '../../lib/hooks/useQuizzes';
-import { UserQuizzesTableHeader } from '../TableHeader/UserQuizzesTableHeader';
+import { useQuizzesStore } from '../../model/store/quizzes';
 import { QuizTable } from '../QuizTable/QuizTable';
+import { UserQuizzesTableHeader } from '../TableHeader/UserQuizzesTableHeader';
 import { UserQuizTableRow } from './UserQuizTableRow';
 
 interface UserQuizzesTableProps {
@@ -19,8 +20,8 @@ export const UserQuizzesTable: FC<UserQuizzesTableProps> = memo(({ userId }) => 
 	const haveError = getUserQuizzesStatus === 'failed';
 
 	const handlePageChange = (page: number) => {
-		getUserQuizzes(userId!, page)
-	}
+		getUserQuizzes(userId!, page);
+	};
 
 	return (
 		<>
@@ -29,7 +30,7 @@ export const UserQuizzesTable: FC<UserQuizzesTableProps> = memo(({ userId }) => 
 				isLoading={isLoading}
 				haveError={haveError}
 				header={<UserQuizzesTableHeader />}
-				renderQuizRow={(quiz) => <UserQuizTableRow quiz={quiz} key={quiz._id}/>}
+				renderQuizRow={(quiz) => <UserQuizTableRow quiz={quiz} key={quiz._id} />}
 			/>
 			{(!haveError && quizzes.length) && (
 				<Pagination

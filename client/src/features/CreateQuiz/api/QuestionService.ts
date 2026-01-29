@@ -1,9 +1,10 @@
-import $axios from 'shared/api/axios';
 import type { AnswerForm, Question, QuestionForm } from 'entities/Quiz';
+
+import $axios from 'shared/api/axios';
+
 import { AnswersService } from './AnswersService';
 
 export class QuestionService {
-	
 	static removeQuestionOnServer = async (quizId: string, questionId: string): Promise<void> => {
 		try {
 			$axios.delete<Question>(`/quizzes/${quizId}/questions/${questionId}`);

@@ -1,3 +1,3 @@
-import { RouteObject } from 'react-router-dom';
+import type { RouteObject } from 'react-router-dom';
 
 export type AppRouteObject = RouteObject & { authRequire: boolean };

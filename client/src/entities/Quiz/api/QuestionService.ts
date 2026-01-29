@@ -1,8 +1,8 @@
+import type { Question } from '../model/types';
+
 import $axios from 'shared/api/axios';
-import { Question } from '../model/types';
 
 export class QuestionService {
-	
 	static fetchCurrentQuizQuestions = async (quizId: string): Promise<Question[]> => {
 		try {
 			const response = await $axios.get<Question[]>(`quizzes/${quizId}/questions`);
@@ -13,7 +13,7 @@ export class QuestionService {
 			throw new Error(`Error updating question ${err}`);
 		}
 	};
-	
+
 	static countQuizQuestions = async (quizId: string): Promise<number> => {
 		const questions = await QuestionService.fetchCurrentQuizQuestions(quizId);
 		return questions.length;

@@ -1,4 +1,3 @@
-
 export const sortField = {
 	name: 'name',
 	date: 'date',

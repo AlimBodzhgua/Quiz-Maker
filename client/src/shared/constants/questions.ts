@@ -1,4 +1,3 @@
-
 export const QuestionTypes = {
 	multipleAnswer: 'multipleAnswer',
 	oneAnswer: 'oneAnswer',

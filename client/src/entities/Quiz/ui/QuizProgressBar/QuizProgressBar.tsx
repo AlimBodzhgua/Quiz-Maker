@@ -1,5 +1,6 @@
-import { FC, Fragment, memo } from 'react';
+import type { FC } from 'react';
 import { Progress, Text } from '@chakra-ui/react';
+import { Fragment, memo } from 'react';
 
 interface QuizProgressBarProps {
 	currentValue: number;
@@ -12,7 +13,13 @@ export const QuizProgressBar: FC<QuizProgressBarProps> = memo((props) => {
 	return (
 		<Fragment>
 			<Text mr='10px'>
-				Quesetions: {currentValue} / {maxValue}
+				Quesetions:
+{' '}
+{currentValue}
+{' '}
+/
+{' '}
+{maxValue}
 			</Text>
 			<Progress
 				value={currentValue}

@@ -1,4 +1,5 @@
-import { ChangeEvent, FC, memo, useState } from 'react';
+import type { ChangeEvent, FC } from 'react';
+
 import { AddIcon } from '@chakra-ui/icons';
 import {
 	Flex,
@@ -7,6 +8,7 @@ import {
 	InputRightAddon,
 	List,
 } from '@chakra-ui/react';
+import { memo, useState } from 'react';
 import { RestrictedUserItem } from './RestrictedUserItem';
 
 interface RestrictedUsersPrivacyProps {
@@ -25,7 +27,7 @@ export const RestrictedUsersPrivacy: FC<RestrictedUsersPrivacyProps> = memo((pro
 
 	const onChangeUserId = (e: ChangeEvent<HTMLInputElement>) => {
 		setUserId(e.target.value);
-	}
+	};
 
 	const handleAddUserId = () => {
 		onAddUserId(userId);
@@ -51,7 +53,7 @@ export const RestrictedUsersPrivacy: FC<RestrictedUsersPrivacyProps> = memo((pro
 				mt='8px'
 			>
 				{users.map((user) => (
-					<RestrictedUserItem key={user} user={user} onRemove={onRemoveUserId}/> 
+					<RestrictedUserItem key={user} user={user} onRemove={onRemoveUserId} />
 				))}
 			</List>
 		</Flex>

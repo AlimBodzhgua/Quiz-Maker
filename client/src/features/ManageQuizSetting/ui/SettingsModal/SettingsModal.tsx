@@ -1,4 +1,6 @@
-import { FC, memo } from 'react';
+import type { Quiz } from 'entities/Quiz';
+import type { FC } from 'react';
+
 import {
 	Divider,
 	Modal,
@@ -7,9 +9,10 @@ import {
 	ModalHeader,
 	ModalOverlay,
 } from '@chakra-ui/react';
-import { Quiz } from 'entities/Quiz';
-import { TimerSettings } from '../TimerSettings/TimerSettings';
+import { memo } from 'react';
+
 import { PrivacySettings } from '../PrivacySettings/PrivacySettings';
+import { TimerSettings } from '../TimerSettings/TimerSettings';
 
 interface SettingsModalProps {
 	isOpen: boolean;
@@ -30,9 +33,9 @@ export const SettingsModal: FC<SettingsModalProps> = memo((props) => {
 			<ModalContent minW='540px' minH='460px'>
 				<ModalHeader>Settings</ModalHeader>
 				<ModalBody>
-					<TimerSettings onUpdate={onUpdate}/>
-					<Divider mb='10px'/>
-					<PrivacySettings onUpdate={onUpdate}/>
+					<TimerSettings onUpdate={onUpdate} />
+					<Divider mb='10px' />
+					<PrivacySettings onUpdate={onUpdate} />
 				</ModalBody>
 			</ModalContent>
 		</Modal>

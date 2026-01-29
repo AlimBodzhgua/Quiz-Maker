@@ -1,8 +1,9 @@
-import { FC, memo, useCallback } from 'react';
+import type { DragEndEvent } from '@dnd-kit/core';
+import type { FC } from 'react';
+import { memo, useCallback } from 'react';
 import { SortableList } from 'shared/lib/components/SortableList';
-import { DragEndEvent } from '@dnd-kit/core';
-import { AddQuestionForm } from '../AddQuestionForm/AddQuestionForm';
 import { useCreateQuiz } from '../../../model/store';
+import { AddQuestionForm } from '../AddQuestionForm/AddQuestionForm';
 
 export const AddQuestionFormList: FC = memo(() => {
 	const questions = useCreateQuiz((state) => state.questions);
@@ -27,5 +28,5 @@ export const AddQuestionFormList: FC = memo(() => {
 				/>
 			))}
 		</SortableList>
-	)
+	);
 });

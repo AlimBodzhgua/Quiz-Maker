@@ -1,6 +1,8 @@
+import type { ChangeEvent, FC } from 'react';
+
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { ChangeEvent, FC, memo, useState } from 'react';
 import { Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
+import { memo, useState } from 'react';
 
 interface PasswordPrivacyProps {
 	password: string;

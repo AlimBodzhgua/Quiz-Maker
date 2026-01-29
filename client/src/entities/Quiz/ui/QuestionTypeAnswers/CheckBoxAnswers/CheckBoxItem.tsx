@@ -1,6 +1,7 @@
-import { FC, memo } from 'react';
+import type { FC } from 'react';
+import type { Answer } from '../../../model/types';
 import { Checkbox } from '@chakra-ui/react';
-import { Answer } from '../../../model/types';
+import { memo } from 'react';
 import { Answer as AnswerComponent } from 'shared/UI';
 
 interface CheckBoxItemProps {
@@ -13,9 +14,9 @@ export const CheckboxItem: FC<CheckBoxItemProps> = memo((props) => {
 
 	return (
 		<AnswerComponent isCorrect={answer.isCorrect} isSubmit={isAnswerSubmit}>
-			<Checkbox value={answer._id.concat(String(':' + answer.isCorrect))} w='100%'>
+			<Checkbox value={answer._id.concat(String(`:${answer.isCorrect}`))} w='100%'>
 				{answer.value}
 			</Checkbox>
 		</AnswerComponent>
 	);
-})
+});

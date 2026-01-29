@@ -1,4 +1,6 @@
-import { FC, memo, useEffect, useRef, useState } from 'react';
+import type { FC } from 'react';
+
+import { CheckIcon, CopyIcon } from '@chakra-ui/icons';
 import {
 	Card,
 	CardBody,
@@ -11,8 +13,9 @@ import {
 	Text,
 	Tooltip,
 } from '@chakra-ui/react';
-import { CheckIcon, CopyIcon } from '@chakra-ui/icons';
+import { memo, useEffect, useRef, useState } from 'react';
 import { Page } from 'widgets/Page';
+
 import { useUserStore } from '../model/store';
 
 export const ProfileCard: FC = memo(() => {
@@ -28,7 +31,9 @@ export const ProfileCard: FC = memo(() => {
 		}, 3000);
 
 		return () => {
-			if (timerRef.current) clearInterval(timerRef.current);
+			if (timerRef.current) {
+				clearInterval(timerRef.current);
+			}
 		};
 	}, [isIdCopied, isEmailCopied]);
 

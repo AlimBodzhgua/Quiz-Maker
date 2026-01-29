@@ -1,10 +1,10 @@
-import { FC, memo } from 'react';
+import type { FC } from 'react';
 import { Heading } from '@chakra-ui/react';
 import { CompletedQuizzesList } from 'entities/CompletedQuiz';
+import { memo } from 'react';
 import { Page } from 'widgets/Page';
 
 const CompletedQuizzesPage: FC = memo(() => {
-
 	return (
 		<Page>
 			<Heading
@@ -16,7 +16,7 @@ const CompletedQuizzesPage: FC = memo(() => {
 			</Heading>
 			<CompletedQuizzesList />
 		</Page>
-	)
+	);
 });
 
 export default CompletedQuizzesPage;

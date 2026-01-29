@@ -1,8 +1,8 @@
+import type { User } from './types';
+import $axios from 'shared/api/axios';
+import { AUTH_LOCALSTORAGE_KEY } from 'shared/constants';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { AUTH_LOCALSTORAGE_KEY } from 'shared/constants';
-import $axios from 'shared/api/axios';
-import type { User } from './types';
 
 interface UserState {
 	user: User | null;
@@ -39,7 +39,7 @@ export const useUserStore = create<UserAction & UserState>()(
 				signInStatus: 'idle',
 				signUpStatus: 'idle',
 				initUserStatus: 'idle',
-			})
+			});
 		},
 
 		initUser: async () => {
@@ -56,7 +56,7 @@ export const useUserStore = create<UserAction & UserState>()(
 
 				localStorage.setItem(AUTH_LOCALSTORAGE_KEY, user.token);
 
-				set({ user: user, _mounted: true, initUserStatus: 'success' }, false, 'initUserSuccess');
+				set({ user, _mounted: true, initUserStatus: 'success' }, false, 'initUserSuccess');
 			} catch (err) {
 				set({ initUserStatus: 'failed' }, false, 'initUserFailed');
 			} finally {
@@ -100,7 +100,7 @@ export const useUserStore = create<UserAction & UserState>()(
 
 				localStorage.setItem(AUTH_LOCALSTORAGE_KEY, user.token);
 
-				set({ user: user, signUpStatus: 'success' }, false, 'signUpSuccess');
+				set({ user, signUpStatus: 'success' }, false, 'signUpSuccess');
 			} catch (err) {
 				set({ signUpStatus: 'failed' }, false, 'signUpFailed');
 			}

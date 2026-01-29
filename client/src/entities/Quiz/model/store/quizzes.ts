@@ -1,7 +1,7 @@
+import type { Quiz } from '../types';
+import $axios from 'shared/api/axios';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import $axios from 'shared/api/axios';
-import { Quiz } from '../types';
 
 interface QuizState {
 	quizzes: Quiz[];
@@ -49,15 +49,15 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 		removeQuizStatus: 'idle',
 
 		getUserQuizzes: async (userId, page = 1) => {
-			set({ getUserQuizzesStatus: 'pending', page: page }, false, 'getUserQuizzesPending');
+			set({ getUserQuizzesStatus: 'pending', page }, false, 'getUserQuizzesPending');
 			try {
-				set({ page: page });
+				set({ page });
 
 				const response = await $axios.get('quizzes', {
 					params: {
 						authorId: userId,
 						limit: get().limit,
-						page: page,
+						page,
 					},
 				});
 
@@ -75,20 +75,20 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 		getPublicQuizzes: async (page) => {
 			set({ getPublicQuizzesStaus: 'pending' }, false, 'getPublicQuizzesPending');
 			try {
-				set({ page: page });
+				set({ page });
 
 				const response = await $axios.get('quizzes', {
 					params: {
-						'privacy': ['public', 'publicProtected', 'restrictedUsers'],
+						privacy: ['public', 'publicProtected', 'restrictedUsers'],
 						limit: get().limit,
-						page: page,
+						page,
 					},
 				});
 
 				const quizzes = response.data;
 
 				set({
-					quizzes: quizzes,
+					quizzes,
 					sortedAndFilteredQuizzes: quizzes,
 					getPublicQuizzesStaus: 'success',
 				}, false, 'getPublicQuizzesSuccess');
@@ -104,7 +104,7 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 		},
 
 		removeQuiz: async (quizId: string) => {
-			set({ removeQuizStatus: 'pending'}, false, 'removeQuizPending');
+			set({ removeQuizStatus: 'pending' }, false, 'removeQuizPending');
 			try {
 				await $axios.delete(`/quizzes/${quizId}`);
 				const allQuizzes = get().quizzes.filter((quiz) => quiz._id !== quizId);
@@ -128,17 +128,17 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 		},
 
 		selectQuiz: (quizId) => {
-			set({ selectedQuizzes: [ ...get().selectedQuizzes, quizId ]});
+			set({ selectedQuizzes: [...get().selectedQuizzes, quizId] });
 		},
 
 		deselectQuiz: (quizId) => {
-			set({ selectedQuizzes: get().selectedQuizzes.filter((quiz) => quiz !== quizId )});
+			set({ selectedQuizzes: get().selectedQuizzes.filter((quiz) => quiz !== quizId) });
 		},
-		
+
 		isSelectedQuiz: (quizId) => get().selectedQuizzes.includes(quizId),
 
 		fullResetSelectState: () => {
-			set({ selectedQuizzes: [],  isSelecting: false });
+			set({ selectedQuizzes: [], isSelecting: false });
 		},
 
 		resetSelectedList: () => {
@@ -148,8 +148,8 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 		removeSelectedList: () => {
 			const promises = get().selectedQuizzes.map((quiz) => {
 				return get().removeQuiz(quiz);
-			})
+			});
 			Promise.all(promises);
-		}
+		},
 	})),
 );

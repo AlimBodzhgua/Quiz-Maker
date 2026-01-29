@@ -1,34 +1,36 @@
-import { FC, useCallback, useEffect, useState } from 'react';
-import { Box, Button, Collapse, Flex, Heading, Text, useDisclosure } from '@chakra-ui/react';
-import { useLocation, useParams } from 'react-router-dom';
+import type { FC } from 'react';
+
 import { DownloadIcon, StarIcon } from '@chakra-ui/icons';
-import { Page } from 'widgets/Page';
+import { Box, Button, Collapse, Flex, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import {
-	QuizHeader,
+	PrivacyDrawer,
 	QuestionsList,
+	QuizHeader,
 	QuizResult,
 	useCurrentQuiz,
-	PrivacyDrawer,
 } from 'entities/Quiz';
-import { useTimer } from 'shared/lib/hooks';
-import { FinishQuizButton } from 'features/SaveQuizResult';
 import { useUserStore } from 'entities/User';
-import { QuizRating } from 'features/RateQuiz';
-import { NoPrint } from 'shared/lib/components/NoPrint';
-import { ShareButton } from 'widgets/ShareButton';
 import {
-	PassworodRequireDialog,
+	PasswordRequireDialog,
 	PrivateLinkDialog,
 	RestrictedAccessDialog,
 	useQuizAccess,
 } from 'features/QuizAccessControl';
+import { QuizRating } from 'features/RateQuiz';
+import { FinishQuizButton } from 'features/SaveQuizResult';
+import { useCallback, useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import { Margin, usePDF } from 'react-to-pdf';
-import { getMathcedTimerProps } from '../lib/getMathcedTimerProps';
+import { NoPrint } from 'shared/lib/components/NoPrint';
+import { useTimer } from 'shared/lib/hooks';
+import { Page } from 'widgets/Page';
+import { ShareButton } from 'widgets/ShareButton';
 
+import { getMatchedTimerProps } from '../lib/getMatchedTimerProps';
 
 const QuizPage: FC = () => {
 	const { id } = useParams<{ id?: string }>();
-	const { isOpen, onToggle } = useDisclosure()
+	const { isOpen, onToggle } = useDisclosure();
 	const location = useLocation();
 	const user = useUserStore((state) => state.user);
 	const [isStarted, setIsStarted] = useState<boolean>(false);
@@ -38,7 +40,7 @@ const QuizPage: FC = () => {
 	const quiz = useCurrentQuiz((state) => state.quiz);
 	const correctAnswers = useCurrentQuiz((state) => state.correctAnswers);
 	const withTimer = useCurrentQuiz((state) => state.quiz?.withTimer) || false;
-	const timerProps = getMathcedTimerProps(quiz?.timerLimit);
+	const timerProps = getMatchedTimerProps(quiz?.timerLimit);
 	const { minutes, seconds, start, pause } = useTimer(timerProps);
 	const { toPDF, targetRef } = usePDF({
 		filename: 'quiz.pdf',
@@ -52,7 +54,7 @@ const QuizPage: FC = () => {
 		correctPassword,
 		isOpenPasswordDialog,
 		closePasswordDialog,
-	} = useQuizAccess({ quiz: quiz, userId: user?._id})
+	} = useQuizAccess({ quiz, userId: user?._id });
 
 	const initQuiz = async (id: string) => {
 		const quiz = await getCurrentQuiz(id);
@@ -83,7 +85,6 @@ const QuizPage: FC = () => {
 		onToggle();
 	}, [pause, onToggle]);
 
-	
 	const onDownloadPDF = () => {
 		const elementsToHide = document.querySelectorAll<HTMLDivElement>('#hide-in-pdf');
 
@@ -96,8 +97,7 @@ const QuizPage: FC = () => {
 		elementsToHide.forEach((element) => {
 			element.style.opacity = '1';
 		});
-	}
-
+	};
 
 	return (
 		<Page>
@@ -111,7 +111,7 @@ const QuizPage: FC = () => {
 				ref={targetRef}
 			>
 				{quiz?.privacy?.type === 'publicProtected' && (
-					<PassworodRequireDialog
+					<PasswordRequireDialog
 						correctPassword={correctPassword}
 						isOpen={isOpenPasswordDialog}
 						onClose={closePasswordDialog}
@@ -126,7 +126,7 @@ const QuizPage: FC = () => {
 				{quiz?.privacy.type === 'linkProtected' && (
 					<>
 						<PrivateLinkDialog isOpen={!havePermission} />
-						<PassworodRequireDialog
+						<PasswordRequireDialog
 							correctPassword={correctPassword}
 							isOpen={isOpenPasswordDialog}
 							onClose={closePasswordDialog}
@@ -144,7 +144,7 @@ const QuizPage: FC = () => {
 								{quiz && quiz?.authorId === user?._id && (
 									<PrivacyDrawer quiz={quiz} />
 								)}
-								<ShareButton link={window.location.href}/>
+								<ShareButton link={window.location.href} />
 								<Button
 									onClick={onDownloadPDF}
 									size='xs'
@@ -154,9 +154,9 @@ const QuizPage: FC = () => {
 									bgImage='linear-gradient(to right, #ff512f 0%, #dd2476 51%, #ff512f 100%)'
 									color='#ffff'
 									_hover={{ color: '#dcd9d9' }}
-									_active={{ color: 'none'}}
+									_active={{ color: 'none' }}
 								>
-									<DownloadIcon fontSize='15px'/>
+									<DownloadIcon fontSize='15px' />
 								</Button>
 							</Flex>
 						</Flex>

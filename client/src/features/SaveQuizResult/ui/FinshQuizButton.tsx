@@ -1,6 +1,7 @@
-import { FC, memo, useState } from 'react';
+import type { FC } from 'react';
 import { Button, useToast } from '@chakra-ui/react';
 import { useQuizResult } from 'entities/Quiz';
+import { memo, useState } from 'react';
 
 interface FinishQuizButtonProps {
 	minutes: number;
@@ -19,13 +20,14 @@ export const FinishQuizButton: FC<FinishQuizButtonProps> = memo((props) => {
 	} = useQuizResult({ minutes, seconds });
 
 	const onFinishQuiz = async () => {
-		
 		if (isUserAskedAllRequiredQuestions()) {
 			setIsLoading(true);
-			await saveQuizResult()
+			await saveQuizResult();
 			setIsLoading(false);
 
-			if (onFinish) onFinish();
+			if (onFinish) {
+				onFinish();
+			}
 		} else {
 			toast({
 				title: 'You haven\'t answered all the questions.',
@@ -36,8 +38,7 @@ export const FinishQuizButton: FC<FinishQuizButtonProps> = memo((props) => {
 				isClosable: true,
 			});
 		}
-	}
-
+	};
 
 	return (
 		<Button
@@ -49,5 +50,5 @@ export const FinishQuizButton: FC<FinishQuizButtonProps> = memo((props) => {
 		>
 			Finish Quiz
 		</Button>
-	)
+	);
 });

@@ -1,7 +1,8 @@
-import { FC, ReactNode, useEffect, useState } from 'react';
+import type { FC, ReactNode } from 'react';
+import { useUserStore } from 'entities/User';
+import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AppRoutes } from 'shared/constants';
-import { useUserStore } from 'entities/User';
 
 interface AuthRequireProps {
 	children: ReactNode;
@@ -16,8 +17,8 @@ export const AuthRequire: FC<AuthRequireProps> = ({ children }) => {
 	}, []);
 
 	if (!isAuthorized && authMounted) {
-		return <Navigate to={AppRoutes.LOGIN} />
+		return <Navigate to={AppRoutes.LOGIN} />;
 	}
 
 	return children;
-}
+};

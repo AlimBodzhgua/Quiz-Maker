@@ -1,18 +1,19 @@
+import type { Quiz, SortDirectionType, SortFieldType } from '../../model/types';
+
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+
 import { QuizService } from '../../api/QuizService';
 import { useQuizzesStore } from '../../model/store/quizzes';
-import { Quiz } from '../../model/types';
-import { SortDirectionType, SortFieldType } from '../../model/types';
 
 type PublicQuizzesProps = {
 	type: 'public';
-}
+};
 
 type UserQuizzesProps = {
 	type: 'users';
 	userId: string;
-}
+};
 
 type useQuizzesProps = PublicQuizzesProps | UserQuizzesProps;
 
@@ -39,17 +40,17 @@ export const useQuizzes = (props: useQuizzesProps): UseQuizzesResult => {
 
 		if (props.type === 'public') {
 			const publicPagesAmount = await QuizService.getPublicQuizzesPagesAmount(limit);
-			setPublicPagesAmount(publicPagesAmount)
+			setPublicPagesAmount(publicPagesAmount);
 
-			quizzes = await getPublicQuizzes(page); 
+			quizzes = await getPublicQuizzes(page);
 		} else {
 			const userPagesAmount = await QuizService.getUserQuizzesPagesAmount(limit);
-			setUsersPagesAmount(userPagesAmount)
-			
-			quizzes = await getUserQuizzes(props.userId, page); 
+			setUsersPagesAmount(userPagesAmount);
+
+			quizzes = await getUserQuizzes(props.userId, page);
 		}
 		return quizzes;
-	}
+	};
 
 	const fetchQuizzesAndSort = async () => {
 		const quizzes = await fetchQuizzesFn();
@@ -60,11 +61,11 @@ export const useQuizzes = (props: useQuizzesProps): UseQuizzesResult => {
 			const sortedQuizzes = QuizService.sortQuizzes(quizzes, sortValue, sortDirection);
 			setSortedAndFilteredQuizzes(sortedQuizzes);
 		}
-	}
+	};
 
 	useEffect(() => {
 		fetchQuizzesAndSort();
 	}, []);
 
 	return { quizzes: sortedAndFilteredQuizzes, publicPagesAmount, usersPagesAmount };
-}
+};

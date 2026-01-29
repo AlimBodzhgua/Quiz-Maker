@@ -1,9 +1,9 @@
-export { removeItemAndFixListOrder } from './removeItemAndFixListOrder';
-export { setIsCorrectMathcedType } from './setIsCorrectMathcedType';
-export { changeListOrder } from './changeListOrder';
-export { initAnswers } from './initAnswers';
 export { capitalizeFirstLetter } from './capitalizeFirstLetter';
+export { changeListOrder } from './changeListOrder';
 export { create24CharId } from './create25CharId';
+export { initAnswers } from './initAnswers';
 export { isCorrectAnswerExist } from './isCorrectAnswerExist';
 export { isNoEmptyValuesAnswers } from './isNoEmptyValuesAnswers';
+export { removeItemAndFixListOrder } from './removeItemAndFixListOrder';
+export { setIsCorrectMatchedType } from './setIsCorrectMatchedType';
 export { splitCamelCaseLetter } from './splitCamelCaseLetter';

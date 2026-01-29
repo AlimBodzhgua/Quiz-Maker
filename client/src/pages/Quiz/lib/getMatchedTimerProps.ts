@@ -10,10 +10,10 @@ export interface DecreasingTimerProps {
 	limit: TimerLimit;
 }
 
-export const getMathcedTimerProps = (timerLimit?: TimerLimit) => {
+export const getMatchedTimerProps = (timerLimit?: TimerLimit) => {
 	const type = timerLimit ? 'decreasing' : 'increasing';
 
 	return type === 'increasing'
 		? { type: 'increasing' } as IncreasingTimerProps
-		: { type: 'decreasing', limit: timerLimit } as DecreasingTimerProps; 
-}
+		: { type: 'decreasing', limit: timerLimit } as DecreasingTimerProps;
+};

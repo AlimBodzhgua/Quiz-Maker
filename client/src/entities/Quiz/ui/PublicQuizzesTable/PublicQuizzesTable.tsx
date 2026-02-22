@@ -24,7 +24,7 @@ export const PublicQuizzesTable: FC = memo(() => {
 				header={<PublicQuizzesTableHeader />}
 				renderQuizRow={(quiz) => <PublicQuizTableRow quiz={quiz} key={quiz._id} />}
 			/>
-			{(!haveError && quizzes.length) && (
+			{(!haveError && !!quizzes.length) && (
 				<Pagination
 					activePage={page}
 					pagesAmount={publicPagesAmount}

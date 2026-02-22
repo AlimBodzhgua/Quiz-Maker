@@ -32,7 +32,7 @@ export const UserQuizzesTable: FC<UserQuizzesTableProps> = memo(({ userId }) => 
 				header={<UserQuizzesTableHeader />}
 				renderQuizRow={(quiz) => <UserQuizTableRow quiz={quiz} key={quiz._id} />}
 			/>
-			{(!haveError && quizzes.length) && (
+			{(!haveError && !!quizzes.length) && (
 				<Pagination
 					activePage={page}
 					pagesAmount={usersPagesAmount}

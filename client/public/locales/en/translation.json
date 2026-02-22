@@ -1,0 +1,107 @@
+{
+	"Login": "Login",
+	"Register": "Register",
+
+	"auth": {
+		"login": {
+			"title": "Login",
+			"button": "Login"
+		},
+		"register": {
+			"title": "Register",
+			"button": "Register"
+		}
+	},
+
+	"Email": "Email",
+	"Password": "Password",
+
+	"Public quizzes": "Public quizzes",
+	"My Quizzes": "My Quizzes",
+	"Completed": "Completed",
+	"Profile": "Profile",
+	"Logout": "Logout",
+
+	"Create": "Create",
+	"Select": "Select",
+	"Done": "Done",
+
+	"Delete quiz": "Delete quiz",
+	"Are you sure you want to delete quiz?": "Are you sure you want to delete quiz?",
+	"Title must be at least 4 characters long": "Title must be at least 4 characters long",
+
+	"Quiz title": "Quiz title",
+	"Answer": "Answer",
+	"Add answer": "Add answer",
+	"correct answer": "correct answer",
+	"Empty value or no correct answer.": "Empty value or no correct answer.",
+	"All answer fields should not be empty and should have at least 1 correct answer.": "All answer fields should not be empty and should have at least 1 correct answer.",
+	"Question title": "Question title",
+	"Required": "Required",
+	"Save question": "Save question",
+
+	"Quiz Privacy": "Quiz Privacy",
+	"Public": "Public",
+	"Private": "Private",
+	"Public protected with password": "Public protected with password",
+	"Private access with a link": "Private access a with link",
+	"Private access with link & password": "Private access with link & password",
+	"Private access for selected users": "Private access for selected users",
+	
+	"Enable quiz access only for you": "Enable quiz access only for you",
+	"Available in public quizzes table, but only accessible with a password": "Available in public quizzes table, but only accessible with a password",
+	"Enable quiz access for all users and displays in public quizzes table": "Enable quiz access for all users and displays in public quizzes table",
+	"Enable access with a link so only those who have the link can access the quiz": "Enable access with a link so only those who have the link can access the quiz",
+	"Enable private access with a link and password so users without password cannot access the quiz": "Enable private access with a link and password so users without password cannot access the quiz",
+	"Enable private access with user id (you can set the list of user ids)": "Enable private access with user id (you can set the list of user ids)",
+	
+	"This quiz requires a private link with token": "This quiz requires a private link with token",
+	"You have no permission to this quiz": "You have no permission to this quiz",
+	"Restricted Access": "Restricted Access",
+	"You have no permission to this test. Your not added to restricted users list": "You have no permission to this test. Your not added to restricted users list",
+	"This quiz requires a password": "This quiz requires a password",
+	"Enter password": "Enter password",
+	"Wrong password": "Wrong password",
+	
+	"Settings": "Settings",
+	"Enable quiz timer": "Enable quiz timer", 
+	"Set limit": "Set limit",
+	"minutes": "minutes",
+	"seconds": "seconds",
+
+	"Total Questions": "Total Questions",
+	"Test result": "Test result",
+	"Correct": "Correct",
+	"Incorrect": "Incorrect",
+	"Time result": "Time result",
+	"try again": "try again",
+
+	"No quizzes": "No quizzes",
+	"Error fetching completed quizzes!": "Error fetching completed quizzes!",
+	"Something went wrong trying to fetch quizzes data. Reload the page or try it later.": "Something went wrong trying to fetch quizzes data. Reload the page or try it later.",
+	"You have no completed quizzes": "You have no completed quizzes",
+
+	"Share": "Share",
+	"Share on Social Media": "Share on Social Media",
+	
+	"Name": "Name",
+	"Action": "Action",
+	"Date": "Date",
+	"Author": "Author",
+	"Number of participants": "Number of participants",
+
+	"Delete selected quizzes": "Delete selected quizzes",
+	"Delete Quiz": "Delete Quiz",
+	"Are you sure? You can't undo this action afterwards.": "Are you sure? You can't undo this action afterwards.",
+	"Delete": "Delete",
+	"Cancel": "Cancel",
+	"submit": "submit",
+
+	"Create a new quiz": "Create a new quiz",
+	"Add Question": "Add Question",
+	"Questions": "Questions",
+	"Save": "Save",
+	"Saved": "Saved",
+	"Preview": "Preview",
+	"Complete": "Complete"
+}

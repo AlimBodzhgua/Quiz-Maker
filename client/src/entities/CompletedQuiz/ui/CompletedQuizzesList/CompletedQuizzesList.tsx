@@ -12,6 +12,7 @@ import {
 	List,
 } from '@chakra-ui/react';
 import { memo, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import NoteIcon from '../../assets/note.svg';
 import { useCompletedQuizzes } from '../../model/store';
@@ -19,6 +20,7 @@ import { CompletedQuizzesItem } from '../CompletedQuizzesItem/CompletedQuizzesIt
 import { CompletedQuizzesSkeleton } from './CompletedQuizzesSkeleton';
 
 export const CompletedQuizzesList: FC = memo(() => {
+	const { t } = useTranslation();
 	const fetchCompletedQuizzes = useCompletedQuizzes((state) => state.fetchQuizzes);
 	const quizzes = useCompletedQuizzes((state) => state.quizzes);
 	const fetchStatus = useCompletedQuizzes((state) => state.fetchQuizzesStatus);
@@ -44,10 +46,10 @@ export const CompletedQuizzesList: FC = memo(() => {
 				<Flex direction='column'>
 					<Flex>
 						<AlertIcon />
-						<AlertTitle>Error fetching completed quizzes!</AlertTitle>
+						<AlertTitle>{t('Error fetching completed quizzes!')}</AlertTitle>
 					</Flex>
 					<AlertDescription p='0 32px'>
-						Something went wrong trying to fetch quizzes data. Reload the page or try it later.
+						{t('Something went wrong trying to fetch quizzes data. Reload the page or try it later.')}
 					</AlertDescription>
 				</Flex>
 			</Alert>
@@ -70,7 +72,7 @@ export const CompletedQuizzesList: FC = memo(() => {
 						mt='20px'
 						color='gray.500'
 					>
-						You have no completed quizzes
+						{t('You have no completed quizzes')}
 					</Heading>
 				</CardBody>
 			</Card>

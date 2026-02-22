@@ -3,6 +3,7 @@ import type { AnswerForm, QuestionForm, QuestionType } from 'entities/Quiz';
 import type { FC } from 'react';
 import { Flex, useToast } from '@chakra-ui/react';
 import { memo, useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { baseAnswer, QuestionTypes } from 'shared/constants';
 import { SortableItem } from 'shared/lib/components/SortableItem';
 import { useHover } from 'shared/lib/hooks';
@@ -28,6 +29,7 @@ interface AddQuestionFormProps {
 
 export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 	const { question } = props;
+	const { t } = useTranslation();
 	const toast = useToast();
 	const removeQuestion = useCreateQuiz((state) => state.removeQuestion);
 	const saveQuestion = useCreateQuiz((state) => state.saveQuestion);
@@ -125,8 +127,8 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 			setIsLoading(false);
 		} else {
 			toast({
-				title: 'Empty value or no correct answer.',
-				description: 'All answer fields should not be empty and should have at least 1 correct answer.',
+				title: t('Empty value or no correct answer.'),
+				description: t('All answer fields should not be empty and should have at least 1 correct answer.'),
 				status: 'error',
 				duration: 5000,
 				isClosable: true,

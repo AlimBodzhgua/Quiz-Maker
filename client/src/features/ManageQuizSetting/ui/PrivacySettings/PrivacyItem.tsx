@@ -4,6 +4,7 @@ import type { FC } from 'react';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import { Flex, Radio, Tooltip } from '@chakra-ui/react';
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { mapToPrivacyLabelText, mapToPrivacyText, PrivacyValues } from 'shared/constants';
 
 interface PrivacyItemProps {
@@ -12,14 +13,15 @@ interface PrivacyItemProps {
 
 export const PrivacyItem: FC<PrivacyItemProps> = memo((props) => {
 	const { privacy } = props;
+	const { t } = useTranslation();
 
 	return (
 		<Flex alignItems='center'>
 			<Radio value={PrivacyValues[privacy]} mr='10px'>
-				{mapToPrivacyText[privacy]}
+				{t(`${mapToPrivacyText[privacy]}`)}
 			</Radio>
 			<Tooltip
-				label={mapToPrivacyLabelText[privacy]}
+				label={t(`${mapToPrivacyLabelText[privacy]}`)}
 				placement='right'
 				bgColor='blackAlpha.900'
 				maxW='250px'

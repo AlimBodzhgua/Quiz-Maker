@@ -5,6 +5,7 @@ import {
 	Avatar,
 	Box,
 	Button,
+	Flex,
 	Heading,
 	Link,
 	Menu,
@@ -12,11 +13,12 @@ import {
 	MenuItem,
 	MenuList,
 	Text,
-	Wrap,
 	WrapItem,
 } from '@chakra-ui/react';
 import { useSignOutUser } from 'entities/User';
+import { LangSwitcher } from 'features/LangSwitcher';
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AppRoutes } from 'shared/constants';
 
@@ -27,6 +29,7 @@ import SignOutIcon from '../assets/signOut.svg';
 import ListBulletsIcon from '../assets/unorderedList.svg';
 
 export const Header: FC = memo(() => {
+	const { t } = useTranslation();
 	const { signOut, isAuthorized } = useSignOutUser();
 	const navigate = useNavigate();
 
@@ -51,93 +54,96 @@ export const Header: FC = memo(() => {
 				<Box fontWeight='medium'>Quiz</Box>
 				Maker
 			</Heading>
-			{isAuthorized
-				? (
-					<Box display='flex'>
-						<Link
-							as={RouterLink}
-							to={AppRoutes.PUBLIC_QUIZZES}
-							color='white'
-							mr='24px'
-							display='flex'
-							alignItems='center'
-							justifyContent='center'
-							gap='4px'
-						>
-							<ListIcon />
-							<Text fontSize='15px'>Public quizzes</Text>
-						</Link>
-
-						<Menu placement='bottom'>
-							<MenuButton>
-								<Avatar icon={<ProfileIcon />} size='sm' bg='gray.50' />
-							</MenuButton>
-							<MenuList
+			<Flex gap='14px'>
+				{isAuthorized
+					? (
+						<Flex>
+							<Link
+								as={RouterLink}
+								to={AppRoutes.PUBLIC_QUIZZES}
+								color='white'
+								mr='24px'
 								display='flex'
-								flexDirection='column'
+								alignItems='center'
 								justifyContent='center'
-								minW='0'
-								w='145px'
+								gap='4px'
 							>
-								<MenuItem
-									as={RouterLink}
-									to={AppRoutes.USER_QUIZZES}
-									icon={<ListBulletsIcon />}
-								>
-									My Quizzes
-								</MenuItem>
-								<MenuItem
-									as={RouterLink}
-									to={AppRoutes.COMPLETED_QUIZZES}
-									icon={<CheckIcon />}
-								>
-									Completed
-								</MenuItem>
-								<MenuItem
-									as={RouterLink}
-									to={AppRoutes.PROFILE}
-									icon={<AvatarIcon />}
-								>
-									Profile
-								</MenuItem>
-								<MenuItem onClick={handleLogout} icon={<SignOutIcon />}>
-									Logout
-								</MenuItem>
-							</MenuList>
-						</Menu>
+								<ListIcon />
+								<Text fontSize='15px'>{t('Public quizzes')}</Text>
+							</Link>
 
-					</Box>
-				)
-				:
-				(
-					<Wrap spacing='20px'>
-						<WrapItem>
-							<Button
-								to={AppRoutes.REGISTER}
-								as={RouterLink}
-								variant='outline'
-								color='gray.50'
-								size='sm'
-								_hover={{ bg: 'gray.700' }}
-							>
-								Register
-							</Button>
-						</WrapItem>
-						<WrapItem>
-							<Button
-								to={AppRoutes.LOGIN}
-								as={RouterLink}
-								variant='outline'
-								color='gray.50'
-								size='sm'
-								_hover={{ bg: 'gray.700' }}
-							>
-								Login
-							</Button>
-						</WrapItem>
-					</Wrap>
-				)
-			}
+							<Menu placement='bottom'>
+								<MenuButton>
+									<Avatar icon={<ProfileIcon />} size='sm' bg='gray.50' />
+								</MenuButton>
+								<MenuList
+									display='flex'
+									flexDirection='column'
+									justifyContent='center'
+									minW='0'
+									w='145px'
+								>
+									<MenuItem
+										as={RouterLink}
+										to={AppRoutes.USER_QUIZZES}
+										icon={<ListBulletsIcon />}
+									>
+										{t('My Quizzes')}
+									</MenuItem>
+									<MenuItem
+										as={RouterLink}
+										to={AppRoutes.COMPLETED_QUIZZES}
+										icon={<CheckIcon />}
+									>
+										{t('Completed')}
+									</MenuItem>
+									<MenuItem
+										as={RouterLink}
+										to={AppRoutes.PROFILE}
+										icon={<AvatarIcon />}
+									>
+										{t('Profile')}
+									</MenuItem>
+									<MenuItem onClick={handleLogout} icon={<SignOutIcon />}>
+										{t('Logout')}
+									</MenuItem>
+								</MenuList>
+							</Menu>
+
+						</Flex>
+					)
+					:
+					(
+						<Flex gap='10px'>
+							<WrapItem>
+								<Button
+									to={AppRoutes.REGISTER}
+									as={RouterLink}
+									variant='outline'
+									color='gray.50'
+									size='sm'
+									_hover={{ bg: 'gray.700' }}
+								>
+									{t('Register')}
+								</Button>
+							</WrapItem>
+							<WrapItem>
+								<Button
+									to={AppRoutes.LOGIN}
+									as={RouterLink}
+									variant='outline'
+									color='gray.50'
+									size='sm'
+									_hover={{ bg: 'gray.700' }}
+								>
+									{t('Login')}
+								</Button>
+							</WrapItem>
+						</Flex>
+					)
+				}
+				<LangSwitcher />
+			</Flex>
 		</Box>
 	);
 });

@@ -1,10 +1,20 @@
 import type { FC } from 'react';
 import { EmailIcon, LockIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { Button, Card, Heading, Input, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react';
+import {
+	Button,
+	Card,
+	Heading,
+	Input,
+	InputGroup,
+	InputLeftElement,
+	InputRightElement,
+} from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 import { useSignUpUser } from 'entities/User';
 import { memo, useEffect, useState } from 'react';
 
 export const RegisterForm: FC = memo(() => {
+	const { t } = useTranslation();
 	const { signUpUser, isLoading, error } = useSignUpUser();
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
@@ -49,14 +59,14 @@ export const RegisterForm: FC = memo(() => {
 			as='form'
 		>
 			<Heading size='xl' color='gray.600' mb='12px'>
-				Register
+				{t('auth.register.title')}
 			</Heading>
 			<InputGroup>
 				<InputLeftElement>
 					<EmailIcon />
 				</InputLeftElement>
 				<Input
-					placeholder='Email'
+					placeholder={t('Email')}
 					value={email}
 					onChange={onEmailChange}
 					variant='filled'
@@ -73,7 +83,7 @@ export const RegisterForm: FC = memo(() => {
 					onChange={onPasswordChange}
 					type={showPassword ? 'text' : 'password'}
 					isInvalid={!!error}
-					placeholder='Password'
+					placeholder={t('Password')}
 					variant='filled'
 					size='md'
 				/>
@@ -94,7 +104,7 @@ export const RegisterForm: FC = memo(() => {
 				w='100%'
 				mt='20px'
 			>
-				Register
+				{t('auth.register.button')}
 			</Button>
 		</Card>
 	);

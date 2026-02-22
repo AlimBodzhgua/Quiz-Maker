@@ -3,6 +3,7 @@ import type { ChangeEvent, FC } from 'react';
 
 import { Flex, FormControl, FormLabel, Input, Switch } from '@chakra-ui/react';
 import { memo, useId } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { QuestionTypeSelector } from '../../QuestionTypeSelector/QuestionTypeSelector';
 
@@ -26,6 +27,7 @@ export const QuestionHeader: FC<QuestionHeaderProps> = memo((props) => {
 		isRequired,
 		onToggleIsRequired,
 	} = props;
+	const { t } = useTranslation();
 	const id = useId();
 
 	return (
@@ -34,7 +36,7 @@ export const QuestionHeader: FC<QuestionHeaderProps> = memo((props) => {
 				value={title}
 				onChange={onTitleChange}
 				disabled={isSaved}
-				placeholder='Question title'
+				placeholder={t('Question title')}
 				bg='whiteAlpha.900'
 				w='70%'
 			/>
@@ -53,7 +55,7 @@ export const QuestionHeader: FC<QuestionHeaderProps> = memo((props) => {
 				gap='10px'
 			>
 				<FormLabel htmlFor={`requiredSwitch-${id}`} m='0'>
-					Required
+					{t('Required')}
 				</FormLabel>
 				<Switch
 					isDisabled={isSaved}

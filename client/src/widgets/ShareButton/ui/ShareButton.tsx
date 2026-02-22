@@ -11,6 +11,7 @@ import {
 	PopoverTrigger,
 } from '@chakra-ui/react';
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import ShareIcon from '../assets/share.svg';
 import { SocialList } from './SocialList';
@@ -20,6 +21,8 @@ interface ShareButtonProps {
 }
 
 export const ShareButton: FC<ShareButtonProps> = memo(({ link }) => {
+	const { t } = useTranslation();
+
 	return (
 		<Popover>
 			<PopoverTrigger>
@@ -32,13 +35,13 @@ export const ShareButton: FC<ShareButtonProps> = memo(({ link }) => {
 					_hover={{ color: '#dcd9d9' }}
 					_active={{ color: 'none' }}
 				>
-					Share
+					{t('Share')}
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent minW='0'w='225px'>
 				<PopoverArrow />
 				<PopoverCloseButton />
-				<PopoverHeader>Share on Social Media</PopoverHeader>
+				<PopoverHeader>{t('Share on Social Media')}</PopoverHeader>
 				<PopoverBody>
 					<SocialList link={link} />
 				</PopoverBody>

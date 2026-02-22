@@ -2,6 +2,7 @@ import type { AnswerForm } from 'entities/Quiz';
 import type { FC } from 'react';
 import { DeleteIcon, DragHandleIcon } from '@chakra-ui/icons';
 import { Button, Checkbox, Flex, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 import { memo, useEffect, useState } from 'react';
 import { SortableItem } from 'shared/lib/components/SortableItem';
 import { useDebounce, useHover } from 'shared/lib/hooks';
@@ -22,7 +23,7 @@ export const AddAnswerForm: FC<AddAnswerFormProps> = memo((props) => {
 		onChangeValue,
 		onDeleteAnswer,
 	} = props;
-
+	const { t } = useTranslation();
 	const { isHover, hoverProps } = useHover();
 	const [value, setValue] = useState<string>(answer.value);
 	const debouncedValue = useDebounce(value);
@@ -57,7 +58,7 @@ export const AddAnswerForm: FC<AddAnswerFormProps> = memo((props) => {
 			>
 				<InputGroup>
 					<Input
-						placeholder='Answer'
+						placeholder={t('Answer')}
 						value={value}
 						onChange={handleOnChangeValue}
 						disabled={isSaved}
@@ -92,7 +93,7 @@ export const AddAnswerForm: FC<AddAnswerFormProps> = memo((props) => {
 					size='sm'
 					alignSelf='flex-end'
 				>
-					correct answer
+					{t('correct answer')}
 				</Checkbox>
 			</Flex>
 		</SortableItem>

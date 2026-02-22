@@ -1,0 +1,105 @@
+{
+	"Login": "Вход",
+	"Register": "Регистрация",
+	
+	"auth": {
+		"login": {
+			"title": "Вход",
+			"button": "Войти"
+		},
+		"register": {
+			"title": "Регистрация",
+			"button": "Зарегистрироваться"
+		}
+	},
+	"Email": "Почта",
+	"Password": "Пароль",
+	
+	"Public quizzes": "Публичные тесты",
+	"My Quizzes": "Мои Тесты",
+	"Completed": "Завершённые",
+	"Profile": "Профиль",
+	"Logout": "Выход",
+
+	"Create": "Создать",
+	"Select": "Выбрать",
+	"Done": "Завершить",
+
+	"Delete quiz": "Удалить тест",
+	"Are you sure you want to delete quiz?": "Вы уверенны что хотите удалить этот тест?",
+	"Title must be at least 4 characters long": "Заголовок должен состоять как минимум из 4 символов.",
+
+	"Quiz title": "Заголовок теста",
+	"Answer": "Ответ",
+	"Add answer": "Добавить ответ",
+	"correct answer": "верный ответ",
+	"Empty value or no correct answer.": "Пустое значение или нет верного ответа.",
+	"All answer fields should not be empty and should have at least 1 correct answer.": "Все поля для ответов не должны быть пустыми и должны содержать как минимум один правильный ответ.",
+	"Question title": "Заголовок вопроса",
+	"Required": "Обязательный",
+	"Save question": "Сохранить вопрос",
+
+	"Quiz Privacy": "Приватность тестов",
+	"Public": "Публичный",
+	"Private": "Частный",
+	"Public protected with password": "Публичный защищённый паролем",
+	"Private access with a link": "Частный доступ по ссылке",
+	"Private access with a link & password": "Частный доступ по ссылке и паролю",
+	"Private access for selected users": "Частный доступ выбранным пользователям",
+	
+	"Enable quiz access only for you": "Предоставляет доступ к тесту только себе",
+	"Available in public quizzes table, but only accessible with a password": "Доступен в публичной таблице тестов, но только по паролю",
+	"Enable quiz access for all users and displays in public quizzes table": "Разрешить доступ к тесту для всех пользователей и отобразить её в таблице публичных тестов",
+	"Enable access with a link so only those who have the link can access the quiz": "Предоставьте доступ по ссылке, чтобы только те, у кого есть эта ссылка, могли пройти викторину",
+	"Enable private access with a link and password so users without password cannot access the quiz": "Предоставьте приватный доступ по ссылке и паролю, чтобы пользователи без пароля не могли пройти викторину",
+	"Enable private access with user id (you can set the list of user ids)": "Разрешите приватный доступ с использованием id пользователя (вы можете задать список id пользователей)",
+	
+	"This quiz requires a private link with token": "Этот тест требует приватной ссылки с токеном",
+	"You have no permission to this quiz": "У вас нет прав к этому тесту",
+	"Restricted Access": "Ограниченный Доступ",
+	"You have no permission to this test. Your not added to restricted users list": "У вас нет прав на этот тест. Вы не добавлены в список ограниченных пользователей",
+	"This quiz requires a password": "Этот тест требует пароль",
+	"Enter password": "Введите пароль",
+	"Wrong password": "Неверный пароль",
+	
+	"Settings": "Настройки",
+	"Enable quiz timer": "Включить таймер для теста", 
+	"Set limit": "Установить лимит",
+	"minutes": "минут",
+	"seconds": "секунд",
+
+	"Total Questions": "Всего вопросов",
+	"Test result": "Результат тестирования",
+	"Correct": "Верный",
+	"Incorrect": "Неверный",
+	"Time result": "Резлуьтат по времени",
+	"try again": "попробовать снова",
+
+	"No quizzes": "Нет тестов",
+	"Error fetching completed quizzes!": "Ошибка при получении завершенных тестов!",
+	"Something went wrong trying to fetch quizzes data. Reload the page or try it later.": "Произошла ошибка при попытке получить данные тестов. Перезагрузите страницу или попробуйте позже.",
+	"You have no completed quizzes": "У вас нет завершённых тестов",
+
+	"Share": "Поделиться",
+	"Share on Social Media": "Поделиться в социальных сетях",
+
+	"Name": "Название",
+	"Action": "Действие",
+	"Author": "Автор",
+	"Number of participants": "Количество участников",
+
+	"Delete selected quizzes": "Удалить выбранные тесты",
+	"Delete Quiz": "Удалить Тест",
+	"Are you sure? You can't undo this action afterwards.": "Вы уверен? Это действие нельзя будет отменить впоследствии.",
+	"Delete": "Удалить",
+	"Cancel": "Отменить",
+	"submit": "Подтвердить",
+
+	"Create a new quiz": "Создать новый тест",
+	"Add Question": "Добавить вопрос",
+	"Questions": "Вопросов",
+	"Save": "Сохранить",
+	"Saved": "Сохранено",
+	"Preview": "Предпросмотр",
+	"Complete": "Завершить"
+}

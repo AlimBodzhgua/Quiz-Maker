@@ -14,6 +14,7 @@ import {
 	Tbody,
 } from '@chakra-ui/react';
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import BoxIcon from '../../assets/box.svg';
 import { TableSkeleton } from './TableSkeleton';
 
@@ -33,6 +34,7 @@ export const QuizTable: FC<QuizTableProps> = memo((props) => {
 		haveError,
 		renderQuizRow,
 	} = props;
+	const { t } = useTranslation();
 
 	if (isLoading) {
 		return <TableSkeleton />;
@@ -44,10 +46,10 @@ export const QuizTable: FC<QuizTableProps> = memo((props) => {
 				<Flex direction='column'>
 					<Flex>
 						<AlertIcon />
-						<AlertTitle>Error fetching quizzes!</AlertTitle>
+						<AlertTitle>{t('Error fetching quizzes!')}</AlertTitle>
 					</Flex>
 					<AlertDescription p='0 32px'>
-						Something went wrong trying to fetch quizzes data. Reload the page or try it later.
+						{t('Something went wrong trying to fetch quizzes data. Reload the page or try it later.')}
 					</AlertDescription>
 				</Flex>
 			</Alert>
@@ -69,7 +71,7 @@ export const QuizTable: FC<QuizTableProps> = memo((props) => {
 						fontWeight='medium'
 						color='gray.400'
 					>
-						No Quizzes
+						{t('No quizzes')}
 					</Heading>
 				</CardBody>
 			</Card>

@@ -2,6 +2,7 @@ import type { ChangeEvent, FC } from 'react';
 
 import { Input, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { AppDialog } from 'shared/UI';
 
@@ -13,6 +14,7 @@ interface PasswordRequireDialogProps {
 
 export const PasswordRequireDialog: FC<PasswordRequireDialogProps> = (props) => {
 	const { correctPassword, isOpen, onClose } = props;
+	const { t } = useTranslation();
 	const toast = useToast();
 	const navigate = useNavigate();
 	const [password, setPassword] = useState<string>('');
@@ -28,7 +30,7 @@ export const PasswordRequireDialog: FC<PasswordRequireDialogProps> = (props) => 
 			onClose();
 		} else {
 			toast({
-				title: 'Wrong password',
+				title: t('Wrong password'),
 				position: 'top',
 				status: 'error',
 				duration: 4000,
@@ -39,15 +41,15 @@ export const PasswordRequireDialog: FC<PasswordRequireDialogProps> = (props) => 
 
 	return (
 		<AppDialog
-			header='This quiz requires a password'
+			header={t('This quiz requires a password')}
 			body={
 				<Input
-					placeholder='Enter password'
+					placeholder={t('Enter password')}
 					value={password}
 					onChange={onChangePassword}
 				/>
 			}
-			actionText='submit'
+			actionText={t('submit')}
 			actionHandler={onSubmitPassword}
 			isOpen={isOpen}
 			onClose={onCloseDialog}

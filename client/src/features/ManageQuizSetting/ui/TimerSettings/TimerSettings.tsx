@@ -12,6 +12,7 @@ import {
 	Switch,
 } from '@chakra-ui/react';
 import { memo, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getQueryParam } from 'shared/utils';
 
 import { QuizService } from '../../api/QuizService';
@@ -21,6 +22,7 @@ interface TimerSettingProps {
 }
 
 export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
+	const { t } = useTranslation();
 	const [isTimerEnabled, setIsTimerEnabled] = useState<boolean>(false);
 	const [showLimit, setShowLimit] = useState<boolean>(false);
 	const [minutes, setMinutes] = useState<number>(1);
@@ -103,7 +105,7 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 			<FormControl display='flex' alignItems='center' mb='5px'>
 				<Flex justifyContent='space-between' w='100%'>
 					<Flex alignItems='center'>
-						<FormLabel htmlFor='quiz-timer'>Enable quiz timer</FormLabel>
+						<FormLabel htmlFor='quiz-timer'>{t('Enable quiz timer')}</FormLabel>
 						<Switch
 							id='quiz-timer'
 							isChecked={isTimerEnabled}
@@ -130,7 +132,7 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 						variant='outline'
 						m='0 10px 10px 0'
 					>
-						Set limit
+						{t('Set limit')}
 					</Button>
 					<Collapse in={showLimit} animateOpacity>
 						<Flex>
@@ -144,7 +146,8 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 									.fill(0)
 									.map((_, index) => (
 										<option value={index} key={index}>
-											{index} minutes
+											{index}&nbsp;
+											{t('minutes')}
 										</option>
 									))}
 							</Select>
@@ -158,7 +161,8 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 									.fill(0)
 									.map((_, index) => (
 										<option value={index} key={index}>
-											{index} seconds
+											{index}&nbsp;
+											{t('seconds')}
 										</option>
 									))}
 							</Select>

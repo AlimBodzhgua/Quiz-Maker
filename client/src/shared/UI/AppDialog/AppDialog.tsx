@@ -11,6 +11,7 @@ import {
 	Button,
 } from '@chakra-ui/react';
 import { memo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface AppDialogProps extends Omit<AlertDialogProps, 'leastDestructiveRef' | 'children'> {
 	header: ReactNode;
@@ -33,6 +34,7 @@ export const AppDialog: FC<AppDialogProps> = memo((props) => {
 		actionHandler,
 		...otherProps
 	} = props;
+	const { t } = useTranslation();
 	const cancelRef = useRef<HTMLButtonElement>(null);
 
 	return (
@@ -55,7 +57,7 @@ export const AppDialog: FC<AppDialogProps> = memo((props) => {
 
 						<AlertDialogFooter>
 							<Button onClick={onClose} ref={cancelRef}>
-								Cancel
+								{t('Cancel')}
 							</Button>
 							<Button colorScheme='red' onClick={actionHandler} ml={3}>
 								{actionText}

@@ -3,6 +3,7 @@ import type { Quiz } from '../../model/types';
 import { DeleteIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { Button, Checkbox, Flex, ScaleFade, Td, Tr, useDisclosure } from '@chakra-ui/react';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { AppDialog } from 'shared/UI';
 import { getQuizPage } from 'shared/utils';
@@ -17,9 +18,10 @@ interface UserQuizTableRowProps {
 }
 
 export const UserQuizTableRow: FC<UserQuizTableRowProps> = memo(({ quiz }) => {
+	const { t } = useTranslation();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [participiantsAmount, setParticipiantsAmount] = useState<number>(0);
+	const [participantsAmount, setParticipantsAmount] = useState<number>(0);
 	const [questionsAmount, setQuestionsAmount] = useState<number>(0);
 
 	const isSelecting = useQuizzesStore((state) => state.isSelecting);
@@ -33,11 +35,11 @@ export const UserQuizTableRow: FC<UserQuizTableRowProps> = memo(({ quiz }) => {
 
 	const initQuizExtraData = async () => {
 		const [participantsAmount, questionsAmount] = await Promise.all([
-			QuizService.countParticipiants(quiz._id),
+			QuizService.countParticipants(quiz._id),
 			QuestionService.countQuizQuestions(quiz._id),
 		]);
 
-		setParticipiantsAmount(participantsAmount);
+		setParticipantsAmount(participantsAmount);
 		setQuestionsAmount(questionsAmount);
 	};
 
@@ -83,14 +85,14 @@ export const UserQuizTableRow: FC<UserQuizTableRowProps> = memo(({ quiz }) => {
 							overflow: 'hidden',
 						}}
 					>
-{quiz.title}
-     </Link>
+						{quiz.title}
+					</Link>
 					<PrivacyIcons privacy={quiz.privacy} />
 				</Flex>
 			</Td>
 			<Td>{formatter.format(new Date(quiz.createdAt)).split('/').join('.')}</Td>
 			<Td isNumeric>{questionsAmount}</Td>
-			<Td isNumeric>{participiantsAmount}</Td>
+			<Td isNumeric>{participantsAmount}</Td>
 			<Td>
 				<Flex align='center' gap='10px' justifyContent='center'>
 					<Button
@@ -105,9 +107,9 @@ export const UserQuizTableRow: FC<UserQuizTableRowProps> = memo(({ quiz }) => {
 
 					<AppDialog
 						isOpen={isOpen}
-						header={`Delete Quiz: ${quiz.title}`}
-						body={'Are you sure? You can\'t undo this action afterwards.'}
-						actionText='Delete'
+						header={`${t('Delete Quiz')}: ${quiz.title}`}
+						body={t('Are you sure? You can\'t undo this action afterwards.')}
+						actionText={t('Delete')}
 						actionHandler={handleRemove}
 						onClose={onClose}
 					>

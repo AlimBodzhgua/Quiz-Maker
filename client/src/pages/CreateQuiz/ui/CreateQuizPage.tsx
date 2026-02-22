@@ -10,10 +10,12 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { getQueryParam } from 'shared/utils';
 import { Page } from 'widgets/Page';
+import { useTranslation } from 'react-i18next';
 
 const CreateQuizPage: FC = () => {
 	const toast = useToast();
 	const navigate = useNavigate();
+	const { t } = useTranslation();
 
 	const savedQuestionsAmount = useCreateQuiz((state) => state.savedQuestionsAmount);
 	const quizId = useCreateQuiz((state) => state.quizId);
@@ -85,11 +87,11 @@ const CreateQuizPage: FC = () => {
 					_hover={{}}
 					_active={{}}
 				>
-					+ Add Question
+					+ {t('Add Question')}
 				</Button>
 				<Flex alignSelf='flex-end' alignItems='center' gap='10px'>
 					<Box>
-						Questions:
+						{t('Questions')}:
 						{savedQuestionsAmount}
 					</Box>
 					<Button
@@ -102,7 +104,7 @@ const CreateQuizPage: FC = () => {
 						target='_blank'
 					>
 						<ViewIcon mr='10px' />
-						<Text>Preview</Text>
+						<Text>{t('Preview')}</Text>
 					</Button>
 					<Button
 						colorScheme='cyan'
@@ -110,7 +112,7 @@ const CreateQuizPage: FC = () => {
 						disabled={savedQuestionsAmount === 0}
 						onClick={onComplete}
 					>
-						Complete
+						{t('Complete')}
 					</Button>
 				</Flex>
 			</Box>

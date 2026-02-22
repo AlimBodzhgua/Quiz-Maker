@@ -2,11 +2,13 @@ import type { FC } from 'react';
 import type { SortFieldType } from '../../model/types';
 import { Th, Thead, Tr } from '@chakra-ui/react';
 import { memo, useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { sortField } from 'shared/constants';
 import { ColumnToggleSort } from './ColumnToggleSort';
 
 export const PublicQuizzesTableHeader: FC = memo(() => {
-	const [acitveField, setActiveField] = useState<SortFieldType | null>(null);
+	const { t } = useTranslation();
+	const [activeField, setActiveField] = useState<SortFieldType | null>(null);
 
 	const onChangeActiveField = useCallback((field: SortFieldType) => {
 		setActiveField(field);
@@ -19,21 +21,21 @@ export const PublicQuizzesTableHeader: FC = memo(() => {
 					<ColumnToggleSort
 						text='Name'
 						sortField={sortField.name}
-						activeField={acitveField}
+						activeField={activeField}
 						onChangeActiveField={onChangeActiveField}
 					/>
 				</Th>
 				<Th>
 					<ColumnToggleSort
-						text='Date'
+						text={t('Date')}
 						sortField={sortField.date}
-						activeField={acitveField}
+						activeField={activeField}
 						onChangeActiveField={onChangeActiveField}
 					/>
 				</Th>
-				<Th isNumeric>Questions</Th>
-				<Th isNumeric>Number of participants</Th>
-				<Th>Author</Th>
+				<Th isNumeric>{t('Questions')}</Th>
+				<Th isNumeric>{t('Number of participants')}</Th>
+				<Th>{t('Author')}</Th>
 			</Tr>
 		</Thead>
 	);

@@ -11,6 +11,7 @@ import {
 	useToast,
 } from '@chakra-ui/react';
 import { memo, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PrivacyValues } from 'shared/constants';
 import { getQueryParam } from 'shared/utils';
 import { QuizService } from '../../api/QuizService';
@@ -26,6 +27,7 @@ interface PrivacySettingProps {
 
 export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 	const toast = useToast();
+	const { t } = useTranslation();
 	const [privacy, setPrivacy] = useState<PrivacyTypeValue>(PrivacyValues.restrictedUsers);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>('');
@@ -94,7 +96,7 @@ export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 					mr='15px'
 					minW='90px'
 				>
-					Quiz Privacy
+					{t('Quiz Privacy')}
 				</Heading>
 				<Button
 					size='xs'

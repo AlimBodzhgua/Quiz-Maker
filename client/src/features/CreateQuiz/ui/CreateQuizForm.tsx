@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { useQuizzesStore } from 'entities/Quiz';
 import { memo, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useHover } from 'shared/lib/hooks';
 import { AppDialog } from 'shared/UI';
@@ -32,6 +33,7 @@ interface CreateQuizFormProps {
 
 export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 	const { renderQuizSettingsManager } = props;
+	const { t } = useTranslation();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const {
 		isOpen: isSettingsModalOpen,
@@ -98,7 +100,7 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 		<Flex gap='15px' {...hoverProps}>
 			<InputGroup>
 				<Input
-					placeholder='Quiz title...'
+					placeholder={t('Quiz title')}
 					value={title}
 					onChange={onTitleChange}
 					disabled={isSaved}
@@ -111,8 +113,8 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 								<EditIcon />
 							</Button>
 							<AppDialog
-								header='Delete quiz'
-								body='Are you sure you want to delete quiz?'
+								header={t('Delete quiz')}
+								body={t('Are you sure you want to delete quiz?')}
 								actionText='delete'
 								isOpen={isOpen}
 								onClose={onClose}
@@ -132,7 +134,7 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 							hasArrow
 							placement='bottom'
 							isDisabled={!isSmallLength}
-							label='Title must be at least 4 characters long'
+							label={t('Title must be at least 4 characters long')}
 						>
 							<Button
 								onClick={onSaveQuiz}
@@ -142,11 +144,12 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 								{isSaved
 									? (
 										<Flex gap='5px' align='center'>
-											Saved&nbsp;
+											{t('Saved')}
+											&nbsp;
 											<CheckIcon fontSize='14px' />
 										</Flex>
 									)
-									: 'Save'
+									: t('Save')
 								}
 							</Button>
 						</Tooltip>

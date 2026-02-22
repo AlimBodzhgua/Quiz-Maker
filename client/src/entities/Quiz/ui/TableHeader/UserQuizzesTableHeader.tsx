@@ -3,18 +3,20 @@ import type { SortFieldType } from '../../model/types';
 import { DeleteIcon, MinusIcon } from '@chakra-ui/icons';
 import { Button, Flex, ScaleFade, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react';
 import { memo, useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { sortField } from 'shared/constants';
 import { AppDialog } from 'shared/UI';
 import { useQuizzesStore } from '../../model/store/quizzes';
 import { ColumnToggleSort } from './ColumnToggleSort';
 
 export const UserQuizzesTableHeader: FC = memo(() => {
+	const { t } = useTranslation();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const resetSelectedList = useQuizzesStore((state) => state.resetSelectedList);
 	const selectedQuizzes = useQuizzesStore((state) => state.selectedQuizzes);
 	const isSelecting = useQuizzesStore((state) => state.isSelecting);
 	const removeSelectedList = useQuizzesStore((state) => state.removeSelectedList);
-	const [acitveField, setActiveField] = useState<SortFieldType | null>(null);
+	const [activeField, setActiveField] = useState<SortFieldType | null>(null);
 
 	const handleRemove = useCallback(() => {
 		removeSelectedList();
@@ -46,9 +48,9 @@ export const UserQuizzesTableHeader: FC = memo(() => {
 						</Button>
 						<AppDialog
 							isOpen={isOpen}
-							header='Delete selected quizzes'
-							body={'Are you sure? You can\'t undo this action afterwards.'}
-							actionText='Delete'
+							header={t('Delete selected quizzes')}
+							body={t('Are you sure? You can\'t undo this action afterwards.')}
+							actionText={t('Delete')}
 							actionHandler={handleRemove}
 							onClose={onClose}
 						>
@@ -70,23 +72,23 @@ export const UserQuizzesTableHeader: FC = memo(() => {
 				</Th>
 				<Th>
 					<ColumnToggleSort
-						text='Name'
+						text={t('Name')}
 						sortField={sortField.name}
-						activeField={acitveField}
+						activeField={activeField}
 						onChangeActiveField={onChangeActiveField}
 					/>
 				</Th>
 				<Th>
 					<ColumnToggleSort
-						text='Date'
+						text={t('Date')}
 						sortField={sortField.date}
-						activeField={acitveField}
+						activeField={activeField}
 						onChangeActiveField={onChangeActiveField}
 					/>
 				</Th>
-				<Th isNumeric>Questions</Th>
-				<Th isNumeric>Number of participants</Th>
-				<Th><Flex justifyContent='center'>Action</Flex></Th>
+				<Th isNumeric>{t('Questions')}</Th>
+				<Th isNumeric>{t('Number of participants')}</Th>
+				<Th><Flex justifyContent='center'>{t('Action')}</Flex></Th>
 			</Tr>
 		</Thead>
 	);

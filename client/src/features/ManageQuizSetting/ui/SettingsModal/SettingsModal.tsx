@@ -10,6 +10,7 @@ import {
 	ModalOverlay,
 } from '@chakra-ui/react';
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { PrivacySettings } from '../PrivacySettings/PrivacySettings';
 import { TimerSettings } from '../TimerSettings/TimerSettings';
@@ -26,12 +27,13 @@ export const SettingsModal: FC<SettingsModalProps> = memo((props) => {
 		onClose,
 		onUpdate,
 	} = props;
+	const { t } = useTranslation();
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<ModalOverlay />
 			<ModalContent minW='540px' minH='460px'>
-				<ModalHeader>Settings</ModalHeader>
+				<ModalHeader>{t('Settings')}</ModalHeader>
 				<ModalBody>
 					<TimerSettings onUpdate={onUpdate} />
 					<Divider mb='10px' />

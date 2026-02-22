@@ -26,7 +26,7 @@ export const PublicQuizTableRow: FC<PublicQuizTableRowProps> = memo((props) => {
 		setIsLoading(true);
 
 		const [participantsAmount, questionsAmount, user] = await Promise.all([
-			QuizService.countParticipiants(quiz._id),
+			QuizService.countParticipants(quiz._id),
 			QuestionService.countQuizQuestions(quiz._id),
 			UserService.getUserData(quiz.authorId),
 		]);

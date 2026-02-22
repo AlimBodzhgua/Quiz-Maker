@@ -14,6 +14,7 @@ import {
 	Text,
 } from '@chakra-ui/react';
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { Timer } from 'shared/UI';
 import { getQuizPage } from 'shared/utils';
@@ -24,6 +25,7 @@ interface CompletedQuizzesItemProps {
 }
 
 export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo(({ quiz }) => {
+	const { t } = useTranslation();
 	const removeQuiz = useCompletedQuizzes((state) => state.removeQuiz);
 	const removeStatus = useCompletedQuizzes((state) => state.fetchQuizzesStatus);
 	const isLoading = removeStatus === 'pending';
@@ -56,19 +58,23 @@ export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo(({ quiz 
 				</CardHeader>
 				<CardBody>
 					<Flex alignItems='center' justifyContent='space-between'>
-						<Heading size='sm'>Total Questions:</Heading>
+						<Heading size='sm'>
+							{t('Total Questions')}:
+						</Heading>
 						<Text>{quiz.correct + quiz.incorrect}</Text>
 					</Flex>
 					<Divider />
 					<Flex m='5px 0' alignItems='center' justifyContent='space-between'>
-						<Heading size='sm'>Test result:</Heading>
+						<Heading size='sm'>
+							{t('Test result')}:
+						</Heading>
 						<Flex flexDirection='column' textAlign='end'>
 							<Text color='green.400'>
-								Correct:
+								{t('Correct')}:
 								{quiz.correct}
 							</Text>
 							<Text color='red.400'>
-								Incorrect:
+								{t('Incorrect')}:
 								{quiz.incorrect}
 							</Text>
 						</Flex>
@@ -77,7 +83,7 @@ export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo(({ quiz 
 					{quiz.timeResult && (
 						<Flex m='5px 0' alignItems='center' justifyContent='space-between'>
 							<Heading size='sm' mr='32px'>
-								Time result:
+								{t('Time result')}:
 							</Heading>
 							<Timer
 								minutes={quiz.timeResult.minutes}
@@ -98,7 +104,7 @@ export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo(({ quiz 
 						as={RouterLink}
 						to={getQuizPage(quiz.quizId)}
 					>
-						<Text>try again</Text>
+						<Text>{t('try again')}</Text>
 						<RepeatIcon />
 					</Button>
 				</CardFooter>

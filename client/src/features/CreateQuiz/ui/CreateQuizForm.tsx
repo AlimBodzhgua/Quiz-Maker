@@ -105,11 +105,16 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 					onChange={onTitleChange}
 					disabled={isSaved}
 					ref={inputRef}
+					flex={1}
 				/>
-				<InputRightAddon maxW='15%' w='100%' display='flex' justifyContent='center'>
+				<InputRightAddon
+					display='flex'
+					w='100%'
+					maxW='fit-content'
+				>
 					{isSaved && isHover ? (
-						<Flex justify='center' align='flex-start' width='100%'>
-							<Button size='sm' onClick={onEdit} _hover={{ color: 'blue.500' }}>
+						<Flex justify='center' align='flex-start'>
+							<Button size='md' onClick={onEdit} _hover={{ color: 'blue.500' }}>
 								<EditIcon />
 							</Button>
 							<AppDialog
@@ -121,7 +126,7 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 								actionHandler={onRemove}
 							>
 								<Button
-									size='sm'
+									size='md'
 									onClick={onOpen}
 									_hover={{ color: 'red.400' }}
 								>
@@ -141,16 +146,15 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 								disabled={isSaved || isSmallLength}
 								isLoading={isLoading}
 							>
-								{isSaved
-									? (
-										<Flex gap='5px' align='center'>
-											{t('Saved')}
-											&nbsp;
-											<CheckIcon fontSize='14px' />
-										</Flex>
-									)
-									: t('Save')
-								}
+								{isSaved ? (
+									<Flex gap='5px' align='center'>
+										{t('Saved')}
+										&nbsp;
+										<CheckIcon fontSize='14px' />
+									</Flex>
+								) : (
+									t('Save')
+								)}
 							</Button>
 						</Tooltip>
 					)}

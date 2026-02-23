@@ -3,6 +3,7 @@ import type { FC } from 'react';
 
 import { Select } from '@chakra-ui/react';
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { QuestionTypes } from 'shared/constants';
 
 import { capitalizeFirstLetter, splitCamelCaseLetter } from '../../lib/utils';
@@ -19,6 +20,7 @@ export const QuestionTypeSelector: FC<QuestionTypeSelectorProps> = memo((props) 
 		disabled,
 		onChange,
 	} = props;
+	const { t } = useTranslation();
 
 	return (
 		<Select
@@ -29,7 +31,9 @@ export const QuestionTypeSelector: FC<QuestionTypeSelectorProps> = memo((props) 
 			bg='whiteAlpha.900'
 		>
 			{Object.values(QuestionTypes).map((type) => (
-				<option value={type} key={type}>{splitCamelCaseLetter(capitalizeFirstLetter(type))}</option>
+				<option value={type} key={type}>
+					{t(`${splitCamelCaseLetter(capitalizeFirstLetter(type))}`)}
+				</option>
 			))}
 		</Select>
 	);

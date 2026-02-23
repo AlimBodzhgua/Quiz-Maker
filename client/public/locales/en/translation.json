@@ -103,5 +103,10 @@
 	"Save": "Save",
 	"Saved": "Saved",
 	"Preview": "Preview",
-	"Complete": "Complete"
+	"Complete": "Complete",
+
+	"Multiple Answer": "Multiple Answer",
+	"One Answer": "One Answer",
+	"Input Answer": "Input Answer",
+	"True Or False": "True Or False"
 }

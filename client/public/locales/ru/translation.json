@@ -102,5 +102,10 @@
 	"Save": "Сохранить",
 	"Saved": "Сохранено",
 	"Preview": "Предпросмотр",
-	"Complete": "Завершить"
+	"Complete": "Завершить",
+
+	"Multiple Answer": "Несколько Ответов",
+	"One Answer": "Один Ответ",
+	"Input Answer": "Ввод Ответа",
+	"True Or False": "Правда или Ложь"
 }

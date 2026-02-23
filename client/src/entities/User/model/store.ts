@@ -6,6 +6,7 @@ import { devtools } from 'zustand/middleware';
 
 interface UserState {
 	user: User | null;
+	error?: string;
 	_mounted: boolean;
 
 	signInStatus: 'idle' | 'pending' | 'success' | 'failed';
@@ -58,7 +59,9 @@ export const useUserStore = create<UserAction & UserState>()(
 
 				set({ user, _mounted: true, initUserStatus: 'success' }, false, 'initUserSuccess');
 			} catch (err) {
-				set({ initUserStatus: 'failed' }, false, 'initUserFailed');
+				const errorMsg = err instanceof Error ? err.message : 'initUser error';
+
+				set({ initUserStatus: 'failed', error: errorMsg }, false, 'initUserFailed');
 			} finally {
 				set({ _mounted: true }, false, 'initUserMounted');
 			}
@@ -79,7 +82,9 @@ export const useUserStore = create<UserAction & UserState>()(
 
 				set({ user, signInStatus: 'success' }, false, 'signInUserSuccess');
 			} catch (err) {
-				set({ signInStatus: 'failed' }, false, 'signInUserFailed');
+				const errorMsg = err instanceof Error ? err.message : 'signin error';
+
+				set({ signInStatus: 'failed', error: errorMsg }, false, 'signInUserFailed');
 			}
 		},
 
@@ -102,7 +107,9 @@ export const useUserStore = create<UserAction & UserState>()(
 
 				set({ user, signUpStatus: 'success' }, false, 'signUpSuccess');
 			} catch (err) {
-				set({ signUpStatus: 'failed' }, false, 'signUpFailed');
+				const errorMsg = err instanceof Error ? err.message : 'signin error';
+
+				set({ signUpStatus: 'failed', error: errorMsg }, false, 'signUpFailed');
 			}
 		},
 	})),

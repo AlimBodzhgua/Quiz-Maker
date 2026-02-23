@@ -6,6 +6,7 @@ import { devtools } from 'zustand/middleware';
 interface QuizState {
 	quizzes: Quiz[];
 	sortedAndFilteredQuizzes: Quiz[];
+	error?: string;
 
 	isSelecting: boolean;
 	selectedQuizzes: string[];
@@ -14,7 +15,7 @@ interface QuizState {
 	page: number;
 
 	getUserQuizzesStatus: 'idle' | 'pending' | 'success' | 'failed';
-	getPublicQuizzesStaus: 'idle' | 'pending' | 'success' | 'failed';
+	getPublicQuizzesStatus: 'idle' | 'pending' | 'success' | 'failed';
 	removeQuizStatus: 'idle' | 'pending' | 'success' | 'failed';
 }
 
@@ -45,7 +46,7 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 		selectedQuizzes: [],
 
 		getUserQuizzesStatus: 'idle',
-		getPublicQuizzesStaus: 'idle',
+		getPublicQuizzesStatus: 'idle',
 		removeQuizStatus: 'idle',
 
 		getUserQuizzes: async (userId, page = 1) => {
@@ -68,12 +69,19 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 				}, false, 'getUserQuizzesStatusSuccess');
 				return response.data;
 			} catch (err) {
-				set({ getUserQuizzesStatus: 'failed' }, false, 'getUserQuizzesFailed');
+				const errorMsg = err instanceof Error ? err.message : 'getUserQuizzes error';
+
+				set(
+					{ getUserQuizzesStatus: 'failed', error: errorMsg },
+					false,
+					'getUserQuizzesFailed',
+				);
 			}
 		},
 
 		getPublicQuizzes: async (page) => {
-			set({ getPublicQuizzesStaus: 'pending' }, false, 'getPublicQuizzesPending');
+			set({ getPublicQuizzesStatus: 'pending' }, false, 'getPublicQuizzesPending');
+
 			try {
 				set({ page });
 
@@ -87,15 +95,26 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 
 				const quizzes = response.data;
 
-				set({
-					quizzes,
-					sortedAndFilteredQuizzes: quizzes,
-					getPublicQuizzesStaus: 'success',
-				}, false, 'getPublicQuizzesSuccess');
+				set(
+					{
+						quizzes,
+						sortedAndFilteredQuizzes: quizzes,
+						getPublicQuizzesStatus: 'success',
+					},
+					false,
+					'getPublicQuizzesSuccess',
+				);
+
 				return quizzes as Quiz[];
 			} catch (err) {
-				set({ getPublicQuizzesStaus: 'failed' }, false, 'getPublicQuizzesFailed');
-				throw new Error('Failed to fecth public quizzes');
+				const errorMsg = err instanceof Error ? err.message : 'getPublicQuizzes error';
+
+				set(
+					{ getPublicQuizzesStatus: 'failed', error: errorMsg },
+					false,
+					'getPublicQuizzesFailed',
+				);
+				return [];
 			}
 		},
 
@@ -110,18 +129,25 @@ export const useQuizzesStore = create<QuizState & QuizAction>()(
 				const allQuizzes = get().quizzes.filter((quiz) => quiz._id !== quizId);
 				const sortedQuizzes = get().sortedAndFilteredQuizzes.filter((quiz) => quiz._id !== quizId);
 
-				set({
-					quizzes: allQuizzes,
-					sortedAndFilteredQuizzes: sortedQuizzes,
-					removeQuizStatus: 'success',
-				}, false, 'removeQuizSuccess');
+				set(
+					{
+						quizzes: allQuizzes,
+						sortedAndFilteredQuizzes: sortedQuizzes,
+						removeQuizStatus: 'success',
+					},
+					false,
+					'removeQuizSuccess',
+				);
 			} catch (err) {
-				set({ removeQuizStatus: 'failed' }, false, 'removeQuizFailed');
+				const errorMsg = err instanceof Error ? err.message : 'removeQuiz error';
+
+				set({ removeQuizStatus: 'failed', error: errorMsg }, false, 'removeQuizFailed');
 			}
 		},
 
 		toggleSelect: () => {
 			set({ isSelecting: !get().isSelecting });
+
 			if (!get().isSelecting) {
 				get().resetSelectedList();
 			}

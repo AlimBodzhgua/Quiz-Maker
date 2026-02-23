@@ -12,10 +12,10 @@ import { QuestionService } from '../../../api/QuestionService';
 import { useQuestionForm } from '../../../lib/hooks/useQuestionForm';
 import {
 	changeListOrder,
+	isAnswersValid,
 	removeItemAndFixListOrder,
 	setIsCorrectMatchedType,
 } from '../../../lib/utils';
-import { isAnswersValid } from '../../../lib/utils';
 import { useCreateQuiz } from '../../../model/store';
 import { AddAnswerButton } from './AddAnswerButton';
 import { AnswersList } from './AnswersList';

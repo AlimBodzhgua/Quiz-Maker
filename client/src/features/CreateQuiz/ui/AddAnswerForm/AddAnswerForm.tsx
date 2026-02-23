@@ -2,8 +2,8 @@ import type { AnswerForm } from 'entities/Quiz';
 import type { FC } from 'react';
 import { DeleteIcon, DragHandleIcon } from '@chakra-ui/icons';
 import { Button, Checkbox, Flex, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
-import { useTranslation } from 'react-i18next';
 import { memo, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SortableItem } from 'shared/lib/components/SortableItem';
 import { useDebounce, useHover } from 'shared/lib/hooks';
 

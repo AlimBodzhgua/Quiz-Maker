@@ -1,6 +1,5 @@
 import type { FC } from 'react';
 
-import { memo, useEffect, useState } from 'react';
 import { EmailIcon, LockIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import {
 	Button,
@@ -11,8 +10,9 @@ import {
 	InputLeftElement,
 	InputRightElement,
 } from '@chakra-ui/react';
-import { useTranslation } from 'react-i18next';
 import { useSignInUser } from 'entities/User';
+import { memo, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const LoginForm: FC = memo(() => {
 	const { t } = useTranslation();

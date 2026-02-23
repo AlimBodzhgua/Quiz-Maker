@@ -9,9 +9,9 @@ import {
 	InputLeftElement,
 	InputRightElement,
 } from '@chakra-ui/react';
-import { useTranslation } from 'react-i18next';
 import { useSignUpUser } from 'entities/User';
 import { memo, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const RegisterForm: FC = memo(() => {
 	const { t } = useTranslation();

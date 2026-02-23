@@ -5,6 +5,7 @@ import { CompletedQuizService } from '../api/CompletedQuizService';
 
 type CompletedQuizState = {
 	quizzes: CompletedQuiz[];
+	error?: string;
 	removeQuizStatus: 'idle' | 'pending' | 'success' | 'failed';
 	fetchQuizzesStatus: 'idle' | 'pending' | 'success' | 'failed';
 };
@@ -29,7 +30,9 @@ export const useCompletedQuizzes = create<CompletedQuizState & CompletedQuizActi
 
 				return quizzes;
 			} catch (err) {
-				set({ fetchQuizzesStatus: 'failed' });
+				const errorMsg = err instanceof Error ? err.message : 'fetchQuizzes error';
+
+				set({ fetchQuizzesStatus: 'failed', error: errorMsg });
 			}
 		},
 
@@ -43,7 +46,9 @@ export const useCompletedQuizzes = create<CompletedQuizState & CompletedQuizActi
 
 				set({ quizzes, removeQuizStatus: 'success' });
 			} catch (err) {
-				set({ removeQuizStatus: 'failed' });
+				const errorMsg = err instanceof Error ? err.message : 'fetchQuizzes error';
+
+				set({ removeQuizStatus: 'failed', error: errorMsg });
 			}
 		},
 	})),

@@ -10,6 +10,7 @@ interface CurrentQuizState {
 	correctAnswers: number;
 	incorrectAnswers: number;
 	answeredQuestionIds: string[];
+	error?: string;
 
 	fetchQuizStatus: 'idle' | 'pending' | 'success' | 'failed';
 	fetchQuizQuestionsStatus: 'idle' | 'pending' | 'success' | 'failed';
@@ -57,7 +58,9 @@ export const useCurrentQuiz = create<CurrentQuizState & CurrentQuizAction>()(
 				set({ quiz, fetchQuizStatus: 'success' }, false, 'fetchQuizSuccess');
 				return quiz;
 			} catch (err) {
-				set({ fetchQuizStatus: 'failed' }, false, 'fetchQuizFailed');
+				const errorMsg = err instanceof Error ? err.message : 'fetchQuiz error';
+
+				set({ fetchQuizStatus: 'failed', error: errorMsg }, false, 'fetchQuizFailed');
 			}
 		},
 
@@ -66,20 +69,30 @@ export const useCurrentQuiz = create<CurrentQuizState & CurrentQuizAction>()(
 			try {
 				const questions = await QuestionService.fetchCurrentQuizQuestions(quizId);
 
-				set({
-					questions,
-					fetchQuizQuestionsStatus: 'success',
-				}, false, 'fetchCurrentQuizQuestionsSuccess');
+				set(
+					{ questions, fetchQuizQuestionsStatus: 'success' },
+					false,
+					'fetchCurrentQuizQuestionsSuccess',
+				);
 			} catch (err) {
-				set({ fetchQuizQuestionsStatus: 'failed' }, false, 'fetchQuizQuestionsFailed');
+				const errorMsg = err instanceof Error ? err.message : 'fetchQuizQuestions error';
+
+				set(
+					{ fetchQuizQuestionsStatus: 'failed', error: errorMsg },
+					false,
+					'fetchQuizQuestionsFailed',
+				);
 			}
 		},
 
 		getCurrentQuiz: async (quizId) => {
 			set({ getCurrentQuizStatus: 'pending' }, false, 'getCurrentQuizPending');
+
 			const quiz = await get().fetchQuiz(quizId);
 			await get().fetchQuizQuestions(quizId);
+
 			set({ getCurrentQuizStatus: 'success' }, false, 'getCurrentQuizSuccess');
+			
 			return quiz;
 		},
 

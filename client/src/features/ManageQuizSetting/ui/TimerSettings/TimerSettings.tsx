@@ -146,7 +146,8 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 									.fill(0)
 									.map((_, index) => (
 										<option value={index} key={index}>
-											{index}&nbsp;
+											{index}
+											&nbsp;
 											{t('minutes')}
 										</option>
 									))}
@@ -161,7 +162,8 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 									.fill(0)
 									.map((_, index) => (
 										<option value={index} key={index}>
-											{index}&nbsp;
+											{index}
+											&nbsp;
 											{t('seconds')}
 										</option>
 									))}

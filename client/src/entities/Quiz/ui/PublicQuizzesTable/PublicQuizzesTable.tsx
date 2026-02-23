@@ -10,10 +10,10 @@ import { PublicQuizTableRow } from './PublicQuizTableRow';
 export const PublicQuizzesTable: FC = memo(() => {
 	const getPublicQuizzes = useQuizzesStore((state) => state.getPublicQuizzes);
 	const { quizzes, publicPagesAmount } = useQuizzes({ type: 'public' });
-	const getPublicQiuzzesStatus = useQuizzesStore((state) => state.getPublicQuizzesStaus);
+	const getPublicQuizzesStatus = useQuizzesStore((state) => state.getPublicQuizzesStatus);
 	const page = useQuizzesStore((state) => state.page);
-	const isLoading = getPublicQiuzzesStatus === 'pending';
-	const haveError = getPublicQiuzzesStatus === 'failed';
+	const isLoading = getPublicQuizzesStatus === 'pending';
+	const haveError = getPublicQuizzesStatus === 'failed';
 
 	return (
 		<>

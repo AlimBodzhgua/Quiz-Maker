@@ -15,6 +15,8 @@ interface CreateQuizState {
 }
 
 interface CreateQuizActions {
+	setQuestionDescription: (id: string, description: string) => void;
+
 	resetQuizData: () => void;
 	createQuiz: (title: string) => Promise<Quiz>;
 	updateQuiz: (newQuiz: Partial<Quiz>) => Promise<Quiz>;
@@ -33,6 +35,17 @@ export const useCreateQuiz = create<CreateQuizState & CreateQuizActions>()(
 
 		resetQuizData: () => {
 			set({ quizId: null, questions: [], savedQuestionsAmount: 0 }, false, 'resetQuiz');
+		},
+
+		setQuestionDescription: (id: string, description: string) => {
+			const updatedQuestions = get().questions.map((question) => {
+				if (question._id === id) {
+					return { ...question, description: description };
+				} return question;
+			})
+			console.log(updatedQuestions)
+
+			set({ questions: updatedQuestions }, false, 'setQuestionDescription');
 		},
 
 		createQuiz: async (title: string) => {
@@ -60,11 +73,15 @@ export const useCreateQuiz = create<CreateQuizState & CreateQuizActions>()(
 		},
 
 		createQuestion: () => {
-			return { _id: create24CharId(), order: get().questions.length + 1 };
+			return {
+				_id: create24CharId(),
+				description: '',
+				order: get().questions.length + 1,
+			};
 		},
 
 		addQuestion: () => {
-			set({ questions: [...get().questions, get().createQuestion()] }, false, 'addQustion');
+			set({ questions: [...get().questions, get().createQuestion()] }, false, 'addQuestion');
 		},
 
 		removeQuestion: (questionId) => {

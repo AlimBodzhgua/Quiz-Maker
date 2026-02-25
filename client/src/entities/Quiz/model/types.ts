@@ -71,7 +71,7 @@ export type PublicUserData = {
 };
 
 export type AnswerForm = Omit<Answer, 'questionId'>;
-export type QuestionForm = Pick<Question, '_id' | 'order'>;
+export type QuestionForm = Pick<Question, '_id' | 'order' | 'description'>;
 
 export type SortFieldType = keyof typeof sortField;
 export type SortDirectionType = keyof typeof sortDirection;

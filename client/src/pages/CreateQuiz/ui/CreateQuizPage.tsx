@@ -1,9 +1,14 @@
 import type { FC } from 'react';
 
 import { ViewIcon } from '@chakra-ui/icons';
-import { Box, Button, Flex, Heading, Text, useToast } from '@chakra-ui/react';
+import { Box, Button, Flex, Text, useToast } from '@chakra-ui/react';
 import { useQuizzesStore } from 'entities/Quiz';
-import { AddQuestionFormList, CreateQuizForm, useCreateQuiz } from 'features/CreateQuiz';
+import {
+	AddQuestionFormList,
+	CreateQuizForm,
+	SidebarQuestionsList,
+	useCreateQuiz,
+} from 'features/CreateQuiz';
 import { SettingsModal } from 'features/ManageQuizSetting';
 import { useCallback, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -57,65 +62,65 @@ const CreateQuizPage: FC = () => {
 
 	return (
 		<Page>
-			<Heading m='20px 0' fontWeight='normal' color='blue.400'>
-				Create a new quiz
-			</Heading>
-			<Box
-				display='flex'
-				flexDirection='column'
-				gap='10px'
-				border='1px'
-				borderColor='blue.400'
-				borderRadius='12px'
-				w='70%'
-				p='20px'
-			>
-				<CreateQuizForm
-					renderQuizSettingsManager={(params) => <SettingsModal {...params} />}
-				/>
+			<Flex width='100%' gap='12px' my='32px'>
+				<SidebarQuestionsList questions={questions} />
 
-				{!!questions.length && <AddQuestionFormList />}
-
-				<Button
-					onClick={onAddQuestion}
-					size='lg'
-					bgColor='#e6007e'
-					color='white'
-					m='8px 0'
-					textTransform='uppercase'
-					bgImage='linear-gradient(to right, #ff512f 0%, #dd2476 51%, #ff512f 100%)'
-					_hover={{}}
-					_active={{}}
+				<Box
+					display='flex'
+					flexDirection='column'
+					gap='10px'
+					border='1px'
+					borderColor='blue.400'
+					borderRadius='12px'
+					w='70%'
+					p='20px'
 				>
-					+ {t('Add Question')}
-				</Button>
-				<Flex alignSelf='flex-end' alignItems='center' gap='10px'>
-					<Box>
-						{t('Questions')}:
-						{savedQuestionsAmount}
-					</Box>
+					<CreateQuizForm
+						renderQuizSettingsManager={(params) => <SettingsModal {...params} />}
+					/>
+
+					{!!questions.length && <AddQuestionFormList />}
+
 					<Button
-						as={Link}
-						state={{ page: '#PREVIEW' }}
-						to={`/quiz/${getQueryParam('id')}#PREVIEW`}
-						disabled={savedQuestionsAmount === 0}
-						pointerEvents={savedQuestionsAmount === 0 ? 'none' : 'all'}
-						colorScheme='blue'
-						target='_blank'
-					>
-						<ViewIcon mr='10px' />
-						<Text>{t('Preview')}</Text>
-					</Button>
-					<Button
-						colorScheme='cyan'
+						onClick={onAddQuestion}
+						size='lg'
+						bgColor='#e6007e'
 						color='white'
-						disabled={savedQuestionsAmount === 0}
-						onClick={onComplete}
+						m='8px 0'
+						textTransform='uppercase'
+						bgImage='linear-gradient(to right, #ff512f 0%, #dd2476 51%, #ff512f 100%)'
+						_hover={{}}
+						_active={{}}
 					>
-						{t('Complete')}
+						+ {t('Add Question')}
 					</Button>
-				</Flex>
-			</Box>
+					<Flex alignSelf='flex-end' alignItems='center' gap='10px'>
+						<Box>
+							{t('Questions')}:{savedQuestionsAmount}
+						</Box>
+						<Button
+							as={Link}
+							state={{ page: '#PREVIEW' }}
+							to={`/quiz/${getQueryParam('id')}#PREVIEW`}
+							disabled={savedQuestionsAmount === 0}
+							pointerEvents={savedQuestionsAmount === 0 ? 'none' : 'all'}
+							colorScheme='blue'
+							target='_blank'
+						>
+							<ViewIcon mr='10px' />
+							<Text>{t('Preview')}</Text>
+						</Button>
+						<Button
+							colorScheme='cyan'
+							color='white'
+							disabled={savedQuestionsAmount === 0}
+							onClick={onComplete}
+						>
+							{t('Complete')}
+						</Button>
+					</Flex>
+				</Box>
+			</Flex>
 		</Page>
 	);
 };

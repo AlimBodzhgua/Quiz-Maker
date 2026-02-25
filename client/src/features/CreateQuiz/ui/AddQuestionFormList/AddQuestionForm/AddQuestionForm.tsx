@@ -33,6 +33,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 	const toast = useToast();
 	const removeQuestion = useCreateQuiz((state) => state.removeQuestion);
 	const saveQuestion = useCreateQuiz((state) => state.saveQuestion);
+	const setQuestionDescription = useCreateQuiz((state) => state.setQuestionDescription);
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const { isHover, hoverProps } = useHover();
@@ -123,6 +124,8 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 				isRequired,
 			};
 			await saveQuestion(newQuestion, answersList!);
+			
+			setQuestionDescription(question._id, title);
 			setIsSaved(true);
 			setIsLoading(false);
 		} else {
@@ -145,6 +148,7 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 				bg='blue.400'
 				p='10px 8px'
 				position='relative'
+				data-question-id={question._id}
 				{...hoverProps}
 			>
 				<QuestionHeader

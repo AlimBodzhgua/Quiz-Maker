@@ -69,9 +69,9 @@ const CreateQuizPage: FC = () => {
 					display='flex'
 					flexDirection='column'
 					gap='10px'
-					border='1px'
-					borderColor='blue.400'
-					borderRadius='12px'
+					boxShadow='lg'
+					bgColor='#f6f6f6'
+					borderRadius='lg'
 					w='70%'
 					p='20px'
 				>

@@ -46,7 +46,7 @@ export const FinishQuizButton: FC<FinishQuizButtonProps> = memo((props) => {
 			isLoading={isLoading}
 			colorScheme='cyan'
 			color='white'
-			size='lg'
+			size='md'
 		>
 			Finish Quiz
 		</Button>

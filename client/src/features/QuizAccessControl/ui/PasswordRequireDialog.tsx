@@ -42,13 +42,13 @@ export const PasswordRequireDialog: FC<PasswordRequireDialogProps> = (props) => 
 	return (
 		<AppDialog
 			header={t('This quiz requires a password')}
-			body={
+			body={(
 				<Input
 					placeholder={t('Enter password')}
 					value={password}
 					onChange={onChangePassword}
 				/>
-			}
+			)}
 			actionText={t('submit')}
 			actionHandler={onSubmitPassword}
 			isOpen={isOpen}

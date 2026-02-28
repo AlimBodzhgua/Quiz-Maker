@@ -31,8 +31,8 @@ export const SettingsModal: FC<SettingsModalProps> = memo((props) => {
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
-			<ModalOverlay />
-			<ModalContent minW='540px' minH='460px'>
+			<ModalOverlay bgColor='overlay.primary' />
+			<ModalContent minW='540px' minH='460px' bgColor='bg.secondary'>
 				<ModalHeader>{t('Settings')}</ModalHeader>
 				<ModalBody>
 					<TimerSettings onUpdate={onUpdate} />

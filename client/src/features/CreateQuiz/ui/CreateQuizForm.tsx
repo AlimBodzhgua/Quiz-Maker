@@ -114,7 +114,11 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 				>
 					{isSaved && isHover ? (
 						<Flex justify='center' align='flex-start'>
-							<Button size='md' onClick={onEdit} _hover={{ color: 'blue.500' }}>
+							<Button
+								onClick={onEdit}
+								size='md'
+								variant='unstyled'
+								_hover={{ color: 'blue.500' }}>
 								<EditIcon />
 							</Button>
 							<AppDialog
@@ -126,8 +130,9 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 								actionHandler={onRemove}
 							>
 								<Button
-									size='md'
 									onClick={onOpen}
+									size='md'
+									variant='unstyled'
 									_hover={{ color: 'red.400' }}
 								>
 									<DeleteIcon />

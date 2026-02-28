@@ -70,7 +70,7 @@ const CreateQuizPage: FC = () => {
 					flexDirection='column'
 					gap='10px'
 					boxShadow='lg'
-					bgColor='#f6f6f6'
+					bgColor={'bg.secondary'}
 					borderRadius='lg'
 					w='70%'
 					p='20px'
@@ -111,7 +111,8 @@ const CreateQuizPage: FC = () => {
 							<Text>{t('Preview')}</Text>
 						</Button>
 						<Button
-							colorScheme='cyan'
+							//colorScheme='cyan'
+							bgColor='cyan.200'
 							color='white'
 							disabled={savedQuestionsAmount === 0}
 							onClick={onComplete}

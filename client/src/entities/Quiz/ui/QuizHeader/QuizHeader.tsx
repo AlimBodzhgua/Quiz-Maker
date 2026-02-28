@@ -20,16 +20,16 @@ export const QuizHeader: FC<QuizHeaderProps> = memo((props) => {
 	const questions = useCurrentQuiz((state) => state.questions);
 	const infoRef = useRef<HTMLDivElement | null>(null);
 
-	const [isSrolledAfter, setIsSrolledAfter] = useState<boolean>(false);
+	const [isScrolledAfter, setIsScrolledAfter] = useState<boolean>(false);
 
 	const onScroll = useThrottle(() => {
 		const windowTop = window.scrollY;
 		const infoTop = infoRef.current?.offsetTop || 75;
 
 		if (windowTop > infoTop * 2) {
-			setIsSrolledAfter(true);
+			setIsScrolledAfter(true);
 		} else {
-			setIsSrolledAfter(false);
+			setIsScrolledAfter(false);
 		}
 	}, 200);
 
@@ -41,31 +41,16 @@ export const QuizHeader: FC<QuizHeaderProps> = memo((props) => {
 
 	const headerInfo = (
 		<Fragment>
-			{isTimerStarted
-? (
-				<Flex
-					color='white'
-					alignItems='center'
-					w='50%'
-					m='8px 0'
-					id='hide-in-pdf'
-				>
+			{isTimerStarted ? (
+				<Flex color='white' alignItems='center' w='50%' m='8px 0' id='hide-in-pdf'>
 					<QuizProgressBar
 						currentValue={correctAnswers + incorrectAnswers}
 						maxValue={questions!.length}
 					/>
 				</Flex>
-			)
-: (
-				<Text
-					fontWeight='bold'
-					color='white'
-					w='30%'
-					m='8px 0'
-				>
-					Total quesetions:
-{' '}
-{questions?.length}
+			) : (
+				<Text fontWeight='bold' color='white' w='30%' m='8px 0'>
+					Total quesetions: {questions?.length}
 				</Text>
 			)}
 			{quiz && quiz.withTimer && <Timer minutes={minutes} seconds={seconds} />}
@@ -80,7 +65,7 @@ export const QuizHeader: FC<QuizHeaderProps> = memo((props) => {
 
 			<Flex
 				ref={infoRef}
-				opacity={isSrolledAfter ? '1' : '0'}
+				opacity={isScrolledAfter ? '1' : '0'}
 				justifyContent='space-between'
 				position='fixed'
 				top='0'
@@ -88,7 +73,7 @@ export const QuizHeader: FC<QuizHeaderProps> = memo((props) => {
 				w='75%'
 				p='5px 20px'
 				marginLeft='-20px'
-				bg='linear-gradient(#0E6FE4, #0447CC)'
+				bgColor='blue.500'
 				transition='opacity .2s linear'
 			>
 				{headerInfo}

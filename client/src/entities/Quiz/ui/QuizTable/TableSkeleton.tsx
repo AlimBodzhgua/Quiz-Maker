@@ -3,7 +3,7 @@ import { Skeleton, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chak
 
 export const TableSkeleton: FC = () => {
 	return (
-		<TableContainer>
+		<TableContainer width='80%'>
 			<Table variant='simple'>
 				<Thead>
 					<Tr>
@@ -16,7 +16,7 @@ export const TableSkeleton: FC = () => {
 				<Tbody>
 					{Array.from({ length: 12 }).fill(0).map((_, index) => (
 						<Tr key={index}>
-							<Td colSpan={4}><Skeleton height='20px' /></Td>
+							<Td colSpan={4}><Skeleton height='24px' /></Td>
 						</Tr>
 					))}
 				</Tbody>

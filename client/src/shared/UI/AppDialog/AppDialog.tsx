@@ -47,8 +47,8 @@ export const AppDialog: FC<AppDialogProps> = memo((props) => {
 				leastDestructiveRef={cancelRef}
 				isCentered
 			>
-				<AlertDialogOverlay>
-					<AlertDialogContent>
+				<AlertDialogOverlay bgColor='overlay.primary'>
+					<AlertDialogContent bgColor='bg.secondary'>
 						<AlertDialogHeader fontSize='lg' fontWeight='bold'>
 							{header}
 						</AlertDialogHeader>

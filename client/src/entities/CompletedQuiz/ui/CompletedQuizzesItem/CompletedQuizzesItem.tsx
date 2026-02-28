@@ -42,9 +42,13 @@ export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo(({ quiz 
 			transition='transform .2s linear'
 			_hover={{ transform: 'scale(1.03)' }}
 		>
-			<Card w='100%'>
+			<Card w='100%' bgColor='bg.secondary'>
 				<CardHeader pb='0'>
-					<Flex justifyContent='space-between' alignItems='center'>
+					<Flex
+						justifyContent='space-between'
+						alignItems='center'
+						gap='10px'
+					>
 						<Heading size='md'>{quiz.quizTitle}</Heading>
 						<Button
 							onClick={handleRemove}
@@ -59,22 +63,26 @@ export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo(({ quiz 
 				<CardBody>
 					<Flex alignItems='center' justifyContent='space-between'>
 						<Heading size='sm'>
-							{t('Total Questions')}:
+							{t('Total Questions')}
+							:
 						</Heading>
 						<Text>{quiz.correct + quiz.incorrect}</Text>
 					</Flex>
 					<Divider />
 					<Flex m='5px 0' alignItems='center' justifyContent='space-between'>
 						<Heading size='sm'>
-							{t('Test result')}:
+							{t('Test result')}
+							:
 						</Heading>
 						<Flex flexDirection='column' textAlign='end'>
 							<Text color='green.400'>
-								{t('Correct')}:
+								{t('Correct')}
+								:
 								{quiz.correct}
 							</Text>
 							<Text color='red.400'>
-								{t('Incorrect')}:
+								{t('Incorrect')}
+								:
 								{quiz.incorrect}
 							</Text>
 						</Flex>
@@ -83,7 +91,8 @@ export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo(({ quiz 
 					{quiz.timeResult && (
 						<Flex m='5px 0' alignItems='center' justifyContent='space-between'>
 							<Heading size='sm' mr='32px'>
-								{t('Time result')}:
+								{t('Time result')}
+								:
 							</Heading>
 							<Timer
 								minutes={quiz.timeResult.minutes}

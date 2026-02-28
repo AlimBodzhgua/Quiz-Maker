@@ -13,7 +13,8 @@ export const PrintButton: FC = memo(() => {
 			size='sm'
 			variant='unstyled'
 			className='no-printme'
-			_hover={{ fill: 'gray.600', transform: 'scale(1.1)' }}
+			fill='blackAlpha.800'
+			_hover={{ transform: 'scale(1.1)' }}
 		>
 			<PrinterIcon />
 		</Button>

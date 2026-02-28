@@ -105,7 +105,7 @@ const QuizPage: FC = () => {
 				w='75%'
 				m='20px 0'
 				p='20px'
-				bg='linear-gradient(#0E6FE4, #0447CC)'
+				bg='blue.500'
 				borderRadius='base'
 				boxShadow='base'
 				ref={targetRef}
@@ -179,7 +179,7 @@ const QuizPage: FC = () => {
 						</Button>
 					)}
 
-					<QuestionsList isBlured={isStarted} />
+					<QuestionsList isBlurred={isStarted} />
 				</NoPrint>
 
 				{!isPreview && !isOpen && (

@@ -20,10 +20,11 @@ export const Answer: FC<AnswerProps> = memo((props) => {
 			p='4px 10px'
 			mb='6px'
 			w='100%'
-			border='1px solid #e8e8e8'
+			border='1px solid'
+			borderColor='border.white'
 			transition='.3s linear box-shadow'
-			bgColor={isSubmit ? getDataMatchedAnswer(isCorrect).color : 'rgb(249, 249, 249)'}
-			color={isSubmit ? '#fff' : 'black'}
+			bgColor={isSubmit ? getDataMatchedAnswer(isCorrect).color : 'bg.white'}
+			color={isSubmit ? '#fff' : 'blackAlpha.700'}
 			_hover={{ boxShadow: '0 6px 6px rgba(16, 81, 185, 0.15)' }}
 		>
 			{children}

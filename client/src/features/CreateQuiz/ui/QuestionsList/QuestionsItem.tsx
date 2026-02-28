@@ -28,7 +28,7 @@ export const QuestionsItem: FC<QuestionsItemProps> = ({ question }) => {
 			borderRadius='base'
 			p='8px 6px'
 			boxShadow='base'
-			bgColor='whiteAlpha.900'
+			bgColor='bg.primary'
 			color='blackAlpha.700'
 			transition='box-shadow .2s linear'
 			_hover={{ cursor: 'pointer', boxShadow: 'lg' }}

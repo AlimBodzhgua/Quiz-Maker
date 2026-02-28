@@ -38,8 +38,8 @@ export const UserQuizzesTableHeader: FC = memo(() => {
 							size='xs'
 							p='0 2px'
 							mr='5px'
-							color='blue.400'
-							borderColor='blue.400'
+							color='blue.600'
+							borderColor='blue.600'
 							borderWidth='2px'
 							disabled={!selectedQuizzes.length}
 							onClick={resetSelectedList}
@@ -59,8 +59,8 @@ export const UserQuizzesTableHeader: FC = memo(() => {
 								variant='outline'
 								size='xs'
 								p='0 2px'
-								color='red.400'
-								borderColor='red.400'
+								color='red.600'
+								borderColor='red.600'
 								borderWidth='2px'
 								disabled={!selectedQuizzes.length}
 								onClick={onOpen}

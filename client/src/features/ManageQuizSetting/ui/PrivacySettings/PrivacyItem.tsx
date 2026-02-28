@@ -23,7 +23,8 @@ export const PrivacyItem: FC<PrivacyItemProps> = memo((props) => {
 			<Tooltip
 				label={t(`${mapToPrivacyLabelText[privacy]}`)}
 				placement='right'
-				bgColor='blackAlpha.900'
+				bgColor='bg.primary'
+				color='text.secondary'
 				maxW='250px'
 				hasArrow
 			>

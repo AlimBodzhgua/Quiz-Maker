@@ -1,4 +1,4 @@
-import type { QuestionForm } from 'entities/Quiz'
+import type { QuestionForm } from 'entities/Quiz';
 import type { FC } from 'react';
 
 import { Box, Flex, Heading, List } from '@chakra-ui/react';
@@ -19,7 +19,7 @@ export const SidebarQuestionsList: FC<SidebarQuestionsListProps> = (props) => {
 
 	useEffect(() => {
 		const observer = new ResizeObserver(() => {
-			if (listRef.current){
+			if (listRef.current) {
 				listRef.current.style.width = placeholderRef.current?.offsetWidth + 'px';
 			}
 		});
@@ -34,7 +34,7 @@ export const SidebarQuestionsList: FC<SidebarQuestionsListProps> = (props) => {
 			}
 		};
 	}, []);
-	
+
 	return (
 		<>
 			<Box
@@ -63,7 +63,7 @@ export const SidebarQuestionsList: FC<SidebarQuestionsListProps> = (props) => {
 				w='100%'
 				minW='115px'
 				maxW='240px'
-				bgColor='#f6f6f6'
+				bgColor='bg.secondary'
 				borderRadius='2xl'
 			>
 				<Flex justifyContent='space-between' alignItems='center' px='5px' mb='3'>
@@ -83,4 +83,4 @@ export const SidebarQuestionsList: FC<SidebarQuestionsListProps> = (props) => {
 			</List>
 		</>
 	);
-}
+};

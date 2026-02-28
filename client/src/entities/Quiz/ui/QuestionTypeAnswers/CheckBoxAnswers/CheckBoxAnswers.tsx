@@ -29,8 +29,8 @@ export const CheckBoxAnswers: FC<CheckBoxAnswersProps> = memo(({ answers, isAnsw
 			if (correctAnswersAmount === amountOfCorrect) {
 				questionAnswer(true);
 			} else {
- questionAnswer(false);
-}
+				questionAnswer(false);
+			}
 		}
 	}, [isAnswerSubmit]);
 

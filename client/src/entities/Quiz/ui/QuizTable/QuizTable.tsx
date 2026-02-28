@@ -79,7 +79,13 @@ export const QuizTable: FC<QuizTableProps> = memo((props) => {
 	}
 
 	return (
-		<TableContainer border='1px solid black' borderRadius='12px' borderColor='#E2E8F0'>
+		<TableContainer
+			bgColor='bg.secondary'
+			borderRadius='12px'
+			boxShadow='lg'
+			w='80%'
+			mb='25px'
+		>
 			<Table>
 				{header}
 				<Tbody>{quizzes.map(renderQuizRow)}</Tbody>

@@ -58,7 +58,7 @@ export const CompletedQuizzesList: FC = memo(() => {
 
 	if (!quizzes.length) {
 		return (
-			<Card align='center' mt='120px'>
+			<Card align='center' mt='120px' bgColor='bg.secondary'>
 				<CardBody
 					display='flex'
 					justifyContent='center'
@@ -70,7 +70,7 @@ export const CompletedQuizzesList: FC = memo(() => {
 						fontWeight='medium'
 						size='md'
 						mt='20px'
-						color='gray.500'
+						color='#616161'
 					>
 						{t('You have no completed quizzes')}
 					</Heading>

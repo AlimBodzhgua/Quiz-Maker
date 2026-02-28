@@ -37,7 +37,7 @@ export const QuestionHeader: FC<QuestionHeaderProps> = memo((props) => {
 				onChange={onTitleChange}
 				disabled={isSaved}
 				placeholder={t('Question title')}
-				bg='whiteAlpha.900'
+				bg='bg.secondary'
 				w='70%'
 			/>
 			<QuestionTypeSelector
@@ -48,7 +48,7 @@ export const QuestionHeader: FC<QuestionHeaderProps> = memo((props) => {
 			<FormControl
 				display='flex'
 				alignItems='center'
-				bgColor='whiteAlpha.900'
+				bgColor='bg.secondary'
 				borderRadius='base'
 				w='fit-content'
 				p='0 10px'

@@ -6,7 +6,7 @@ import { Header } from 'widgets/Header';
 
 export const Layout: FC = () => {
 	return (
-		<Flex direction='column' align='center' h='100vh'>
+		<Flex direction='column' align='center'>
 			<Header />
 			<Outlet />
 		</Flex>

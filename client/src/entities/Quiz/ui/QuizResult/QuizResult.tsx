@@ -24,7 +24,7 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 	} = props;
 	const correct = useCurrentQuiz((state) => state.correctAnswers);
 	const incorrect = useCurrentQuiz((state) => state.incorrectAnswers);
-	const questinsAmount = useCurrentQuiz((state) => state.questions)?.length;
+	const questionsAmount = useCurrentQuiz((state) => state.questions)?.length;
 	const quiz = useCurrentQuiz((state) => state.quiz);
 	const { toPDF, targetRef } = usePDF({
 		filename: 'result.pdf',
@@ -49,7 +49,7 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 
 	return (
 		<Box
-			bgColor='#ffff'
+			bgColor='bg.secondary'
 			borderRadius='base'
 			padding='10px 14px'
 			ref={targetRef}
@@ -58,7 +58,7 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 				<Heading size='md' mb='12px' color='gray.700'>
 					Your Result
 				</Heading>
-				<Flex alignItems='center' gap='6px' id='hide-in-pdf'>
+				<Flex alignItems='center' gap='8px' id='hide-in-pdf'>
 					<Button
 						size='sm'
 						variant='unstyled'
@@ -72,8 +72,9 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 			</Flex>
 			<Flex
 				justifyContent='space-between'
-				bgColor='rgb(249, 249, 249)'
-				border='1px solid #e8e8e8'
+				bgColor='bg.white'
+				border='1px solid'
+				borderColor='border.white'
 				borderRadius='base'
 				p='4px 10px'
 			>
@@ -96,8 +97,9 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 
 			<Flex
 				justifyContent='space-between'
-				bgColor='rgb(249, 249, 249)'
-				border='1px solid #e8e8e8'
+				bgColor='bg.white'
+				border='1px solid'
+				borderColor='border.white'
 				borderRadius='base'
 				p='4px 10px'
 			>
@@ -120,8 +122,9 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 
 			<Flex
 				justifyContent='space-between'
-				bgColor='rgb(249, 249, 249)'
-				border='1px solid #e8e8e8'
+				bgColor='bg.white'
+				border='1px solid'
+				borderColor='border.white'
 				borderRadius='base'
 				p='4px 10px'
 			>
@@ -132,15 +135,15 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 					borderColor='gray.200'
 					paddingRight='5%'
 				>
-					<Text fontWeight='bold' color='gray.500'>Total quesetions</Text>
-					<Text>{questinsAmount}</Text>
+					<Text fontWeight='bold' color='gray.500'>Total questions</Text>
+					<Text>{questionsAmount}</Text>
 				</Flex>
 				<Flex w='45%' justifyContent='space-between'>
 					<Text fontWeight='bold' color='gray.500'>Score</Text>
 					<Text>
 						{correct}
-/
-{questinsAmount}
+						/
+						{questionsAmount}
 					</Text>
 				</Flex>
 			</Flex>
@@ -148,8 +151,9 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 
 			<Flex
 				justifyContent='space-between'
-				bgColor='rgb(249, 249, 249)'
-				border='1px solid #e8e8e8'
+				bgColor='bg.white'
+				border='1px solid'
+				borderColor='border.white'
 				borderRadius='base'
 				p='4px 10px'
 			>
@@ -174,9 +178,10 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 				<Flex
 					alignItems='center'
 					direction='column'
-					border='1px solid #e8e8e8'
-					bgColor='rgb(249, 249, 249)'
+					border='1px solid'
+					borderColor='border.white'
 					borderRadius='base'
+					bgColor='bg.white'
 					padding='10px'
 					gap='12px'
 					m='16px 0'

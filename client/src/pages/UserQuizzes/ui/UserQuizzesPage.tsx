@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from 'shared/constants';
+import { Page } from 'widgets/Page';
 
 const UserQuizzesPage: FC = () => {
 	const { t } = useTranslation();
@@ -24,16 +25,13 @@ const UserQuizzesPage: FC = () => {
 	}, []);
 
 	return (
-		<Flex
-			w='80%'
-			p='15px 0'
-			direction='column'
-			gap='14px'
-		>
+		<Page>
 			<Flex
 				justify='space-between'
 				align='center'
 				p='2px 0px'
+				my='15px'
+				w='80%'
 			>
 				<Flex w='80%'>
 					<SearchBar />
@@ -54,7 +52,7 @@ const UserQuizzesPage: FC = () => {
 				</Flex>
 			</Flex>
 			<UserQuizzesTable userId={userId!} />
-		</Flex>
+		</Page>
 	);
 };
 

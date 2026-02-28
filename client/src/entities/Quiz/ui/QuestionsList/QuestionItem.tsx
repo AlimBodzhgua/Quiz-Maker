@@ -81,30 +81,31 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 
 	return (
 		<ListItem m='16px 0'>
-			<Card minW='md' maxW='xl'>
+			<Card minW='md' maxW='xl' bgColor={'bg.secondary'}>
 				<CardHeader pb='0'>
 					<Flex align='center'>
 						<Text size='lg' mr='6px'>{`${question.order})`}</Text>
-						<Heading size='md' as='h4'>{question.description}</Heading>
+						<Heading size='md' as='h4'>
+							{question.description}
+						</Heading>
 						{!question.isRequired && (
-							<Tooltip hasArrow placement='right-end' label='This question is not required'>
-								<Box><RequiredIcon /></Box>
+							<Tooltip
+								hasArrow
+								placement='right-end'
+								label='This question is not required'
+							>
+								<Box>
+									<RequiredIcon />
+								</Box>
 							</Tooltip>
 						)}
 					</Flex>
 				</CardHeader>
-				<CardBody>
-					{mapToQuestionTypeAnswers[question.type]}
-				</CardBody>
+				<CardBody>{mapToQuestionTypeAnswers[question.type]}</CardBody>
 				<CardFooter justify='flex-end' pt='0'>
-
-					<Button
-						size='sm'
-						onClick={onSubmit}
-						disabled={isSubmitted}
-					>
-Submit Answer
-     </Button>
+					<Button size='sm' onClick={onSubmit} disabled={isSubmitted}>
+						Submit Answer
+					</Button>
 				</CardFooter>
 			</Card>
 		</ListItem>

@@ -41,9 +41,9 @@ export const useCreateQuiz = create<CreateQuizState & CreateQuizActions>()(
 			const updatedQuestions = get().questions.map((question) => {
 				if (question._id === id) {
 					return { ...question, description: description };
-				} return question;
+				}
+				return question;
 			})
-			console.log(updatedQuestions)
 
 			set({ questions: updatedQuestions }, false, 'setQuestionDescription');
 		},

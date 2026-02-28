@@ -33,7 +33,7 @@ export const InputAnswer: FC<InputAnswerProps> = memo((props) => {
 			<InputGroup>
 				<Input
 					bgColor={isAnswerSubmit ? getDataMatchedAnswer(isAnswerCorrect).color : 'none'}
-					color={isAnswerSubmit ? '#fff' : 'black'}
+					color={isAnswerSubmit ? '#fff' : 'blackAlpha.700'}
 					placeholder='Enter your answer here...'
 					ref={inputRef}
 				/>

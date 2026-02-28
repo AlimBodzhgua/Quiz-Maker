@@ -5,11 +5,11 @@ import { useCurrentQuiz } from '../../model/store/currentQuiz';
 import { QuestionItem } from './QuestionItem';
 
 interface QuestionsListProps {
-	isBlured?: boolean;
+	isBlurred?: boolean;
 }
 
 export const QuestionsList: FC<QuestionsListProps> = memo((props) => {
-	const { isBlured } = props;
+	const { isBlurred } = props;
 	const questions = useCurrentQuiz((state) => state.questions);
 	const status = useCurrentQuiz((state) => state.getCurrentQuizStatus);
 	const isLoading = status === 'pending';
@@ -35,8 +35,8 @@ export const QuestionsList: FC<QuestionsListProps> = memo((props) => {
 
 	return (
 		<List
-			filter={!isBlured ? 'blur(5px)' : 'none'}
-			pointerEvents={!isBlured ? 'none' : 'all'}
+			filter={!isBlurred ? 'blur(5px)' : 'none'}
+			pointerEvents={!isBlurred ? 'none' : 'all'}
 			transition='.2s filter linear'
 		>
 			{questions && questions.map((question) => (

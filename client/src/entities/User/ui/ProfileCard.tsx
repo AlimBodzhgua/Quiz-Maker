@@ -49,7 +49,7 @@ export const ProfileCard: FC = memo(() => {
 
 	return (
 		<Page centered>
-			<Card>
+			<Card bgColor='bg.secondary'>
 				<CardHeader display='flex' justifyContent='center' pb='0'>
 					<Heading size='md'>Profile</Heading>
 				</CardHeader>

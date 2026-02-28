@@ -49,7 +49,7 @@ export const AddAnswerForm: FC<AddAnswerFormProps> = memo((props) => {
 		<SortableItem id={answer._id}>
 			<Flex
 				direction='column'
-				bg='whiteAlpha.900'
+				bg='bg.secondary'
 				borderRadius='base'
 				gap='6px'
 				p='5px 8px'

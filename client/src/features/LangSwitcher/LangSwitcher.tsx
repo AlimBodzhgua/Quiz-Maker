@@ -1,4 +1,4 @@
-import { Button, Flex } from '@chakra-ui/react';
+import { Button, Flex, useColorModeValue } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import GlobeIcon from './language.svg';
@@ -13,6 +13,8 @@ type LanguageType = (typeof LanguageValues)[keyof typeof LanguageValues];
 export const LangSwitcher = () => {
 	const { i18n } = useTranslation();
 	const [language, setLanguage] = useState<LanguageType>(i18n.language as LanguageType);
+	const buttonBg = useColorModeValue('whiteAlpha.900', '#1a202c');
+	const buttonClr = useColorModeValue('blackAlpha.900', '#fffff');
 
 	const onToggleLanguage = () => {
 		const language = i18n.language === 'en' ? 'ru' : 'en';
@@ -27,7 +29,7 @@ export const LangSwitcher = () => {
 			justifyContent='center'
 			alignItems='center'
 			gap='6px'
-			bg='#f6f6f6'
+			bg='bg.secondary'
 			p='3px 10px'
 			rounded='md'
 		>
@@ -35,9 +37,9 @@ export const LangSwitcher = () => {
 			<Flex gap='8px' justifyItems='center' alignItems='center'>
 				<Button
 					type='reset'
-					bg={language === LanguageValues.ENG ? 'whiteAlpha.900' : 'inherit'}
+					bg={language === LanguageValues.ENG ? buttonBg : 'inherit'}
 					boxShadow={language === LanguageValues.ENG ? 'base' : 'none'}
-					color={language === LanguageValues.ENG ? 'blackAlpha.900' : '#616161'}
+					color={language === LanguageValues.ENG ? buttonClr : '#616161'}
 					fontWeight='medium'
 					height='fit-content'
 					p='4px'
@@ -51,9 +53,9 @@ export const LangSwitcher = () => {
 				</Button>
 				<Button
 					type='reset'
-					bg={language === LanguageValues.RUS ? 'whiteAlpha.900' : 'inherit'}
+					bg={language === LanguageValues.RUS ? buttonBg : 'inherit'}
 					boxShadow={language === LanguageValues.RUS ? 'base' : 'none'}
-					color={language === LanguageValues.RUS ? 'blackAlpha.900' : '#616161'}
+					color={language === LanguageValues.RUS ? buttonClr : '#616161'}
 					fontWeight='medium'
 					height='max-content'
 					p='4px'

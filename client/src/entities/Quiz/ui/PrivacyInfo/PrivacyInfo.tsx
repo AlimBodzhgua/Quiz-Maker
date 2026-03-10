@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import type { Quiz } from '../../model/types';
+
 import { CheckIcon, CopyIcon, QuestionIcon } from '@chakra-ui/icons';
 import {
 	Card,
@@ -16,13 +17,17 @@ import {
 	Tooltip,
 } from '@chakra-ui/react';
 import { memo, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { mapToPrivacyLabelText, mapToPrivacyText } from 'shared/constants';
+
+import { getTokenLink } from '../../model/utils';
 
 interface PrivacyInfoProps {
 	quiz: Quiz;
 }
 
 export const PrivacyInfo: FC<PrivacyInfoProps> = memo(({ quiz }) => {
+	const { t } = useTranslation();
 	const [isPasswordCopied, setIsPasswordCopied] = useState<boolean>(false);
 	const [isTokenCopied, setIsTokenCopied] = useState<boolean>(false);
 	const [isLinkCopied, setIsLinkCopied] = useState<boolean>(false);
@@ -36,8 +41,7 @@ export const PrivacyInfo: FC<PrivacyInfoProps> = memo(({ quiz }) => {
 		}, 3000);
 
 		return () => {
-			if (timerRef.current)
-clearInterval(timerRef.current);
+			if (timerRef.current) clearInterval(timerRef.current);
 		};
 	}, [isLinkCopied, isTokenCopied, isPasswordCopied]);
 
@@ -57,7 +61,7 @@ clearInterval(timerRef.current);
 
 	const onCopyLink = () => {
 		if (quiz.privacy.type === 'linkProtected' || quiz.privacy.type === 'privateLink') {
-			const link = `http://localhost:3000/quiz/${quiz._id}?token=${quiz.privacy.token}`;
+			const link = getTokenLink(quiz._id, quiz.privacy.token);
 			navigator.clipboard.writeText(link);
 			setIsLinkCopied(true);
 		}
@@ -69,24 +73,33 @@ clearInterval(timerRef.current);
 				<Heading size='md' fontWeight='medium' mb='12px'>
 					{quiz.title}
 				</Heading>
-				<Text mb='8px'>
-Quiz ID:
-{quiz._id}
-    </Text>
+				<Flex mb='8px' direction='column'>
+					<Text>
+						{t('quiz_privacy.info.quiz_id')}:
+					</Text>
+					<Text>
+						{quiz._id}
+					</Text>
+				</Flex>
 			</CardHeader>
 			<CardBody>
-				<Flex align='center' gap='10px' mb='10px'>
-					<Text>
-Privacy type:
-{mapToPrivacyText[quiz.privacy.type]}
-     </Text>
-					<Tooltip hasArrow label={mapToPrivacyLabelText[quiz.privacy.type]}>
-						<QuestionIcon />
-					</Tooltip>
+				<Flex direction='column'>
+					<Text mb='10px'>
+						{t('quiz_privacy.info.title')}:
+					</Text>
+					<Flex align='center' gap='10px'>
+						<Text>
+							{t(mapToPrivacyText[quiz.privacy.type])}
+						</Text>
+						<Tooltip hasArrow label={t(mapToPrivacyLabelText[quiz.privacy.type])}>
+							<QuestionIcon />
+						</Tooltip>
+					</Flex>
 				</Flex>
-				{(quiz.privacy.type === 'publicProtected' || quiz.privacy.type === 'linkProtected') && (
+				{(quiz.privacy.type === 'publicProtected' ||
+					quiz.privacy.type === 'linkProtected') && (
 					<Flex alignItems='center'>
-						<Text w='28%'>Password:</Text>
+						<Text w='28%'>{t('privacy.info.password')}:</Text>
 						<InputGroup>
 							<Input
 								value={quiz.privacy.password}
@@ -100,16 +113,17 @@ Privacy type:
 								_hover={{ cursor: 'pointer' }}
 							>
 								<Tooltip label={isPasswordCopied ? 'copied' : 'copy'}>
-									{isPasswordCopied ? <CheckIcon /> : <CopyIcon /> }
+									{isPasswordCopied ? <CheckIcon /> : <CopyIcon />}
 								</Tooltip>
 							</InputRightElement>
 						</InputGroup>
 					</Flex>
 				)}
-				{(quiz.privacy.type === 'privateLink' || quiz.privacy.type === 'linkProtected') && (
+				{(quiz.privacy.type === 'privateLink' ||
+					quiz.privacy.type === 'linkProtected') && (
 					<Flex direction='column' gap='8px'>
 						<Flex alignItems='center'>
-							<Text w='28%'>Link token:</Text>
+							<Text w='28%'>{t('privacy.info.link_token')}:</Text>
 							<InputGroup>
 								<Input
 									value={quiz.privacy.token}
@@ -118,21 +132,23 @@ Privacy type:
 									disabled
 									_disabled={{ bgColor: 'gray.50' }}
 								/>
-									<InputRightElement
-										onClick={onCopyToken}
-										_hover={{ cursor: 'pointer' }}
-									>
-										<Tooltip label={isTokenCopied ? 'copied' : 'copy'}>
-											{isTokenCopied ? <CheckIcon /> : <CopyIcon /> }
-										</Tooltip>
-									</InputRightElement>
+								<InputRightElement
+									onClick={onCopyToken}
+									_hover={{ cursor: 'pointer' }}
+								>
+									<Tooltip label={isTokenCopied ? 'copied' : 'copy'}>
+										{isTokenCopied ? <CheckIcon /> : <CopyIcon />}
+									</Tooltip>
+								</InputRightElement>
 							</InputGroup>
 						</Flex>
 						<Flex alignItems='center'>
-							<Text w='28%' alignItems='center'>Full Link:</Text>
+							<Text w='28%' alignItems='center'>
+								{t('privacy.info.full_link')}:
+							</Text>
 							<InputGroup>
 								<Input
-									value={`http://localhost:3000/quiz/${quiz._id}?token=${quiz.privacy.token}`}
+									value={getTokenLink(quiz._id, quiz.privacy.token)}
 									variant='filled'
 									size='sm'
 									disabled
@@ -143,7 +159,7 @@ Privacy type:
 									_hover={{ cursor: 'pointer' }}
 								>
 									<Tooltip label={isLinkCopied ? 'copied' : 'copy'}>
-										{isLinkCopied ? <CheckIcon /> : <CopyIcon /> }
+										{isLinkCopied ? <CheckIcon /> : <CopyIcon />}
 									</Tooltip>
 								</InputRightElement>
 							</InputGroup>
@@ -152,13 +168,8 @@ Privacy type:
 				)}
 				{quiz.privacy.type === 'restrictedUsers' && (
 					<Flex alignItems='center'>
-						<Heading
-							fontWeight='medium'
-							alignSelf='flex-start'
-							size='sm'
-							mb='5px'
-						>
-							User ids:
+						<Heading fontWeight='medium' alignSelf='flex-start' size='sm' mb='5px'>
+							{t('privacy.info.user_ids')}:
 						</Heading>
 						<List ml='14px'>
 							{quiz.privacy.userIds.map((user) => (

@@ -4,9 +4,11 @@ import { SearchIcon } from '@chakra-ui/icons';
 import { Input, InputGroup, InputLeftElement, InputRightElement, Kbd } from '@chakra-ui/react';
 import { useQuizzesStore } from 'entities/Quiz';
 import { memo, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDebounce } from 'shared/lib/hooks';
 
 export const SearchBar: FC = memo(() => {
+	const { t } = useTranslation();
 	const [value, setValue] = useState<string>('');
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const quizzes = useQuizzesStore((state) => state.quizzes);
@@ -50,7 +52,7 @@ export const SearchBar: FC = memo(() => {
 				<SearchIcon />
 			</InputLeftElement>
 			<Input
-				placeholder='Search'
+				placeholder={t('placeholders.search')}
 				ref={inputRef}
 				value={value}
 				onChange={onChangeValue}

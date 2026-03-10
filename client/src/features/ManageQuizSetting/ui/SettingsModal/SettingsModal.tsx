@@ -33,7 +33,7 @@ export const SettingsModal: FC<SettingsModalProps> = memo((props) => {
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<ModalOverlay bgColor='overlay.primary' />
 			<ModalContent minW='540px' minH='460px' bgColor='bg.secondary'>
-				<ModalHeader>{t('Settings')}</ModalHeader>
+				<ModalHeader>{t('quiz_settings.title')}</ModalHeader>
 				<ModalBody>
 					<TimerSettings onUpdate={onUpdate} />
 					<Divider mb='10px' />

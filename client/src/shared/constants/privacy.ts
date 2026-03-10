@@ -10,19 +10,19 @@ export const PrivacyValues = {
 type QuizPrivacy = keyof typeof PrivacyValues;
 
 export const mapToPrivacyText: Record<QuizPrivacy, string> = {
-	private: 'Private',
-	publicProtected: 'Public protected with password',
-	public: 'Public',
-	privateLink: 'Private access with a link',
-	linkProtected: 'Private access with a link & password',
-	restrictedUsers: 'Private access for selected users',
+	public: 'quiz_privacy.types.public',
+	private: 'quiz_privacy.types.private',
+	publicProtected: 'quiz_privacy.types.public_password',
+	privateLink: 'quiz_privacy.types.private_link',
+	linkProtected: 'quiz_privacy.types.private_link_password',
+	restrictedUsers: 'quiz_privacy.types.private_users',
 };
 
 export const mapToPrivacyLabelText: Record<QuizPrivacy, string> = {
-	private: 'Enable quiz access only for you',
-	publicProtected: 'Available in public quizzes table, but only accessible with a password',
-	public: 'Enable quiz access for all users and displays in public quizzes table',
-	privateLink: 'Enable access with a link so only those who have the link can access the quiz',
-	linkProtected: 'Enable private access with a link and password so users without password cannot access the quiz',
-	restrictedUsers: 'Enable private access with user id (you can set the list of user ids)',
+	public: 'quiz_privacy.descriptions.public',
+	private: 'quiz_privacy.descriptions.private',
+	publicProtected: 'quiz_privacy.descriptions.public_password',
+	privateLink: 'quiz_privacy.descriptions.private_link',
+	linkProtected: 'quiz_privacy.descriptions.private_link_password',
+	restrictedUsers: 'quiz_privacy.descriptions.private_users',
 };

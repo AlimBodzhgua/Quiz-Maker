@@ -2,32 +2,30 @@ import type { FC } from 'react';
 
 import { ArrowBackIcon, RepeatClockIcon } from '@chakra-ui/icons';
 import { Button, Flex, Heading } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
+import { Page } from 'widgets/Page/ui/Page';
 
 export const PageError: FC = () => {
+	const { t } = useTranslation();
 	const onReload = () => window.location.reload();
 	const onBack = () => window.history.back();
 
 	return (
-		<Flex
-			justifyContent='center'
-			alignItems='center'
-			direction='column'
-			h='100vh'
-		>
+		<Page centered>
 			<Heading size='lg' mb='12px'>
-				An unexpected error occurred
+				{t('errors.unexpected')}
 			</Heading>
 			<Heading size='md' mb='16px' fontWeight='medium'>
-				Reload the page or try it later
+				{t('errors.generic_reload')}
 			</Heading>
 			<Flex gap='12px'>
 				<Button onClick={onBack} leftIcon={<ArrowBackIcon />} colorScheme='blue'>
-					Go back
+					{t('buttons.back')}
 				</Button>
 				<Button onClick={onReload} leftIcon={<RepeatClockIcon />} colorScheme='blue'>
-					Reload the page
+					{t('buttons.reload_page')}
 				</Button>
 			</Flex>
-		</Flex>
+		</Page>
 	);
 };

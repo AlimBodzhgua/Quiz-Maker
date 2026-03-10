@@ -46,10 +46,10 @@ export const CompletedQuizzesList: FC = memo(() => {
 				<Flex direction='column'>
 					<Flex>
 						<AlertIcon />
-						<AlertTitle>{t('Error fetching completed quizzes!')}</AlertTitle>
+						<AlertTitle>{t('errors.fetch_completed_quizzes')}</AlertTitle>
 					</Flex>
 					<AlertDescription p='0 32px'>
-						{t('Something went wrong trying to fetch quizzes data. Reload the page or try it later.')}
+						{t('errors.fetch_quizzes')}
 					</AlertDescription>
 				</Flex>
 			</Alert>
@@ -72,7 +72,7 @@ export const CompletedQuizzesList: FC = memo(() => {
 						mt='20px'
 						color='#616161'
 					>
-						{t('You have no completed quizzes')}
+						{t('completed_quiz.no_completed')}
 					</Heading>
 				</CardBody>
 			</Card>

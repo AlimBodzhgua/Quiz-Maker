@@ -58,7 +58,7 @@ export const QuizTable: FC<QuizTableProps> = memo((props) => {
 
 	if (!quizzes.length) {
 		return (
-			<Card align='center'>
+			<Card align='center' w='80%'>
 				<CardBody
 					display='flex'
 					justifyContent='center'
@@ -71,7 +71,7 @@ export const QuizTable: FC<QuizTableProps> = memo((props) => {
 						fontWeight='medium'
 						color='gray.400'
 					>
-						{t('No quizzes')}
+						{t('table.state.empty')}
 					</Heading>
 				</CardBody>
 			</Card>

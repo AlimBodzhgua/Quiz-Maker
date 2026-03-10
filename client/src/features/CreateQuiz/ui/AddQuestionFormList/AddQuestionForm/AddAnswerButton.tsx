@@ -22,7 +22,7 @@ export const AddAnswerButton: FC<AddAnswerButtonProps> = memo((props) => {
 				size='sm'
 				m='5px 0'
 			>
-				+ {t('Add answer')}
+				+ {t('quiz_create.answer.add')}
 			</Button>
 		</Tooltip>
 	);

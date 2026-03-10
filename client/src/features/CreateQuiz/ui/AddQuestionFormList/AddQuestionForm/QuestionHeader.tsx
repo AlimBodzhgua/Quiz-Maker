@@ -36,7 +36,7 @@ export const QuestionHeader: FC<QuestionHeaderProps> = memo((props) => {
 				value={title}
 				onChange={onTitleChange}
 				disabled={isSaved}
-				placeholder={t('Question title')}
+				placeholder={t('quiz_create.questions.placeholder')}
 				bg='bg.secondary'
 				w='70%'
 			/>
@@ -55,7 +55,7 @@ export const QuestionHeader: FC<QuestionHeaderProps> = memo((props) => {
 				gap='10px'
 			>
 				<FormLabel htmlFor={`requiredSwitch-${id}`} m='0'>
-					{t('Required')}
+					{t('quiz_create.questions.required')}
 				</FormLabel>
 				<Switch
 					isDisabled={isSaved}

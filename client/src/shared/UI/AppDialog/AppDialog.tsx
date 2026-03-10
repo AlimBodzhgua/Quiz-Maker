@@ -57,7 +57,7 @@ export const AppDialog: FC<AppDialogProps> = memo((props) => {
 
 						<AlertDialogFooter>
 							<Button onClick={onClose} ref={cancelRef}>
-								{t('Cancel')}
+								{t('buttons.cancel')}
 							</Button>
 							<Button colorScheme='red' onClick={actionHandler} ml={3}>
 								{actionText}

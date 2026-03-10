@@ -130,8 +130,8 @@ export const AddQuestionForm: FC<AddQuestionFormProps> = memo((props) => {
 			setIsLoading(false);
 		} else {
 			toast({
-				title: t('Empty value or no correct answer.'),
-				description: t('All answer fields should not be empty and should have at least 1 correct answer.'),
+				title: t('toasts.add_question.title'),
+				description: t('toasts.add_question.description'),
 				status: 'error',
 				duration: 5000,
 				isClosable: true,

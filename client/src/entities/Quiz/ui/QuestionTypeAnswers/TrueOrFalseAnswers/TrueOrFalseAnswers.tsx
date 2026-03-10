@@ -22,8 +22,8 @@ export const TrueOrFalseAnswers: FC<TrueOrFalseAnswersProps> = memo((props) => {
 			if (splittedAnswer[1] === 'true') {
 				questionAnswer(true);
 			} else {
- questionAnswer(false);
-}
+				questionAnswer(false);
+			}
 		}
 	}, [isAnswerSubmit]);
 

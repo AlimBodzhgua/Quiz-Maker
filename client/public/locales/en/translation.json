@@ -1,7 +1,58 @@
 {
-	"Login": "Login",
-	"Register": "Register",
+	"buttons": {
+		"login": "Login",
 
+		"preview": "Preview",
+		"privacy": "Privacy",
+
+		"register": "Register",
+		"reload_page": "Reload the page",
+
+		"back" :"Go back",
+
+		"done": "Done",
+		"delete": "Delete",
+		
+		"create": "Create",
+		"cancel": "Cancel",
+		"complete": "Complete",
+		"close": "Close",
+		
+		"select": "Select",
+		"submit": "submit",
+		"submit_answer": "Submit answer",
+		"start_quiz": "Start quiz",
+		"share": "share",
+		"save": "Save",
+		"saved": "Saved",
+
+		"finish_quiz": "Finish quiz"
+	},
+
+	"popovers" : {
+		"share": {
+			"title": "Share on Social Media"
+		}
+	},
+
+	"placeholders": {
+		"search": "Search",
+		"enter_answer": "Enter your answer here"
+	},
+
+	"current_quiz": {
+		"title": "Questions",
+		"total_questions": "Total questions"
+	},
+
+	"navigation": {
+		"public_quizzes": "Public quizzes",
+		"my_quizzes": "My Quizzes",
+		"completed": "Completed",
+		"profile": "Profile",
+		"logout": "Logout"
+	},
+	
 	"auth": {
 		"login": {
 			"title": "Login",
@@ -10,103 +61,167 @@
 		"register": {
 			"title": "Register",
 			"button": "Register"
+		},
+		"placeholders": {
+			"email": "Email",
+			"password": "Password"
 		}
 	},
 
-	"Email": "Email",
-	"Password": "Password",
+	"profile": {
+		"title": "Profile",
+		"id": "Id",
+		"email": "Email"
+	},
 
-	"Public quizzes": "Public quizzes",
-	"My Quizzes": "My Quizzes",
-	"Completed": "Completed",
-	"Profile": "Profile",
-	"Logout": "Logout",
+	"quiz_dialog": {
+		"delete": {
+			"quiz": {
+				"title": "Delete quiz"
+			},
+			"selected_quiz": {
+				"title": "Delete selected quizzes"
+			},
+			"confirm_single": "Are you sure you want to delete this quiz?",
+			"confirm_bulk": "Are you sure? You can't undo this action afterwards."
+		}
+	},
 
-	"Create": "Create",
-	"Select": "Select",
-	"Done": "Done",
+	"toasts": {
+		"add_question": {
+			"title": "Empty value or no correct answer",
+			"description": "All answer fields should not be empty and should have at least 1 correct answer"
+		},
+		"password_require": {
+			"title": "Wrong password"
+		},
+		"privacy": {
+			"title": "Privacy saved"
+		},
+		"finish_quiz": {
+			"title": "You haven't answered all the questions",
+			"description": "To finish the quiz you need to answer all required questions"
+		},
+		"create_quiz": {
+			"title": "Quiz not created",
+			"description": "First you need to create a quiz and save it"
+		}
+	},
 
-	"Delete quiz": "Delete quiz",
-	"Are you sure you want to delete quiz?": "Are you sure you want to delete quiz?",
-	"Title must be at least 4 characters long": "Title must be at least 4 characters long",
+	"quiz_create": {
+		"title": "Quiz title",
+		"answer": {
+			"placeholder": "Answer",
+			"add": "Add answer",
+			"correct": "correct answer",
+			"type": {
+				"multiple": "Multiple Answer",
+				"single": "One Answer",
+				"input": "Input Answer",
+				"true_false": "True Or False"
+			}
+		},
+		"questions": {
+			"title": "Questions",
+			"placeholder": "Question title",
+			"add": "Add Question",
+			"save": "Save question",
+			"required": "Required"
+		},
+		"validations": {
+			"title_too_short": "Title must be at least 4 characters long"
+		}
+	},
 
-	"Quiz title": "Quiz title",
-	"Answer": "Answer",
-	"Add answer": "Add answer",
-	"correct answer": "correct answer",
-	"Empty value or no correct answer.": "Empty value or no correct answer.",
-	"All answer fields should not be empty and should have at least 1 correct answer.": "All answer fields should not be empty and should have at least 1 correct answer.",
-	"Question title": "Question title",
-	"Required": "Required",
-	"Save question": "Save question",
-
-	"Quiz Privacy": "Quiz Privacy",
-	"Public": "Public",
-	"Private": "Private",
-	"Public protected with password": "Public protected with password",
-	"Private access with a link": "Private access a with link",
-	"Private access with link & password": "Private access with link & password",
-	"Private access for selected users": "Private access for selected users",
+	"quiz_privacy": {
+		"title": "Quiz Privacy",
+		"info": {
+			"title": "Privacy Info",
+			"user_ids": "User ids",
+			"quiz_id": "Quiz ID",
+			"type": "Privacy type",
+			"password": "Password",
+			"link_token": "Link token",
+			"full_link": "Full Link"
+		},
+		"types": {
+			"public": "Public",
+			"private": "Private",
+			"public_password": "Public protected with password",
+			"private_link": "Private access a with link",
+			"private_link_password": "Private access with link & password",
+			"private_users": "Private access for selected users"
+		},
+		"descriptions": {
+			"public": "Enable quiz access only for you",
+			"private": "Available in public quizzes table, but only accessible with a password",
+			"public_password": "Enable quiz access for all users and displays in public quizzes table",
+			"private_link": "Enable access with a link so only those who have the link can access the quiz",
+			"private_link_password": "Enable private access with a link and password so users without password cannot access the quiz",
+			"private_users": "Enable private access with user id (you can set the list of user ids)"
+		},
+		"access_messages": {
+			"requires_link": "This quiz requires a private link with token",
+			"no_permission": "You have no permission to this quiz",
+			"restricted_title": "Restricted Access",
+			"not_in_list": "You have no permission to this test. You are not added to restricted users list",
+			"requires_password": "This quiz requires a password",
+			"enter_password": "Enter password",
+			"wrong_password": "Wrong password"
+		}
+	},
 	
-	"Enable quiz access only for you": "Enable quiz access only for you",
-	"Available in public quizzes table, but only accessible with a password": "Available in public quizzes table, but only accessible with a password",
-	"Enable quiz access for all users and displays in public quizzes table": "Enable quiz access for all users and displays in public quizzes table",
-	"Enable access with a link so only those who have the link can access the quiz": "Enable access with a link so only those who have the link can access the quiz",
-	"Enable private access with a link and password so users without password cannot access the quiz": "Enable private access with a link and password so users without password cannot access the quiz",
-	"Enable private access with user id (you can set the list of user ids)": "Enable private access with user id (you can set the list of user ids)",
+	"quiz_settings": {
+		"title": "Settings",
+		"timer": {
+			"enable": "Enable quiz timer",
+			"limit": "Set limit",
+			"minutes": "minutes",
+			"seconds": "seconds"
+		}
+	},
 	
-	"This quiz requires a private link with token": "This quiz requires a private link with token",
-	"You have no permission to this quiz": "You have no permission to this quiz",
-	"Restricted Access": "Restricted Access",
-	"You have no permission to this test. Your not added to restricted users list": "You have no permission to this test. Your not added to restricted users list",
-	"This quiz requires a password": "This quiz requires a password",
-	"Enter password": "Enter password",
-	"Wrong password": "Wrong password",
+	"completed_quiz": {
+		"title": "Test result",
+		"total_questions": "Total Questions",
+		"correct": "Correct",
+		"incorrect": "Incorrect",
+		"result": "Time result",
+		"try_again": "try again",
+		"no_completed": "You have no completed quizzes"
+	},
+
+	"quiz_result": {
+		"title": "Your result",
+		"total_questions": "Total Questions",
+		"quiz_id": "Quiz ID",
+		"user_id": "User ID",
+		"user_email": "User Email",
+		"quiz_name": "Quiz Name",
+		"correct_answers": "Correct Answers",
+		"incorrect_answers": "Incorrect Answers",
+		"score": "score",
+		"rate": "How do you rate this quiz?"
+	},
+
+	"errors": {
+		"unexpected" : "An unexpected error occurred",
+		"fetch_completed_quizzes": "Error fetching completed quizzes!",
+		"fetch_quizzes": "Something went wrong trying to fetch quizzes data. Reload the page or try it later.",
+		"generic_reload": "Reload the page or try it later"
+	},
 	
-	"Settings": "Settings",
-	"Enable quiz timer": "Enable quiz timer", 
-	"Set limit": "Set limit",
-	"minutes": "minutes",
-	"seconds": "seconds",
-
-	"Total Questions": "Total Questions",
-	"Test result": "Test result",
-	"Correct": "Correct",
-	"Incorrect": "Incorrect",
-	"Time result": "Time result",
-	"try again": "try again",
-
-	"No quizzes": "No quizzes",
-	"Error fetching completed quizzes!": "Error fetching completed quizzes!",
-	"Something went wrong trying to fetch quizzes data. Reload the page or try it later.": "Something went wrong trying to fetch quizzes data. Reload the page or try it later.",
-	"You have no completed quizzes": "You have no completed quizzes",
-
-	"Share": "Share",
-	"Share on Social Media": "Share on Social Media",
-	
-	"Name": "Name",
-	"Action": "Action",
-	"Date": "Date",
-	"Author": "Author",
-	"Number of participants": "Number of participants",
-
-	"Delete selected quizzes": "Delete selected quizzes",
-	"Delete Quiz": "Delete Quiz",
-	"Are you sure? You can't undo this action afterwards.": "Are you sure? You can't undo this action afterwards.",
-	"Delete": "Delete",
-	"Cancel": "Cancel",
-	"submit": "submit",
-
-	"Create a new quiz": "Create a new quiz",
-	"Add Question": "Add Question",
-	"Questions": "Questions",
-	"Save": "Save",
-	"Saved": "Saved",
-	"Preview": "Preview",
-	"Complete": "Complete",
-
-	"Multiple Answer": "Multiple Answer",
-	"One Answer": "One Answer",
-	"Input Answer": "Input Answer",
-	"True Or False": "True Or False"
+	"table": {
+		"state": {
+			"empty": "No quizzes"
+		},
+		"header": {
+			"name": "Name",
+			"date": "Date",
+			"author": "Author",
+			"participants": "Number of participants",
+			"action": "Action",
+			"questions": "Questions"
+		}
+	}
 }

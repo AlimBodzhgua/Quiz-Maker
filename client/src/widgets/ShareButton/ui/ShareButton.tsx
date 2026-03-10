@@ -35,7 +35,7 @@ export const ShareButton: FC<ShareButtonProps> = memo(({ link }) => {
 					_hover={{ color: '#dcd9d9' }}
 					_active={{ color: 'none' }}
 				>
-					{t('Share')}
+					{t('buttons.share')}
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent minW='0'w='225px'>

@@ -105,7 +105,7 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 			<FormControl display='flex' alignItems='center' mb='5px'>
 				<Flex justifyContent='space-between' w='100%'>
 					<Flex alignItems='center'>
-						<FormLabel htmlFor='quiz-timer'>{t('Enable quiz timer')}</FormLabel>
+						<FormLabel htmlFor='quiz-timer'>{t('quiz_settings.timer.enable')}</FormLabel>
 						<Switch
 							id='quiz-timer'
 							isChecked={isTimerEnabled}
@@ -132,7 +132,7 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 						variant='outline'
 						m='0 10px 10px 0'
 					>
-						{t('Set limit')}
+						{t('quiz_settings.timer.limit')}
 					</Button>
 					<Collapse in={showLimit} animateOpacity>
 						<Flex>
@@ -148,7 +148,7 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 										<option value={index} key={index}>
 											{index}
 											&nbsp;
-											{t('minutes')}
+											{t('quiz_settings.timer.minutes')}
 										</option>
 									))}
 							</Select>
@@ -164,7 +164,7 @@ export const TimerSettings: FC<TimerSettingProps> = memo(({ onUpdate }) => {
 										<option value={index} key={index}>
 											{index}
 											&nbsp;
-											{t('seconds')}
+											{t('quiz_settings.timer.seconds')}
 										</option>
 									))}
 							</Select>

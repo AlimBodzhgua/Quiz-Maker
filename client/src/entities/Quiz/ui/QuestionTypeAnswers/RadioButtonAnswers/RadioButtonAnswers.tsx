@@ -21,8 +21,8 @@ export const RadioButtonAnswers: FC<RadioButtonAnswersProps> = memo(({ answers, 
 			if (splittedAnswer[1] === 'true') {
 				questionAnswer(true);
 			} else {
- questionAnswer(false);
-}
+				questionAnswer(false);
+			}
 		}
 	}, [isAnswerSubmit]);
 

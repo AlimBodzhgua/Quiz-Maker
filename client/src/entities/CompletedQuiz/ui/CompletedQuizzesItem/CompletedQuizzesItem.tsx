@@ -63,7 +63,7 @@ export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo(({ quiz 
 				<CardBody>
 					<Flex alignItems='center' justifyContent='space-between'>
 						<Heading size='sm'>
-							{t('Total Questions')}
+							{t('completed_quiz.total_questions')}
 							:
 						</Heading>
 						<Text>{quiz.correct + quiz.incorrect}</Text>
@@ -71,17 +71,17 @@ export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo(({ quiz 
 					<Divider />
 					<Flex m='5px 0' alignItems='center' justifyContent='space-between'>
 						<Heading size='sm'>
-							{t('Test result')}
+							{t('completed_quiz.title')}
 							:
 						</Heading>
 						<Flex flexDirection='column' textAlign='end'>
 							<Text color='green.400'>
-								{t('Correct')}
+								{t('completed_quiz.correct')}
 								:
 								{quiz.correct}
 							</Text>
 							<Text color='red.400'>
-								{t('Incorrect')}
+								{t('completed_quiz.incorrect')}
 								:
 								{quiz.incorrect}
 							</Text>
@@ -91,7 +91,7 @@ export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo(({ quiz 
 					{quiz.timeResult && (
 						<Flex m='5px 0' alignItems='center' justifyContent='space-between'>
 							<Heading size='sm' mr='32px'>
-								{t('Time result')}
+								{t('completed_quiz.result')}
 								:
 							</Heading>
 							<Timer
@@ -113,7 +113,7 @@ export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo(({ quiz 
 						as={RouterLink}
 						to={getQuizPage(quiz.quizId)}
 					>
-						<Text>{t('try again')}</Text>
+						<Text>{t('completed_quiz.try_again')}</Text>
 						<RepeatIcon />
 					</Button>
 				</CardFooter>

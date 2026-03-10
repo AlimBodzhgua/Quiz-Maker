@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import type { Answer } from '../../../model/types';
 import { Box, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 import { memo, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getDataMatchedAnswer } from 'shared/utils';
 import { useCurrentQuiz } from '../../../model/store/currentQuiz';
 
@@ -12,6 +13,7 @@ interface InputAnswerProps {
 
 export const InputAnswer: FC<InputAnswerProps> = memo((props) => {
 	const { answers, isAnswerSubmit } = props;
+	const { t } = useTranslation();
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean>(false);
 	const questionAnswer = useCurrentQuiz((state) => state.questionAnswer);
@@ -34,7 +36,7 @@ export const InputAnswer: FC<InputAnswerProps> = memo((props) => {
 				<Input
 					bgColor={isAnswerSubmit ? getDataMatchedAnswer(isAnswerCorrect).color : 'none'}
 					color={isAnswerSubmit ? '#fff' : 'blackAlpha.700'}
-					placeholder='Enter your answer here...'
+					placeholder={t('placeholders.enter_answer')}
 					ref={inputRef}
 				/>
 				<InputRightElement>

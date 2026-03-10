@@ -58,7 +58,7 @@ export const AddAnswerForm: FC<AddAnswerFormProps> = memo((props) => {
 			>
 				<InputGroup>
 					<Input
-						placeholder={t('Answer')}
+						placeholder={t('quiz_create.answer.placeholder')}
 						value={value}
 						onChange={handleOnChangeValue}
 						disabled={isSaved}
@@ -93,7 +93,7 @@ export const AddAnswerForm: FC<AddAnswerFormProps> = memo((props) => {
 					size='sm'
 					alignSelf='flex-end'
 				>
-					{t('correct answer')}
+					{t('quiz_create.answer.correct')}
 				</Checkbox>
 			</Flex>
 		</SortableItem>

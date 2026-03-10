@@ -78,7 +78,7 @@ export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 		await onUpdate({ privacy: privacyData });
 
 		toast({
-			title: 'Privacy Saved',
+			title: t('toasts.privacy.title'),
 			status: 'success',
 			position: 'top',
 			isClosable: true,
@@ -96,7 +96,7 @@ export const PrivacySettings: FC<PrivacySettingProps> = memo(({ onUpdate }) => {
 					mr='15px'
 					minW='90px'
 				>
-					{t('Quiz Privacy')}
+					{t('quiz_privacy.title')}
 				</Heading>
 				<Button
 					size='xs'

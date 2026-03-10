@@ -43,8 +43,8 @@ const CreateQuizPage: FC = () => {
 	const onAddQuestion = useCallback(() => {
 		if (!quizId) {
 			return toast({
-				title: 'Quiz not created.',
-				description: 'First you need to create a quiz and save it.',
+				title: t('toasts.create_quiz.title'),
+				description: t('toasts.create_quiz.description'),
 				status: 'info',
 				duration: 5000,
 				isClosable: true,
@@ -92,11 +92,11 @@ const CreateQuizPage: FC = () => {
 						_hover={{}}
 						_active={{}}
 					>
-						+ {t('Add Question')}
+						+ {t('quiz_create.questions.add')}
 					</Button>
 					<Flex alignSelf='flex-end' alignItems='center' gap='10px'>
 						<Box>
-							{t('Questions')}:{savedQuestionsAmount}
+							{t('quiz_create.questions.title')}:{savedQuestionsAmount}
 						</Box>
 						<Button
 							as={Link}
@@ -108,16 +108,15 @@ const CreateQuizPage: FC = () => {
 							target='_blank'
 						>
 							<ViewIcon mr='10px' />
-							<Text>{t('Preview')}</Text>
+							<Text>{t('buttons.preview')}</Text>
 						</Button>
 						<Button
-							//colorScheme='cyan'
 							bgColor='cyan.200'
 							color='white'
 							disabled={savedQuestionsAmount === 0}
 							onClick={onComplete}
 						>
-							{t('Complete')}
+							{t('buttons.complete')}
 						</Button>
 					</Flex>
 				</Box>

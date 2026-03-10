@@ -14,11 +14,13 @@ import {
 	Tooltip,
 } from '@chakra-ui/react';
 import { memo, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Page } from 'widgets/Page';
 
 import { useUserStore } from '../model/store';
 
 export const ProfileCard: FC = memo(() => {
+	const { t } = useTranslation();
 	const user = useUserStore((state) => state.user);
 	const [isIdCopied, setIsIdCopied] = useState<boolean>(false);
 	const [isEmailCopied, setIsEmailCopied] = useState<boolean>(false);
@@ -51,11 +53,11 @@ export const ProfileCard: FC = memo(() => {
 		<Page centered>
 			<Card bgColor='bg.secondary'>
 				<CardHeader display='flex' justifyContent='center' pb='0'>
-					<Heading size='md'>Profile</Heading>
+					<Heading size='md'>{t('profile.title')}</Heading>
 				</CardHeader>
 				<CardBody>
 					<Flex direction='column' gap='12px' width='320px'>
-						<Text>Id</Text>
+						<Text>{t('profile.id')}</Text>
 						<InputGroup>
 							<Input value={user?._id} variant='filled' disabled />
 							<Tooltip label={isIdCopied ? 'copied' : 'copy'} hasArrow>
@@ -68,7 +70,7 @@ export const ProfileCard: FC = memo(() => {
 							</Tooltip>
 						</InputGroup>
 
-						<Text>Email</Text>
+						<Text>{t('profile.email')}</Text>
 						<InputGroup>
 							<Input value={user?.email} variant='filled' disabled />
 							<Tooltip label={isEmailCopied ? 'copied' : 'copy'} hasArrow>

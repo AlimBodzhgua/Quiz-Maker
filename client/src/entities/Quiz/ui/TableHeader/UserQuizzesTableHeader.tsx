@@ -48,9 +48,9 @@ export const UserQuizzesTableHeader: FC = memo(() => {
 						</Button>
 						<AppDialog
 							isOpen={isOpen}
-							header={t('Delete selected quizzes')}
-							body={t('Are you sure? You can\'t undo this action afterwards.')}
-							actionText={t('Delete')}
+							header={t('quiz_dialog.delete.selected_quiz.title')}
+							body={t('quiz_dialog.delete.confirm_bulk')}
+							actionText={t('buttons.delete')}
 							actionHandler={handleRemove}
 							onClose={onClose}
 						>
@@ -72,7 +72,7 @@ export const UserQuizzesTableHeader: FC = memo(() => {
 				</Th>
 				<Th>
 					<ColumnToggleSort
-						text={t('Name')}
+						text={t('table.header.name')}
 						sortField={sortField.name}
 						activeField={activeField}
 						onChangeActiveField={onChangeActiveField}
@@ -80,15 +80,15 @@ export const UserQuizzesTableHeader: FC = memo(() => {
 				</Th>
 				<Th>
 					<ColumnToggleSort
-						text={t('Date')}
+						text={t('table.header.date')}
 						sortField={sortField.date}
 						activeField={activeField}
 						onChangeActiveField={onChangeActiveField}
 					/>
 				</Th>
-				<Th isNumeric>{t('Questions')}</Th>
-				<Th isNumeric>{t('Number of participants')}</Th>
-				<Th><Flex justifyContent='center'>{t('Action')}</Flex></Th>
+				<Th isNumeric>{t('table.header.questions')}</Th>
+				<Th isNumeric>{t('table.header.participants')}</Th>
+				<Th><Flex justifyContent='center'>{t('table.header.action')}</Flex></Th>
 			</Tr>
 		</Thead>
 	);

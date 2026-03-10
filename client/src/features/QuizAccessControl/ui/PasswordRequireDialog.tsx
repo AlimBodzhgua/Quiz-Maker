@@ -30,7 +30,7 @@ export const PasswordRequireDialog: FC<PasswordRequireDialogProps> = (props) => 
 			onClose();
 		} else {
 			toast({
-				title: t('Wrong password'),
+				title: t('toasts.password_require.title'),
 				position: 'top',
 				status: 'error',
 				duration: 4000,
@@ -41,15 +41,15 @@ export const PasswordRequireDialog: FC<PasswordRequireDialogProps> = (props) => 
 
 	return (
 		<AppDialog
-			header={t('This quiz requires a password')}
+			header={t('quiz_privacy.access_messages.requires_password')}
 			body={(
 				<Input
-					placeholder={t('Enter password')}
+					placeholder={t('quiz_privacy.access_messages.enter_password')}
 					value={password}
 					onChange={onChangePassword}
 				/>
 			)}
-			actionText={t('submit')}
+			actionText={t('buttons.submit')}
 			actionHandler={onSubmitPassword}
 			isOpen={isOpen}
 			onClose={onCloseDialog}

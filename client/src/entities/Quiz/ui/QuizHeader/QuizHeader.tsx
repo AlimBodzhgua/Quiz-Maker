@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import { Flex, Text } from '@chakra-ui/react';
 import { Fragment, memo, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useThrottle } from 'shared/lib/hooks';
 import { Timer } from 'shared/UI';
 import { useCurrentQuiz } from '../../model/store/currentQuiz';
@@ -14,6 +15,7 @@ interface QuizHeaderProps {
 
 export const QuizHeader: FC<QuizHeaderProps> = memo((props) => {
 	const { isTimerStarted, minutes, seconds } = props;
+	const { t } = useTranslation();
 	const quiz = useCurrentQuiz((state) => state.quiz);
 	const correctAnswers = useCurrentQuiz((state) => state.correctAnswers);
 	const incorrectAnswers = useCurrentQuiz((state) => state.incorrectAnswers);
@@ -50,7 +52,7 @@ export const QuizHeader: FC<QuizHeaderProps> = memo((props) => {
 				</Flex>
 			) : (
 				<Text fontWeight='bold' color='white' w='30%' m='8px 0'>
-					Total quesetions: {questions?.length}
+					{t('current_quiz.total_questions')}: {questions?.length}
 				</Text>
 			)}
 			{quiz && quiz.withTimer && <Timer minutes={minutes} seconds={seconds} />}

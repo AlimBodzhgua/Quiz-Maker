@@ -13,6 +13,7 @@ import {
 	useDisclosure,
 } from '@chakra-ui/react';
 import { memo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PrivacyInfo } from './PrivacyInfo';
 
 interface PrivacyDrawerProps {
@@ -21,6 +22,7 @@ interface PrivacyDrawerProps {
 
 export const PrivacyDrawer: FC<PrivacyDrawerProps> = memo((props) => {
 	const { quiz } = props;
+	const { t } = useTranslation();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const btnRef = useRef<HTMLButtonElement | null>(null);
 
@@ -37,7 +39,7 @@ export const PrivacyDrawer: FC<PrivacyDrawerProps> = memo((props) => {
 				_hover={{ color: '#dcd9d9' }}
 				_active={{ color: 'none' }}
 			>
-				Privacy
+				{t('buttons.privacy')}
 			</Button>
 			<Drawer
 				isOpen={isOpen}
@@ -46,9 +48,9 @@ export const PrivacyDrawer: FC<PrivacyDrawerProps> = memo((props) => {
 				placement='left'
 				size='sm'
 			>
-				<DrawerOverlay />
-				<DrawerContent>
-					<DrawerHeader>Privacy Info</DrawerHeader>
+				<DrawerOverlay bgColor='overlay.primary'/>
+				<DrawerContent bgColor='bg.secondary'>
+					<DrawerHeader>{t('quiz_privacy.info.title')}</DrawerHeader>
 					<DrawerCloseButton />
 
 					<DrawerBody>
@@ -62,7 +64,7 @@ export const PrivacyDrawer: FC<PrivacyDrawerProps> = memo((props) => {
 							mr={3}
 							onClick={onClose}
 						>
-							Close
+							{t('buttons.close')}
 						</Button>
 					</DrawerFooter>
 				</DrawerContent>

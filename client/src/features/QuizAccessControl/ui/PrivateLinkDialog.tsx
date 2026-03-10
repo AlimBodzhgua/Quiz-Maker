@@ -18,8 +18,8 @@ export const PrivateLinkDialog: FC<PrivateLinkDialogProps> = memo((props) => {
 
 	return (
 		<AppDialog
-			header={t('This quiz requires a private link with token')}
-			body={t('You have no permission to this quiz')}
+			header={t('quiz_privacy.access_messages.requires_link')}
+			body={t('quiz_privacy.access_messages.no_permission')}
 			actionText='ok'
 			isOpen={isOpen}
 			actionHandler={onCloseDialog}

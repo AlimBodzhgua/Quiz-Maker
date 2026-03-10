@@ -19,6 +19,7 @@ import {
 import { QuizRating } from 'features/RateQuiz';
 import { FinishQuizButton } from 'features/SaveQuizResult';
 import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { Margin, usePDF } from 'react-to-pdf';
 import { NoPrint } from 'shared/lib/components/NoPrint';
@@ -29,6 +30,7 @@ import { ShareButton } from 'widgets/ShareButton';
 import { getMatchedTimerProps } from '../lib/getMatchedTimerProps';
 
 const QuizPage: FC = () => {
+	const { t } = useTranslation();
 	const { id } = useParams<{ id?: string }>();
 	const { isOpen, onToggle } = useDisclosure();
 	const location = useLocation();
@@ -175,7 +177,7 @@ const QuizPage: FC = () => {
 							size='sm'
 							m='5px 0'
 						>
-							Start quiz
+							{t('buttons.start_quiz')}
 						</Button>
 					)}
 

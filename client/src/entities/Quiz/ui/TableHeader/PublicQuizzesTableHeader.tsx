@@ -19,7 +19,7 @@ export const PublicQuizzesTableHeader: FC = memo(() => {
 			<Tr>
 				<Th>
 					<ColumnToggleSort
-						text='Name'
+						text={t('table.header.name')}
 						sortField={sortField.name}
 						activeField={activeField}
 						onChangeActiveField={onChangeActiveField}
@@ -27,15 +27,15 @@ export const PublicQuizzesTableHeader: FC = memo(() => {
 				</Th>
 				<Th>
 					<ColumnToggleSort
-						text={t('Date')}
+						text={t('table.header.date')}
 						sortField={sortField.date}
 						activeField={activeField}
 						onChangeActiveField={onChangeActiveField}
 					/>
 				</Th>
-				<Th isNumeric>{t('Questions')}</Th>
-				<Th isNumeric>{t('Number of participants')}</Th>
-				<Th>{t('Author')}</Th>
+				<Th isNumeric>{t('table.header.questions')}</Th>
+				<Th isNumeric>{t('table.header.participants')}</Th>
+				<Th>{t('table.header.author')}</Th>
 			</Tr>
 		</Thead>
 	);

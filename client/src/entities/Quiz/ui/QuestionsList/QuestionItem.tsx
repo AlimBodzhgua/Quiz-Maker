@@ -15,6 +15,7 @@ import {
 	Tooltip,
 } from '@chakra-ui/react';
 import { memo, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnswersService } from '../../api/AnswersService';
 import RequiredIcon from '../../assets/required.svg';
 import { useCurrentQuiz } from '../../model/store/currentQuiz';
@@ -30,13 +31,14 @@ interface QuestionItemProps {
 }
 
 export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
+	const { t } = useTranslation();
 	const currentQuiz = useCurrentQuiz((state) => state.quiz);
 	const addAnsweredQuestionId = useCurrentQuiz((state) => state.addAnsweredQuestionId);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [answers, setAnswers] = useState<Answer[]>([]);
 	const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-	const initAnswrers = async () => {
+	const initAnswers = async () => {
 		if (currentQuiz) {
 			setIsLoading(true);
 			const answers = await AnswersService.fetchQuestionAnswers(currentQuiz._id, question._id);
@@ -46,7 +48,7 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 	};
 
 	useEffect(() => {
-		initAnswrers();
+		initAnswers();
 	}, []);
 
 	const mapToQuestionTypeAnswers: Record<QuestionType, JSX.Element> = useMemo(() => ({
@@ -104,7 +106,7 @@ export const QuestionItem: FC<QuestionItemProps> = memo(({ question }) => {
 				<CardBody>{mapToQuestionTypeAnswers[question.type]}</CardBody>
 				<CardFooter justify='flex-end' pt='0'>
 					<Button size='sm' onClick={onSubmit} disabled={isSubmitted}>
-						Submit Answer
+						{t('buttons.submit_answer')}
 					</Button>
 				</CardFooter>
 			</Card>

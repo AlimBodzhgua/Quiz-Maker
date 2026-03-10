@@ -69,7 +69,7 @@ export const Header: FC = memo(() => {
 							gap='4px'
 						>
 							<ListIcon />
-							<Text fontSize='15px'>{t('Public quizzes')}</Text>
+							<Text fontSize='15px'>{t('navigation.public_quizzes')}</Text>
 						</Link>
 
 						<Menu placement='bottom'>
@@ -92,24 +92,24 @@ export const Header: FC = memo(() => {
 									to={AppRoutes.USER_QUIZZES}
 									icon={<ListBulletsIcon />}
 								>
-									{t('My Quizzes')}
+									{t('navigation.my_quizzes')}
 								</MenuItem>
 								<MenuItem
 									as={RouterLink}
 									to={AppRoutes.COMPLETED_QUIZZES}
 									icon={<CheckIcon color='#000' />}
 								>
-									{t('Completed')}
+									{t('navigation.completed')}
 								</MenuItem>
 								<MenuItem
 									as={RouterLink}
 									to={AppRoutes.PROFILE}
 									icon={<AvatarIcon />}
 								>
-									{t('Profile')}
+									{t('navigation.profile')}
 								</MenuItem>
 								<MenuItem onClick={handleLogout} icon={<SignOutIcon />}>
-									{t('Logout')}
+									{t('navigation.logout')}
 								</MenuItem>
 							</MenuList>
 						</Menu>

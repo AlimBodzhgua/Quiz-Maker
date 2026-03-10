@@ -68,7 +68,7 @@ export const SidebarQuestionsList: FC<SidebarQuestionsListProps> = (props) => {
 			>
 				<Flex justifyContent='space-between' alignItems='center' px='5px' mb='3'>
 					<Heading size='sm' color='blackAlpha.600'>
-						{t('Questions')}
+						{t('quiz_create.questions.title')}
 					</Heading>
 					<Box fontWeight='bold' color='blackAlpha.600'>
 						{questions.length}

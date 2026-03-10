@@ -3,6 +3,7 @@ import { DownloadIcon } from '@chakra-ui/icons';
 import { Box, Button, Divider, Flex, Heading, Text } from '@chakra-ui/react';
 import { useCurrentQuiz } from 'entities/Quiz/model/store/currentQuiz';
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Margin, usePDF } from 'react-to-pdf';
 import { PrintButton } from 'shared/UI';
 
@@ -22,6 +23,7 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 		userEmail,
 		renderQuizRating,
 	} = props;
+	const { t } = useTranslation();
 	const correct = useCurrentQuiz((state) => state.correctAnswers);
 	const incorrect = useCurrentQuiz((state) => state.incorrectAnswers);
 	const questionsAmount = useCurrentQuiz((state) => state.questions)?.length;
@@ -56,7 +58,7 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 		>
 			<Flex justifyContent='space-between' alignItems='center'>
 				<Heading size='md' mb='12px' color='gray.700'>
-					Your Result
+					{t('quiz_result.title')}
 				</Heading>
 				<Flex alignItems='center' gap='8px' id='hide-in-pdf'>
 					<Button
@@ -85,11 +87,11 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 					borderColor='gray.200'
 					paddingRight='5%'
 				>
-					<Text fontWeight='bold' color='gray.500'>Quiz ID</Text>
+					<Text fontWeight='bold' color='gray.500'>{t('quiz_result.user_id')}</Text>
 					<Text>{quiz?._id}</Text>
 				</Flex>
 				<Flex w='45%' justifyContent='space-between'>
-					<Text fontWeight='bold' color='gray.500'>Quiz Name</Text>
+					<Text fontWeight='bold' color='gray.500'>{t('quiz_result.quiz_name')}</Text>
 					<Text>{quiz?.title}</Text>
 				</Flex>
 			</Flex>
@@ -110,11 +112,11 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 					borderColor='gray.200'
 					paddingRight='5%'
 				>
-					<Text fontWeight='bold' color='gray.500'>User ID</Text>
+					<Text fontWeight='bold' color='gray.500'>{t('quiz_result.user_id')}</Text>
 					<Text>{userId}</Text>
 				</Flex>
 				<Flex w='45%' justifyContent='space-between'>
-					<Text fontWeight='bold' color='gray.500'>User Email</Text>
+					<Text fontWeight='bold' color='gray.500'>{t('quiz_result.user_email')}</Text>
 					<Text>{userEmail}</Text>
 				</Flex>
 			</Flex>
@@ -135,11 +137,11 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 					borderColor='gray.200'
 					paddingRight='5%'
 				>
-					<Text fontWeight='bold' color='gray.500'>Total questions</Text>
+					<Text fontWeight='bold' color='gray.500'>{t('quiz_result.total_questions')}</Text>
 					<Text>{questionsAmount}</Text>
 				</Flex>
 				<Flex w='45%' justifyContent='space-between'>
-					<Text fontWeight='bold' color='gray.500'>Score</Text>
+					<Text fontWeight='bold' color='gray.500'>{t('quiz_result.score')}</Text>
 					<Text>
 						{correct}
 						/
@@ -165,11 +167,11 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 					paddingRight='5%'
 					color='green.400'
 				>
-					<Text fontWeight='bold'>Correct Answers</Text>
+					<Text fontWeight='bold'>{t('quiz_result.correct_answers')}</Text>
 					<Text>{correct}</Text>
 				</Flex>
 				<Flex w='45%' justifyContent='space-between' color='red.400'>
-					<Text fontWeight='bold'>Incorrect Answers</Text>
+					<Text fontWeight='bold'>{t('quiz_result.incorrect_answers')}</Text>
 					<Text>{incorrect}</Text>
 				</Flex>
 			</Flex>
@@ -187,7 +189,7 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 					m='16px 0'
 					id='hide-in-pdf'
 				>
-					<Heading size='md' fontWeight='medium'>How do you rate this quiz?</Heading>
+					<Heading size='md' fontWeight='medium'>{t('quiz_result.rate')}</Heading>
 					{renderQuizRating({ quizId: quiz._id })}
 				</Flex>
 			)}

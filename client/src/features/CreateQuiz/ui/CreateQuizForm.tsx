@@ -100,7 +100,7 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 		<Flex gap='15px' {...hoverProps}>
 			<InputGroup>
 				<Input
-					placeholder={t('Quiz title')}
+					placeholder={t('quiz_create.title')}
 					value={title}
 					onChange={onTitleChange}
 					disabled={isSaved}
@@ -122,9 +122,9 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 								<EditIcon />
 							</Button>
 							<AppDialog
-								header={t('Delete quiz')}
-								body={t('Are you sure you want to delete quiz?')}
-								actionText='delete'
+								header={t('quiz_dialog.delete.quiz.title')}
+								body={t('quiz_dialog.delete.confirm_single')}
+								actionText={t('buttons.delete')}
 								isOpen={isOpen}
 								onClose={onClose}
 								actionHandler={onRemove}
@@ -144,7 +144,7 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 							hasArrow
 							placement='bottom'
 							isDisabled={!isSmallLength}
-							label={t('Title must be at least 4 characters long')}
+							label={t('quiz_create.validations.title_too_short')}
 						>
 							<Button
 								onClick={onSaveQuiz}
@@ -153,12 +153,12 @@ export const CreateQuizForm: FC<CreateQuizFormProps> = memo((props) => {
 							>
 								{isSaved ? (
 									<Flex gap='5px' align='center'>
-										{t('Saved')}
+										{t('buttons.saved')}
 										&nbsp;
 										<CheckIcon fontSize='14px' />
 									</Flex>
 								) : (
-									t('Save')
+									t('buttons.save')
 								)}
 							</Button>
 						</Tooltip>

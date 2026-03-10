@@ -29,7 +29,7 @@ const UserQuizzesPage: FC = () => {
 			<Flex
 				justify='space-between'
 				align='center'
-				p='2px 0px'
+				gap='8px'
 				my='15px'
 				w='80%'
 			>
@@ -38,7 +38,7 @@ const UserQuizzesPage: FC = () => {
 				</Flex>
 				<Flex gap='8px'>
 					<Button size='sm' as={Link} to={AppRoutes.CREATE_QUIZ}>
-						{t('Create')}
+						{t('buttons.create')}
 					</Button>
 					<Button
 						size='sm'
@@ -47,7 +47,7 @@ const UserQuizzesPage: FC = () => {
 						colorScheme='cyan'
 						color='white'
 					>
-						{isSelecting ? t('Done') : t('Select')}
+						{isSelecting ? t('buttons.done') : t('buttons.select')}
 					</Button>
 				</Flex>
 			</Flex>

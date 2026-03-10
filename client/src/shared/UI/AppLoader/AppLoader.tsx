@@ -13,8 +13,8 @@ export const AppLoader: FC = memo(() => {
 			left='45%'
 			transform='translate(45%, 50%)'
 		>
-			<Spinner color='blue.500' mb='10px' size='lg' />
-			<Heading size='md' color='blue.500'>
+			<Spinner color='bg.blue' mb='10px' size='lg' />
+			<Heading size='md' color='bg.blue'>
 				Loading...
 			</Heading>
 		</Flex>

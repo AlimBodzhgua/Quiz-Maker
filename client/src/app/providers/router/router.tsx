@@ -12,6 +12,7 @@ import { createBrowserRouter, replace } from 'react-router-dom';
 import { AppRoutes } from 'shared/constants';
 import { AuthRequire, ProtectedFromAuthorized } from '../../../features/Auth';
 import { Layout } from '../../Layout/Layout';
+import { PageError } from 'widgets/PageError';
 
 export const routes: AppRouteObject[] = [
 	{
@@ -72,7 +73,8 @@ export const routes: AppRouteObject[] = [
 export const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <Layout />,
+		element:  <Layout />,
+		errorElement: <PageError />,
 		children: [
 			{
 				index: true,

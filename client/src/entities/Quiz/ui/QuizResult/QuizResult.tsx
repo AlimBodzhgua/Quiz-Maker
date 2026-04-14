@@ -87,7 +87,7 @@ export const QuizResult: FC<QuizResultProps> = memo((props) => {
 					borderColor='gray.200'
 					paddingRight='5%'
 				>
-					<Text fontWeight='bold' color='gray.500'>{t('quiz_result.user_id')}</Text>
+					<Text fontWeight='bold' color='gray.500'>{t('quiz_result.quiz_id')}</Text>
 					<Text>{quiz?._id}</Text>
 				</Flex>
 				<Flex w='45%' justifyContent='space-between'>

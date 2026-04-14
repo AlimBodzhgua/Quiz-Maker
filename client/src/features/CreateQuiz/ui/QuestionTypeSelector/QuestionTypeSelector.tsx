@@ -28,7 +28,7 @@ export const QuestionTypeSelector: FC<QuestionTypeSelectorProps> = memo((props) 
 			w='25%'
 			bg='bg.secondary'
 		>
-			{Object.values(QuestionTypesDisplay).map((type) => (
+			{Object.keys(QuestionTypesDisplay).map((type) => (
 				<option value={type} key={type}>
 					{t(type)}
 				</option>

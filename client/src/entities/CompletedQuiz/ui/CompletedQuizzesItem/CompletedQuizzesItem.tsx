@@ -44,21 +44,7 @@ export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo(({ quiz 
 		>
 			<Card w='100%' bgColor='bg.secondary'>
 				<CardHeader pb='0'>
-					<Flex
-						justifyContent='space-between'
-						alignItems='center'
-						gap='10px'
-					>
-						<Heading size='md'>{quiz.quizTitle}</Heading>
-						<Button
-							onClick={handleRemove}
-							size='sm'
-							variant='outline'
-							_hover={{ color: 'red.400' }}
-						>
-							<DeleteIcon />
-						</Button>
-					</Flex>
+					<Heading size='md'>{quiz.quizTitle}</Heading>
 				</CardHeader>
 				<CardBody>
 					<Flex alignItems='center' justifyContent='space-between'>
@@ -104,18 +90,36 @@ export const CompletedQuizzesItem: FC<CompletedQuizzesItemProps> = memo(({ quiz 
 					<Divider />
 				</CardBody>
 				<CardFooter pt='0' display='flex' justifyContent='space-between'>
-					<Text>{quiz.date}</Text>
-					<Button
-						size='sm'
-						colorScheme='cyan'
-						color='white'
-						gap='6px'
-						as={RouterLink}
-						to={getQuizPage(quiz.quizId)}
-					>
-						<Text>{t('completed_quiz.try_again')}</Text>
-						<RepeatIcon />
-					</Button>
+					<Flex direction='column' w='100%' gap='12px'>
+						<Text alignSelf='end'>{quiz.date}</Text>
+						<Flex w='100%' gap='12px'>
+							<Button
+								size='sm'
+								color='white'
+								bg='cyan.500'
+								w='50%'
+								_hover={{ backgroundColor: 'cyan.600' }}
+								gap='6px'
+								as={RouterLink}
+								to={getQuizPage(quiz.quizId)}
+							>
+								<Text whiteSpace='collapse'>{t('completed_quiz.try_again')}</Text>
+								<RepeatIcon />
+							</Button>
+							<Button
+									size='sm'
+									color='white'
+									bg='red.500'
+									w='50%'
+									gap='6px'
+									onClick={handleRemove}
+									_hover={{ backgroundColor: 'red.600' }}
+								>
+									<Text>{t('buttons.delete')}</Text>
+									<DeleteIcon />
+								</Button>
+						</Flex>
+					</Flex>
 				</CardFooter>
 			</Card>
 		</ListItem>

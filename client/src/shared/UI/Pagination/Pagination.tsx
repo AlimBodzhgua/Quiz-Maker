@@ -56,7 +56,7 @@ export const Pagination: FC<PaginationProps> = memo((props) => {
 					<Button
 						key={index}
 						size='sm'
-						colorScheme={activePage === index + 1 ? 'cyan' : 'gray'}
+						backgroundColor={activePage === index + 1 ? 'cyan.500' : 'bg.secondary'}
 						color={activePage === index + 1 ? '#ffff' : 'gray.500'}
 						onClick={() => handlePageClick(index + 1)}
 					>

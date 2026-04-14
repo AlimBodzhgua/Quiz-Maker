@@ -39,6 +39,7 @@ export const theme = extendTheme({
 				200: { default: '#FEB2B2', _dark: '#d41a1a' },
 			},
 			blackAlpha: {
+				200: { default: '#0000007a', _dark: '#00000027' },
 				600: { default: '#0000007a', _dark: '#ffffff7a' },
 				700: { default: '#000000a3', _dark: '#ffffffa3' },
 				800: { default: '#000000cc', _dark: '#ffffffa3'}

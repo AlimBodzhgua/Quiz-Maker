@@ -19,8 +19,10 @@ export const RestrictedUserItem: FC<RestrictedUserItemProps> = memo((props) => {
 			display='flex'
 			alignItems='center'
 			justifyContent='center'
-			backgroundColor='blackAlpha.100'
+			backgroundColor='blackAlpha.200'
+			shadow='md'
 			pl='5px'
+			pt='2px'
 			borderRadius='base'
 		>
 			<Text>{user}</Text>
@@ -33,7 +35,7 @@ export const RestrictedUserItem: FC<RestrictedUserItemProps> = memo((props) => {
 				alignItems='center'
 				onClick={handleRemove}
 			>
-				<CloseIcon fontSize='smaller' color='blackAlpha.500' />
+				<CloseIcon fontSize='smaller' />
 			</Button>
 		</ListItem>
 	);

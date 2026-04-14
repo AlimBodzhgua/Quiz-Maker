@@ -169,12 +169,12 @@ export const PrivacyInfo: FC<PrivacyInfoProps> = memo(({ quiz }) => {
 				{quiz.privacy.type === 'restrictedUsers' && (
 					<Flex alignItems='center'>
 						<Heading fontWeight='medium' alignSelf='flex-start' size='sm' mb='5px'>
-							{t('privacy.info.user_ids')}:
+							{t('quiz_privacy.info.user_ids')}:
 						</Heading>
 						<List ml='14px'>
 							{quiz.privacy.userIds.map((user) => (
 								<ListItem
-									bgColor='blackAlpha.100'
+									bgColor='blackAlpha.200'
 									p='4px 6px'
 									w='fit-content'
 									mb='5px'

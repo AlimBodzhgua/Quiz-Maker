@@ -5,7 +5,6 @@ export const QuestionTypes = {
 	trueOrFalse: 'trueOrFalse',
 } as const;
 
-
 export const QuestionTypesDisplay = {
 	multipleAnswer: 'quiz_create.answer.type.multiple',
 	oneAnswer: 'quiz_create.answer.type.single',

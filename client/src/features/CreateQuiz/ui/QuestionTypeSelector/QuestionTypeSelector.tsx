@@ -12,6 +12,8 @@ interface QuestionTypeSelectorProps {
 	disabled?: boolean;
 }
 
+const questionTypeKeys = Object.keys(QuestionTypesDisplay) as Array<keyof typeof QuestionTypesDisplay>;
+
 export const QuestionTypeSelector: FC<QuestionTypeSelectorProps> = memo((props) => {
 	const {
 		value,
@@ -28,9 +30,9 @@ export const QuestionTypeSelector: FC<QuestionTypeSelectorProps> = memo((props) 
 			w='25%'
 			bg='bg.secondary'
 		>
-			{Object.keys(QuestionTypesDisplay).map((type) => (
+			{questionTypeKeys.map((type) => (
 				<option value={type} key={type}>
-					{t(type)}
+					{t(QuestionTypesDisplay[type])}
 				</option>
 			))}
 		</Select>

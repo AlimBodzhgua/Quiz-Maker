@@ -111,9 +111,10 @@ const CreateQuizPage: FC = () => {
 							<Text>{t('buttons.preview')}</Text>
 						</Button>
 						<Button
-							bgColor='cyan.200'
+							bgColor='cyan.400'
 							color='white'
 							disabled={savedQuestionsAmount === 0}
+							_hover={{ backgroundColor: 'cyan.500'}}
 							onClick={onComplete}
 						>
 							{t('buttons.complete')}

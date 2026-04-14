@@ -32,9 +32,6 @@ export const theme = extendTheme({
 				400: { default: '#4299e1', _dark: '#1a202c' },
 				500: { default: '#3b82f6', _dark: '#1a202c' },
 			},
-			cyan: {
-				200: { default: '#9DECF9', _dark: '#00A3C4'}
-			},
 			red: {
 				200: { default: '#FEB2B2', _dark: '#d41a1a' },
 			},

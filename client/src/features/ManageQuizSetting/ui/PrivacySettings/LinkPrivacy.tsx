@@ -47,6 +47,7 @@ clearInterval(timerRef.current);
 			<Input value={link} variant='filled' disabled />
 			<Tooltip label={isCopied ? 'copied' : 'copy'} hasArrow>
 				<InputRightAddon
+					as='button'
 					onClick={onCopy}
 					_hover={{ cursor: 'pointer' }}
 				>

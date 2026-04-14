@@ -1,7 +1,7 @@
 import type { ChangeEvent, FC } from 'react';
 
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
+import { Input, InputGroup, InputRightAddon } from '@chakra-ui/react';
 import { memo, useState } from 'react';
 
 interface PasswordPrivacyProps {
@@ -16,19 +16,20 @@ export const PasswordPrivacy: FC<PasswordPrivacyProps> = memo((props) => {
 	const onToggleShowPassword = () => setShowPassword((prev) => !prev);
 
 	return (
-		<InputGroup>
+		<InputGroup size='sm'>
 			<Input
-				size='sm'
 				placeholder='Password'
 				value={password}
 				type={showPassword ? 'text' : 'password'}
 				onChange={onPasswordChange}
 			/>
-			<InputRightElement height='100%'>
-				<Button size='xs' variant='unstyled' onClick={onToggleShowPassword}>
-					{showPassword ? <ViewOffIcon color='#000' /> : <ViewIcon color='#000' />}
-				</Button>
-			</InputRightElement>
+			<InputRightAddon
+				as='button'
+				onClick={onToggleShowPassword}
+				_hover={{ cursor: 'pointer' }}
+			>
+				{showPassword ? <ViewOffIcon /> : <ViewIcon  />}
+			</InputRightAddon>
 		</InputGroup>
 	);
 });

@@ -44,7 +44,8 @@ const UserQuizzesPage: FC = () => {
 						size='sm'
 						onClick={toggleSelect}
 						disabled={!quizzes.length}
-						colorScheme='cyan'
+						bgColor='cyan.500'
+						_hover={{ backgroundColor: 'cyan.700'}}
 						color='white'
 					>
 						{isSelecting ? t('buttons.done') : t('buttons.select')}
